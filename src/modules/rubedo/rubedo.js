@@ -1,33 +1,34 @@
 (function(){
     var app = angular.module('rubedo', ['rubedoDataAccess','ngRoute']);
     var currentPage={
-        title:"Rubedo",
         blocks:[]
     };
 
 
     app.config(function($routeProvider,$locationProvider) {
         $routeProvider.when('/:lang/:routeline*', {
-                template: '<rubedo-page-body></rubedo-page-body>'
+                template: '<ng-include src="pageBodyCtrl.currentBodyTemplate"></ng-include>',
+                controller:'PageBodyController',
+                controllerAs: "pageBodyCtrl"
             });
         $locationProvider.html5Mode(true);
+
     });
 
-    app.controller("PageController",function($scope){
-        $scope.$on("$locationChangeSuccess",function(event){event.preventDefault();});
+    app.controller("PageController",function(){
         this.currentPage=currentPage;
+
     });
 
-    app.directive("rubedoPageBody",['RubedoPagesService',function(RubedoPagesService){
+    app.controller("PageBodyController",['RubedoPagesService',function(RubedoPagesService){
+        var me=this;
         RubedoPagesService.getPageByCurrentRoute().then(function(response){
             currentPage.title=response.page.text;
             currentPage.blocks=response.page.blocks;
+            me.currentBodyTemplate='/components/webtales/rubedo-frontoffice/templates/defaultPageBody.html';
         });
-        return{
-            restrict:"E",
-            template:'<div class="container"><h3>Resolved to default page template</h3><p>Current page : </p><pre>{{pageCtrl.currentPage}}</pre></div>'
-        };
 
     }]);
+
 
 })();
