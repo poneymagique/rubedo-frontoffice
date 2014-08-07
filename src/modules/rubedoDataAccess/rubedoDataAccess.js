@@ -9,7 +9,20 @@
         RestangularProvider.setBaseUrl('/api/v1');
     });
 
-    //serives returning restangular objects
+    //auxiliary functions
+    auxObjectToQueryString=function(obj){
+        var queryString=[];
+        for (var prop in obj){
+            if ((obj.hasOwnProperty(prop))&&(!_.isNull(obj[prop]))){
+                queryString.push(encodeURIComponent(prop)+"="+encodeURIComponent(obj[prop]));
+            }
+        }
+        return (queryString.join("&"));
+    };
+
+
+
+    //serives providing page json from current route
     module.factory('RubedoPagesService', ['$location','$route','Restangular',function($location,$route,Restangular) {
         var serviceInstance={};
         serviceInstance.getPageByCurrentRoute=function(){
@@ -22,5 +35,18 @@
         };
         return serviceInstance;
     }]);
+
+    //service providing image urls
+    module.factory('RubedoImageUrlService', function() {
+        var serviceInstance={};
+        serviceInstance.getUrlByMediaId=function(mediaId,options){
+            var url="/dam?media-id="+mediaId+"&";
+            if (!_.isEmpty(options)){
+                url=url+auxObjectToQueryString(options);
+            }
+            return(url);
+        };
+        return serviceInstance;
+    });
 
 })();

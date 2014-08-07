@@ -1,5 +1,5 @@
 (function(){
-    var app = angular.module('rubedo', ['rubedoDataAccess','ngRoute']);
+    var app = angular.module('rubedo', ['rubedoDataAccess','rubedoBlocks','ngRoute']);
     var currentPage={
         blocks:[]
     };
@@ -15,10 +15,11 @@
 
     });
 
-    app.controller("PageController",function(){
+    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService',function(RubedoBlockTemplateResolver,RubedoImageUrlService){
         this.currentPage=currentPage;
-
-    });
+        this.blockTemplateResolver=RubedoBlockTemplateResolver;
+        this.imageUrl=RubedoImageUrlService;
+    }]);
 
     app.controller("PageBodyController",['RubedoPagesService',function(RubedoPagesService){
         var me=this;
