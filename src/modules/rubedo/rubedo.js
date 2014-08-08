@@ -26,9 +26,15 @@
     app.controller("PageBodyController",['RubedoPagesService',function(RubedoPagesService){
         var me=this;
         RubedoPagesService.getPageByCurrentRoute().then(function(response){
-            currentPage.title=response.page.text;
-            currentPage.blocks=response.page.blocks;
-            me.currentBodyTemplate='/components/webtales/rubedo-frontoffice/templates/defaultPageBody.html';
+            if (response.success){
+                currentPage.title=response.page.text;
+                currentPage.blocks=response.page.blocks;
+                me.currentBodyTemplate='/components/webtales/rubedo-frontoffice/templates/defaultPageBody.html';
+            } else {
+                currentPage.title="404";
+                currentPage.blocks=[];
+                me.currentBodyTemplate='/components/webtales/rubedo-frontoffice/templates/404.html';
+            }
         });
 
     }]);
