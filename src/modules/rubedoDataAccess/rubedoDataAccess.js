@@ -13,7 +13,7 @@
     auxObjectToQueryString=function(obj){
         var queryString=[];
         for (var prop in obj){
-            if ((obj.hasOwnProperty(prop))&&(!_.isNull(obj[prop]))){
+            if ((obj.hasOwnProperty(prop))&&(obj[prop])){
                 queryString.push(encodeURIComponent(prop)+"="+encodeURIComponent(obj[prop]));
             }
         }
