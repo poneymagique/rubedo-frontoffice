@@ -1,0 +1,4 @@
+<div ng-init="blockConfig=block.blockData.configBloc">
+    <h4 ng-if="block.blockData.displayTitle">{{block.blockData.title}}</h4>
+    <ng-include src="rubedo.blockTemplateResolver.getTemplateByBType(block.blockData.bType)"></ng-include>
+</div>

@@ -13,7 +13,7 @@
     auxObjectToQueryString=function(obj){
         var queryString=[];
         for (var prop in obj){
-            if ((obj.hasOwnProperty(prop))&&(obj[prop])){
+            if ((obj.hasOwnProperty(prop))&&(obj[prop])&&(obj[prop]!="")){
                 queryString.push(encodeURIComponent(prop)+"="+encodeURIComponent(obj[prop]));
             }
         }
@@ -37,7 +37,7 @@
     }]);
 
     //service providing image urls
-    module.factory('RubedoImageUrlService', function() {
+    module.factory('RubedoImageUrlService', ["Restangular",function(Restangular) {
         var serviceInstance={};
         serviceInstance.getUrlByMediaId=function(mediaId,options){
             var url="/dam?media-id="+mediaId+"&";
@@ -47,6 +47,6 @@
             return(url);
         };
         return serviceInstance;
-    });
+    }]);
 
 })();

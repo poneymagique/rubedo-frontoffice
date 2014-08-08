@@ -6,7 +6,8 @@
 
     var blocksConfig = {
         image:"/components/webtales/rubedo-frontoffice/templates/blocks/imageBlock.html",
-        blockNotFound:"/components/webtales/rubedo-frontoffice/templates/blocks/blockNotFound.html"
+        blockNotFound:"/components/webtales/rubedo-frontoffice/templates/blocks/blockNotFound.html",
+        navigation:"/components/webtales/rubedo-frontoffice/templates/blocks/navigation.html"
     };
 
     module.factory('RubedoBlockTemplateResolver', function() {
@@ -19,6 +20,14 @@
             }
         };
         return serviceInstance;
+    });
+
+    //generic block directive
+    module.directive("rubedoBlock",function(){
+        return {
+            restrict:"E",
+            templateUrl:"/components/webtales/rubedo-frontoffice/templates/rubedoBlock.html"
+        };
     });
 
 })();

@@ -10,7 +10,9 @@
                 template: '<ng-include src="pageBodyCtrl.currentBodyTemplate"></ng-include>',
                 controller:'PageBodyController',
                 controllerAs: "pageBodyCtrl"
-            });
+            }).otherwise({
+                templateUrl:'/components/webtales/rubedo-frontoffice/templates/404.html'
+        });
         $locationProvider.html5Mode(true);
 
     });

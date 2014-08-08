@@ -3,7 +3,8 @@
     <p>Current page json : </p>
     <pre>{{rubedo.currentPage}}</pre>
     <p>Current page blocks : </p>
-    <div ng-repeat="block in rubedo.currentPage.blocks">
-        <ng-include ng-init="blockConfig=block.blockData.configBloc" src="rubedo.blockTemplateResolver.getTemplateByBType(block.blockData.bType)"></ng-include>
-    </div>
+    <rubedo-block ng-repeat="block in rubedo.currentPage.blocks"></rubedo-block>
+    <!--<div ng-repeat="block in rubedo.currentPage.blocks">-->
+        <!--<ng-include ng-init="blockConfig=block.blockData.configBloc" src="rubedo.blockTemplateResolver.getTemplateByBType(block.blockData.bType)"></ng-include>-->
+    <!--</div>-->
 </div>
