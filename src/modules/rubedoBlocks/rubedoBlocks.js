@@ -31,9 +31,10 @@
     });
 
     //block controllers start here
-    module.controller("MenuController",['$scope','RubedoMenuService',function($scope,RubedoMenuService){
+    module.controller("MenuController",['$scope','$location','RubedoMenuService',function($scope,$location,RubedoMenuService){
         var me=this;
         me.menu={};
+        me.currentRouteleine=$location.path();
         var config=$scope.blockConfig;
         RubedoMenuService.getMenu(config.rootPage, config.menuLevel).then(function(response){
             if (response.success){

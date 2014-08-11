@@ -11,13 +11,13 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li ng-repeat="page in menuCtrl.menu.pages" ng-class="{active:page.id==rubedo.current.page.id, dropdown:page.pages}">
+                <li ng-repeat="page in menuCtrl.menu.pages" ng-class="{active:menuCtrl.currentRouteleine.indexOf(page.url) > -1, dropdown:page.pages}">
                     <a ng-if="!page.pages" ng-href="{{page.url}}">{{page.title}}</a>
                     <a ng-if="page.pages" class="dropdown-toggle cursor-as-pointer" data-toggle="dropdown" >{{page.title}} <span class="caret"></span></a>
                     <ul ng-if="page.pages" class="dropdown-menu" role="menu">
-                        <li ng-class="{active:page.id==rubedo.current.page.id}"><a ng-href="{{page.url}}">{{page.title}}</a></li>
+                        <li ng-class="{active:rubedo.current.page.id==page.id}"><a ng-href="{{page.url}}">{{page.title}}</a></li>
                         <li class="divider"></li>
-                        <li ng-repeat="subpage in page.pages" ng-class="{active:subpage.id==rubedo.current.page.id}">
+                        <li ng-repeat="subpage in page.pages" ng-class="{active:menuCtrl.currentRouteleine.indexOf(subpage.url) > -1}">
                             <a ng-href="{{subpage.url}}">{{subpage.title}}</a>
                         </li>
                     </ul>
