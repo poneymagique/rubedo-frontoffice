@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default" role="navigation" ng-controller="MenuController as menuCtrl">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -7,16 +7,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Brand</a>
+            <a ng-if="blockConfig.displayRootPage" class="navbar-brand" ng-href="{{menuCtrl.menu.url}}">{{menuCtrl.menu.title}}</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Link</a></li>
-                <li><a href="#">Link</a></li>
+                <li ng-repeat="page in menuCtrl.menu.pages" ng-class="{active:page.id==rubedo.current.page.id}"><a ng-href="{{page.url}}">{{page.title}}</a></li>
             </ul>
-
             <ul class="nav navbar-nav navbar-right">
-
             </ul>
         </div>
     </div>

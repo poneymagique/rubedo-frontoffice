@@ -30,4 +30,18 @@
         };
     });
 
+    //block controllers start here
+    module.controller("MenuController",['$scope','RubedoMenuService',function($scope,RubedoMenuService){
+        var me=this;
+        me.menu={};
+        var config=$scope.blockConfig;
+        RubedoMenuService.getMenu(config.rootPage, config.menuLevel).then(function(response){
+            if (response.success){
+                me.menu=response.menu;
+            } else {
+                me.menu={};
+            }
+        });
+    }]);
+
 })();

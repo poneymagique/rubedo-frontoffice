@@ -1,10 +1,7 @@
 <div class="container">
     <h3>Using default page template</h3>
     <p>Current page json : </p>
-    <pre>{{rubedo.currentPage}}</pre>
+    <pre>{{rubedo.current.page}}</pre>
     <p>Current page blocks : </p>
-    <rubedo-block ng-repeat="block in rubedo.currentPage.blocks"></rubedo-block>
-    <!--<div ng-repeat="block in rubedo.currentPage.blocks">-->
-        <!--<ng-include ng-init="blockConfig=block.blockData.configBloc" src="rubedo.blockTemplateResolver.getTemplateByBType(block.blockData.bType)"></ng-include>-->
-    <!--</div>-->
+    <rubedo-block ng-repeat="block in rubedo.current.page.blocks"></rubedo-block>
 </div>

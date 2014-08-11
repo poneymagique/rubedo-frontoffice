@@ -22,7 +22,7 @@
 
 
 
-    //serives providing page json from current route
+    //service providing page json from current route
     module.factory('RubedoPagesService', ['$location','$route','Restangular',function($location,$route,Restangular) {
         var serviceInstance={};
         serviceInstance.getPageByCurrentRoute=function(){
@@ -36,8 +36,22 @@
         return serviceInstance;
     }]);
 
+    //service providing menu structure using root page id, level and language
+    module.factory('RubedoMenuService', ['$route','Restangular',function($route,Restangular) {
+        var serviceInstance={};
+        serviceInstance.getMenu=function(pageId,menuLevel){
+            var element=Restangular.one("menu");
+            return (element.get({
+                pageId:pageId,
+                menuLocale:$route.current.params.lang,
+                menuLevel:menuLevel
+            }));
+        };
+        return serviceInstance;
+    }]);
+
     //service providing image urls
-    module.factory('RubedoImageUrlService', ["Restangular",function(Restangular) {
+    module.factory('RubedoImageUrlService', function() {
         var serviceInstance={};
         serviceInstance.getUrlByMediaId=function(mediaId,options){
             var url="/dam?media-id="+mediaId+"&";
@@ -47,6 +61,6 @@
             return(url);
         };
         return serviceInstance;
-    }]);
+    });
 
 })();

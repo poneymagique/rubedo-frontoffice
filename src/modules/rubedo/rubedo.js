@@ -1,7 +1,9 @@
 (function(){
     var app = angular.module('rubedo', ['rubedoDataAccess','rubedoBlocks','ngRoute']);
-    var currentPage={
-        blocks:[]
+    var current={
+        page:{
+            blocks:[]
+        }
     };
 
 
@@ -18,7 +20,7 @@
     });
 
     app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService',function(RubedoBlockTemplateResolver,RubedoImageUrlService){
-        this.currentPage=currentPage;
+        this.current=current;
         this.blockTemplateResolver=RubedoBlockTemplateResolver;
         this.imageUrl=RubedoImageUrlService;
     }]);
@@ -27,12 +29,13 @@
         var me=this;
         RubedoPagesService.getPageByCurrentRoute().then(function(response){
             if (response.success){
-                currentPage.title=response.page.text;
-                currentPage.blocks=response.page.blocks;
+                current.page=angular.copy(response.page);
                 me.currentBodyTemplate='/components/webtales/rubedo-frontoffice/templates/defaultPageBody.html';
             } else {
-                currentPage.title="404";
-                currentPage.blocks=[];
+                current.page={
+                    text:"404",
+                    blocks:[]
+                };
                 me.currentBodyTemplate='/components/webtales/rubedo-frontoffice/templates/404.html';
             }
         });
