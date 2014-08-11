@@ -36,7 +36,11 @@
         me.menu={};
         me.currentRouteleine=$location.path();
         var config=$scope.blockConfig;
-        RubedoMenuService.getMenu(config.rootPage, config.menuLevel).then(function(response){
+        var pageId=$scope.rubedo.current.page.id;
+        if (config.rootPage){
+            pageId=config.rootPage;
+        }
+        RubedoMenuService.getMenu(pageId, config.menuLevel).then(function(response){
             if (response.success){
                 me.menu=response.menu;
             } else {
