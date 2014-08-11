@@ -6,7 +6,7 @@
 
 
     app.config(function($routeProvider,$locationProvider) {
-        $routeProvider.when('/:lang/:routeline*', {
+        $routeProvider.when('/:lang/:routeline*?', {
                 template: '<ng-include src="pageBodyCtrl.currentBodyTemplate"></ng-include>',
                 controller:'PageBodyController',
                 controllerAs: "pageBodyCtrl"
