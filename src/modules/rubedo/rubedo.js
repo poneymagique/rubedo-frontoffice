@@ -35,15 +35,16 @@
                 current.page=angular.copy(response.data.page);
                 current.site=angular.copy(response.data.site);
                 me.currentBodyTemplate='/components/webtales/rubedo-frontoffice/templates/defaultPageBody.html';
-            } else {
+            }
+        },function(response){
+            if (response.status==404){
                 current.page={
                     text:"404",
                     blocks:[]
                 };
                 me.currentBodyTemplate='/components/webtales/rubedo-frontoffice/templates/404.html';
             }
-        },function(response){
-            //handle request fail here
+            // @TODO handle other error codes or use generic error template
         });
 
     }]);
