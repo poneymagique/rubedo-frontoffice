@@ -2,11 +2,14 @@
  * Module providing data access services
  */
 (function(){
-    var module = angular.module('rubedoDataAccess', ['restangular']);
+    var module = angular.module('rubedoDataAccess', []);
 
-    //global Restangular config
-    module.config(function(RestangularProvider) {
-        RestangularProvider.setBaseUrl('/api/v1');
+    //global config
+    var config = {
+        baseUrl:'/api/v1'
+    };
+    module.config(function($httpProvider ) {
+        //set default $http headers here
     });
 
     //auxiliary functions
@@ -23,28 +26,30 @@
 
 
     //service providing page json from current route
-    module.factory('RubedoPagesService', ['$location','$route','Restangular',function($location,$route,Restangular) {
+    module.factory('RubedoPagesService', ['$location','$route','$http',function($location,$route,$http) {
         var serviceInstance={};
         serviceInstance.getPageByCurrentRoute=function(){
-            var element=Restangular.one("pages");
-            return (element.get({
-                site:$location.host(),
-                route:$route.current.params.routeline,
-                lang:$route.current.params.lang
+            return ($http.get(config.baseUrl+"/pages",{
+                params:{
+                    site:$location.host(),
+                    route:$route.current.params.routeline,
+                    lang:$route.current.params.lang
+                }
             }));
         };
         return serviceInstance;
     }]);
 
     //service providing menu structure using root page id, level and language
-    module.factory('RubedoMenuService', ['$route','Restangular',function($route,Restangular) {
+    module.factory('RubedoMenuService', ['$route','$http',function($route,$http) {
         var serviceInstance={};
         serviceInstance.getMenu=function(pageId,menuLevel){
-            var element=Restangular.one("menu");
-            return (element.get({
-                pageId:pageId,
-                menuLocale:$route.current.params.lang,
-                menuLevel:menuLevel
+            return ($http.get(config.baseUrl+"/menu",{
+                params:{
+                    pageId:pageId,
+                    menuLocale:$route.current.params.lang,
+                    menuLevel:menuLevel
+                }
             }));
         };
         return serviceInstance;
@@ -55,7 +60,7 @@
         var serviceInstance={};
         serviceInstance.getUrlByMediaId=function(mediaId,options){
             var url="/dam?media-id="+mediaId+"&";
-            if (!_.isEmpty(options)){
+            if (options){
                 url=url+auxObjectToQueryString(options);
             }
             return(url);

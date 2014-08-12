@@ -3,6 +3,9 @@
     var current={
         page:{
             blocks:[]
+        },
+        site:{
+
         }
     };
 
@@ -28,8 +31,9 @@
     app.controller("PageBodyController",['RubedoPagesService',function(RubedoPagesService){
         var me=this;
         RubedoPagesService.getPageByCurrentRoute().then(function(response){
-            if (response.success){
-                current.page=angular.copy(response.page);
+            if (response.data.success){
+                current.page=angular.copy(response.data.page);
+                current.site=angular.copy(response.data.site);
                 me.currentBodyTemplate='/components/webtales/rubedo-frontoffice/templates/defaultPageBody.html';
             } else {
                 current.page={
@@ -38,6 +42,8 @@
                 };
                 me.currentBodyTemplate='/components/webtales/rubedo-frontoffice/templates/404.html';
             }
+        },function(response){
+            //handle request fail here
         });
 
     }]);
