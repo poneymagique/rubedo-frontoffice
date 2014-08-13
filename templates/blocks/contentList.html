@@ -10,7 +10,7 @@
         </p>
         <hr/>
     </div>
-    <ul class="pagination">
+    <ul ng-show="contentListCtrl.showPager" class="pagination">
         <li><a ng-hide="contentListCtrl.actualPage == 1" ng-click="contentListCtrl.getContents('prev')">&laquo;</a></li>
         <li ng-repeat="page in contentListCtrl.getIteration(contentListCtrl.nbPages) track by $index">
             <a ng-click="contentListCtrl.getContents($index)">{{ $index+1 }}</a>

@@ -57,8 +57,9 @@
         var pageId=$scope.rubedo.current.page.id;
         var siteId=$scope.rubedo.current.site.id;
         me.showPager = config.showPager;
-        me.start = config.skip?config.skip:0;
-        me.limit = config.limit?config.limit:6;
+        var resultsSkip = config.resultsSkip?config.resultsSkip:0;
+        me.start = config.resultsSkip?config.resultsSkip:0;
+        me.limit = config.pageSize?config.pageSize:6;
         me.actualPage = 1;
         var options = {
             start: me.start,
@@ -69,7 +70,6 @@
             return new Array(num);
         };
         me.getContents = function(value){
-            console.log(value);
             if (value == 'prev'){
                 me.actualPage -= 1;
                 value = me.actualPage -1;
@@ -80,12 +80,14 @@
                 me.actualPage = value + 1;
             }
             options['start'] = (value * options['limit']);
+            if (resultsSkip)
+                options['start'] += resultsSkip;
             getContents(config.query, pageId, siteId, options);
         };
         function getContents (queryId, pageId, siteId, options){
             RubedoContentsService.getContents(queryId,pageId,siteId, options).then(function(response){
                 if (response.data.success){
-                    me.nbPages = Math.ceil(response.data.count/me.limit);
+                    me.nbPages = Math.ceil((response.data.count - (resultsSkip?resultsSkip:0))/me.limit);
                     me.contentList=response.data.contents;
                 }
             });
