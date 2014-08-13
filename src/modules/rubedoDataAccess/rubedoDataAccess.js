@@ -68,4 +68,26 @@
         return serviceInstance;
     });
 
+    module.factory('RubedoContentsService', ['$route','$http', function($route,$http){
+        var serviceInstance={};
+        var lang = $route.current.params.lang;
+        serviceInstance.getContents=function(queryId,pageId,siteId,options){
+            var params = {
+                queryId: queryId,
+                    lang: lang,
+                    pageId: pageId,
+                    siteId: siteId
+            };
+            if (options){
+                for (var attrname in options) {
+                    params[attrname] = options[attrname];
+                }
+            }
+            return ($http.get(config.baseUrl+"/contents", {
+                params: params
+            }));
+        };
+        return serviceInstance;
+    }]);
+
 })();
