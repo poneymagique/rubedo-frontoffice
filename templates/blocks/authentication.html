@@ -1,5 +1,5 @@
 <div ng-controller="AuthenticationController as authCtrl">
-    <button ng-if="!rubedo.current.user" class="btn btn-primary" data-toggle="modal" data-target="#rubedoAuthModal">Log in</button>
+    <button ng-if="!rubedo.current.user" class="btn btn-primary" data-toggle="modal" data-target="#rubedoAuthModal"><span class="glyphicon glyphicon-log-in"></span> Log in</button>
     <div ng-if="!rubedo.current.user" class="modal fade" id="rubedoAuthModal" tabindex="-1" role="dialog" aria-labelledby="rubedoAuthModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
