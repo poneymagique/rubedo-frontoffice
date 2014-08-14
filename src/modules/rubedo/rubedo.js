@@ -6,7 +6,8 @@
         },
         site:{
 
-        }
+        },
+        user:null
     };
 
 

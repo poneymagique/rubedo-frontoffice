@@ -88,4 +88,17 @@
         return serviceInstance;
     }]);
 
+    module.factory('RubedoAuthService',['$http',function($http){
+        var serviceInstance={};
+        serviceInstance.generateToken=function(credentials){
+            return ($http.post(config.baseUrl+"/auth/oauth2/generate", {
+                withCredentials : true,
+                headers : {
+                    "Basic":btoa(credentials.login+":" +credentials.password)
+                }
+            }));
+        };
+        return serviceInstance;
+    }]);
+
 })();

@@ -8,7 +8,8 @@
         image:"/components/webtales/rubedo-frontoffice/templates/blocks/imageBlock.html",
         blockNotFound:"/components/webtales/rubedo-frontoffice/templates/blocks/blockNotFound.html",
         navigation:"/components/webtales/rubedo-frontoffice/templates/blocks/navigation.html",
-        contentList:"/components/webtales/rubedo-frontoffice/templates/blocks/contentList.html"
+        contentList:"/components/webtales/rubedo-frontoffice/templates/blocks/contentList.html",
+        authentication:"/components/webtales/rubedo-frontoffice/templates/blocks/authentication.html"
     };
 
     module.factory('RubedoBlockTemplateResolver', function() {
@@ -107,5 +108,24 @@
         };
 
         me.getContents(config.query, pageId, siteId, options);
+    }]);
+
+    module.controller("AuthenticationController",["$scope","RubedoAuthService",function($scope,RubedoAuthService){
+        var me=this;
+        me.blockConfig=$scope.blockConfig;
+        me.credentials={ };
+        me.authError=null;
+        me.authenticate=function(){
+            console.log(me.credentials);
+            me.authError=null;
+            if ((!me.credentials.login)||(!me.credentials.password)){
+                me.authError="Please fill in all required fields."
+            } else {
+                RubedoAuthService.generateToken(me.credentials).then(
+                    function(response){console.log(response);},
+                    function(response){console.log(response);}
+                );
+            }
+        };
     }]);
 })();
