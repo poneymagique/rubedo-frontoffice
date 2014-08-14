@@ -116,14 +116,15 @@
         me.credentials={ };
         me.authError=null;
         me.authenticate=function(){
-            console.log(me.credentials);
             me.authError=null;
             if ((!me.credentials.login)||(!me.credentials.password)){
                 me.authError="Please fill in all required fields."
             } else {
                 RubedoAuthService.generateToken(me.credentials).then(
                     function(response){console.log(response);},
-                    function(response){console.log(response);}
+                    function(response){
+                        me.authError=response.data.message;
+                    }
                 );
             }
         };
