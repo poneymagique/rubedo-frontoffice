@@ -5,16 +5,17 @@
                 {{ content.fields.text }}
             </a>
         </h4>
-        <p ng-show="content.fields.summary">
+        <p ng-if="content.fields.summary">
             {{ content.fields.summary }}
         </p>
         <hr/>
     </div>
     <ul ng-show="contentListCtrl.showPager" class="pagination">
-        <li><a ng-hide="contentListCtrl.actualPage == 1" ng-click="contentListCtrl.getContents('prev')">&laquo;</a></li>
-        <li ng-repeat="page in contentListCtrl.getIteration(contentListCtrl.nbPages) track by $index">
-            <a ng-click="contentListCtrl.getContents($index)">{{ $index+1 }}</a>
+        <li ng-if="contentListCtrl.actualPage != 1" ng-click="contentListCtrl.changePage('prev')"><a>&laquo;</a></li>
+        <li ng-repeat="page in contentListCtrl.getIteration(contentListCtrl.nbPages) track by $index"
+            ng-click="contentListCtrl.changePage(contentListCtrl.getPagesNumber($index)-1)" ng-class="{'active':contentListCtrl.showActive(contentListCtrl.getPagesNumber($index))}">
+            <a>{{ contentListCtrl.getPagesNumber($index) }}</a>
         </li>
-        <li><a ng-hide="contentListCtrl.actualPage == contentListCtrl.nbPages" ng-click="contentListCtrl.getContents('next')">&raquo;</a></li>
+        <li ng-if="contentListCtrl.actualPage != contentListCtrl.nbPages" ng-click="contentListCtrl.changePage('next')"><a>&raquo;</a></li>
     </ul>
 </div>

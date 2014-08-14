@@ -56,42 +56,56 @@
         var config=$scope.blockConfig;
         var pageId=$scope.rubedo.current.page.id;
         var siteId=$scope.rubedo.current.site.id;
-        me.showPager = config.showPager;
         var resultsSkip = config.resultsSkip?config.resultsSkip:0;
-        me.start = config.resultsSkip?config.resultsSkip:0;
-        me.limit = config.pageSize?config.pageSize:6;
         me.actualPage = 1;
         var options = {
-            start: me.start,
-            limit: me.limit
+            start: config.resultsSkip?config.resultsSkip:0,
+            limit: config.pageSize?config.pageSize:6
         };
-        getContents(config.query, pageId, siteId, options);
-        me.getIteration = function(num){
-            return new Array(num);
-        };
-        me.getContents = function(value){
-            if (value == 'prev'){
-                me.actualPage -= 1;
-                value = me.actualPage -1;
-            } else if (value == 'next'){
-                me.actualPage += 1;
-                value = me.actualPage -1;
-            } else {
-                me.actualPage = value + 1;
-            }
-            options['start'] = (value * options['limit']);
-            if (resultsSkip)
-                options['start'] += resultsSkip;
-            getContents(config.query, pageId, siteId, options);
-        };
-        function getContents (queryId, pageId, siteId, options){
+        me.getContents = function (queryId, pageId, siteId, options){
             RubedoContentsService.getContents(queryId,pageId,siteId, options).then(function(response){
                 if (response.data.success){
-                    me.nbPages = Math.ceil((response.data.count - (resultsSkip?resultsSkip:0))/me.limit);
+                    me.nbPages = Math.ceil((response.data.count - (resultsSkip?resultsSkip:0))/options['limit']);
+                    me.showPager = config.showPager && me.nbPages > 1;
                     me.contentList=response.data.contents;
                 }
             });
-        }
-    }]);
+        };
+        me.showActive = function(value){
+            return value == me.actualPage;
+        };
+        me.getPagesNumber = function (index){
+            var res;
+            if (me.actualPage < 6 || (me.nbPages <= 9? me.nbPages : 9) < 9){
+                res = index+1;
+            } else if (me.actualPage + 4 >= me.nbPages) {
+                res = me.nbPages - (8 - index);
+            } else {
+                res = me.actualPage + (index - 4);
+            }
+            return res;
+        };
+        me.getIteration = function(num){
+            return new Array(num <= 9? num : 9);
+        };
+        me.changePage = function(value){
+            if (me.actualPage != value + 1){
+                if (value == 'prev'){
+                    me.actualPage -= 1;
+                    value = me.actualPage -1;
+                } else if (value == 'next'){
+                    me.actualPage += 1;
+                    value = me.actualPage -1;
+                } else {
+                    me.actualPage = value + 1;
+                }
+                options['start'] = (value * options['limit']);
+                if (resultsSkip)
+                    options['start'] += resultsSkip;
+                me.getContents(config.query, pageId, siteId, options);
+            }
+        };
 
+        me.getContents(config.query, pageId, siteId, options);
+    }]);
 })();

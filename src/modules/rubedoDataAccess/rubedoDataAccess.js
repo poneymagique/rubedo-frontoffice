@@ -79,9 +79,7 @@
                     siteId: siteId
             };
             if (options){
-                for (var attrname in options) {
-                    params[attrname] = options[attrname];
-                }
+                angular.extend(params,options);
             }
             return ($http.get(config.baseUrl+"/contents", {
                 params: params
