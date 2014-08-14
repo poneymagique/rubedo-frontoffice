@@ -5,7 +5,8 @@
                 {{ content.fields.text }}
             </a>
         </h4>
-        <p ng-if="content.fields.summary">
+        <img ng-if="content.fields.image" ng-src="{{rubedo.imageUrl.getUrlByMediaId(content.fields.image,{size:'thumbnail'}) }}" alt="{{ content.fields.text }}" />
+        <p ng-if="content.fields.summary" style="display: inline-block; vertical-align: top">
             {{ content.fields.summary }}
         </p>
         <hr/>
@@ -13,7 +14,7 @@
     <ul ng-show="contentListCtrl.showPager" class="pagination">
         <li ng-if="contentListCtrl.actualPage != 1" ng-click="contentListCtrl.changePage('prev')"><a>&laquo;</a></li>
         <li ng-repeat="page in contentListCtrl.getIteration(contentListCtrl.nbPages) track by $index"
-            ng-click="contentListCtrl.changePage(contentListCtrl.getPagesNumber($index)-1)" ng-class="{'active':contentListCtrl.showActive(contentListCtrl.getPagesNumber($index))}">
+            ng-click="contentListCtrl.changePage(contentListCtrl.getPagesNumber($index)-1)" ng-class="{'active':contentListCtrl.showActive(contentListCtrl.getPagesNumber($index))}" style="cursor: pointer">
             <a>{{ contentListCtrl.getPagesNumber($index) }}</a>
         </li>
         <li ng-if="contentListCtrl.actualPage != contentListCtrl.nbPages" ng-click="contentListCtrl.changePage('next')"><a>&raquo;</a></li>
