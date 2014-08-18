@@ -23,10 +23,20 @@
 
     });
 
-    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService',function(RubedoBlockTemplateResolver,RubedoImageUrlService){
-        this.current=current;
-        this.blockTemplateResolver=RubedoBlockTemplateResolver;
-        this.imageUrl=RubedoImageUrlService;
+    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService',function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService){
+        //set context and page-wide services
+        var me=this;
+        me.current=current;
+        me.blockTemplateResolver=RubedoBlockTemplateResolver;
+        me.imageUrl=RubedoImageUrlService;
+        //attempt to restore identity using auth cookies
+        if (RubedoAuthService.getPersistedTokens().refreshToken){
+            RubedoAuthService.refreshToken().then(
+                function(response){
+                    me.current.user=response.data.token.user;
+                }
+            );
+        }
     }]);
 
     app.controller("PageBodyController",['RubedoPagesService',function(RubedoPagesService){

@@ -90,18 +90,53 @@
 
     module.factory('RubedoAuthService',['$http','$cookies',function($http,$cookies){
         var serviceInstance={};
+        serviceInstance.persistTokens=function(accessToken,refreshToken){
+            $cookies.accessToken=accessToken;
+            $cookies.refreshToken=refreshToken;
+        };
+        serviceInstance.clearPersistedTokens=function(){
+            delete($cookies.accessToken);
+            delete($cookies.refreshToken);
+        };
+        serviceInstance.getPersistedTokens=function(){
+            return {
+                accessToken:$cookies.accessToken,
+                refreshToken:$cookies.refreshToken
+            };
+        };
         serviceInstance.generateToken=function(credentials){
             return ($http({
                 url:config.baseUrl+"/auth/oauth2/generate",
                 method:"POST",
                 headers :{
                     "Authorization":"Basic "+btoa(credentials.login+":" +credentials.password)
+                },
+                transformResponse:function(data,headerGetter){
+                    var dataObj=angular.fromJson(data);
+                    if (dataObj.success){
+                        serviceInstance.persistTokens(dataObj.token.access_token,dataObj.token.refresh_token);
+                    }
+                    return(dataObj);
                 }
             }));
         };
-        serviceInstance.setAuthCookies=function(token){
-            $cookies.accessToken=token.access_token;
-            $cookies.refreshToken=token.refresh_token;
+        serviceInstance.refreshToken=function(){
+            return ($http({
+                url:config.baseUrl+"/auth/oauth2/refresh",
+                method:"POST",
+                params:{
+                    "refresh_token":serviceInstance.getPersistedTokens().refreshToken
+                },
+                transformResponse:function(data,headerGetter){
+                    var dataObj=angular.fromJson(data);
+                    if (dataObj.success){
+                        serviceInstance.persistTokens(dataObj.token.access_token,dataObj.token.refresh_token);
+                    } else {
+                        serviceInstance.clearPersistedTokens();
+                    }
+                    return(dataObj);
+                }
+            }));
         };
         return serviceInstance;
     }]);
