@@ -9,7 +9,20 @@
         baseUrl:'/api/v1'
     };
     module.config(function($httpProvider ) {
-        //set default $http headers here
+        $httpProvider.interceptors.push(function(){
+            return {
+              'request':function(outboundConfig){
+                  if (config.accessToken){
+                      if (!outboundConfig.params){
+                          outboundConfig.params={};
+                      }
+                      outboundConfig.params.access_token=config.accessToken;
+                  }
+                  return outboundConfig;
+
+              }
+            };
+        });
     });
 
     //auxiliary functions
@@ -93,10 +106,12 @@
         serviceInstance.persistTokens=function(accessToken,refreshToken){
             $cookies.accessToken=accessToken;
             $cookies.refreshToken=refreshToken;
+            config.accessToken=accessToken;
         };
         serviceInstance.clearPersistedTokens=function(){
             delete($cookies.accessToken);
             delete($cookies.refreshToken);
+            delete(config.accessToken);
         };
         serviceInstance.getPersistedTokens=function(){
             return {

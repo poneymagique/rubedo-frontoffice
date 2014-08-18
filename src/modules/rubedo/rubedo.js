@@ -29,7 +29,7 @@
         me.current=current;
         me.blockTemplateResolver=RubedoBlockTemplateResolver;
         me.imageUrl=RubedoImageUrlService;
-        //attempt to restore identity using auth cookies
+        //attempt to restore identity using persisted auth
         if (RubedoAuthService.getPersistedTokens().refreshToken){
             RubedoAuthService.refreshToken().then(
                 function(response){
