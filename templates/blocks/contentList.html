@@ -1,20 +1,30 @@
 <div ng-controller="ContentListController as contentListCtrl">
-    <div ng-repeat="content in contentListCtrl.contentList">
-        <h4>
-            <a ng-href="{{ content.detailPageUrl }}">
-                {{ content.fields.text }}
-            </a>
-        </h4>
-        <img ng-if="content.fields.image" ng-src="{{rubedo.imageUrl.getUrlByMediaId(content.fields.image,{size:'thumbnail'}) }}" alt="{{ content.fields.text }}" />
-        <p ng-if="content.fields.summary" style="display: inline-block; vertical-align: top">
-            {{ content.fields.summary }}
-        </p>
-        <hr/>
+    <div id="infiniteScrollCtrl" ng-attr-lr-infinite-scroll="loadMoreContents"
+         ng-attr-scroll-threshold="{{ contentListCtrl.scrollThreshold }}" ng-attr-time-threshold="{{ contentListCtrl.timeThreshold }}"
+         ng-style="{height: contentListCtrl.limit * contentListCtrl.contentHeight - contentListCtrl.contentHeight +'px'}"
+         style="overflow-y: scroll">
+        <!--<div id="infiniteScrollCtrl">-->
+        <div ng-repeat="content in contentListCtrl.contentList" ng-style="{'height':contentListCtrl.contentHeight,
+         'overflow':'hidden', 'text-overflow': 'ellipsis' }">
+            <h4>
+                <a ng-href="{{ content.detailPageUrl }}">
+                    {{ content.fields.text }}
+                </a>
+            </h4>
+            <img ng-if="content.fields.image"
+                 ng-src="{{rubedo.imageUrl.getUrlByMediaId(content.fields.image,{size:'thumbnail'}) }}" alt="{{ content.fields.text }}" />
+            <p style="display: inline-block; vertical-align: top">
+                {{ content.fields.summary }}
+            </p>
+            <hr/>
+        </div>
     </div>
-    <ul ng-show="contentListCtrl.showPager" class="pagination">
+
+    <ul ng-if="contentListCtrl.showPager" class="pagination">
         <li ng-if="contentListCtrl.actualPage != 1" ng-click="contentListCtrl.changePage('prev')"><a>&laquo;</a></li>
         <li ng-repeat="page in contentListCtrl.getIteration(contentListCtrl.nbPages) track by $index"
-            ng-click="contentListCtrl.changePage(contentListCtrl.getPagesNumber($index)-1)" ng-class="{'active':contentListCtrl.showActive(contentListCtrl.getPagesNumber($index))}" style="cursor: pointer">
+            ng-click="contentListCtrl.changePage(contentListCtrl.getPagesNumber($index)-1)"
+            ng-class="{'active':contentListCtrl.showActive(contentListCtrl.getPagesNumber($index))}" style="cursor: pointer">
             <a>{{ contentListCtrl.getPagesNumber($index) }}</a>
         </li>
         <li ng-if="contentListCtrl.actualPage != contentListCtrl.nbPages" ng-click="contentListCtrl.changePage('next')"><a>&raquo;</a></li>

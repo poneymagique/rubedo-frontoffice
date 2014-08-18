@@ -2,7 +2,7 @@
  * Module that manages blocks
  */
 (function(){
-    var module = angular.module('rubedoBlocks',['rubedoDataAccess']);
+    var module = angular.module('rubedoBlocks',['rubedoDataAccess', 'lrInfiniteScroll']);
 
     var blocksConfig = {
         image:"/components/webtales/rubedo-frontoffice/templates/blocks/imageBlock.html",
@@ -58,19 +58,49 @@
         var pageId=$scope.rubedo.current.page.id;
         var siteId=$scope.rubedo.current.site.id;
         var resultsSkip = config.resultsSkip?config.resultsSkip:0;
-        me.actualPage = 1;
+        me.contentHeight = config.summaryHeight?config.summaryHeight:80;
+
         var options = {
             start: config.resultsSkip?config.resultsSkip:0,
-            limit: config.pageSize?config.pageSize:6
+            limit: config.pageSize?config.pageSize:12
         };
-        me.getContents = function (queryId, pageId, siteId, options){
+
+        if (config.infiniteScroll){
+            var count;
+            me.limit = options['limit'];
+            me.timeThreshold = config['timeThreshold'] ? config['timeThreshold']:200;
+            me.scrollThreshold = config['scrollThreshold'] ? config['scrollThreshold']:300;
+        } else {
+            angular.element('#infiniteScrollCtrl').removeAttr('lr-infinite-scroll').removeAttr('lr-infinite-scroll')
+                .removeAttr('scroll-threshold').removeAttr('time-threshold').removeAttr('ng-style').css('overflow-y','visible');
+            me.actualPage = 1;
+        }
+
+        me.getContents = function (queryId, pageId, siteId, options, add){
             RubedoContentsService.getContents(queryId,pageId,siteId, options).then(function(response){
                 if (response.data.success){
-                    me.nbPages = Math.ceil((response.data.count - (resultsSkip?resultsSkip:0))/options['limit']);
-                    me.showPager = config.showPager && me.nbPages > 1;
-                    me.contentList=response.data.contents;
+                    if (config.infiniteScroll){
+                        count = response.data.count;
+                    } else {
+                        me.nbPages = Math.ceil((response.data.count - (resultsSkip?resultsSkip:0))/options['limit']);
+                    }
+                    me.showPager = config.showPager && me.nbPages > 1 && !config.infiniteScroll;
+                    if (add){
+                        response.data.contents.forEach(function(newContent){
+                            me.contentList.push(newContent);
+                        });
+                    } else {
+                        me.contentList=response.data.contents;
+                    }
                 }
             });
+        };
+
+        $scope.loadMoreContents = function(){
+            if (options['start'] + options['limit'] < count){
+                options['start'] += options['limit'];
+                me.getContents(config.query, pageId, siteId, options, true);
+            }
         };
         me.showActive = function(value){
             return value == me.actualPage;
