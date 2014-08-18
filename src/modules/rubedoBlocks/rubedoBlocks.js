@@ -121,7 +121,11 @@
                 me.authError="Please fill in all required fields."
             } else {
                 RubedoAuthService.generateToken(me.credentials).then(
-                    function(response){console.log(response);},
+                    function(response){
+                        jQuery("#rubedoAuthModal").modal('hide');
+                        RubedoAuthService.setAuthCookies(response.data.token);
+                        $scope.rubedo.current.user=response.data.token.user;
+                    },
                     function(response){
                         me.authError=response.data.message;
                     }

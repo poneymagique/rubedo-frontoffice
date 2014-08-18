@@ -2,7 +2,7 @@
  * Module providing data access services
  */
 (function(){
-    var module = angular.module('rubedoDataAccess', []);
+    var module = angular.module('rubedoDataAccess', ['ngCookies']);
 
     //global config
     var config = {
@@ -88,15 +88,20 @@
         return serviceInstance;
     }]);
 
-    module.factory('RubedoAuthService',['$http',function($http){
+    module.factory('RubedoAuthService',['$http','$cookies',function($http,$cookies){
         var serviceInstance={};
         serviceInstance.generateToken=function(credentials){
-            return ($http.post(config.baseUrl+"/auth/oauth2/generate", {
-                withCredentials : true,
-                headers : {
-                    "Basic":btoa(credentials.login+":" +credentials.password)
+            return ($http({
+                url:config.baseUrl+"/auth/oauth2/generate",
+                method:"POST",
+                headers :{
+                    "Authorization":"Basic "+btoa(credentials.login+":" +credentials.password)
                 }
             }));
+        };
+        serviceInstance.setAuthCookies=function(token){
+            $cookies.accessToken=token.access_token;
+            $cookies.refreshToken=token.refresh_token;
         };
         return serviceInstance;
     }]);
