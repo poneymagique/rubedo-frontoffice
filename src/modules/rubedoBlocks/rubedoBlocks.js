@@ -131,5 +131,9 @@
                 );
             }
         };
+        me.logOut=function(){
+            RubedoAuthService.clearPersistedTokens();
+            $scope.rubedo.current.user=null;
+        }
     }]);
 })();

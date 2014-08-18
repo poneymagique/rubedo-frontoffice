@@ -81,6 +81,7 @@
         return serviceInstance;
     });
 
+    //service providing access to contents
     module.factory('RubedoContentsService', ['$route','$http', function($route,$http){
         var serviceInstance={};
         var lang = $route.current.params.lang;
@@ -101,6 +102,7 @@
         return serviceInstance;
     }]);
 
+    // authentication service
     module.factory('RubedoAuthService',['$http','$cookies',function($http,$cookies){
         var serviceInstance={};
         serviceInstance.persistTokens=function(accessToken,refreshToken){

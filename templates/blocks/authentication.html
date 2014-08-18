@@ -1,6 +1,16 @@
 <div ng-controller="AuthenticationController as authCtrl">
     <button ng-if="!rubedo.current.user" class="btn btn-primary" data-toggle="modal" data-target="#rubedoAuthModal"><span class="glyphicon glyphicon-log-in"></span> Log in</button>
-    <button ng-if="rubedo.current.user" class="btn btn-default"><span class="glyphicon glyphicon-user"></span> {{rubedo.current.user.login}}</button>
+    <div ng-if="rubedo.current.user" class="btn-group">
+        <button class="btn btn-default"><span class="glyphicon glyphicon-user"></span> {{rubedo.current.user.login}}</button>
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a class="cursor-as-pointer" ng-click="authCtrl.logOut()"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+
+        </ul>
+    </div>
     <div class="modal fade" id="rubedoAuthModal" tabindex="-1" role="dialog" aria-labelledby="rubedoAuthModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
