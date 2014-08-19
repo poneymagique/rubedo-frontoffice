@@ -23,11 +23,12 @@
 
     });
 
-    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService',function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService){
+    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService','RubedoFieldTemplateResolver',function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService,RubedoFieldTemplateResolver){
         //set context and page-wide services
         var me=this;
         me.current=current;
         me.blockTemplateResolver=RubedoBlockTemplateResolver;
+        me.fieldTemplateResolver=RubedoFieldTemplateResolver;
         me.imageUrl=RubedoImageUrlService;
         //attempt to restore identity using persisted auth
         if (RubedoAuthService.getPersistedTokens().refreshToken){
