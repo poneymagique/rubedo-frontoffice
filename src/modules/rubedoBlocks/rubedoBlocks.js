@@ -2,7 +2,7 @@
  * Module that manages blocks
  */
 (function(){
-    var module = angular.module('rubedoBlocks',['rubedoDataAccess', 'lrInfiniteScroll']);
+    var module = angular.module('rubedoBlocks',['rubedoDataAccess', 'lrInfiniteScroll','rubedoFields']);
 
     var blocksConfig = {
         image:"/components/webtales/rubedo-frontoffice/templates/blocks/image.html",
