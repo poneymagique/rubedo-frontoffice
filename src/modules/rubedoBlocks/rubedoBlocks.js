@@ -2,14 +2,16 @@
  * Module that manages blocks
  */
 (function(){
-    var module = angular.module('rubedoBlocks',['rubedoDataAccess', 'lrInfiniteScroll']);
+    var module = angular.module('rubedoBlocks',['rubedoDataAccess', 'lrInfiniteScroll', 'ngSanitize']);
 
     var blocksConfig = {
-        image:"/components/webtales/rubedo-frontoffice/templates/blocks/imageBlock.html",
+        image:"/components/webtales/rubedo-frontoffice/templates/blocks/image.html",
         blockNotFound:"/components/webtales/rubedo-frontoffice/templates/blocks/blockNotFound.html",
         navigation:"/components/webtales/rubedo-frontoffice/templates/blocks/navigation.html",
         contentList:"/components/webtales/rubedo-frontoffice/templates/blocks/contentList.html",
-        authentication:"/components/webtales/rubedo-frontoffice/templates/blocks/authentication.html"
+        authentication:"/components/webtales/rubedo-frontoffice/templates/blocks/authentication.html",
+        simpleText:"/components/webtales/rubedo-frontoffice/templates/blocks/simpleText.html",
+        richText:"/components/webtales/rubedo-frontoffice/templates/blocks/richText.html"
     };
 
     module.factory('RubedoBlockTemplateResolver', function() {
@@ -165,5 +167,38 @@
             RubedoAuthService.clearPersistedTokens();
             $scope.rubedo.current.user=null;
         }
+    }]);
+
+    module.controller("SimpleTextController",["$scope","RubedoContentsService",function($scope, RubedoContentsService){
+        var me = this;
+        var config = $scope.blockConfig;
+        me.getContentById = function (contentId){
+            RubedoContentsService.getContentById(contentId).then(
+                function(response){
+                    if(response.data.success){
+                        me.body = response.data.content.fields.body;
+                    }
+                }
+            )
+        };
+        me.getContentById(config.contentId);
+    }]);
+
+    module.controller("RichTextController",["$scope","$sce","RubedoContentsService",function($scope, $sce,RubedoContentsService){
+        var me = this;
+        var config = $scope.blockConfig;
+        me.getContentById = function (contentId){
+            RubedoContentsService.getContentById(contentId).then(
+                function(response){
+                    if(response.data.success){
+//                        me.body = response.data.content.fields.body;
+//                        me.body=$sce.getTrustedHtml("<script>alert('toto');</script><a onclick=\"alert('foo');\">Onclick</a><a href=\"javascript:alert('bar')\">Href</a>");
+                        me.body=$sce.getTrusted('html',response.data.content.fields.body);
+                        console.log(me.body);
+                    }
+                }
+            )
+        };
+        me.getContentById(config.contentId);
     }]);
 })();

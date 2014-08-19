@@ -19,11 +19,14 @@
         $httpProvider.interceptors.push(function(){
             return {
               'request':function(outboundConfig){
+                  if (!outboundConfig.params){
+                      outboundConfig.params={};
+                  }
                   if (config.accessToken){
-                      if (!outboundConfig.params){
-                          outboundConfig.params={};
-                      }
                       outboundConfig.params.access_token=config.accessToken;
+                  }
+                  if (config.lang){
+                      outboundConfig.params.lang =  config.lang;
                   }
                   return outboundConfig;
 
@@ -49,11 +52,11 @@
     module.factory('RubedoPagesService', ['$location','$route','$http',function($location,$route,$http) {
         var serviceInstance={};
         serviceInstance.getPageByCurrentRoute=function(){
+            config.lang = $route.current.params.lang;
             return ($http.get(config.baseUrl+"/pages",{
                 params:{
                     site:$location.host(),
                     route:$route.current.params.routeline,
-                    lang:$route.current.params.lang
                 }
             }));
         };
@@ -91,11 +94,9 @@
     //service providing access to contents
     module.factory('RubedoContentsService', ['$route','$http', function($route,$http){
         var serviceInstance={};
-        var lang = $route.current.params.lang;
         serviceInstance.getContents=function(queryId,pageId,siteId,options){
             var params = {
                 queryId: queryId,
-                    lang: lang,
                     pageId: pageId,
                     siteId: siteId
             };
@@ -105,6 +106,9 @@
             return ($http.get(config.baseUrl+"/contents", {
                 params: params
             }));
+        };
+        serviceInstance.getContentById = function(contentId){
+          return ($http.get(config.baseUrl+"/contents/"+contentId));
         };
         return serviceInstance;
     }]);
