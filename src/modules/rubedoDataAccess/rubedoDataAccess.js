@@ -28,6 +28,9 @@
                   if (config.lang){
                       outboundConfig.params.lang =  config.lang;
                   }
+                  if (config.fingerprint){
+                      outboundConfig.params.fingerprint =  config.fingerprint;
+                  }
                   return outboundConfig;
 
               }
