@@ -8,6 +8,13 @@
     var config = {
         baseUrl:'/api/v1'
     };
+    //handle fingerprinting
+    if (typeof(Fingerprint)!="undefined"){
+        config.fingerprint=new Fingerprint({canvas: true}).get();
+    }
+
+
+    //add params to all requests
     module.config(function($httpProvider ) {
         $httpProvider.interceptors.push(function(){
             return {
