@@ -2,7 +2,7 @@
  * Module that manages blocks
  */
 (function(){
-    var module = angular.module('rubedoBlocks',['rubedoDataAccess', 'lrInfiniteScroll', 'ngSanitize']);
+    var module = angular.module('rubedoBlocks',['rubedoDataAccess', 'lrInfiniteScroll']);
 
     var blocksConfig = {
         image:"/components/webtales/rubedo-frontoffice/templates/blocks/image.html",
@@ -191,11 +191,11 @@
             RubedoContentsService.getContentById(contentId).then(
                 function(response){
                     if(response.data.success){
-//                        me.body = response.data.content.fields.body;
-//                        me.body=$sce.getTrustedHtml("<script>alert('toto');</script><a onclick=\"alert('foo');\">Onclick</a><a href=\"javascript:alert('bar')\">Href</a>");
-                        me.body=$sce.getTrusted('html',response.data.content.fields.body);
-                        console.log(me.body);
-                    }
+                        me.body=$sce.trustAsHtml(jQuery.htmlClean(response.data.content.fields.body, {
+                            allowedAttributes:[["style"]],
+                            format: true
+                        }));
+                   }
                 }
             )
         };
