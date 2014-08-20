@@ -11,7 +11,8 @@
         contentList:"/components/webtales/rubedo-frontoffice/templates/blocks/contentList.html",
         authentication:"/components/webtales/rubedo-frontoffice/templates/blocks/authentication.html",
         simpleText:"/components/webtales/rubedo-frontoffice/templates/blocks/simpleText.html",
-        richText:"/components/webtales/rubedo-frontoffice/templates/blocks/richText.html"
+        richText:"/components/webtales/rubedo-frontoffice/templates/blocks/richText.html",
+        calendar:"/components/webtales/rubedo-frontoffice/templates/blocks/calendar.html"
     };
 
     module.factory('RubedoBlockTemplateResolver', function() {
@@ -200,5 +201,11 @@
             )
         };
         me.getContentById(config.contentId);
+    }]);
+
+    module.controller("CalendarController",["$scope","RubedoContentsService",function($scope,RubedoContentsService){
+        var me = this;
+        var config = $scope.blockConfig;
+        console.log(config);
     }]);
 })();
