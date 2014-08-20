@@ -211,10 +211,18 @@
             RubedoContentsService.getContentById(contentId).then(
                 function(response){
                     if(response.data.success){
-                        console.log(response);
                         me.content=response.data.content;
+                        $scope.fieldEntity=me.content.fields;
+                        $scope.fieldEditMode=false;
+                        //use only default template for now
+                        me.content.type.fields.unshift({
+                            cType:"title",
+                            config:{
+                                name:"text",
+                                fieldLabel:"Title"
+                            }
+                        });
                         me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail/default.html';
-                        $scope.entity=me.content.fields;
                     }
                 }
             )

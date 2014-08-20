@@ -8,6 +8,7 @@
         "textarea":"/components/webtales/rubedo-frontoffice/templates/fields/textarea.html",
         "textareafield":"/components/webtales/rubedo-frontoffice/templates/fields/textarea.html",
         "Ext.form.field.TextArea":"/components/webtales/rubedo-frontoffice/templates/fields/textarea.html",
+        "title":"/components/webtales/rubedo-frontoffice/templates/fields/title.html",
         "fieldNotFound":"/components/webtales/rubedo-frontoffice/templates/fields/fieldNotFound.html"
     };
 
