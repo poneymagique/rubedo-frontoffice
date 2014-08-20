@@ -2,7 +2,7 @@
  * Module that manages blocks
  */
 (function(){
-    var module = angular.module('rubedoBlocks',['rubedoDataAccess', 'lrInfiniteScroll']);
+    var module = angular.module('rubedoBlocks',['rubedoDataAccess', 'lrInfiniteScroll','rubedoFields']);
 
     var blocksConfig = {
         image:"/components/webtales/rubedo-frontoffice/templates/blocks/image.html",
@@ -12,6 +12,7 @@
         authentication:"/components/webtales/rubedo-frontoffice/templates/blocks/authentication.html",
         simpleText:"/components/webtales/rubedo-frontoffice/templates/blocks/simpleText.html",
         richText:"/components/webtales/rubedo-frontoffice/templates/blocks/richText.html",
+        contentDetail:"/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail.html",
         calendar:"/components/webtales/rubedo-frontoffice/templates/blocks/calendar.html"
     };
 
@@ -201,6 +202,23 @@
             )
         };
         me.getContentById(config.contentId);
+    }]);
+
+    module.controller("ContentDetailController",["$scope","RubedoContentsService",function($scope, RubedoContentsService){
+        var me = this;
+        var config = $scope.blockConfig;
+        me.getContentById = function (contentId){
+            RubedoContentsService.getContentById(contentId).then(
+                function(response){
+                    if(response.data.success){
+                        console.log(response);
+                    }
+                }
+            )
+        };
+        if (config.contentId){
+            me.getContentById(config.contentId);
+        }
     }]);
 
     module.controller("CalendarController",["$scope","RubedoContentsService",function($scope,RubedoContentsService){
