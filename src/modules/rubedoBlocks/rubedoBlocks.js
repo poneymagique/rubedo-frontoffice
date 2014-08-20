@@ -214,6 +214,7 @@
                         console.log(response);
                         me.content=response.data.content;
                         me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail/default.html';
+                        $scope.entity=me.content.fields;
                     }
                 }
             )

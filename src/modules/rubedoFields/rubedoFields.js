@@ -11,6 +11,7 @@
         "fieldNotFound":"/components/webtales/rubedo-frontoffice/templates/fields/fieldNotFound.html"
     };
 
+    //service for resolving field templates
     module.factory('RubedoFieldTemplateResolver', function() {
         var serviceInstance={};
         serviceInstance.getTemplateByType=function(type){
@@ -21,6 +22,14 @@
             }
         };
         return serviceInstance;
+    });
+
+    //generic field directive
+    module.directive("rubedoField",function(){
+        return {
+            restrict:"E",
+            templateUrl:"/components/webtales/rubedo-frontoffice/templates/rubedoField.html"
+        };
     });
 
 })();

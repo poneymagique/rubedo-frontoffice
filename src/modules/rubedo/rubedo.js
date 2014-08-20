@@ -47,7 +47,6 @@
                 current.page=angular.copy(response.data.page);
                 current.site=angular.copy(response.data.site);
                 me.currentBodyTemplate='/components/webtales/rubedo-frontoffice/templates/defaultPageBody.html';
-                console.log(response);
             }
         },function(response){
             if (response.status==404){
