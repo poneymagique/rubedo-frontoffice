@@ -9,6 +9,8 @@
         "textareafield":"/components/webtales/rubedo-frontoffice/templates/fields/textarea.html",
         "Ext.form.field.TextArea":"/components/webtales/rubedo-frontoffice/templates/fields/textarea.html",
         "title":"/components/webtales/rubedo-frontoffice/templates/fields/title.html",
+        "datefield":"/components/webtales/rubedo-frontoffice/templates/fields/date.html",
+        "Ext.form.field.Date":"/components/webtales/rubedo-frontoffice/templates/fields/date.html",
         "fieldNotFound":"/components/webtales/rubedo-frontoffice/templates/fields/fieldNotFound.html"
     };
 
