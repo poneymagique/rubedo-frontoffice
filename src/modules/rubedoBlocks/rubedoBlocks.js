@@ -211,6 +211,8 @@
                 function(response){
                     if(response.data.success){
                         console.log(response);
+                        me.content=response.data.content;
+                        me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail/default.html';
                     }
                 }
             )
