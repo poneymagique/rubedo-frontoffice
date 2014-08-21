@@ -14,13 +14,16 @@
         richText:"/components/webtales/rubedo-frontoffice/templates/blocks/richText.html",
         contentDetail:"/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail.html",
         calendar:"/components/webtales/rubedo-frontoffice/templates/blocks/calendar.html",
-        development:"/components/webtales/rubedo-frontoffice/templates/blocks/development.html"
+        development:"/components/webtales/rubedo-frontoffice/templates/blocks/development.html",
+        customTemplate:"/components/webtales/rubedo-frontoffice/templates/blocks/customTemplate.html",
     };
 
     module.factory('RubedoBlockTemplateResolver', function() {
         var serviceInstance={};
-        serviceInstance.getTemplateByBType=function(bType){
-            if (blocksConfig[bType]){
+        serviceInstance.getTemplate=function(bType,bConfig){
+            if (!angular.element.isEmptyObject(bConfig.customTemplate)){
+                return (blocksConfig.customTemplate);
+            } else if (blocksConfig[bType]){
                 return (blocksConfig[bType]);
             } else {
                 return (blocksConfig.blockNotFound);
