@@ -83,6 +83,7 @@
         var config=$scope.blockConfig;
         var pageId=$scope.rubedo.current.page.id;
         var siteId=$scope.rubedo.current.site.id;
+        me.prefixId = 'block-'+$scope.block.id+'-infiniteScrollCtrl';
         var resultsSkip = config.resultsSkip?config.resultsSkip:0;
         me.contentHeight = config.summaryHeight?config.summaryHeight:80;
 
@@ -94,11 +95,16 @@
         if (config.infiniteScroll){
             var count;
             me.limit = options['limit'];
+            me.blockStyle = {
+                height: (me.limit * me.contentHeight - me.contentHeight)+'px',
+                'overflow-y': 'scroll'
+            };
             me.timeThreshold = config['timeThreshold'] ? config['timeThreshold']:200;
             me.scrollThreshold = config['scrollThreshold'] ? config['scrollThreshold']:300;
         } else {
-            angular.element('#infiniteScrollCtrl').removeAttr('lr-infinite-scroll').removeAttr('lr-infinite-scroll')
-                .removeAttr('scroll-threshold').removeAttr('time-threshold').removeAttr('ng-style').css('overflow-y','visible');
+            me.blockStyle = {
+                'overflow-y': 'visible'
+            };
             me.actualPage = 1;
         }
 
@@ -219,7 +225,7 @@
                             allowedAttributes:[["style"]],
                             format: true
                         }));
-                   }
+                    }
                 }
             )
         };
@@ -257,6 +263,23 @@
     module.controller("CalendarController",["$scope","RubedoContentsService",function($scope,RubedoContentsService){
         var me = this;
         var config = $scope.blockConfig;
-        console.log(config);
+        var pageId=$scope.rubedo.current.page.id;
+        var siteId=$scope.rubedo.current.site.id;
+        me.contents = [];
+        var options = {
+            date: Math.round(new Date().getTime() / 1000),
+//            date: 1411293642,
+            dateFieldName: config['date'],
+            endDateFieldName: config['endDate'],
+            limit: 100,
+            'fields[]':['text',config['date'],config['endDate']]
+        };
+        me.getContents = function (queryId, pageId, siteId, options){
+            RubedoContentsService.getContents(queryId,pageId,siteId, options).then(function(response){
+                console.log(response.data);
+                me.contents = response.data.contents
+            })
+        };
+        me.getContents(config.query, pageId, siteId, options);
     }]);
 })();

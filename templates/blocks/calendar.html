@@ -1,3 +1,5 @@
 <div ng-controller="CalendarController as calendarCtrl">
-    <pre>yo</pre>
+    <div ng-repeat="content in calendarCtrl.contents">
+        <h4>{{ content.fields.text }}</h4>
+    </div>
 </div>
