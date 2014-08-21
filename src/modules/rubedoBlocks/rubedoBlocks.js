@@ -13,7 +13,8 @@
         simpleText:"/components/webtales/rubedo-frontoffice/templates/blocks/simpleText.html",
         richText:"/components/webtales/rubedo-frontoffice/templates/blocks/richText.html",
         contentDetail:"/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail.html",
-        calendar:"/components/webtales/rubedo-frontoffice/templates/blocks/calendar.html"
+        calendar:"/components/webtales/rubedo-frontoffice/templates/blocks/calendar.html",
+        development:"/components/webtales/rubedo-frontoffice/templates/blocks/development.html"
     };
 
     module.factory('RubedoBlockTemplateResolver', function() {
@@ -35,6 +36,24 @@
             templateUrl:"/components/webtales/rubedo-frontoffice/templates/rubedoBlock.html"
         };
     });
+
+    //custom template directive
+    module.directive( 'rubedoCustomTemplate',['$compile', function ( $compile ) {
+        return {
+            scope: true,
+            restrict:"E",
+            link: function ( scope, element, attrs ) {
+                var el;
+                attrs.$observe( 'template', function ( tpl ) {
+                    if ( angular.isDefined( tpl ) ) {
+                        el = $compile( tpl )( scope );
+                        element.html("");
+                        element.append( el );
+                    }
+                });
+            }
+        };
+    }]);
 
     //block controllers start here
     module.controller("MenuController",['$scope','$location','RubedoMenuService',function($scope,$location,RubedoMenuService){
@@ -156,7 +175,7 @@
             } else {
                 RubedoAuthService.generateToken(me.credentials).then(
                     function(response){
-                        jQuery("#rubedoAuthModal").modal('hide');
+                        angular.element("#rubedoAuthModal").modal('hide');
                         $scope.rubedo.current.user=response.data.token.user;
                     },
                     function(response){

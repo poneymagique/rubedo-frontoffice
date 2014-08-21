@@ -10,7 +10,6 @@
         user:null
     };
 
-
     app.config(function($routeProvider,$locationProvider) {
         $routeProvider.when('/:lang/:routeline*?', {
                 template: '<ng-include src="pageBodyCtrl.currentBodyTemplate"></ng-include>',
@@ -60,7 +59,5 @@
         });
 
     }]);
-
-
 
 })();
