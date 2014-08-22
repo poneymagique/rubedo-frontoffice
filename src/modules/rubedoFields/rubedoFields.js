@@ -21,6 +21,8 @@
         "Ext.form.field.Text":"/components/webtales/rubedo-frontoffice/templates/fields/text.html",
         "CKEField":"/components/webtales/rubedo-frontoffice/templates/fields/richText.html",
         "Rubedo.view.CKEField":"/components/webtales/rubedo-frontoffice/templates/fields/richText.html",
+        "externalMediaField":"/components/webtales/rubedo-frontoffice/templates/fields/externalMedia.html",
+        "Rubedo.view.externalMediaField":"/components/webtales/rubedo-frontoffice/templates/fields/externalMedia.html",
         "fieldNotFound":"/components/webtales/rubedo-frontoffice/templates/fields/fieldNotFound.html"
     };
 
@@ -48,11 +50,25 @@
     //field controllers
     module.controller("RTEFieldController",['$scope','$sce',function($scope,$sce){
         var me=this;
-        if ($scope.fieldEntity[$scope.field.config.name]){
-            me.html=$sce.trustAsHtml(jQuery.htmlClean($scope.fieldEntity[$scope.field.config.name], {
+        var myValue=$scope.fieldEntity[$scope.field.config.name];
+        if (myValue){
+            me.html=$sce.trustAsHtml(jQuery.htmlClean(myValue, {
                 allowedAttributes:[["style"]],
                 format: true
             }));
+        }
+    }]);
+
+    module.controller("ExternalMediaFieldController",['$scope','$http','$sce',function($scope,$http,$sce){
+        var me=this;
+        var myValue=$scope.fieldEntity[$scope.field.config.name];
+        if ((myValue)&&(myValue.url)){
+            var url = "http://iframe.ly/api/oembed?callback=JSON_CALLBACK&url="+encodeURIComponent(myValue.url);
+            $http.jsonp(url).success(function(response){
+                    me.html=$sce.trustAsHtml(response.html);
+                });
+
+
         }
     }]);
 
