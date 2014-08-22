@@ -15,7 +15,7 @@
         contentDetail:"/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail.html",
         calendar:"/components/webtales/rubedo-frontoffice/templates/blocks/calendar.html",
         development:"/components/webtales/rubedo-frontoffice/templates/blocks/development.html",
-        customTemplate:"/components/webtales/rubedo-frontoffice/templates/blocks/customTemplate.html",
+        customTemplate:"/components/webtales/rubedo-frontoffice/templates/blocks/customTemplate.html"
     };
 
     module.factory('RubedoBlockTemplateResolver', function() {

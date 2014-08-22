@@ -11,7 +11,12 @@
         "title":"/components/webtales/rubedo-frontoffice/templates/fields/title.html",
         "datefield":"/components/webtales/rubedo-frontoffice/templates/fields/date.html",
         "Ext.form.field.Date":"/components/webtales/rubedo-frontoffice/templates/fields/date.html",
+        "Ext.form.field.Time":"/components/webtales/rubedo-frontoffice/templates/fields/time.html",
+        "timefield":"/components/webtales/rubedo-frontoffice/templates/fields/time.html",
+        "Ext.form.field.Number":"/components/webtales/rubedo-frontoffice/templates/fields/number.html",
+        "numberfield":"/components/webtales/rubedo-frontoffice/templates/fields/number.html",
         "fieldNotFound":"/components/webtales/rubedo-frontoffice/templates/fields/fieldNotFound.html"
+
     };
 
     //service for resolving field templates
