@@ -15,8 +15,9 @@
         "timefield":"/components/webtales/rubedo-frontoffice/templates/fields/time.html",
         "Ext.form.field.Number":"/components/webtales/rubedo-frontoffice/templates/fields/number.html",
         "numberfield":"/components/webtales/rubedo-frontoffice/templates/fields/number.html",
+        "slider":"/components/webtales/rubedo-frontoffice/templates/fields/slider.html",
+        "Ext.slider.Single":"/components/webtales/rubedo-frontoffice/templates/fields/slider.html",
         "fieldNotFound":"/components/webtales/rubedo-frontoffice/templates/fields/fieldNotFound.html"
-
     };
 
     //service for resolving field templates
