@@ -1,1 +1,4 @@
-<p ng-if="fieldEntity[field.config.name]" ng-controller="ExternalMediaFieldController as externalMediaFieldCtrl" ng-bind-html="externalMediaFieldCtrl.html"></p>
+<div ng-if="fieldEntity[field.config.name]"
+     ng-controller="ExternalMediaFieldController as externalMediaFieldCtrl"
+     ng-style="{'maxWidth':fieldEntity[field.config.name].maxWidth, 'maxHeight':fieldEntity[field.config.name].maxHeight}"
+     ng-bind-html="externalMediaFieldCtrl.html"></div>
