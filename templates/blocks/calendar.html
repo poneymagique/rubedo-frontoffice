@@ -1,5 +1,21 @@
 <div ng-controller="CalendarController as calendarCtrl">
-    <div ng-repeat="content in calendarCtrl.contents">
-        <h4>{{ content.fields.text }}</h4>
+    <div id="{{ calendarCtrl.calendarId }}" class="col-md-6">
+        {{ calendarCtrl.init() }}
+    </div>
+    <!--<div id="calendarId" class="col-md-6"></div>-->
+    <div class="col-md-6">
+        <div ng-repeat="content in calendarCtrl.contents">
+            <h4>
+                <a ng-href="{{ content.detailPageUrl }}">
+                    {{ content.fields.text }}
+                </a>
+            </h4>
+            <img ng-if="content.fields.image"
+                 ng-src="{{rubedo.imageUrl.getUrlByMediaId(content.fields.image,{size:'thumbnail'}) }}" alt="{{ content.fields.text }}" />
+            <p style="display: inline-block; vertical-align: top">
+                {{ content.fields.summary }}
+            </p>
+            <hr/>
+        </div>
     </div>
 </div>

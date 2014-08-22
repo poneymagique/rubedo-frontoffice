@@ -20,12 +20,12 @@
     </div>
 
     <ul ng-if="contentListCtrl.showPager" class="pagination">
-        <li ng-if="contentListCtrl.actualPage != 1" ng-click="contentListCtrl.changePage('prev')"><a>&laquo;</a></li>
+        <li ng-if="contentListCtrl.actualPage != 1" ng-click="contentListCtrl.changePage('prev')" class="cursor-as-pointer"><a>&laquo;</a></li>
         <li ng-repeat="page in contentListCtrl.getIteration(contentListCtrl.nbPages) track by $index"
             ng-click="contentListCtrl.changePage(contentListCtrl.getPagesNumber($index)-1)"
-            ng-class="{'active':contentListCtrl.showActive(contentListCtrl.getPagesNumber($index))}" style="cursor: pointer">
+            ng-class="{'active':contentListCtrl.showActive(contentListCtrl.getPagesNumber($index))}" class="cursor-as-pointer">
             <a>{{ contentListCtrl.getPagesNumber($index) }}</a>
         </li>
-        <li ng-if="contentListCtrl.actualPage != contentListCtrl.nbPages" ng-click="contentListCtrl.changePage('next')"><a>&raquo;</a></li>
+        <li ng-if="contentListCtrl.actualPage != contentListCtrl.nbPages" ng-click="contentListCtrl.changePage('next')" class="cursor-as-pointer"><a>&raquo;</a></li>
     </ul>
 </div>

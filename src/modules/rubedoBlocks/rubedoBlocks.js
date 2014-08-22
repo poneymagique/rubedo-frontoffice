@@ -260,26 +260,53 @@
         }
     }]);
 
-    module.controller("CalendarController",["$scope","RubedoContentsService",function($scope,RubedoContentsService){
+    module.controller("CalendarController",["$scope","$route","RubedoContentsService",function($scope,$route,RubedoContentsService){
         var me = this;
+
         var config = $scope.blockConfig;
         var pageId=$scope.rubedo.current.page.id;
         var siteId=$scope.rubedo.current.site.id;
         me.contents = [];
+        me.calendarId = 'block-'+$scope.block.id+'-calendar';
         var options = {
-            date: Math.round(new Date().getTime() / 1000),
-//            date: 1411293642,
             dateFieldName: config['date'],
             endDateFieldName: config['endDate'],
             limit: 100,
-            'fields[]':['text',config['date'],config['endDate']]
+            'fields[]':['text',config['date'],config['endDate'],'summary','image']
         };
-        me.getContents = function (queryId, pageId, siteId, options){
+        me.getContents = function (queryId, pageId, siteId, options, cb){
             RubedoContentsService.getContents(queryId,pageId,siteId, options).then(function(response){
-                console.log(response.data);
-                me.contents = response.data.contents
+                me.calendar = angular.element('#'+me.calendarId);
+                if (response.data.success){
+                    cb(response.data);
+                }
             })
         };
-        me.getContents(config.query, pageId, siteId, options);
+        me.init = function(){
+            me.calendar = angular.element('#'+me.calendarId);
+            me.calendar.fullCalendar({
+                lang: $route.current.params.lang,
+                weekMode: 'liquid',
+                timezone: false,
+                viewRender: function(view){
+                    options.date = moment(view.start.format()).unix();
+                    options.endDate = moment(view.end.format()).unix();
+                    me.getContents(config.query, pageId, siteId, options, function(data){
+                        me.contents = data.contents;
+                        var newEvents = [];
+                        me.contents.forEach(function(content){
+                            var event = {};
+                            event.title = content.fields.text;
+                            event.start = moment.unix(content.fields[config['date']]).format('YYYY-MM-DD');
+                            event.end = moment.unix(content.fields[config['endDate']]).format('YYYY-MM-DD');
+                            newEvents.push(event);
+                        });
+                        me.calendar.fullCalendar('removeEvents');
+                        me.calendar.fullCalendar('addEventSource', newEvents);
+                        me.calendar.fullCalendar('refetchEvents');
+                    });
+                }
+            });
+        };
     }]);
 })();
