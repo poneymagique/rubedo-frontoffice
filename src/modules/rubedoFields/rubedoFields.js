@@ -16,9 +16,11 @@
         "Ext.form.field.Number":"/components/webtales/rubedo-frontoffice/templates/fields/number.html",
         "numberfield":"/components/webtales/rubedo-frontoffice/templates/fields/number.html",
         "slider":"/components/webtales/rubedo-frontoffice/templates/fields/slider.html",
-        "Ext.slider.Single":"/components/webtales/rubedo-frontoffice/templates/fields/text.html",
+        "Ext.slider.Single":"/components/webtales/rubedo-frontoffice/templates/fields/slider.html",
         "textfield":"/components/webtales/rubedo-frontoffice/templates/fields/text.html",
-        "Ext.form.field.Text":"/components/webtales/rubedo-frontoffice/templates/fields/slider.html",
+        "Ext.form.field.Text":"/components/webtales/rubedo-frontoffice/templates/fields/text.html",
+        "CKEField":"/components/webtales/rubedo-frontoffice/templates/fields/richText.html",
+        "Rubedo.view.CKEField":"/components/webtales/rubedo-frontoffice/templates/fields/richText.html",
         "fieldNotFound":"/components/webtales/rubedo-frontoffice/templates/fields/fieldNotFound.html"
     };
 
@@ -42,5 +44,16 @@
             templateUrl:"/components/webtales/rubedo-frontoffice/templates/rubedoField.html"
         };
     });
+
+    //field controllers
+    module.controller("RTEFieldController",['$scope','$sce',function($scope,$sce){
+        var me=this;
+        if ($scope.fieldEntity[$scope.field.config.name]){
+            me.html=$sce.trustAsHtml(jQuery.htmlClean($scope.fieldEntity[$scope.field.config.name], {
+                allowedAttributes:[["style"]],
+                format: true
+            }));
+        }
+    }]);
 
 })();
