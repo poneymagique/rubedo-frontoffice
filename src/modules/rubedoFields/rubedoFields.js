@@ -16,7 +16,9 @@
         "Ext.form.field.Number":"/components/webtales/rubedo-frontoffice/templates/fields/number.html",
         "numberfield":"/components/webtales/rubedo-frontoffice/templates/fields/number.html",
         "slider":"/components/webtales/rubedo-frontoffice/templates/fields/slider.html",
-        "Ext.slider.Single":"/components/webtales/rubedo-frontoffice/templates/fields/slider.html",
+        "Ext.slider.Single":"/components/webtales/rubedo-frontoffice/templates/fields/text.html",
+        "textfield":"/components/webtales/rubedo-frontoffice/templates/fields/text.html",
+        "Ext.form.field.Text":"/components/webtales/rubedo-frontoffice/templates/fields/slider.html",
         "fieldNotFound":"/components/webtales/rubedo-frontoffice/templates/fields/fieldNotFound.html"
     };
 
