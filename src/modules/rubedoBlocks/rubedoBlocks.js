@@ -177,7 +177,6 @@
         var me=this;
         me.contents=[];
         var blockConfig=$scope.blockConfig;
-        console.log(blockConfig);
         var queryOptions={
             start: !angular.element.isEmptyObject(blockConfig.resultsSkip) ? blockConfig.resultsSkip : 0,
             limit: !angular.element.isEmptyObject(blockConfig.pageSize) ? blockConfig.pageSize : 6
@@ -187,7 +186,6 @@
         me.getContents=function(){
             RubedoContentsService.getContents(blockConfig.query,pageId,siteId, queryOptions).then(
                 function(response){
-                    console.log(response);
                     if (response.data.success){
                         me.contents=response.data.contents;
                         setTimeout(function(){me.initCarousel();},300);
@@ -201,9 +199,13 @@
                 responsiveBaseWidth:targetElSelector,
                 singleItem:true,
                 pagination: blockConfig.showPager,
-                navigation: blockConfig.showNavigation
+                navigation: blockConfig.showNavigation,
+                autoPlay: blockConfig.autoPlay,
+                stopOnHover: blockConfig.stopOnHover,
+                paginationNumbers:blockConfig.showPagingNumbers,
+                navigationText: ['<span class="glyphicon glyphicon-chevron-left"></span>','<span class="glyphicon glyphicon-chevron-right"></span>'],
+                lazyLoad:true,
             };
-            console.log(owlOptions);
             angular.element(targetElSelector).owlCarousel(owlOptions);
         };
         me.getImageOptions=function(){
