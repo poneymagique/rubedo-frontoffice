@@ -203,6 +203,13 @@
             };
             angular.element(targetElSelector).owlCarousel(owlOptions);
         };
+        me.getImageOptions=function(){
+            return({
+                width:angular.element("#block"+$scope.block.id).width(),
+                height:blockConfig.imageHeight,
+                mode:blockConfig.imageResizeMode
+            });
+        };
         if (blockConfig.query){
             me.getContents();
         }
