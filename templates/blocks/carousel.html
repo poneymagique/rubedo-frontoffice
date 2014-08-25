@@ -1,0 +1,5 @@
+<div id="{{'block'+block.id}}" class="owl-carousel" ng-controller="CarouselController as carouselCtrl">
+    <div ng-repeat="content in carouselCtrl.contents">
+        <img ng-src="{{rubedo.imageUrl.getUrlByMediaId(content.fields[blockConfig.imageField])}}">
+    </div>
+</div>

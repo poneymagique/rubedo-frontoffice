@@ -15,7 +15,8 @@
         contentDetail:"/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail.html",
         calendar:"/components/webtales/rubedo-frontoffice/templates/blocks/calendar.html",
         development:"/components/webtales/rubedo-frontoffice/templates/blocks/development.html",
-        customTemplate:"/components/webtales/rubedo-frontoffice/templates/blocks/customTemplate.html"
+        customTemplate:"/components/webtales/rubedo-frontoffice/templates/blocks/customTemplate.html",
+        carrousel:"/components/webtales/rubedo-frontoffice/templates/blocks/carousel.html"
     };
 
     module.factory('RubedoBlockTemplateResolver', function() {
@@ -171,6 +172,42 @@
 
         me.getContents(config.query, pageId, siteId, options);
     }]);
+
+    module.controller("CarouselController",["$scope","RubedoContentsService",function($scope,RubedoContentsService){
+        var me=this;
+        me.contents=[];
+        var blockConfig=$scope.blockConfig;
+        console.log(blockConfig);
+        var queryOptions={
+            start: !angular.element.isEmptyObject(blockConfig.resultsSkip) ? blockConfig.resultsSkip : 0,
+            limit: !angular.element.isEmptyObject(blockConfig.pageSize) ? blockConfig.pageSize : 6
+        };
+        var pageId=$scope.rubedo.current.page.id;
+        var siteId=$scope.rubedo.current.site.id;
+        me.getContents=function(){
+            RubedoContentsService.getContents(blockConfig.query,pageId,siteId, queryOptions).then(
+                function(response){
+                    console.log(response);
+                    if (response.data.success){
+                        me.contents=response.data.contents;
+                        setTimeout(function(){me.initCarousel();},10);
+                    }
+                }
+            );
+        };
+        me.initCarousel=function(){
+            var targetElSelector="#block"+$scope.block.id;
+            var owlOptions={
+                responsiveBaseWidth:targetElSelector,
+                singleItem:true
+            };
+            angular.element(targetElSelector).owlCarousel(owlOptions);
+        };
+        if (blockConfig.query){
+            me.getContents();
+        }
+    }]);
+
 
     module.controller("AuthenticationController",["$scope","RubedoAuthService",function($scope,RubedoAuthService){
         var me=this;
