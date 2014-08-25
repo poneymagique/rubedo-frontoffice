@@ -190,7 +190,7 @@
                     console.log(response);
                     if (response.data.success){
                         me.contents=response.data.contents;
-                        setTimeout(function(){me.initCarousel();},10);
+                        setTimeout(function(){me.initCarousel();},300);
                     }
                 }
             );
@@ -199,8 +199,11 @@
             var targetElSelector="#block"+$scope.block.id;
             var owlOptions={
                 responsiveBaseWidth:targetElSelector,
-                singleItem:true
+                singleItem:true,
+                pagination: blockConfig.showPager,
+                navigation: blockConfig.showNavigation
             };
+            console.log(owlOptions);
             angular.element(targetElSelector).owlCarousel(owlOptions);
         };
         me.getImageOptions=function(){
