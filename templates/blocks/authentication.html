@@ -1,7 +1,7 @@
 <div ng-controller="AuthenticationController as authCtrl">
     <button ng-if="!rubedo.current.user" class="btn btn-primary" data-toggle="modal" data-target="#rubedoAuthModal"><span class="glyphicon glyphicon-log-in"></span> Log in</button>
     <div ng-if="rubedo.current.user" class="btn-group">
-        <button class="btn btn-default"><span class="glyphicon glyphicon-user"></span> {{rubedo.current.user.login}}</button>
+        <button class="btn btn-default"><span class="glyphicon glyphicon-user"></span> {{rubedo.current.user.name}}</button>
         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
             <span class="caret"></span>
             <span class="sr-only">Toggle Dropdown</span>

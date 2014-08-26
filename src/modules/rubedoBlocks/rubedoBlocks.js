@@ -190,7 +190,7 @@
                 function(response){
                     if (response.data.success){
                         me.contents=response.data.contents;
-                        setTimeout(function(){me.initCarousel();},300);
+                        setTimeout(function(){me.initCarousel();},10);
                     }
                 }
             );
@@ -206,7 +206,7 @@
                 stopOnHover: blockConfig.stopOnHover,
                 paginationNumbers:blockConfig.showPagingNumbers,
                 navigationText: ['<span class="glyphicon glyphicon-chevron-left"></span>','<span class="glyphicon glyphicon-chevron-right"></span>'],
-                lazyLoad:true,
+                lazyLoad:true
             };
             angular.element(targetElSelector).owlCarousel(owlOptions);
         };
