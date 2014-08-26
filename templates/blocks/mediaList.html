@@ -1,3 +1,14 @@
 <div ng-controller="MediaListController as mediaListCtrl">
-
+    <div ng-repeat="media in mediaListCtrl.media">
+        <a class="pull-left" ng-href="{{ media.url }}" target="_blank">
+            <img ng-src="{{ rubedo.imageUrl.getThumbnailUrlByMediaId(media.id) }}" alt="media.title" height="50" width="50"/>
+        </a>
+        <h4>{{ media.title }}</h4>
+        <p>
+            <span>{{ media.type }}</span>
+            [{{media.fileSize}}]
+        </p>
+    </div>
+    <paginator ng-if="mediaListCtrl.showPaginator" start="mediaListCtrl.start" limit="mediaListCtrl.limit"
+               count="mediaListCtrl.count" change-page-action="mediaListCtrl.changePageAction()"></paginator>
 </div>

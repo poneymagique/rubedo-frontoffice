@@ -91,6 +91,11 @@
             }
             return(url);
         };
+
+        serviceInstance.getThumbnailUrlByMediaId = function(mediaId){
+            var url="/dam/get-thumbnail?media-id="+mediaId;
+            return(url);
+        };
         return serviceInstance;
     });
 
@@ -167,6 +172,17 @@
                     }
                     return(dataObj);
                 }
+            }));
+        };
+        return serviceInstance;
+    }]);
+
+    //service providing access to media using elasticsearch
+    module.factory('RubedoMediaSearchService',['$http',function($http){
+        var serviceInstance = {};
+        serviceInstance.getMediaBySearch = function(options){
+            return ($http.get(config.baseUrl+"/media/search", {
+                params: options
             }));
         };
         return serviceInstance;

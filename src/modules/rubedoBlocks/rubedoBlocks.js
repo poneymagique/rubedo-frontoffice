@@ -86,17 +86,22 @@
         var config=$scope.blockConfig;
         var pageId=$scope.rubedo.current.page.id;
         var siteId=$scope.rubedo.current.site.id;
-        me.prefixId = 'block-'+$scope.block.id+'-infiniteScrollCtrl';
-        var resultsSkip = config.resultsSkip?config.resultsSkip:0;
         me.contentHeight = config.summaryHeight?config.summaryHeight:80;
-
+        me.start = config.resultsSkip?config.resultsSkip:0;
+        me.limit = config.pageSize?config.pageSize:12;
         var options = {
-            start: config.resultsSkip?config.resultsSkip:0,
-            limit: config.pageSize?config.pageSize:12
+            start: me.start,
+            limit: me.limit
         };
-
+        me.showPaginator = false;
+        me.changePageAction = function(){
+            var options = {
+                start: me.start,
+                limit: me.limit
+            };
+            me.getContents(config.query, pageId, siteId, options);
+        };
         if (config.infiniteScroll){
-            var count;
             me.limit = options['limit'];
             me.blockStyle = {
                 height: (me.limit * me.contentHeight - me.contentHeight)+'px',
@@ -108,18 +113,14 @@
             me.blockStyle = {
                 'overflow-y': 'visible'
             };
-            me.actualPage = 1;
         }
-
         me.getContents = function (queryId, pageId, siteId, options, add){
             RubedoContentsService.getContents(queryId,pageId,siteId, options).then(function(response){
                 if (response.data.success){
-                    if (config.infiniteScroll){
-                        count = response.data.count;
-                    } else {
-                        me.nbPages = Math.ceil((response.data.count - (resultsSkip?resultsSkip:0))/options['limit']);
+                    me.count = response.data.count;
+                    if (!me.showPaginator && config.showPager && !config.infiniteScroll){
+                        me.showPaginator = true;
                     }
-                    me.showPager = config.showPager && me.nbPages > 1 && !config.infiniteScroll;
                     if (add){
                         response.data.contents.forEach(function(newContent){
                             me.contentList.push(newContent);
@@ -130,49 +131,70 @@
                 }
             });
         };
-
         $scope.loadMoreContents = function(){
-            if (options['start'] + options['limit'] < count){
+            if (options['start'] + options['limit'] < me.count){
                 options['start'] += options['limit'];
                 me.getContents(config.query, pageId, siteId, options, true);
             }
         };
-        me.showActive = function(value){
-            return value == me.actualPage;
-        };
-        me.getPagesNumber = function (index){
-            var res;
-            if (me.actualPage < 6 || (me.nbPages <= 9? me.nbPages : 9) < 9){
-                res = index+1;
-            } else if (me.actualPage + 4 >= me.nbPages) {
-                res = me.nbPages - (8 - index);
-            } else {
-                res = me.actualPage + (index - 4);
-            }
-            return res;
-        };
-        me.getIteration = function(num){
-            return new Array(num <= 9? num : 9);
-        };
-        me.changePage = function(value){
-            if (me.actualPage != value + 1){
-                if (value == 'prev'){
-                    me.actualPage -= 1;
-                    value = me.actualPage -1;
-                } else if (value == 'next'){
-                    me.actualPage += 1;
-                    value = me.actualPage -1;
-                } else {
-                    me.actualPage = value + 1;
-                }
-                options['start'] = (value * options['limit']);
-                if (resultsSkip)
-                    options['start'] += resultsSkip;
-                me.getContents(config.query, pageId, siteId, options);
-            }
-        };
-
         me.getContents(config.query, pageId, siteId, options);
+    }]);
+
+    module.directive("paginator",["$timeout",function($timeout){
+        return {
+            restrict: 'E',
+            templateUrl: "/components/webtales/rubedo-frontoffice/templates/paginator.html",
+            scope:{
+                start: '=start',
+                limit: '=limit',
+                count: '=count',
+                changePageAction: '&changePageAction'
+            },
+            controller: function($scope, $timeout){
+                var me = this;
+                me.actualPage = 1;
+                me.nbPages = Math.ceil(($scope.count - $scope.start)/$scope.limit);
+                me.showPager = me.nbPages > 1;
+                me.showPager = true;
+                console.log($scope.count, $scope.start,$scope.limit, me.nbPages);
+                var resultsSkip = $scope.start;
+                me.showActive = function(value){
+                    return value == me.actualPage;
+                };
+                me.getPagesNumber = function (index){
+                    var res;
+                    if (me.actualPage < 6 || (me.nbPages <= 9? me.nbPages : 9) < 9){
+                        res = index+1;
+                    } else if (me.actualPage + 4 >= me.nbPages) {
+                        res = me.nbPages - (8 - index);
+                    } else {
+                        res = me.actualPage + (index - 4);
+                    }
+                    return res;
+                };
+                me.getIteration = function(num){
+                    return new Array(num <= 9? num : 9);
+                };
+                me.changePage = function(value){
+                    if (me.actualPage != value + 1){
+                        if (value == 'prev'){
+                            me.actualPage -= 1;
+                            value = me.actualPage -1;
+                        } else if (value == 'next'){
+                            me.actualPage += 1;
+                            value = me.actualPage -1;
+                        } else {
+                            me.actualPage = value + 1;
+                        }
+                        $scope.start = (value * $scope.limit);
+                        if (resultsSkip)
+                            $scope.start += resultsSkip;
+                        $timeout($scope.changePageAction);
+                    }
+                };
+            },
+            controllerAs: 'paginatorCtrl'
+        }
     }]);
 
     module.controller("CarouselController",["$scope","RubedoContentsService",function($scope,RubedoContentsService){
@@ -331,12 +353,11 @@
         var options = {
             dateFieldName: config['date'],
             endDateFieldName: config['endDate'],
-            limit: 100,
+            limit: 1000,
             'fields[]':['text',config['date'],config['endDate'],'summary','image']
         };
         me.getContents = function (queryId, pageId, siteId, options, cb){
             RubedoContentsService.getContents(queryId,pageId,siteId, options).then(function(response){
-                me.calendar = angular.element('#'+me.calendarId);
                 if (response.data.success){
                     cb(response.data);
                 }
@@ -368,5 +389,37 @@
                 }
             });
         };
+    }]);
+
+    module.controller("MediaListController",["$scope","RubedoMediaSearchService",function($scope, RubedoMediaSearchService){
+        var me = this;
+        var config = $scope.blockConfig;
+        me.media = [];
+        me.start = 0;
+        me.limit = config.pageSize?config.pageSize:12;
+        var options = {
+            start: me.start,
+            limit: me.limit,
+            constrainToSite: config.constrainToSite,
+            facets: config.facets
+        };
+        me.showPaginator = false;
+        me.changePageAction = function(){
+            options.start = me.start;
+            me.getMedia(options);
+        };
+        console.log(config);
+
+        me.getMedia = function(options){
+            RubedoMediaSearchService.getMediaBySearch(options).then(function(response){
+                if(response.data.success){
+                    console.log(response.data);
+                    me.count = response.data.count;
+                    me.media = response.data.media.data;
+                }
+            });
+        };
+
+        me.getMedia(options);
     }]);
 })();
