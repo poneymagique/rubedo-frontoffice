@@ -35,6 +35,7 @@
         me.blockTemplateResolver=RubedoBlockTemplateResolver;
         me.fieldTemplateResolver=RubedoFieldTemplateResolver;
         me.imageUrl=RubedoImageUrlService;
+        me.fieldEditMode=false;
         //attempt to restore identity using persisted auth
         if (RubedoAuthService.getPersistedTokens().refreshToken){
             RubedoAuthService.refreshToken().then(
@@ -48,6 +49,10 @@
                 }
             );
         }
+        me.enterEditMode=function(){
+            me.fieldEditMode=true;
+            console.log("entered edit mode");
+        };
     }]);
 
     app.controller("PageBodyController",['RubedoPagesService',function(RubedoPagesService){
