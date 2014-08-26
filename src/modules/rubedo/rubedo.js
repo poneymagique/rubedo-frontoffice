@@ -1,5 +1,5 @@
 (function(){
-    var app = angular.module('rubedo', ['rubedoDataAccess','rubedoBlocks','ngRoute']);
+    var app = angular.module('rubedo', ['rubedoDataAccess','rubedoBlocks','ngRoute','snap']);
     var current={
         page:{
             blocks:[]
@@ -19,12 +19,18 @@
                 templateUrl:'/components/webtales/rubedo-frontoffice/templates/404.html'
         });
         $locationProvider.html5Mode(true);
-
     });
 
-    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService','RubedoFieldTemplateResolver',function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService,RubedoFieldTemplateResolver){
+    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService','RubedoFieldTemplateResolver','snapRemote', function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService,RubedoFieldTemplateResolver,snapRemote){
         //set context and page-wide services
         var me=this;
+        me.snapOpts={
+          disable:'right',
+          tapToClose:false
+        };
+        snapRemote.getSnapper().then(function(snapper) {
+            snapper.disable();
+        });
         me.current=current;
         me.blockTemplateResolver=RubedoBlockTemplateResolver;
         me.fieldTemplateResolver=RubedoFieldTemplateResolver;
@@ -34,6 +40,11 @@
             RubedoAuthService.refreshToken().then(
                 function(response){
                     me.current.user=response.data.token.user;
+                    if (me.current.user.rights.canEdit){
+                        snapRemote.getSnapper().then(function(snapper) {
+                            snapper.enable();
+                        });
+                    }
                 }
             );
         }

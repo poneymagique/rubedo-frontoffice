@@ -2,7 +2,7 @@
  * Module that manages blocks
  */
 (function(){
-    var module = angular.module('rubedoBlocks',['rubedoDataAccess', 'lrInfiniteScroll','rubedoFields']);
+    var module = angular.module('rubedoBlocks',['rubedoDataAccess', 'lrInfiniteScroll','rubedoFields','snap']);
 
     var blocksConfig = {
         image:"/components/webtales/rubedo-frontoffice/templates/blocks/image.html",
@@ -223,7 +223,7 @@
     }]);
 
 
-    module.controller("AuthenticationController",["$scope","RubedoAuthService",function($scope,RubedoAuthService){
+    module.controller("AuthenticationController",["$scope","RubedoAuthService","snapRemote",function($scope,RubedoAuthService,snapRemote){
         var me=this;
         me.blockConfig=$scope.blockConfig;
         me.credentials={ };
@@ -237,6 +237,11 @@
                     function(response){
                         angular.element("#rubedoAuthModal").modal('hide');
                         $scope.rubedo.current.user=response.data.token.user;
+                        if (response.data.token.user.rights.canEdit){
+                            snapRemote.getSnapper().then(function(snapper) {
+                                snapper.enable();
+                            });
+                        }
                     },
                     function(response){
                         me.authError=response.data.message;
@@ -247,6 +252,10 @@
         me.logOut=function(){
             RubedoAuthService.clearPersistedTokens();
             $scope.rubedo.current.user=null;
+            snapRemote.close();
+            snapRemote.getSnapper().then(function(snapper) {
+                snapper.disable();
+            });
         }
     }]);
 

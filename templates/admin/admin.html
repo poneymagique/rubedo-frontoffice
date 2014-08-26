@@ -1,0 +1,13 @@
+<img src="/components/webtales/rubedo-frontoffice/img/logo-rubedo.png" alt="Rubedo">
+<div class="container-fluid">
+    <a ng-if="rubedo.current.user.rights.boAccess" href="/backoffice" target="_blank"><button type="button" class="btn btn-default btn-block"><span class="glyphicon glyphicon-cog"></span> Back Office</button></a>
+    <br>
+    <div ng-if="rubedo.current.user.rights.canEdit" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title text-center">In-context editing</h3>
+        </div>
+        <div class="panel-body">
+            <button type="button" class="btn btn-default btn-block"><span class="glyphicon glyphicon-pencil"></span> Begin edit</button>
+        </div>
+    </div>
+</div>
