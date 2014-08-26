@@ -59,7 +59,7 @@
             return ($http.get(config.baseUrl+"/pages",{
                 params:{
                     site:$location.host(),
-                    route:$route.current.params.routeline,
+                    route:$route.current.params.routeline
                 }
             }));
         };
