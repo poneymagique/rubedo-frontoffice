@@ -175,6 +175,54 @@
         me.getContents(config.query, pageId, siteId, options);
     }]);
 
+    module.controller("CarouselController",["$scope","RubedoContentsService",function($scope,RubedoContentsService){
+        var me=this;
+        me.contents=[];
+        var blockConfig=$scope.blockConfig;
+        var queryOptions={
+            start: !angular.element.isEmptyObject(blockConfig.resultsSkip) ? blockConfig.resultsSkip : 0,
+            limit: !angular.element.isEmptyObject(blockConfig.pageSize) ? blockConfig.pageSize : 6
+        };
+        var pageId=$scope.rubedo.current.page.id;
+        var siteId=$scope.rubedo.current.site.id;
+        me.getContents=function(){
+            RubedoContentsService.getContents(blockConfig.query,pageId,siteId, queryOptions).then(
+                function(response){
+                    if (response.data.success){
+                        me.contents=response.data.contents;
+                        setTimeout(function(){me.initCarousel();},300);
+                    }
+                }
+            );
+        };
+        me.initCarousel=function(){
+            var targetElSelector="#block"+$scope.block.id;
+            var owlOptions={
+                responsiveBaseWidth:targetElSelector,
+                singleItem:true,
+                pagination: blockConfig.showPager,
+                navigation: blockConfig.showNavigation,
+                autoPlay: blockConfig.autoPlay,
+                stopOnHover: blockConfig.stopOnHover,
+                paginationNumbers:blockConfig.showPagingNumbers,
+                navigationText: ['<span class="glyphicon glyphicon-chevron-left"></span>','<span class="glyphicon glyphicon-chevron-right"></span>'],
+                lazyLoad:true,
+            };
+            angular.element(targetElSelector).owlCarousel(owlOptions);
+        };
+        me.getImageOptions=function(){
+            return({
+                width:angular.element("#block"+$scope.block.id).width(),
+                height:blockConfig.imageHeight,
+                mode:blockConfig.imageResizeMode
+            });
+        };
+        if (blockConfig.query){
+            me.getContents();
+        }
+    }]);
+
+
     module.controller("AuthenticationController",["$scope","RubedoAuthService",function($scope,RubedoAuthService){
         var me=this;
         me.blockConfig=$scope.blockConfig;
