@@ -322,8 +322,7 @@
                 function(response){
                     if(response.data.success){
                         me.content=response.data.content;
-                        $scope.fieldEntity=me.content.fields;
-                        $scope.fieldEditMode=false;
+                        $scope.fieldEntity=angular.copy(me.content.fields);
                         //use only default template for now
                         me.content.type.fields.unshift({
                             cType:"title",
@@ -335,7 +334,7 @@
                         me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail/default.html';
                     }
                 }
-            )
+            );
         };
         if (config.contentId){
             me.getContentById(config.contentId);
