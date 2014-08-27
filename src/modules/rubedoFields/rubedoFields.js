@@ -2,8 +2,11 @@
  * Module that manages fields for display and edit
  */
 (function(){
-    var module = angular.module('rubedoFields',[]);
+    var module = angular.module('rubedoFields',['xeditable']);
 
+    module.run(function(editableOptions ) {
+        editableOptions.theme = 'bs3';
+    });
     var fieldsConfig={
         "textarea":"/components/webtales/rubedo-frontoffice/templates/fields/textarea.html",
         "textareafield":"/components/webtales/rubedo-frontoffice/templates/fields/textarea.html",

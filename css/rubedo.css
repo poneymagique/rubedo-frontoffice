@@ -23,3 +23,7 @@
     top:10px;
     left:10px;
 }
+.editable-click{
+    border-bottom: none !important;
+    color: inherit !important;
+}
