@@ -1,1 +1,9 @@
-<p>{{fieldEntity[field.config.name]}}</p>
+<p ng-if="!fieldEditMode">{{fieldEntity[field.config.name]}}</p>
+<p ng-if="fieldEditMode" editable-textarea="fieldEntity[field.config.name]"
+   e-ng-required="!field.config.allowBlank"
+   e-rows="4"
+   e-cols="40"
+   e-minLength="{{field.config.minLength}}"
+   e-maxLength="{{field.config.maxLength}}">
+    {{fieldEntity[field.config.name]}}
+</p>
