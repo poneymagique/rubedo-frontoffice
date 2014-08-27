@@ -331,7 +331,8 @@
                             cType:"title",
                             config:{
                                 name:"text",
-                                fieldLabel:"Title"
+                                fieldLabel:"Title",
+                                allowBlank:false
                             }
                         });
                         me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail/default.html';
