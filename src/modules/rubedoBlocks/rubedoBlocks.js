@@ -18,7 +18,8 @@
         customTemplate:"/components/webtales/rubedo-frontoffice/templates/blocks/customTemplate.html",
         carrousel:"/components/webtales/rubedo-frontoffice/templates/blocks/carousel.html",
         imageGallery:"/components/webtales/rubedo-frontoffice/templates/blocks/gallery.html",
-        damList:"/components/webtales/rubedo-frontoffice/templates/blocks/mediaList.html"
+        damList:"/components/webtales/rubedo-frontoffice/templates/blocks/mediaList.html",
+        searchResults:"/components/webtales/rubedo-frontoffice/templates/blocks/searchResults.html"
     };
 
     module.factory('RubedoBlockTemplateResolver', function() {
@@ -155,8 +156,6 @@
                 me.actualPage = 1;
                 me.nbPages = Math.ceil(($scope.count - $scope.start)/$scope.limit);
                 me.showPager = me.nbPages > 1;
-                me.showPager = true;
-                console.log($scope.count, $scope.start,$scope.limit, me.nbPages);
                 var resultsSkip = $scope.start;
                 me.showActive = function(value){
                     return value == me.actualPage;
@@ -399,7 +398,7 @@
         var config = $scope.blockConfig;
         me.media = [];
         me.start = 0;
-        me.limit = config.pageSize?config.pageSize:12;
+        me.limit = config.pagesize?config.pagesize:12;
         var options = {
             start: me.start,
             limit: me.limit,
@@ -411,18 +410,26 @@
             options.start = me.start;
             me.getMedia(options);
         };
-        console.log(config);
 
         me.getMedia = function(options){
             RubedoMediaSearchService.getMediaBySearch(options).then(function(response){
                 if(response.data.success){
-                    console.log(response.data);
                     me.count = response.data.count;
-                    me.media = response.data.media.data;
+                    me.media = response.data.results.data;
+                    if (!me.showPaginator){
+                        me.showPaginator = true;
+                    }
                 }
             });
         };
 
         me.getMedia(options);
     }]);
+
+    module.controller("SearchResultsController",["$scope","$location","$routeParams",function($scope, $location, $routeParams){
+        var me = this;
+        var config = $scope.blockConfig;
+        console.log(config, $routeParams);
+    }]);
+
 })();
