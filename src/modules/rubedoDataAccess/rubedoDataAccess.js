@@ -177,10 +177,18 @@
         return serviceInstance;
     }]);
 
-    //service providing access to media using elasticsearch
-    module.factory('RubedoMediaSearchService',['$http',function($http){
+    //service providing research using ElasticSearch
+    module.factory('RubedoSearchService',['$http',function($http){
         var serviceInstance = {};
-        serviceInstance.getMediaBySearch = function(options){
+
+        //Global Research
+        serviceInstance.searchByQuery = function(options){
+            return ($http.get(config.baseUrl+"/search", {
+                params: options
+            }));
+        };
+        //Media Research
+        serviceInstance.getMediaById = function(options){
             return ($http.get(config.baseUrl+"/media/search", {
                 params: options
             }));

@@ -393,7 +393,7 @@
         };
     }]);
 
-    module.controller("MediaListController",["$scope","RubedoMediaSearchService",function($scope, RubedoMediaSearchService){
+    module.controller("MediaListController",["$scope","RubedoSearchService",function($scope, RubedoSearchService){
         var me = this;
         var config = $scope.blockConfig;
         me.media = [];
@@ -412,7 +412,7 @@
         };
 
         me.getMedia = function(options){
-            RubedoMediaSearchService.getMediaBySearch(options).then(function(response){
+            RubedoSearchService.getMediaById(options).then(function(response){
                 if(response.data.success){
                     me.count = response.data.count;
                     me.media = response.data.results.data;
@@ -426,10 +426,29 @@
         me.getMedia(options);
     }]);
 
-    module.controller("SearchResultsController",["$scope","$location","$routeParams",function($scope, $location, $routeParams){
+    module.controller("SearchResultsController",["$scope","$location","RubedoSearchService",function($scope, $location, RubedoSearchService){
         var me = this;
         var config = $scope.blockConfig;
-        console.log(config, $routeParams);
+        console.log(config);
+
+        me.results = [];
+        me.start = 0;
+        me.limit = config.pagesize?config.pagesize:12;
+        var options = {
+            start: me.start,
+            limit: me.limit,
+            constrainToSite: config.constrainToSite,
+            predefinedFacets: config.predefinedFacets
+        };
+
+        me.searchByQuery = function(options){
+            RubedoSearchService.searchByQuery(options).then(function(response){
+                console.log(response.data);
+            })
+        };
+
+        me.searchByQuery(options);
+
     }]);
 
 })();
