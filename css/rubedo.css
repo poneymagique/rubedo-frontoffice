@@ -26,4 +26,5 @@
 .editable-click{
     border-bottom: none !important;
     color: inherit !important;
+    text-decoration: inherit !important;
 }

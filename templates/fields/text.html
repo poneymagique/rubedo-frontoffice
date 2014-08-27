@@ -1,1 +1,29 @@
-<p>{{fieldEntity[field.config.name]}}</p>
+<div ng-switch="field.config.vtype">
+    <div ng-switch-when="email">
+        <a ng-if="!fieldEditMode" ng-href="mailto:{{fieldEntity[field.config.name]}}">{{fieldEntity[field.config.name]}}</a>
+        <a ng-if="fieldEditMode" editable-email="fieldEntity[field.config.name]"
+           e-ng-required="!field.config.allowBlank"
+           e-minLength="{{field.config.minLength}}"
+           e-maxLength="{{field.config.maxLength}}">
+            {{fieldEntity[field.config.name]}}
+        </a>
+    </div>
+    <div ng-switch-when="url">
+        <a ng-if="!fieldEditMode" ng-href="{{fieldEntity[field.config.name]}}">{{fieldEntity[field.config.name]}}</a>
+        <a ng-if="fieldEditMode" editable-url="fieldEntity[field.config.name]"
+           e-ng-required="!field.config.allowBlank"
+           e-minLength="{{field.config.minLength}}"
+           e-maxLength="{{field.config.maxLength}}">
+            {{fieldEntity[field.config.name]}}
+        </a>
+    </div>
+    <div ng-switch-default>
+        <p ng-if="!fieldEditMode">{{fieldEntity[field.config.name]}}</p>
+        <p ng-if="fieldEditMode" editable-text="fieldEntity[field.config.name]"
+           e-ng-required="!field.config.allowBlank"
+           e-minLength="{{field.config.minLength}}"
+           e-maxLength="{{field.config.maxLength}}">
+            {{fieldEntity[field.config.name]}}
+        </p>
+    </div>
+</div>
