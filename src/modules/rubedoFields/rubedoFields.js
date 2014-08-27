@@ -26,6 +26,8 @@
         "Rubedo.view.CKEField":"/components/webtales/rubedo-frontoffice/templates/fields/richText.html",
         "externalMediaField":"/components/webtales/rubedo-frontoffice/templates/fields/externalMedia.html",
         "Rubedo.view.externalMediaField":"/components/webtales/rubedo-frontoffice/templates/fields/externalMedia.html",
+        "radiogroup":"/components/webtales/rubedo-frontoffice/templates/fields/radioGroup.html",
+        "Ext.form.RadioGroup":"/components/webtales/rubedo-frontoffice/templates/fields/radioGroup.html",
         "fieldNotFound":"/components/webtales/rubedo-frontoffice/templates/fields/fieldNotFound.html"
     };
 
