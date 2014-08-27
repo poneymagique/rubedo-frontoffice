@@ -260,9 +260,9 @@
                         angular.element("#rubedoAuthModal").modal('hide');
                         $scope.rubedo.current.user=response.data.token.user;
                         if (response.data.token.user.rights.canEdit){
-                            snapRemote.getSnapper().then(function(snapper) {
-                                snapper.enable();
-                            });
+//                            snapRemote.getSnapper().then(function(snapper) {
+//                                snapper.enable();
+//                            });
                         }
                     },
                     function(response){
@@ -275,9 +275,9 @@
             RubedoAuthService.clearPersistedTokens();
             $scope.rubedo.current.user=null;
             snapRemote.close();
-            snapRemote.getSnapper().then(function(snapper) {
-                snapper.disable();
-            });
+//            snapRemote.getSnapper().then(function(snapper) {
+//                snapper.disable();
+//            });
         }
     }]);
 

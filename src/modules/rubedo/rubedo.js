@@ -42,9 +42,9 @@
                 function(response){
                     me.current.user=response.data.token.user;
                     if (me.current.user.rights.canEdit){
-                        snapRemote.getSnapper().then(function(snapper) {
-                            snapper.enable();
-                        });
+//                        snapRemote.getSnapper().then(function(snapper) {
+//                            //snapper.enable();
+//                        });
                     }
                 }
             );

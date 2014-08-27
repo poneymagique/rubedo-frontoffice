@@ -1,5 +1,16 @@
-<div  class="progress" ng-init="percentage = fieldEntity[field.config.name]/(field.config.maxValue-field.config.minValue) * 100">
-    <div class="progress-bar" role="progressbar" aria-valuenow="{{percentage}}" aria-valuemin="{{field.config.minValue}}" aria-valuemax="{{field.config.maxValue}}" ng-style="{'width':percentage+'%'}">
-        {{percentage}}%
+<div ng-if="!fieldEditMode" class="progress">
+    <div class="progress-bar" role="progressbar" aria-valuenow="{{percentage}}" aria-valuemin="{{field.config.minValue}}" aria-valuemax="{{field.config.maxValue}}" ng-style="{'width':fieldEntity[field.config.name]/(field.config.maxValue-field.config.minValue) * 100+'%'}">
+        {{fieldEntity[field.config.name]/(field.config.maxValue-field.config.minValue) * 100}}%
     </div>
+</div>
+<div ng-if="fieldEditMode" editable-range="fieldEntity[field.config.name]"
+   e-min="{{field.config.minValue}}"
+   e-max="{{field.config.maxValue}}"
+   e-step="{{field.config.increment}}">
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="{{percentage}}" aria-valuemin="{{field.config.minValue}}" aria-valuemax="{{field.config.maxValue}}" ng-style="{'width':fieldEntity[field.config.name]/(field.config.maxValue-field.config.minValue) * 100+'%'}">
+            {{fieldEntity[field.config.name]/(field.config.maxValue-field.config.minValue) * 100}}%
+        </div>
+    </div>
+
 </div>
