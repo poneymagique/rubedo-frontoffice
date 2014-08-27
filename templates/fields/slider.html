@@ -1,4 +1,4 @@
-<div ng-if="fieldEntity[field.config.name]" class="progress" ng-init="percentage = fieldEntity[field.config.name]/(field.config.maxValue-field.config.minValue) * 100">
+<div  class="progress" ng-init="percentage = fieldEntity[field.config.name]/(field.config.maxValue-field.config.minValue) * 100">
     <div class="progress-bar" role="progressbar" aria-valuenow="{{percentage}}" aria-valuemin="{{field.config.minValue}}" aria-valuemax="{{field.config.maxValue}}" ng-style="{'width':percentage+'%'}">
         {{percentage}}%
     </div>

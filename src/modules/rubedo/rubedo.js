@@ -49,6 +49,10 @@
                 }
             );
         }
+        me.toggleAdminPanel=function(){
+            snapRemote.toggle("left");
+        };
+
         me.enterEditMode=function(){
             me.fieldEditMode=true;
             console.log("entered edit mode");

@@ -18,3 +18,8 @@
 .rubedo-admin-drawer{
     width:256px !important;
 }
+.rubedo-admin-btn{
+    position:absolute;
+    top:10px;
+    left:10px;
+}

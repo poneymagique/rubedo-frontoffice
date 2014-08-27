@@ -1,1 +1,1 @@
-<ng-include src="rubedo.fieldTemplateResolver.getTemplateByType(field.cType)"></ng-include>
+<ng-include ng-if="fieldEntity[field.config.name]" src="rubedo.fieldTemplateResolver.getTemplateByType(field.cType)"></ng-include>

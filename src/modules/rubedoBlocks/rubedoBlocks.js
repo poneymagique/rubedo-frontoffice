@@ -317,6 +317,9 @@
     module.controller("ContentDetailController",["$scope","RubedoContentsService",function($scope, RubedoContentsService){
         var me = this;
         var config = $scope.blockConfig;
+        $scope.$watch('rubedo.fieldEditMode', function(newValue) {
+            $scope.fieldEditMode=newValue;
+        });
         me.getContentById = function (contentId){
             RubedoContentsService.getContentById(contentId).then(
                 function(response){
