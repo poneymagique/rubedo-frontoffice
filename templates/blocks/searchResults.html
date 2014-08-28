@@ -1,3 +1,33 @@
 <div ng-controller="SearchResultsController as searchResultsCtrl">
+    <nav class="navbar navbar-default">
+        <div class="navbar-header">
+            <span class="navbar-brand">There are <span>{{searchResultsCtrl.count}}</span> results</span>
+        </div>
+    </nav>
+    <nav class="navbar navbar-default">
+        <div class="navbar-header">
+            <span class="navbar-brand">Search criteria : <span ng-repeat="activeFacet in searchResultsCtrl.activeFacets">
+                {{searchResultsCtrl.count}}</span> results</span>
+        </div>
+    </nav>
+    <div class="col-md-3">
+        <div class="panel panel-default" ng-repeat="facet in searchResultsCtrl.facets" ng-if="facet.terms">
+            <div class="panel-heading">{{facet.label}}</div>
+            <div class="panel-body">
+                <ul>
+                    <li class="cursor-as-pointer" ng-repeat="term in facet.terms" ng-click="searchResultsCtrl.facetClickAction(facet.id, term.term)">
+                        {{term.label}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div ng-repeat="datum in searchResultsCtrl.data">
+            <h4>{{datum.title}}</h4>
+        </div>
 
+        <paginator start="searchResultsCtrl.start" limit="searchResultsCtrl.limit"
+                   count="searchResultsCtrl.count" change-page-action="searchResultsCtrl.changePageAction()"></paginator>
+    </div>
 </div>

@@ -90,7 +90,6 @@
         me.contentHeight = config.summaryHeight?config.summaryHeight:80;
         me.start = config.resultsSkip?config.resultsSkip:0;
         me.limit = config.pageSize?config.pageSize:12;
-        console.log(config);
         var options = {
             start: me.start,
             limit: me.limit
@@ -98,7 +97,7 @@
         if(config.singlePage){
             options.detailPageId = config.singlePage;
         }
-        me.showPaginator = false;
+        me.showPaginator = config.showPager && !config.infiniteScroll;
         me.changePageAction = function(){
             options.start = me.start;
             me.getContents(config.query, pageId, siteId, options);
@@ -120,15 +119,15 @@
             RubedoContentsService.getContents(queryId,pageId,siteId, options).then(function(response){
                 if (response.data.success){
                     me.count = response.data.count;
-                    if (!me.showPaginator && config.showPager && !config.infiniteScroll){
-                        me.showPaginator = true;
-                    }
                     if (add){
                         response.data.contents.forEach(function(newContent){
                             me.contentList.push(newContent);
                         });
                     } else {
                         me.contentList=response.data.contents;
+                    }
+                    if (me.showPaginator){
+                        $compile(angular.element('paginator'))($scope);
                     }
                 }
             });
@@ -156,6 +155,7 @@
                 var me = this;
                 me.actualPage = 1;
                 me.nbPages = Math.ceil(($scope.count - $scope.start)/$scope.limit);
+                console.log($scope.count, me.nbPages);
                 me.showPager = me.nbPages > 1;
                 var resultsSkip = $scope.start;
                 me.showActive = function(value){
@@ -404,9 +404,9 @@
             start: me.start,
             limit: me.limit,
             constrainToSite: config.constrainToSite,
+            siteId: $scope.rubedo.current.site.id,
             predefinedFacets: config.facets
         };
-        me.showPaginator = false;
         me.changePageAction = function(){
             options.start = me.start;
             me.getMedia(options);
@@ -417,9 +417,7 @@
                 if(response.data.success){
                     me.count = response.data.count;
                     me.media = response.data.results.data;
-                    if (!me.showPaginator){
-                        me.showPaginator = true;
-                    }
+                    $compile(angular.element('paginator'))($scope);
                 }
             });
         };
@@ -427,12 +425,14 @@
         me.getMedia(options);
     }]);
 
-    module.controller("SearchResultsController",["$scope","$location","RubedoSearchService",function($scope, $location, RubedoSearchService){
+    module.controller("SearchResultsController",["$scope","$location","$compile","RubedoSearchService",function($scope, $location,$compile, RubedoSearchService){
         var me = this;
         var config = $scope.blockConfig;
         console.log(config);
 
-        me.results = [];
+        me.data = [];
+        me.facets = [];
+        me.activeFacets = [];
         me.start = 0;
         me.limit = config.pagesize?config.pagesize:12;
         var options = {
@@ -443,10 +443,33 @@
             displayMode: config.displayMode,
             displayedFacets: config.displayedFacets
         };
+        me.showPaginator = false;
+        me.changePageAction = function(){
+            options.start = me.start;
+            me.searchByQuery(options);
+        };
+
+        me.facetClickAction = function(facetId,term){
+            if(!options[facetId+'[]']){
+                options[facetId+'[]'] = [];
+            }
+            options[facetId+'[]'].push(term);
+            me.searchByQuery(options);
+        };
 
         me.searchByQuery = function(options){
             RubedoSearchService.searchByQuery(options).then(function(response){
-                console.log(response.data);
+                if(response.data.success){
+                    console.log(response.data);
+                    me.count = response.data.count;
+                    me.data =  response.data.results.data;
+                    me.facets = response.data.results.facets;
+                    me.activeFacets = [];
+                    response.data.results.activeFacets.forEach(function(activeFacets){
+
+                    });
+                    $compile(angular.element('paginator'))($scope);
+                }
             })
         };
 
