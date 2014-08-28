@@ -2,7 +2,7 @@
  * Module that manages fields for display and edit
  */
 (function(){
-    var module = angular.module('rubedoFields',['xeditable']);
+    var module = angular.module('rubedoFields',['xeditable','checklist-model']);
 
     module.run(function(editableOptions ) {
         editableOptions.theme = 'bs3';
@@ -28,6 +28,8 @@
         "Rubedo.view.externalMediaField":"/components/webtales/rubedo-frontoffice/templates/fields/externalMedia.html",
         "radiogroup":"/components/webtales/rubedo-frontoffice/templates/fields/radioGroup.html",
         "Ext.form.RadioGroup":"/components/webtales/rubedo-frontoffice/templates/fields/radioGroup.html",
+        "checkboxgroup":"/components/webtales/rubedo-frontoffice/templates/fields/checkboxGroup.html",
+        "Ext.form.CheckboxGroup":"/components/webtales/rubedo-frontoffice/templates/fields/checkboxGroup.html",
         "fieldNotFound":"/components/webtales/rubedo-frontoffice/templates/fields/fieldNotFound.html"
     };
 
@@ -85,6 +87,22 @@
             itemsObj[item.inputValue]=item.boxLabel;
         });
         me.options=itemsObj;
+    }]);
+
+    module.controller("CheckboxGroupController",['$scope',function($scope){
+        var me=this;
+        var items=$scope.field.config.items;
+        var itemsObj={};
+        items.forEach(function(item){
+            itemsObj[item.inputValue]=item.boxLabel;
+        });
+        me.displayValue=function(value){
+          var result=[];
+          value.forEach(function(item){
+              result.push(itemsObj[item]);
+          });
+         return result.join(", ");
+        };
     }]);
 
 })();

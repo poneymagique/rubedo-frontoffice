@@ -1,0 +1,8 @@
+<div ng-controller="CheckboxGroupController as checkboxGroupCtrl">
+    <p ng-if="!fieldEditMode">{{checkboxGroupCtrl.displayValue(fieldEntity[field.config.name][field.config.name])}}</p>
+    <p ng-if="fieldEditMode" editable-checklist="fieldEntity[field.config.name][field.config.name]"
+       e-ng-required="!field.config.allowBlank"
+       e-ng-options="s.inputValue as s.boxLabel for s in field.config.items" >
+        {{checkboxGroupCtrl.displayValue(fieldEntity[field.config.name][field.config.name])}}
+    </p>
+</div>
