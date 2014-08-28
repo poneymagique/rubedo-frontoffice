@@ -90,16 +90,17 @@
         me.contentHeight = config.summaryHeight?config.summaryHeight:80;
         me.start = config.resultsSkip?config.resultsSkip:0;
         me.limit = config.pageSize?config.pageSize:12;
+        console.log(config);
         var options = {
             start: me.start,
             limit: me.limit
         };
+        if(config.singlePage){
+            options.detailPageId = config.singlePage;
+        }
         me.showPaginator = false;
         me.changePageAction = function(){
-            var options = {
-                start: me.start,
-                limit: me.limit
-            };
+            options.start = me.start;
             me.getContents(config.query, pageId, siteId, options);
         };
         if (config.infiniteScroll){
@@ -403,7 +404,7 @@
             start: me.start,
             limit: me.limit,
             constrainToSite: config.constrainToSite,
-            facets: config.facets
+            predefinedFacets: config.facets
         };
         me.showPaginator = false;
         me.changePageAction = function(){
@@ -438,7 +439,9 @@
             start: me.start,
             limit: me.limit,
             constrainToSite: config.constrainToSite,
-            predefinedFacets: config.predefinedFacets
+            predefinedFacets: config.predefinedFacets,
+            displayMode: config.displayMode,
+            displayedFacets: config.displayedFacets
         };
 
         me.searchByQuery = function(options){
