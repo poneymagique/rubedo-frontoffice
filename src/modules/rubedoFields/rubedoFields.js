@@ -77,4 +77,14 @@
         }
     }]);
 
+    module.controller("RadioGroupController",['$scope',function($scope){
+        var me=this;
+        var items=$scope.field.config.items;
+        var itemsObj={};
+        items.forEach(function(item){
+            itemsObj[item.inputValue]=item.boxLabel;
+        });
+        me.options=itemsObj;
+    }]);
+
 })();

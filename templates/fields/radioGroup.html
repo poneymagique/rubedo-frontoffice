@@ -1,6 +1,8 @@
-<p ng-if="!fieldEditMode">{{fieldEntity[field.config.name][field.config.name]}}</p>
-<p ng-if="fieldEditMode" editable-radiolist="fieldEntity[field.config.name][field.config.name]"
-   e-ng-required="!field.config.allowBlank"
-   e-ng-options="s.inputValue as s.boxLabel for s in field.config.items" >
-    {{fieldEntity[field.config.name][field.config.name]}}
-</p>
+<div ng-controller="RadioGroupController as radioGroupCtrl">
+    <p ng-if="!fieldEditMode">{{radioGroupCtrl.options[fieldEntity[field.config.name][field.config.name]]}}</p>
+    <p ng-if="fieldEditMode" editable-radiolist="fieldEntity[field.config.name][field.config.name]"
+       e-ng-required="!field.config.allowBlank"
+       e-ng-options="s.inputValue as s.boxLabel for s in field.config.items" >
+        {{radioGroupCtrl.options[fieldEntity[field.config.name][field.config.name]]}}
+    </p>
+</div>
