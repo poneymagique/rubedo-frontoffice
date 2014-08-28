@@ -30,6 +30,8 @@
         "Ext.form.RadioGroup":"/components/webtales/rubedo-frontoffice/templates/fields/radioGroup.html",
         "checkboxgroup":"/components/webtales/rubedo-frontoffice/templates/fields/checkboxGroup.html",
         "Ext.form.CheckboxGroup":"/components/webtales/rubedo-frontoffice/templates/fields/checkboxGroup.html",
+        "combobox":"/components/webtales/rubedo-frontoffice/templates/fields/combobox.html",
+        "Ext.form.field.ComboBox":"/components/webtales/rubedo-frontoffice/templates/fields/combobox.html",
         "fieldNotFound":"/components/webtales/rubedo-frontoffice/templates/fields/fieldNotFound.html"
     };
 
@@ -105,6 +107,29 @@
               result.push(itemsObj[item]);
           });
          return result.join(", ");
+        };
+    }]);
+
+    module.controller("ComboboxController",['$scope',function($scope){
+        var me=this;
+        var items=$scope.field.store.data;
+        var itemsObj={};
+        if (!angular.isArray($scope.fieldEntity[$scope.field.config.name])&&$scope.field.config.multiSelect){
+            $scope.fieldEntity[$scope.field.config.name]=[$scope.fieldEntity[$scope.field.config.name]];
+        }
+        items.forEach(function(item){
+            itemsObj[item.valeur]=item.nom;
+        });
+        me.displayValue=function(value){
+            if ($scope.field.config.multiSelect){
+                var result=[];
+                value.forEach(function(item){
+                    result.push(itemsObj[item]);
+                });
+                return result.join(", ");
+            } else {
+                return itemsObj[value];
+            }
         };
     }]);
 
