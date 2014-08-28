@@ -93,6 +93,9 @@
         var me=this;
         var items=$scope.field.config.items;
         var itemsObj={};
+        if (!angular.isArray($scope.fieldEntity[$scope.field.config.name][$scope.field.config.name])){
+            $scope.fieldEntity[$scope.field.config.name][$scope.field.config.name]=[$scope.fieldEntity[$scope.field.config.name][$scope.field.config.name]];
+        }
         items.forEach(function(item){
             itemsObj[item.inputValue]=item.boxLabel;
         });
