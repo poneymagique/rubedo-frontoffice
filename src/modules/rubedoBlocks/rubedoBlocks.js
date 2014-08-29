@@ -81,7 +81,7 @@
         });
     }]);
 
-    module.controller("ContentListController",['$scope','RubedoContentsService',function($scope,RubedoContentsService){
+    module.controller("ContentListController",['$scope','$compile','RubedoContentsService',function($scope,$compile,RubedoContentsService){
         var me = this;
         me.contentList=[];
         var config=$scope.blockConfig;
@@ -402,7 +402,7 @@
         };
     }]);
 
-    module.controller("MediaListController",["$scope","RubedoSearchService",function($scope, RubedoSearchService){
+    module.controller("MediaListController",["$scope","$compile","RubedoSearchService",function($scope,$compile,RubedoSearchService){
         var me = this;
         var config = $scope.blockConfig;
         me.media = [];
