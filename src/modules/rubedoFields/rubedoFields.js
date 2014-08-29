@@ -2,7 +2,7 @@
  * Module that manages fields for display and edit
  */
 (function(){
-    var module = angular.module('rubedoFields',['xeditable','checklist-model']);
+    var module = angular.module('rubedoFields',['xeditable','checklist-model','ngCkeditor']);
 
     module.run(function(editableOptions ) {
         editableOptions.theme = 'bs3';
