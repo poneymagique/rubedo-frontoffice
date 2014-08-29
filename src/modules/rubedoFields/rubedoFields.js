@@ -104,21 +104,13 @@
             filebrowserImageBrowseUrl:"/backoffice/ext-finder?type=Image",
             filebrowserImageUploadUrl:null
         };
-        var myValue=$scope.fieldEntity[$scope.field.config.name];
-        if (myValue){
-            me.html=$sce.trustAsHtml(jQuery.htmlClean(myValue, {
-                allowedAttributes:[["style"]],
-                format: true
-            }));
-        }
-        $scope.$watch("fieldEntity", function(newValue) {
-            if ($scope.fieldEditMode){
-                me.html=$sce.trustAsHtml(jQuery.htmlClean(newValue[$scope.field.config.name], {
+
+        $scope.$watch("fieldEntity."+$scope.field.config.name, function(newValue) {
+                me.html=$sce.trustAsHtml(jQuery.htmlClean(newValue, {
                     allowedAttributes:[["style"]],
                     format: true
                 }));
-            }
-        },true);
+        });
     }]);
 
     module.controller("ExternalMediaFieldController",['$scope','$http','$sce',function($scope,$http,$sce){
