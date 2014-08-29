@@ -59,6 +59,51 @@
     //field controllers
     module.controller("RTEFieldController",['$scope','$sce',function($scope,$sce){
         var me=this;
+        var CKEMode=$scope.field.config.CKETBConfig;
+        var myTBConfig=[
+            { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', '-', 'NewPage', 'Preview', 'Print', '-', 'Templates' ] },
+            { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo',"Source"  ] },
+            { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ], items: [ 'Find', 'Replace', '-', 'SelectAll', '-', 'Scayt' ] },
+
+
+            { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
+            { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']},
+
+
+            { name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
+            { name: 'colors', items: [ 'TextColor', '-','BGColor' ] },
+            { name: 'tools', items: [ 'Maximize', '-','ShowBlocks' ] },
+            { name: 'links', items: [ 'Link', "Rubedolink", 'Unlink','-','Anchor' ] },
+
+            { name: 'insert', items: [ 'Image',  '-', 'Table', 'HorizontalRule', 'SpecialChar', 'PageBreak' ] }
+        ];
+        if (CKEMode=="Standard"){
+            myTBConfig=[
+                { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
+                { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']},
+                { name: 'colors', items: [ 'TextColor','BGColor','-', 'Scayt' ] },
+                { name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
+                { name: 'insert', items: [ 'Image',  '-', 'Table', 'SpecialChar', 'PageBreak', 'Link', "Rubedolink", 'Unlink'] },
+                { name: 'managing', items: [ 'Maximize','-','Undo', 'Redo', "Source"  ] }
+            ];
+        } else if (CKEMode=="Basic"){
+            myTBConfig=[
+                { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline','Strike', '-', 'RemoveFormat' ] },
+                { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-',  'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock','-','Image']},
+                { name: 'colors', items: [ 'TextColor','BGColor' ,'-', 'Scayt'] },
+                { name: 'styles', items: [ 'Font', 'FontSize' ] }
+
+
+            ];
+        }
+        $scope.editorOptions={
+            toolbar:  myTBConfig,
+            allowedContent:true,
+            language:$scope.fieldLanguage,
+            extraPlugins:'rubedolink',
+            filebrowserImageBrowseUrl:"/backoffice/ext-finder?type=Image",
+            filebrowserImageUploadUrl:null
+        };
         var myValue=$scope.fieldEntity[$scope.field.config.name];
         if (myValue){
             me.html=$sce.trustAsHtml(jQuery.htmlClean(myValue, {

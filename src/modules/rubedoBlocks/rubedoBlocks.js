@@ -326,6 +326,7 @@
                     if(response.data.success){
                         me.content=response.data.content;
                         $scope.fieldEntity=angular.copy(me.content.fields);
+                        $scope.fieldLanguage=me.content.locale;
                         //use only default template for now
                         me.content.type.fields.unshift({
                             cType:"title",
