@@ -66,6 +66,14 @@
                 format: true
             }));
         }
+        $scope.$watch("fieldEntity", function(newValue) {
+            if ($scope.fieldEditMode){
+                me.html=$sce.trustAsHtml(jQuery.htmlClean(newValue[$scope.field.config.name], {
+                    allowedAttributes:[["style"]],
+                    format: true
+                }));
+            }
+        },true);
     }]);
 
     module.controller("ExternalMediaFieldController",['$scope','$http','$sce',function($scope,$http,$sce){

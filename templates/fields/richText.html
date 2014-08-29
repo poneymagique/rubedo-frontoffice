@@ -1,1 +1,9 @@
-<div ng-controller="RTEFieldController as rteFieldCtrl" ng-bind-html="rteFieldCtrl.html"></div>
+<div ng-controller="RTEFieldController as rteFieldCtrl" >
+    <div ng-if="!fieldEditMode" ng-bind-html="rteFieldCtrl.html"></div>
+    <div ng-if="fieldEditMode" editable-textarea="fieldEntity[field.config.name]"
+       e-ng-required="!field.config.allowBlank"
+       e-minLength="{{field.config.minLength}}"
+       e-maxLength="{{field.config.maxLength}}"
+       ng-bind-html="rteFieldCtrl.html">
+    </div>
+</div>
