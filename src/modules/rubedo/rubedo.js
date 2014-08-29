@@ -35,6 +35,7 @@
         me.blockTemplateResolver=RubedoBlockTemplateResolver;
         me.fieldTemplateResolver=RubedoFieldTemplateResolver;
         me.imageUrl=RubedoImageUrlService;
+        me.registeredEditCtrls=[ ];
         me.fieldEditMode=false;
         //attempt to restore identity using persisted auth
         if (RubedoAuthService.getPersistedTokens().refreshToken){
@@ -52,11 +53,23 @@
         me.toggleAdminPanel=function(){
             snapRemote.toggle("left");
         };
-
         me.enterEditMode=function(){
             me.fieldEditMode=true;
             console.log("entered edit mode");
         };
+        me.revertChanges=function(){
+            me.fieldEditMode=false;
+            angular.forEach(me.registeredEditCtrls,function(ctrlRef){
+                ctrlRef.revertChanges();
+            });
+            me.registeredEditCtrls=[];
+        };
+        me.registerEditCtrl=function(ctrlRef){
+            if (angular.element.inArray(ctrlRef,me.registeredEditCtrls)){
+                me.registeredEditCtrls.push(ctrlRef);
+            }
+        };
+
     }]);
 
     app.controller("PageBodyController",['RubedoPagesService',function(RubedoPagesService){

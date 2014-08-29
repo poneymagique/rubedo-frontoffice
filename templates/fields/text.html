@@ -4,7 +4,8 @@
         <a ng-if="fieldEditMode" editable-email="fieldEntity[field.config.name]"
            e-ng-required="!field.config.allowBlank"
            e-minLength="{{field.config.minLength}}"
-           e-maxLength="{{field.config.maxLength}}">
+           e-maxLength="{{field.config.maxLength}}"
+           onaftersave="registerFieldEditChanges()">
             {{fieldEntity[field.config.name]}}
         </a>
     </div>
@@ -13,7 +14,8 @@
         <a ng-if="fieldEditMode" editable-url="fieldEntity[field.config.name]"
            e-ng-required="!field.config.allowBlank"
            e-minLength="{{field.config.minLength}}"
-           e-maxLength="{{field.config.maxLength}}">
+           e-maxLength="{{field.config.maxLength}}"
+           onaftersave="registerFieldEditChanges()">
             {{fieldEntity[field.config.name]}}
         </a>
     </div>
@@ -22,7 +24,8 @@
         <p ng-if="fieldEditMode" editable-text="fieldEntity[field.config.name]"
            e-ng-required="!field.config.allowBlank"
            e-minLength="{{field.config.minLength}}"
-           e-maxLength="{{field.config.maxLength}}">
+           e-maxLength="{{field.config.maxLength}}"
+           onaftersave="registerFieldEditChanges()">
             {{fieldEntity[field.config.name]}}
         </p>
     </div>

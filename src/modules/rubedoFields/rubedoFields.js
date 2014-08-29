@@ -142,6 +142,11 @@
         var itemsObj={};
         if (!angular.isArray($scope.fieldEntity[$scope.field.config.name][$scope.field.config.name])){
             $scope.fieldEntity[$scope.field.config.name][$scope.field.config.name]=[$scope.fieldEntity[$scope.field.config.name][$scope.field.config.name]];
+            $scope.$watch('fieldEntity.'+$scope.field.config.name+'.'+$scope.field.config.name,function(changedValue){
+                if (!angular.isArray($scope.fieldEntity[$scope.field.config.name][$scope.field.config.name])){
+                    $scope.fieldEntity[$scope.field.config.name][$scope.field.config.name]=[$scope.fieldEntity[$scope.field.config.name][$scope.field.config.name]];
+                }
+            });
         }
         items.forEach(function(item){
             itemsObj[item.inputValue]=item.boxLabel;
@@ -161,6 +166,11 @@
         var itemsObj={};
         if (!angular.isArray($scope.fieldEntity[$scope.field.config.name])&&$scope.field.config.multiSelect){
             $scope.fieldEntity[$scope.field.config.name]=[$scope.fieldEntity[$scope.field.config.name]];
+            $scope.$watch('fieldEntity.'+$scope.field.config.name,function(changedValue){
+                if (!angular.isArray($scope.fieldEntity[$scope.field.config.name])){
+                    $scope.fieldEntity[$scope.field.config.name]=[$scope.fieldEntity[$scope.field.config.name]];
+                }
+            });
         }
         items.forEach(function(item){
             itemsObj[item.valeur]=item.nom;

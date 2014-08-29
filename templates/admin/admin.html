@@ -13,7 +13,7 @@
             <button ng-if="rubedo.fieldEditMode" type="button" class="btn btn-primary btn-block">
                 <span class="glyphicon glyphicon-floppy-saved"></span> Save changes
             </button>
-            <button ng-if="rubedo.fieldEditMode" type="button" class="btn btn-default btn-block">
+            <button ng-if="rubedo.fieldEditMode" type="button" class="btn btn-default btn-block" ng-click="rubedo.revertChanges()">
                 <span class="glyphicon glyphicon-trash"></span> Discard changes
             </button>
         </div>

@@ -6,6 +6,7 @@
        e-maxLength="{{field.config.maxLength}}"
        e-ckeditor="editorOptions"
        blur="ignore"
+       onaftersave="registerFieldEditChanges()"
        ng-bind-html="rteFieldCtrl.html">
     </div>
 </div>

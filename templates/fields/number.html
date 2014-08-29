@@ -2,6 +2,7 @@
 <p ng-if="fieldEditMode" editable-number="fieldEntity[field.config.name]"
        e-ng-required="!field.config.allowBlank"
        e-min="{{field.config.minValue}}"
-       e-max="{{field.config.maxValue}}">
+       e-max="{{field.config.maxValue}}"
+       onaftersave="registerFieldEditChanges()">
     {{fieldEntity[field.config.name] |number : field.config.decimalPrecision}}
 </p>

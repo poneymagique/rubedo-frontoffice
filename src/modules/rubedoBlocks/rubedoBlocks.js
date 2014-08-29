@@ -343,6 +343,14 @@
         if (config.contentId){
             me.getContentById(config.contentId);
         }
+        me.revertChanges=function(){
+            $scope.fieldEntity=angular.copy(me.content.fields);
+        };
+        me.registerEditChanges=function(){
+            $scope.rubedo.registerEditCtrl(me);
+        };
+
+        $scope.registerFieldEditChanges=me.registerEditChanges;
     }]);
 
     module.controller("CalendarController",["$scope","$route","RubedoContentsService",function($scope,$route,RubedoContentsService){
