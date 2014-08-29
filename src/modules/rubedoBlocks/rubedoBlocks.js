@@ -349,6 +349,15 @@
         me.registerEditChanges=function(){
             $scope.rubedo.registerEditCtrl(me);
         };
+        me.persistChanges=function(){
+            var payload=angular.copy(me.content);
+            payload.fields=angular.copy($scope.fieldEntity);
+            delete (payload.type);
+            RubedoContentsService.updateContent(payload).then(
+                function(response){console.log(response);},
+                function(response){console.log(response);}
+            );
+        }
 
         $scope.registerFieldEditChanges=me.registerEditChanges;
     }]);

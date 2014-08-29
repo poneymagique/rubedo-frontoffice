@@ -118,6 +118,16 @@
         serviceInstance.getContentById = function(contentId){
           return ($http.get(config.baseUrl+"/contents/"+contentId));
         };
+        serviceInstance.updateContent=function(content){
+            return ($http({
+                url:config.baseUrl+"/contents/"+content.id,
+                method:"PATCH",
+                data : {
+                    content:content
+                }
+            }));
+
+        };
         return serviceInstance;
     }]);
 

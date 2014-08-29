@@ -10,7 +10,7 @@
             <button ng-if="!rubedo.fieldEditMode" type="button" class="btn btn-default btn-block" ng-click="rubedo.enterEditMode()">
                 <span class="glyphicon glyphicon-pencil"></span> Begin edit
             </button>
-            <button ng-if="rubedo.fieldEditMode" type="button" class="btn btn-primary btn-block">
+            <button ng-if="rubedo.fieldEditMode" type="button" class="btn btn-primary btn-block" ng-click="rubedo.persistChanges()">
                 <span class="glyphicon glyphicon-floppy-saved"></span> Save changes
             </button>
             <button ng-if="rubedo.fieldEditMode" type="button" class="btn btn-default btn-block" ng-click="rubedo.revertChanges()">

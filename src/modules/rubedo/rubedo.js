@@ -64,6 +64,13 @@
             });
             me.registeredEditCtrls=[];
         };
+        me.persistChanges=function(){
+            me.fieldEditMode=false;
+            angular.forEach(me.registeredEditCtrls,function(ctrlRef){
+                ctrlRef.persistChanges();
+            });
+            me.registeredEditCtrls=[];
+        };
         me.registerEditCtrl=function(ctrlRef){
             if (angular.element.inArray(ctrlRef,me.registeredEditCtrls)){
                 me.registeredEditCtrls.push(ctrlRef);
