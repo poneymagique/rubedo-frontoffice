@@ -455,6 +455,7 @@
             me.activeFacets = [];
             me.start = 0;
             me.limit = config.pagesize?config.pagesize:12;
+            me.template = "/components/webtales/rubedo-frontoffice/templates/blocks/searchResults/"+config.displayMode+".html";
             var displayedFacets = JSON.parse(config.displayedFacets);
             var predefinedFacets = JSON.parse(config.predefinedFacets);
             var facetsId = ['objectType','type','damType','userType','author','userName','lastUpdateTime','query'];
@@ -475,6 +476,19 @@
             } else if(predefinedFacets.query) {
                 me.query = options.query = predefinedFacets.query;
             }
+            me.checked = function(term){
+                var checked = false;
+                me.activeTerms.forEach(function(activeTerm){
+                    checked = activeTerm.term==term;
+                });
+                return checked;
+            }
+            me.disabled = function(term){
+                var disabled = false;
+                me.notRemovableTerms.forEach(function(notRemovableTerm){
+                   disabled = notRemovableTerm.term == term;
+                });
+            };
             me.changePageAction = function(){
                 options.start = me.start;
                 me.searchByQuery(options);
@@ -493,40 +507,44 @@
                 me.searchByQuery(options, true);
             };
 
-            me.facetAdd = function(facetId,term){
-                if(facetsId.indexOf(facetId)==-1){
-                    if(!options.taxonomies){
-                        options.taxonomies = {};
+            me.clickOnFacets =  function(facetId,term){
+                var del = false;
+                me.activeTerms.forEach(function(activeTerm){
+                    del = activeTerm.term==term;
+                });
+                if(del){
+                    if(facetsId.indexOf(facetId)==-1){
+                        options.taxonomies[facetId].splice(options.taxonomies[facetId].indexOf(term),1);
+                    } else if (facetId == 'query') {
+                        delete options.query;
+                    } else {
+                        options[facetId+'[]'].splice(options[facetId+'[]'].indexOf(term),1);
                     }
-                    if(!options.taxonomies[facetId]){
-                        options.taxonomies[facetId] = [];
-                    }
-                    options.taxonomies[facetId].push(term);
                 } else {
-                    if(!options[facetId+'[]']){
-                        options[facetId+'[]'] = [];
+                    if(facetsId.indexOf(facetId)==-1){
+                        if(!options.taxonomies){
+                            options.taxonomies = {};
+                        }
+                        if(!options.taxonomies[facetId]){
+                            options.taxonomies[facetId] = [];
+                        }
+                        options.taxonomies[facetId].push(term);
+                    } else {
+                        if(!options[facetId+'[]']){
+                            options[facetId+'[]'] = [];
+                        }
+                        options[facetId+'[]'].push(term);
                     }
-                    options[facetId+'[]'].push(term);
                 }
                 me.start = 0;
                 options.start = me.start;
                 me.searchByQuery(options, true);
             };
-            me.facetRemove = function(facetId,term){
-                if(facetsId.indexOf(facetId)==-1){
-                    options.taxonomies[facetId].splice(options.taxonomies[facetId].indexOf(term),1);
-                } else if (facetId == 'query') {
-                    delete options.query;
-                } else {
-                    options[facetId+'[]'].splice(options[facetId+'[]'].indexOf(term),1);
-                }
-                me.start = 0;
-                options.start = me.start;
-                me.searchByQuery(options, true);
-            };
+
             me.searchByQuery = function(options, reloadPager){
                 RubedoSearchService.searchByQuery(options).then(function(response){
                     if(response.data.success){
+                        me.query = response.data.results.query;
                         me.count = response.data.count;
                         me.data =  response.data.results.data;
                         me.facets = response.data.results.facets;
