@@ -55,7 +55,6 @@
         };
         me.enterEditMode=function(){
             me.fieldEditMode=true;
-            console.log("entered edit mode");
         };
         me.revertChanges=function(){
             me.fieldEditMode=false;

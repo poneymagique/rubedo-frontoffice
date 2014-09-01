@@ -273,6 +273,7 @@
         me.logOut=function(){
             RubedoAuthService.clearPersistedTokens();
             $scope.rubedo.current.user=null;
+            $scope.rubedo.fieldEditMode=false;
             snapRemote.close();
 //            snapRemote.getSnapper().then(function(snapper) {
 //                snapper.disable();
@@ -317,7 +318,8 @@
         var me = this;
         var config = $scope.blockConfig;
         $scope.$watch('rubedo.fieldEditMode', function(newValue) {
-            $scope.fieldEditMode=newValue;
+            $scope.fieldEditMode=me.content&&me.content.readOnly ? false : newValue;
+
         });
         me.getContentById = function (contentId){
             RubedoContentsService.getContentById(contentId).then(
