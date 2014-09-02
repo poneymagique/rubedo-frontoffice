@@ -281,37 +281,47 @@
         }
     }]);
 
-    module.controller("SimpleTextController",["$scope","RubedoContentsService",function($scope, RubedoContentsService){
-        var me = this;
-        var config = $scope.blockConfig;
-        me.getContentById = function (contentId){
-            RubedoContentsService.getContentById(contentId).then(
-                function(response){
-                    if(response.data.success){
-                        me.body = response.data.content.fields.body;
-                    }
-                }
-            )
-        };
-        me.getContentById(config.contentId);
-    }]);
-
     module.controller("RichTextController",["$scope","$sce","RubedoContentsService",function($scope, $sce,RubedoContentsService){
         var me = this;
         var config = $scope.blockConfig;
+        $scope.$watch('rubedo.fieldEditMode', function(newValue) {
+            $scope.fieldEditMode=me.content&&me.content.readOnly ? false : newValue;
+
+        });
         me.getContentById = function (contentId){
             RubedoContentsService.getContentById(contentId).then(
                 function(response){
                     if(response.data.success){
-                        me.body=$sce.trustAsHtml(jQuery.htmlClean(response.data.content.fields.body, {
-                            allowedAttributes:[["style"]],
-                            format: true
-                        }));
+                        me.content=response.data.content;
+                        $scope.fieldEntity=angular.copy(me.content.fields);
+                        $scope.fieldLanguage=me.content.locale;
                     }
                 }
             )
         };
-        me.getContentById(config.contentId);
+        if (config.contentId){
+            me.getContentById(config.contentId);
+        }
+        me.revertChanges=function(){
+            $scope.fieldEntity=angular.copy(me.content.fields);
+        };
+        me.registerEditChanges=function(){
+            $scope.rubedo.registerEditCtrl(me);
+        };
+        me.persistChanges=function(){
+            var payload=angular.copy(me.content);
+            payload.fields=angular.copy($scope.fieldEntity);
+            delete (payload.type);
+            RubedoContentsService.updateContent(payload).then(
+                function(response){
+                    $scope.rubedo.addNotification("success","Content updated.");
+                },
+                function(response){
+                    $scope.rubedo.addNotification("error","Content update error.");
+                }
+            );
+        }
+        $scope.registerFieldEditChanges=me.registerEditChanges;
     }]);
 
     module.controller("ContentDetailController",["$scope","RubedoContentsService",function($scope, RubedoContentsService){
@@ -357,14 +367,13 @@
             delete (payload.type);
             RubedoContentsService.updateContent(payload).then(
                 function(response){
-                    $scope.rubedo.addNotification("success","Content updated");
+                    $scope.rubedo.addNotification("success","Content updated.");
                 },
                 function(response){
-                    $scope.rubedo.addNotification("error","Content update error");
+                    $scope.rubedo.addNotification("error","Content update error.");
                 }
             );
         }
-
         $scope.registerFieldEditChanges=me.registerEditChanges;
     }]);
 

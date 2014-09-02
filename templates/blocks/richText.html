@@ -1,3 +1,4 @@
-<div ng-controller="RichTextController as richTextCtrl" ng-bind-html="richTextCtrl.body">
+<div ng-controller="RichTextController as richTextCtrl">
+    <rubedo-field ng-repeat="field in richTextCtrl.content.type.fields" ng-if="fieldEntity[field.config.name]"></rubedo-field>
 </div>
 
