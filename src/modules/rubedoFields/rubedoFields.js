@@ -130,7 +130,7 @@
         var me=this;
         var items=$scope.field.config.items;
         var itemsObj={};
-        items.forEach(function(item){
+        angular.forEach(items,function(item){
             itemsObj[item.inputValue]=item.boxLabel;
         });
         me.options=itemsObj;
@@ -148,12 +148,12 @@
                 }
             });
         }
-        items.forEach(function(item){
+        angular.forEach(items,function(item){
             itemsObj[item.inputValue]=item.boxLabel;
         });
         me.displayValue=function(value){
           var result=[];
-          value.forEach(function(item){
+          angular.forEach(value,function(item){
               result.push(itemsObj[item]);
           });
          return result.join(", ");
@@ -172,13 +172,13 @@
                 }
             });
         }
-        items.forEach(function(item){
+        angular.forEach(items,function(item){
             itemsObj[item.valeur]=item.nom;
         });
         me.displayValue=function(value){
             if ($scope.field.config.multiSelect){
                 var result=[];
-                value.forEach(function(item){
+                angular.forEach(value,function(item){
                     result.push(itemsObj[item]);
                 });
                 return result.join(", ");
