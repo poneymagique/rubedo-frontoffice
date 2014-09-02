@@ -467,8 +467,17 @@
             me.facets = [];
             me.activeFacets = [];
             me.start = 0;
-            me.limit = config.pagesize?config.pagesize:12;
+            me.limit = $routeParams.limit?$routeParams.limit:10;
+            me.orderBy = $routeParams.orderby?$routeParams.orderby:"_score";
+            var resolveOrderBy = {
+                '_score': 'relevance',
+                'lastUpdateTime': 'date',
+                'authorName': 'author',
+                'text': 'title'
+            };
+            me.displayOrderBy = $routeParams.orderby?resolveOrderBy[$routeParams.orderby]:"relevance";
             me.template = "/components/webtales/rubedo-frontoffice/templates/blocks/searchResults/"+config.displayMode+".html";
+            console.log(config);
             var displayedFacets = JSON.parse(config.displayedFacets);
             var predefinedFacets = JSON.parse(config.predefinedFacets);
             var facetsId = ['objectType','type','damType','userType','author','userName','lastUpdateTime','query'];
@@ -482,13 +491,40 @@
                 constrainToSite: config.constrainToSite,
                 predefinedFacets: config.predefinedFacets,
                 displayMode: config.displayMode,
-                displayedFacets: config.displayedFacets
+                displayedFacets: config.displayedFacets,
+                orderby: me.orderBy,
             };
-            if($routeParams.query && $routeParams.query.length == 0){
-                me.query = options.query = $location.search('query');
-            } else if(predefinedFacets.query) {
-                me.query = options.query = predefinedFacets.query;
+            var parseQueryParamsToOptions = function(){
+                angular.forEach($location.search(), function(queryParam, key){
+                    if(typeof queryParam !== "boolean"){
+                        if(key == 'taxonomies'){
+                            options[key] = JSON.parse(queryParam);
+                        } else {
+                            if(key == 'query'){
+                                me.query = queryParam;
+                            }
+                            options[key] = queryParam;
+                        }
+                    }
+                });
             }
+            if(predefinedFacets.query) {
+                me.query = options.query = predefinedFacets.query;
+                $location.search('query',me.query);
+            }
+            $scope.$on('$routeUpdate', function(scope, next, current) {
+                options = {
+                    start: me.start,
+                    limit: me.limit,
+                    constrainToSite: config.constrainToSite,
+                    predefinedFacets: config.predefinedFacets,
+                    displayMode: config.displayMode,
+                    displayedFacets: config.displayedFacets,
+                    orderby: me.orderBy,
+                };
+                parseQueryParamsToOptions();
+                me.searchByQuery(options, true);
+            });
             me.checked = function(term){
                 var checked = false;
                 me.activeTerms.forEach(function(activeTerm){
@@ -517,9 +553,30 @@
                     displayedFacets: config.displayedFacets,
                     query: me.query
                 };
-                me.searchByQuery(options, true);
+                $location.search('query',me.query);
             };
-
+            me.changeOrderBy = function(orderBy){
+                if(me.orderBy != orderBy){
+                    me.orderBy = orderBy;
+                    me.displayOrderBy = resolveOrderBy[orderBy];
+                    options.orderby = me.orderBy;
+                    me.start = 0;
+                    options.start = me.start;
+                    $location.search('orderby',me.orderBy);
+//                    me.searchByQuery(options, true);
+                }
+            };
+            me.changeLimit = function(limit){
+                if(me.limit != limit){
+                    console.log('changeLimit');
+                    me.limit = limit;
+                    me.start = 0;
+                    options.limit = me.limit;
+                    options.start = me.start;
+                    $location.search('limit',me.limit);
+//                    me.searchByQuery(options, true);
+                }
+            }
             me.clickOnFacets =  function(facetId,term){
                 var del = false;
                 me.activeTerms.forEach(function(activeTerm){
@@ -528,10 +585,25 @@
                 if(del){
                     if(facetsId.indexOf(facetId)==-1){
                         options.taxonomies[facetId].splice(options.taxonomies[facetId].indexOf(term),1);
+                        if(options.taxonomies[facetId].length == 0){
+                            delete options.taxonomies[facetId];
+                        }
+                        console.log(options);
+                        if(Object.keys(options['taxonomies']).length == 0){
+                            $location.search('taxonomies',null);
+                        } else {
+                            $location.search('taxonomies',JSON.stringify(options.taxonomies));
+                        }
                     } else if (facetId == 'query') {
+                        $location.search('query',null);
                         delete options.query;
                     } else {
                         options[facetId+'[]'].splice(options[facetId+'[]'].indexOf(term),1);
+                        if(options[facetId+'[]'].length == 0){
+                            $location.search(options[facetId+'[]'],null)
+                        } else {
+                            $location.search(facetId+'[]',options[facetId+'[]']);
+                        }
                     }
                 } else {
                     if(facetsId.indexOf(facetId)==-1){
@@ -542,16 +614,18 @@
                             options.taxonomies[facetId] = [];
                         }
                         options.taxonomies[facetId].push(term);
+                        $location.search('taxonomies',JSON.stringify(options.taxonomies));
                     } else {
                         if(!options[facetId+'[]']){
                             options[facetId+'[]'] = [];
                         }
                         options[facetId+'[]'].push(term);
+                        $location.search(facetId+'[]',options[facetId+'[]']);
                     }
                 }
                 me.start = 0;
                 options.start = me.start;
-                me.searchByQuery(options, true);
+//                me.searchByQuery(options, true);
             };
 
             me.searchByQuery = function(options, reloadPager){
@@ -589,6 +663,7 @@
                     }
                 })
             };
+            parseQueryParamsToOptions();
             me.searchByQuery(options, true);
         }]);
 

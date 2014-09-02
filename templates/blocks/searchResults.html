@@ -3,6 +3,27 @@
         <div class="navbar-header">
             <span class="navbar-brand">There are <span class="badge">{{searchResultsCtrl.count}}</span> results</span>
         </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href class="dropdown-toggle" data-toggle="dropdown">Order by {{searchResultsCtrl.displayOrderBy}} <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href ng-click="searchResultsCtrl.changeOrderBy('_score')">Order by relevance</a></li>
+                        <li><a href ng-click="searchResultsCtrl.changeOrderBy('lastUpdateTime')">Order by date</a></li>
+                        <li><a ng-click="searchResultsCtrl.changeOrderBy('authorName')" href>Order by author</a></li>
+                        <li><a ng-click="searchResultsCtrl.changeOrderBy('text')" href>Order by title</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href class="dropdown-toggle" data-toggle="dropdown">by page <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a ng-click="searchResultsCtrl.changeLimit(10)" href>10 by page</a></li>
+                        <li><a ng-click="searchResultsCtrl.changeLimit(20)" href>20 by page</a></li>
+                        <li><a ng-click="searchResultsCtrl.changeLimit(50)" href>50 by page</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </nav>
     <ng-include src="searchResultsCtrl.template"></ng-include>
 </div>

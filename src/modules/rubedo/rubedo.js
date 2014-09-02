@@ -14,7 +14,8 @@
         $routeProvider.when('/:lang/:routeline*?', {
                 template: '<ng-include src="pageBodyCtrl.currentBodyTemplate"></ng-include>',
                 controller:'PageBodyController',
-                controllerAs: "pageBodyCtrl"
+                controllerAs: "pageBodyCtrl",
+                reloadOnSearch: false
             }).otherwise({
                 templateUrl:'/components/webtales/rubedo-frontoffice/templates/404.html'
         });
