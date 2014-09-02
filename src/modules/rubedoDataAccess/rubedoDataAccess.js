@@ -15,7 +15,7 @@
 
 
     //add params to all requests
-    module.config(function($httpProvider ) {
+    module.config(function($httpProvider ){
         $httpProvider.interceptors.push(function(){
             return {
               'request':function(outboundConfig){

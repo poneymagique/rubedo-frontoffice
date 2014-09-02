@@ -356,8 +356,12 @@
             payload.fields=angular.copy($scope.fieldEntity);
             delete (payload.type);
             RubedoContentsService.updateContent(payload).then(
-                function(response){console.log(response);},
-                function(response){console.log(response);}
+                function(response){
+                    $scope.rubedo.addNotification("success","Content updated");
+                },
+                function(response){
+                    $scope.rubedo.addNotification("error","Content update error");
+                }
             );
         }
 

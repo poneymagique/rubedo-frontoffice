@@ -18,4 +18,13 @@
             </button>
         </div>
     </div>
+    <div ng-show="rubedo.hasNotifications()" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title text-center">Notifications <span ng-click="rubedo.clearNotifications()" titile="Clear notifications" class="glyphicon glyphicon-remove pull-right cursor-as-pointer"></span></h3>
+        </div>
+        <div class="panel-body">
+            <rubedo-notification ng-repeat="notification in rubedo.notifications">
+            </rubedo-notification>
+        </div>
+    </div>
 </div>

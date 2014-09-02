@@ -19,6 +19,7 @@
                 templateUrl:'/components/webtales/rubedo-frontoffice/templates/404.html'
         });
         $locationProvider.html5Mode(true);
+
     });
 
     app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService','RubedoFieldTemplateResolver','snapRemote', function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService,RubedoFieldTemplateResolver,snapRemote){
@@ -37,6 +38,7 @@
         me.imageUrl=RubedoImageUrlService;
         me.registeredEditCtrls=[ ];
         me.fieldEditMode=false;
+        me.notifications=[ ];
         //attempt to restore identity using persisted auth
         if (RubedoAuthService.getPersistedTokens().refreshToken){
             RubedoAuthService.refreshToken().then(
@@ -50,6 +52,22 @@
                 }
             );
         }
+        me.clearNotifications=function(){
+            me.notifications=[ ];
+        };
+        me.addNotification=function(type,text){
+            me.notifications.push({
+                type:type,
+                text:text
+            });
+        };
+        me.hasNotifications=function(){
+            if (angular.element.isEmptyObject(me.notifications)){
+                return false;
+            } else {
+                return true;
+            }
+        };
         me.toggleAdminPanel=function(){
             snapRemote.toggle("left");
         };
@@ -98,5 +116,12 @@
         });
 
     }]);
+
+    app.directive("rubedoNotification",function(){
+        return {
+            restrict:"E",
+            templateUrl:"/components/webtales/rubedo-frontoffice/templates/notification.html"
+        };
+    });
 
 })();
