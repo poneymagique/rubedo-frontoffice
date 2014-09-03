@@ -702,7 +702,7 @@
                         me.canEdit=!me.user.readOnly;
                         //use only default template for now
                         me.user.type.fields.unshift({
-                            cType:"text",
+                            cType:"textfield",
                             config:{
                                 name:"email",
                                 fieldLabel:"E-mail",
@@ -711,7 +711,7 @@
                             }
                         });
                         me.user.type.fields.unshift({
-                            cType:"text",
+                            cType:"textfield",
                             config:{
                                 name:"name",
                                 fieldLabel:"Name",
