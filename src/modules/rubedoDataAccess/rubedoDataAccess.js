@@ -210,4 +210,13 @@
         return serviceInstance;
     }]);
 
+    //service providing users access
+    module.factory('RubedoUsersService', ['$http',function($http) {
+        var serviceInstance={};
+        serviceInstance.getUserById=function(userId){
+            return ($http.get(config.baseUrl+"/users/"+userId));
+        };
+        return serviceInstance;
+    }]);
+
 })();

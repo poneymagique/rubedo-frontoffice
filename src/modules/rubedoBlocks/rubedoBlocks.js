@@ -19,7 +19,8 @@
         carrousel:"/components/webtales/rubedo-frontoffice/templates/blocks/carousel.html",
         imageGallery:"/components/webtales/rubedo-frontoffice/templates/blocks/gallery.html",
         damList:"/components/webtales/rubedo-frontoffice/templates/blocks/mediaList.html",
-        searchResults:"/components/webtales/rubedo-frontoffice/templates/blocks/searchResults.html"
+        searchResults:"/components/webtales/rubedo-frontoffice/templates/blocks/searchResults.html",
+        userProfile:"/components/webtales/rubedo-frontoffice/templates/blocks/userProfile.html"
     };
 
     mongoIdRegex = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
