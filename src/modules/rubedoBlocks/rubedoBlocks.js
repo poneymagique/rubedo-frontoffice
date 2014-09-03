@@ -686,4 +686,62 @@
             me.searchByQuery(options, true);
         }]);
 
+    module.controller("UserProfileController",["$scope","RubedoUsersService","$route",function($scope, RubedoUsersService, $route){
+        var me = this;
+        var config = $scope.blockConfig;
+        $scope.fieldEditMode=false;
+        me.getUserById = function (userId){
+            RubedoUsersService.getUserById(userId).then(
+                function(response){
+                    if(response.data.success){
+                        me.user=response.data.user;
+                        $scope.fieldEntity=angular.copy(me.user.fields);
+                        $scope.fieldLanguage=$route.current.params.lang;
+                        //use only default template for now
+                        me.user.type.fields.unshift({
+                            cType:"text",
+                            config:{
+                                name:"email",
+                                fieldLabel:"E-mail",
+                                allowBlank:false,
+                                vtype:"email"
+                            }
+                        });
+                        me.user.type.fields.unshift({
+                            cType:"text",
+                            config:{
+                                name:"name",
+                                fieldLabel:"Name",
+                                allowBlank:false
+                            }
+                        });
+                        me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/userDetail/default.html';
+                    }
+                }
+            );
+        };
+        if ($scope.rubedo.current.user&&$scope.rubedo.current.user.id){
+            me.getUserById($scope.rubedo.current.user.id);
+        }
+        me.revertChanges=function(){
+            $scope.fieldEntity=angular.copy(me.user.fields);
+        };
+        me.registerEditChanges=function(){
+        };
+        me.persistChanges=function(){
+            var payload=angular.copy(me.user);
+            payload.fields=angular.copy($scope.fieldEntity);
+            delete (payload.type);
+            RubedoContentsService.updateUser(payload).then(
+                function(response){
+                    $scope.rubedo.addNotification("success","User updated.");
+                },
+                function(response){
+                    $scope.rubedo.addNotification("error","User update error.");
+                }
+            );
+        }
+        $scope.registerFieldEditChanges=me.registerEditChanges;
+    }]);
+
 })();
