@@ -392,7 +392,7 @@
                     $scope.rubedo.addNotification("error","Content update error.");
                 }
             );
-        }
+        };
         $scope.registerFieldEditChanges=me.registerEditChanges;
     }]);
 
@@ -690,13 +690,16 @@
         var me = this;
         var config = $scope.blockConfig;
         $scope.fieldEditMode=false;
+        me.canEdit=false;
         me.getUserById = function (userId){
             RubedoUsersService.getUserById(userId).then(
                 function(response){
                     if(response.data.success){
                         me.user=response.data.user;
+                        me.hasChanges=false;
                         $scope.fieldEntity=angular.copy(me.user.fields);
                         $scope.fieldLanguage=$route.current.params.lang;
+                        me.canEdit=!me.user.readOnly;
                         //use only default template for now
                         me.user.type.fields.unshift({
                             cType:"text",
@@ -724,23 +727,32 @@
             me.getUserById($scope.rubedo.current.user.id);
         }
         me.revertChanges=function(){
+            $scope.fieldEditMode=false;
             $scope.fieldEntity=angular.copy(me.user.fields);
+            me.hasChanges=false;
         };
         me.registerEditChanges=function(){
+            me.hasChanges=true;
         };
         me.persistChanges=function(){
             var payload=angular.copy(me.user);
             payload.fields=angular.copy($scope.fieldEntity);
             delete (payload.type);
-            RubedoContentsService.updateUser(payload).then(
+            RubedoUsersService.updateUser(payload).then(
                 function(response){
-                    $scope.rubedo.addNotification("success","User updated.");
+                    console.log(response);
                 },
                 function(response){
-                    $scope.rubedo.addNotification("error","User update error.");
+                    console.log(response);
                 }
             );
-        }
+        };
+        me.enterEditMode=function(){
+            $scope.fieldEditMode=true;
+        };
+        me.cancelEditMode=function(){
+            $scope.fieldEditMode=false;
+        };
         $scope.registerFieldEditChanges=me.registerEditChanges;
     }]);
 

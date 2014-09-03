@@ -216,6 +216,16 @@
         serviceInstance.getUserById=function(userId){
             return ($http.get(config.baseUrl+"/users/"+userId));
         };
+        serviceInstance.updateUser=function(user){
+            return ($http({
+                url:config.baseUrl+"/users/"+user.id,
+                method:"PATCH",
+                data : {
+                    user:user
+                }
+            }));
+
+        };
         return serviceInstance;
     }]);
 
