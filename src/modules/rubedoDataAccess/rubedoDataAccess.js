@@ -64,6 +64,9 @@
                 }
             }));
         };
+        serviceInstance.getPageById=function(pageId){
+            return ($http.get(config.baseUrl+"/pages/"+pageId));
+        };
         return serviceInstance;
     }]);
 
