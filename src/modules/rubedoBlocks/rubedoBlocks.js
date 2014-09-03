@@ -496,7 +496,6 @@
             };
             me.displayOrderBy = $routeParams.orderby?resolveOrderBy[$routeParams.orderby]:"relevance";
             me.template = "/components/webtales/rubedo-frontoffice/templates/blocks/searchResults/"+config.displayMode+".html";
-            console.log(config);
             var displayedFacets = JSON.parse(config.displayedFacets);
             var predefinedFacets = JSON.parse(config.predefinedFacets);
             var facetsId = ['objectType','type','damType','userType','author','userName','lastUpdateTime','query'];
@@ -582,7 +581,6 @@
                     me.start = 0;
                     options.start = me.start;
                     $location.search('orderby',me.orderBy);
-//                    me.searchByQuery(options, true);
                 }
             };
             me.changeLimit = function(limit){
@@ -593,7 +591,6 @@
                     options.limit = me.limit;
                     options.start = me.start;
                     $location.search('limit',me.limit);
-//                    me.searchByQuery(options, true);
                 }
             }
             me.clickOnFacets =  function(facetId,term){
@@ -607,7 +604,6 @@
                         if(options.taxonomies[facetId].length == 0){
                             delete options.taxonomies[facetId];
                         }
-                        console.log(options);
                         if(Object.keys(options['taxonomies']).length == 0){
                             $location.search('taxonomies',null);
                         } else {
@@ -617,9 +613,14 @@
                         $location.search('query',null);
                         delete options.query;
                     } else {
-                        options[facetId+'[]'].splice(options[facetId+'[]'].indexOf(term),1);
-                        if(options[facetId+'[]'].length == 0){
-                            $location.search(options[facetId+'[]'],null)
+                        if(angular.isArray(options[facetId+'[]'])){
+                            options[facetId+'[]'].splice(options[facetId+'[]'].indexOf(term),1);
+                        } else {
+                            delete options[facetId+'[]'];
+                        }
+                        console.log(!options[facetId+'[]']);
+                        if(!options[facetId+'[]'] || options[facetId+'[]'].length == 0){
+                            $location.search(facetId+'[]',null)
                         } else {
                             $location.search(facetId+'[]',options[facetId+'[]']);
                         }
@@ -644,12 +645,12 @@
                 }
                 me.start = 0;
                 options.start = me.start;
-//                me.searchByQuery(options, true);
             };
 
             me.searchByQuery = function(options, reloadPager){
                 RubedoSearchService.searchByQuery(options).then(function(response){
                     if(response.data.success){
+                        console.log(response.data.results);
                         me.query = response.data.results.query;
                         me.count = response.data.count;
                         me.data =  response.data.results.data;
