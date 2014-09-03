@@ -22,6 +22,8 @@
         searchResults:"/components/webtales/rubedo-frontoffice/templates/blocks/searchResults.html"
     };
 
+    mongoIdRegex = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
+
     module.factory('RubedoBlockTemplateResolver', function() {
         var serviceInstance={};
         serviceInstance.getTemplate=function(bType,bConfig){
@@ -324,7 +326,7 @@
         $scope.registerFieldEditChanges=me.registerEditChanges;
     }]);
 
-    module.controller("ContentDetailController",["$scope","RubedoContentsService",function($scope, RubedoContentsService){
+    module.controller("ContentDetailController",["$scope","RubedoContentsService","$route",function($scope, RubedoContentsService, $route){
         var me = this;
         var config = $scope.blockConfig;
         $scope.$watch('rubedo.fieldEditMode', function(newValue) {
@@ -352,7 +354,16 @@
                 }
             );
         };
-        if (config.contentId){
+        var routeSegments=$route.current.params.routeline.split("/");
+        var detectedId=null;
+        angular.forEach(routeSegments,function(segment){
+            if (mongoIdRegex.test(segment)){
+                detectedId=segment;
+            }
+        });
+        if (detectedId){
+            me.getContentById(detectedId);
+        } else if (config.contentId){
             me.getContentById(config.contentId);
         }
         me.revertChanges=function(){
