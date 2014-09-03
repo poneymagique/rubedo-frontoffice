@@ -503,7 +503,7 @@
                 predefinedFacets: config.predefinedFacets,
                 displayMode: config.displayMode,
                 displayedFacets: config.displayedFacets,
-                orderby: me.orderBy,
+                orderby: me.orderBy
             };
             var parseQueryParamsToOptions = function(){
                 angular.forEach($location.search(), function(queryParam, key){
@@ -531,7 +531,7 @@
                     predefinedFacets: config.predefinedFacets,
                     displayMode: config.displayMode,
                     displayedFacets: config.displayedFacets,
-                    orderby: me.orderBy,
+                    orderby: me.orderBy
                 };
                 parseQueryParamsToOptions();
                 me.searchByQuery(options, true);
