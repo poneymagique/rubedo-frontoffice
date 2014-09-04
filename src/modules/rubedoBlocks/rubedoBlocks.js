@@ -20,7 +20,8 @@
         imageGallery:"/components/webtales/rubedo-frontoffice/templates/blocks/gallery.html",
         damList:"/components/webtales/rubedo-frontoffice/templates/blocks/mediaList.html",
         searchResults:"/components/webtales/rubedo-frontoffice/templates/blocks/searchResults.html",
-        userProfile:"/components/webtales/rubedo-frontoffice/templates/blocks/userProfile.html"
+        userProfile:"/components/webtales/rubedo-frontoffice/templates/blocks/userProfile.html",
+        externalMedia:"/components/webtales/rubedo-frontoffice/templates/blocks/externalMedia.html"
     };
 
     mongoIdRegex = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
@@ -757,6 +758,19 @@
             $scope.fieldEditMode=false;
         };
         $scope.registerFieldEditChanges=me.registerEditChanges;
+    }]);
+
+    module.controller("ExternalMediaController",['$scope','$http','$sce',function($scope,$http,$sce){
+        var me=this;
+        var config=$scope.blockConfig;
+        if ((config)&&(config.url)){
+            var url = "http://iframe.ly/api/oembed?callback=JSON_CALLBACK&url="+encodeURIComponent(config.url);
+            $http.jsonp(url).success(function(response){
+                me.html=$sce.trustAsHtml(response.html);
+            });
+
+
+        }
     }]);
 
 })();
