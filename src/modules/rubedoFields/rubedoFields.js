@@ -2,7 +2,7 @@
  * Module that manages fields for display and edit
  */
 (function(){
-    var module = angular.module('rubedoFields',['xeditable','checklist-model','ngCkeditor']);
+    var module = angular.module('rubedoFields',['xeditable','checklist-model','ngCkeditor','google-maps']);
 
     module.run(function(editableOptions ) {
         editableOptions.theme = 'bs3';
@@ -32,6 +32,8 @@
         "Ext.form.CheckboxGroup":"/components/webtales/rubedo-frontoffice/templates/fields/checkboxGroup.html",
         "combobox":"/components/webtales/rubedo-frontoffice/templates/fields/combobox.html",
         "Ext.form.field.ComboBox":"/components/webtales/rubedo-frontoffice/templates/fields/combobox.html",
+        "localiserField":"/components/webtales/rubedo-frontoffice/templates/fields/localiserField.html",
+        "Rubedo.view.localiserField":"/components/webtales/rubedo-frontoffice/templates/fields/localiserField.html",
         "fieldNotFound":"/components/webtales/rubedo-frontoffice/templates/fields/fieldNotFound.html"
     };
 
