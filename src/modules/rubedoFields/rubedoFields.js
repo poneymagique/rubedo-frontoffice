@@ -190,4 +190,35 @@
         };
     }]);
 
+    module.controller("LocaliserFieldController",["$scope",function($scope){
+        var me=this;
+        me.map={
+            center:{
+                latitude:48.8567,
+                longitude:2.3508
+            },
+            zoom:4
+        };
+        $scope.$watch("fieldEntity."+$scope.field.config.name, function(newValue){
+            if (newValue.lat&&newValue.lon){
+                me.map.center={
+                    latitude:newValue.lat,
+                    longitude:newValue.lon
+                };
+                me.map.zoom=14;
+                me.positionMarker={
+                    coords:{
+                        latitude:newValue.lat,
+                        longitude:newValue.lon
+                    }
+                };
+                if (newValue.address){
+                    me.positionMarker.label=newValue.address;
+                }
+            } else {
+                me.positionMarker=null;
+            }
+        });
+    }]);
+
 })();

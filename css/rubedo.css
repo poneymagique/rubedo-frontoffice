@@ -31,3 +31,6 @@
     color: inherit !important;
     text-decoration: inherit !important;
 }
+.angular-google-map-container {
+    height: 400px;
+}

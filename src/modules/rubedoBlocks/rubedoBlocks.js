@@ -362,13 +362,15 @@
                 }
             );
         };
-        var routeSegments=$route.current.params.routeline.split("/");
         var detectedId=null;
-        angular.forEach(routeSegments,function(segment){
-            if (mongoIdRegex.test(segment)){
-                detectedId=segment;
-            }
-        });
+        if ($route.current.params.routeline){
+            var routeSegments=$route.current.params.routeline.split("/");
+            angular.forEach(routeSegments,function(segment){
+                if (mongoIdRegex.test(segment)){
+                    detectedId=segment;
+                }
+            });
+        }
         if (detectedId){
             me.getContentById(detectedId);
         } else if (config.contentId){
