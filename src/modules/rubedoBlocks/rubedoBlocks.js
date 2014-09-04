@@ -499,13 +499,14 @@
             };
             me.displayOrderBy = $routeParams.orderby?resolveOrderBy[$routeParams.orderby]:"relevance";
             me.template = "/components/webtales/rubedo-frontoffice/templates/blocks/searchResults/"+config.displayMode+".html";
-            var displayedFacets = JSON.parse(config.displayedFacets);
-            var predefinedFacets = JSON.parse(config.predefinedFacets);
+            console.log(config);
+//            var displayedFacets = JSON.parse(config.displayedFacets);
+            var predefinedFacets = config.predefinedFacets==""?{}:JSON.parse(config.predefinedFacets);
             var facetsId = ['objectType','type','damType','userType','author','userName','lastUpdateTime','query'];
             var operatorByFacetId = {};
-            displayedFacets.forEach(function(facet){
-                operatorByFacetId[facet.name] = facet.operator;
-            });
+//            displayedFacets.forEach(function(facet){
+//                operatorByFacetId[facet.name] = facet.operator;
+//            });
             var options = {
                 start: me.start,
                 limit: me.limit,
@@ -513,7 +514,9 @@
                 predefinedFacets: config.predefinedFacets,
                 displayMode: config.displayMode,
                 displayedFacets: config.displayedFacets,
-                orderby: me.orderBy
+                orderby: me.orderBy,
+                pageId: $scope.rubedo.current.page.id,
+                siteId: $scope.rubedo.current.site.id
             };
             var parseQueryParamsToOptions = function(){
                 angular.forEach($location.search(), function(queryParam, key){
@@ -541,7 +544,9 @@
                     predefinedFacets: config.predefinedFacets,
                     displayMode: config.displayMode,
                     displayedFacets: config.displayedFacets,
-                    orderby: me.orderBy
+                    orderby: me.orderBy,
+                    pageId: $scope.rubedo.current.page.id,
+                    siteId: $scope.rubedo.current.site.id
                 };
                 parseQueryParamsToOptions();
                 me.searchByQuery(options, true);
@@ -572,7 +577,10 @@
                     predefinedFacets: config.predefinedFacets,
                     displayMode: config.displayMode,
                     displayedFacets: config.displayedFacets,
-                    query: me.query
+                    query: me.query,
+                    orderby: me.orderBy,
+                    pageId: $scope.rubedo.current.page.id,
+                    siteId: $scope.rubedo.current.site.id
                 };
                 $location.search('query',me.query);
             };
@@ -588,7 +596,6 @@
             };
             me.changeLimit = function(limit){
                 if(me.limit != limit){
-                    console.log('changeLimit');
                     me.limit = limit;
                     me.start = 0;
                     options.limit = me.limit;
@@ -599,7 +606,9 @@
             me.clickOnFacets =  function(facetId,term){
                 var del = false;
                 me.activeTerms.forEach(function(activeTerm){
-                    del = activeTerm.term==term;
+                    if(!del){
+                        del = activeTerm.term==term;
+                    }
                 });
                 if(del){
                     if(facetsId.indexOf(facetId)==-1){
@@ -621,7 +630,6 @@
                         } else {
                             delete options[facetId+'[]'];
                         }
-                        console.log(!options[facetId+'[]']);
                         if(!options[facetId+'[]'] || options[facetId+'[]'].length == 0){
                             $location.search(facetId+'[]',null)
                         } else {
@@ -662,23 +670,25 @@
                         me.activeTerms = [];
                         var previousFacetId;
                         response.data.results.activeFacets.forEach(function(activeFacet){
-                            activeFacet.terms.forEach(function(term){
-                                var newTerm = {};
-                                newTerm.term = term.term;
-                                newTerm.label = term.label;
-                                newTerm.facetId = activeFacet.id;
-                                if(previousFacetId == activeFacet.id){
-                                    newTerm.operator =' '+operatorByFacetId[activeFacet.id]+' ';
-                                } else if (previousFacetId && me.notRemovableTerms.length != 0){
-                                    newTerm.operator = ', ';
-                                }
-                                if(predefinedFacets.hasOwnProperty(activeFacet.id) && predefinedFacets[activeFacet.id]==term.term){
-                                    me.notRemovableTerms.push(newTerm);
-                                } else {
-                                    me.activeTerms.push(newTerm);
-                                }
-                                previousFacetId = activeFacet.id;
-                            });
+                            if(activeFacet.id != 'navigation'){
+                                activeFacet.terms.forEach(function(term){
+                                    var newTerm = {};
+                                    newTerm.term = term.term;
+                                    newTerm.label = term.label;
+                                    newTerm.facetId = activeFacet.id;
+                                    if(previousFacetId == activeFacet.id){
+                                        newTerm.operator =' '+(activeFacet.operator)+' ';
+                                    } else if (previousFacetId && me.notRemovableTerms.length != 0){
+                                        newTerm.operator = ', ';
+                                    }
+                                    if(predefinedFacets.hasOwnProperty(activeFacet.id) && predefinedFacets[activeFacet.id]==term.term){
+                                        me.notRemovableTerms.push(newTerm);
+                                    } else {
+                                        me.activeTerms.push(newTerm);
+                                    }
+                                    previousFacetId = activeFacet.id;
+                                });
+                            }
                         });
                         if(reloadPager){
                             $compile(angular.element('paginator'))($scope);
