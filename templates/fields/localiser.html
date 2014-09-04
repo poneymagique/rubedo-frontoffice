@@ -1,0 +1,7 @@
+<div ng-controller="LocaliserFieldController as localiserFieldCtrl">
+    <google-map center="localiserFieldCtrl.map.center" zoom="localiserFieldCtrl.map.zoom" draggable="true">
+        <marker ng-if="localiserFieldCtrl.positionMarker" idKey="'positionMarker'" coords="localiserFieldCtrl.positionMarker.coords">
+            <marker-label ng-if="localiserFieldCtrl.positionMarker.label" content="localiserFieldCtrl.positionMarker.label" anchor="2 0" class="badge"></marker-label>
+        </marker>
+    </google-map>
+</div>

@@ -2,7 +2,7 @@
  * Module that manages fields for display and edit
  */
 (function(){
-    var module = angular.module('rubedoFields',['xeditable','checklist-model','ngCkeditor','google-maps']);
+    var module = angular.module('rubedoFields',['rubedoDataAccess','xeditable','checklist-model','ngCkeditor','google-maps']);
 
     module.run(function(editableOptions ) {
         editableOptions.theme = 'bs3';
@@ -32,8 +32,10 @@
         "Ext.form.CheckboxGroup":"/components/webtales/rubedo-frontoffice/templates/fields/checkboxGroup.html",
         "combobox":"/components/webtales/rubedo-frontoffice/templates/fields/combobox.html",
         "Ext.form.field.ComboBox":"/components/webtales/rubedo-frontoffice/templates/fields/combobox.html",
-        "localiserField":"/components/webtales/rubedo-frontoffice/templates/fields/localiserField.html",
-        "Rubedo.view.localiserField":"/components/webtales/rubedo-frontoffice/templates/fields/localiserField.html",
+        "localiserField":"/components/webtales/rubedo-frontoffice/templates/fields/localiser.html",
+        "Rubedo.view.localiserField":"/components/webtales/rubedo-frontoffice/templates/fields/localiser.html",
+        "treepicker":"/components/webtales/rubedo-frontoffice/templates/fields/pageLink.html",
+        "Ext.ux.TreePicker":"/components/webtales/rubedo-frontoffice/templates/fields/pageLink.html",
         "fieldNotFound":"/components/webtales/rubedo-frontoffice/templates/fields/fieldNotFound.html"
     };
 
@@ -219,6 +221,20 @@
                 me.positionMarker=null;
             }
         });
+    }]);
+
+    module.controller("PageLinkController",["$scope","RubedoPagesService",function($scope,RubedoPagesService){
+        var me=this;
+        var pageId=$scope.fieldEntity[$scope.field.config.name];
+        if (pageId){
+            RubedoPagesService.getPageById(pageId).then(
+                function(response){
+                    if (response.data.success){
+                        me.pageUrl=response.data.url;
+                    }
+                }
+            );
+        }
     }]);
 
 })();
