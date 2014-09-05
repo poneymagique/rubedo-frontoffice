@@ -36,6 +36,8 @@
         "Rubedo.view.localiserField":"/components/webtales/rubedo-frontoffice/templates/fields/localiser.html",
         "treepicker":"/components/webtales/rubedo-frontoffice/templates/fields/pageLink.html",
         "Ext.ux.TreePicker":"/components/webtales/rubedo-frontoffice/templates/fields/pageLink.html",
+        "checkboxfield":"/components/webtales/rubedo-frontoffice/templates/fields/checkbox.html",
+        "Ext.form.CheckboxGroup":"/components/webtales/rubedo-frontoffice/templates/fields/checkbox.html",
         "fieldNotFound":"/components/webtales/rubedo-frontoffice/templates/fields/fieldNotFound.html"
     };
 

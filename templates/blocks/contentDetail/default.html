@@ -1,1 +1,1 @@
-<rubedo-field ng-repeat="field in contentDetailCtrl.content.type.fields" ng-if="fieldEntity[field.config.name]"></rubedo-field>
+<rubedo-field ng-repeat="field in contentDetailCtrl.content.type.fields" ng-if="fieldEntity[field.config.name]||field.cType=='checkboxfield'"></rubedo-field>
