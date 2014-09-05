@@ -231,6 +231,7 @@
                 function(response){
                     if (response.data.success){
                         me.pageUrl=response.data.url;
+                        me.pageTitle=response.data.title;
                     }
                 }
             );
