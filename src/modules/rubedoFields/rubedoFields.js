@@ -251,6 +251,9 @@
                     case "Image":
                         me.fileTypeTemplate="/components/webtales/rubedo-frontoffice/templates/fields/media/image.html";
                         break;
+                    case "Document":
+                        me.fileTypeTemplate="/components/webtales/rubedo-frontoffice/templates/fields/media/document.html";
+                        break;
                     default:
                         me.fileTypeTemplate="/components/webtales/rubedo-frontoffice/templates/fields/media/fieldNotFound.html";
                 }
