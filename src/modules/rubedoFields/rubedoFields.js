@@ -37,7 +37,9 @@
         "treepicker":"/components/webtales/rubedo-frontoffice/templates/fields/pageLink.html",
         "Ext.ux.TreePicker":"/components/webtales/rubedo-frontoffice/templates/fields/pageLink.html",
         "checkboxfield":"/components/webtales/rubedo-frontoffice/templates/fields/checkbox.html",
-        "Ext.form.CheckboxGroup":"/components/webtales/rubedo-frontoffice/templates/fields/checkbox.html",
+        "Ext.form.Checkbox":"/components/webtales/rubedo-frontoffice/templates/fields/checkbox.html",
+        "ImagePickerField":"/components/webtales/rubedo-frontoffice/templates/fields/media.html",
+        "Rubedo.view.ImagePickerField":"/components/webtales/rubedo-frontoffice/templates/fields/media.html",
         "fieldNotFound":"/components/webtales/rubedo-frontoffice/templates/fields/fieldNotFound.html"
     };
 
