@@ -1,4 +1,3 @@
 <div ng-controller="MediaFieldController as mediaFieldCtrl">
-    <pre>{{field.config}}</pre>
-    <pre>{{fieldEntity[field.config.name]}}</pre>
+    <div ng-if="mediaFieldCtrl.fileTypeTemplate" ng-include="mediaFieldCtrl.fileTypeTemplate"></div>
 </div>

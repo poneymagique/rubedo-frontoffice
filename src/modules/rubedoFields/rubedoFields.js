@@ -245,10 +245,24 @@
     module.controller("MediaFieldController",["$scope","RubedoMediaService",function($scope,RubedoMediaService){
         var me=this;
         var mediaId=$scope.fieldEntity[$scope.field.config.name];
+        me.displayMedia=function(){
+            if (me.media&&me.media.originalFileId){
+                switch(me.media.mainFileType) {
+                    case "Image":
+                        me.fileTypeTemplate="/components/webtales/rubedo-frontoffice/templates/fields/media/image.html";
+                        break;
+                    default:
+                        me.fileTypeTemplate="/components/webtales/rubedo-frontoffice/templates/fields/media/fieldNotFound.html";
+                }
+            }
+        };
         if (mediaId){
             RubedoMediaService.getMediaById(mediaId).then(
                 function(response){
-                    console.log(response);
+                    if (response.data.success){
+                        me.media=response.data.media;
+                        me.displayMedia();
+                    }
                 }
             );
         }
