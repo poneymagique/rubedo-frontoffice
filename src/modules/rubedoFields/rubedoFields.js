@@ -254,6 +254,16 @@
                     case "Document":
                         me.fileTypeTemplate="/components/webtales/rubedo-frontoffice/templates/fields/media/document.html";
                         break;
+                    case "Audio":
+                        me.jwSettings={
+                            primary:'flash',
+                            height:40,
+                            width:"100%",
+                            file:me.media.url
+                        };
+                        me.fileTypeTemplate="/components/webtales/rubedo-frontoffice/templates/fields/media/audio.html";
+                        setTimeout(function(){jwplayer("file"+me.media.originalFileId).setup(me.jwSettings);}, 200);
+                        break;
                     default:
                         me.fileTypeTemplate="/components/webtales/rubedo-frontoffice/templates/fields/media/fieldNotFound.html";
                 }
