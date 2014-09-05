@@ -229,4 +229,12 @@
         return serviceInstance;
     }]);
 
+    module.factory('RubedoMediaService', ['$http',function($http) {
+        var serviceInstance={};
+        serviceInstance.getMediaById=function(mediaId){
+            return ($http.get(config.baseUrl+"/media/"+mediaId));
+        };
+        return serviceInstance;
+    }]);
+
 })();

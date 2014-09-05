@@ -242,4 +242,16 @@
         }
     }]);
 
+    module.controller("MediaFieldController",["$scope","RubedoMediaService",function($scope,RubedoMediaService){
+        var me=this;
+        var mediaId=$scope.fieldEntity[$scope.field.config.name];
+        if (mediaId){
+            RubedoMediaService.getMediaById(mediaId).then(
+                function(response){
+                    console.log(response);
+                }
+            );
+        }
+    }]);
+
 })();
