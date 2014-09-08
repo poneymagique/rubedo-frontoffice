@@ -145,6 +145,7 @@
             ipCookie("accessToken",accessToken,{path:"/", expires:lifetime, expirationUnit:"seconds"});
             if (remeberMe){
                 ipCookie("refreshToken",refreshToken,{path:"/",expires:8760, expirationUnit:"hours"});
+                ipCookie("rememberMe","true",{path:"/",expires:8760, expirationUnit:"hours"});
             } else {
                 ipCookie("refreshToken",refreshToken,{path:"/"});
             }
@@ -153,12 +154,14 @@
         serviceInstance.clearPersistedTokens=function(){
             ipCookie.remove('accessToken',{path:"/"});
             ipCookie.remove('refreshToken',{path:"/"});
+            ipCookie.remove('rememberMe',{path:"/"});
             delete(config.accessToken);
         };
         serviceInstance.getPersistedTokens=function(){
             return {
                 accessToken:ipCookie('accessToken'),
-                refreshToken:ipCookie('refreshToken')
+                refreshToken:ipCookie('refreshToken'),
+                rememberMe:ipCookie('rememberMe')
             };
         };
         serviceInstance.generateToken=function(credentials,remeberMe){
@@ -187,7 +190,8 @@
                 transformResponse:function(data,headerGetter){
                     var dataObj=angular.fromJson(data);
                     if (dataObj.success){
-                        serviceInstance.persistTokens(dataObj.token.access_token,dataObj.token.refresh_token, dataObj.token.lifetime);
+                        var rememberMe=serviceInstance.getPersistedTokens().rememberMe;
+                        serviceInstance.persistTokens(dataObj.token.access_token,dataObj.token.refresh_token, dataObj.token.lifetime,rememberMe);
                     } else {
                         serviceInstance.clearPersistedTokens();
                     }
