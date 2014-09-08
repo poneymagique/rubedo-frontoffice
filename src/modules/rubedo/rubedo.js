@@ -40,20 +40,24 @@
         me.registeredEditCtrls=[ ];
         me.fieldEditMode=false;
         me.notifications=[ ];
-        //attempt to restore identity using persisted auth
-        if (RubedoAuthService.getPersistedTokens().refreshToken){
-            RubedoAuthService.refreshToken().then(
-                function(response){
-                    me.current.user=response.data.token.user;
-                    if (me.current.user.rights.canEdit){
+        me.refreshAuth=function(forceRefresh){
+            var curentTokens=RubedoAuthService.getPersistedTokens();
+            if (curentTokens.refreshToken&&(!curentTokens.accessToken||forceRefresh)){
+                RubedoAuthService.refreshToken().then(
+                    function(response){
+                        me.current.user=response.data.token.user;
+                        if (me.current.user.rights.canEdit){
 //                        snapRemote.getSnapper().then(function(snapper) {
 //                            //snapper.enable();
 //                        });
+                        }
                     }
-                }
-            );
-        }
+                );
+            }
+        };
 
+        me.refreshAuth(true);
+        setInterval(function () {me.refreshAuth(false);}, 300000);
         me.clearNotifications=function(){
             me.notifications=[ ];
         };
