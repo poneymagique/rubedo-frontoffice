@@ -21,7 +21,8 @@
         damList:"/components/webtales/rubedo-frontoffice/templates/blocks/mediaList.html",
         searchResults:"/components/webtales/rubedo-frontoffice/templates/blocks/searchResults.html",
         userProfile:"/components/webtales/rubedo-frontoffice/templates/blocks/userProfile.html",
-        externalMedia:"/components/webtales/rubedo-frontoffice/templates/blocks/externalMedia.html"
+        externalMedia:"/components/webtales/rubedo-frontoffice/templates/blocks/externalMedia.html",
+        searchForm:"/components/webtales/rubedo-frontoffice/templates/blocks/searchForm.html"
     };
 
     mongoIdRegex = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
@@ -501,14 +502,10 @@
             me.displayOrderBy = $routeParams.orderby?resolveOrderBy[$routeParams.orderby]:"relevance";
             me.template = "/components/webtales/rubedo-frontoffice/templates/blocks/searchResults/"+config.displayMode+".html";
             console.log(config);
-//            var displayedFacets = JSON.parse(config.displayedFacets);
             var predefinedFacets = config.predefinedFacets==""?{}:JSON.parse(config.predefinedFacets);
             var facetsId = ['objectType','type','damType','userType','author','userName','lastUpdateTime','query'];
             var operatorByFacetId = {};
-//            displayedFacets.forEach(function(facet){
-//                operatorByFacetId[facet.name] = facet.operator;
-//            });
-            var options = {
+            var defaultOptions = {
                 start: me.start,
                 limit: me.limit,
                 constrainToSite: config.constrainToSite,
@@ -519,6 +516,10 @@
                 pageId: $scope.rubedo.current.page.id,
                 siteId: $scope.rubedo.current.site.id
             };
+            if (config.singlePage){
+                defaultOptions.detailPageId = config.singlePage;
+            }
+            var options = angular.copy(defaultOptions);
             var parseQueryParamsToOptions = function(){
                 angular.forEach($location.search(), function(queryParam, key){
                     if(typeof queryParam !== "boolean"){
@@ -538,17 +539,10 @@
                 $location.search('query',me.query);
             }
             $scope.$on('$routeUpdate', function(scope, next, current) {
-                options = {
-                    start: me.start,
-                    limit: me.limit,
-                    constrainToSite: config.constrainToSite,
-                    predefinedFacets: config.predefinedFacets,
-                    displayMode: config.displayMode,
-                    displayedFacets: config.displayedFacets,
-                    orderby: me.orderBy,
-                    pageId: $scope.rubedo.current.page.id,
-                    siteId: $scope.rubedo.current.site.id
-                };
+                options = angular.copy(defaultOptions);
+                options.start = me.start;
+                options.limit = me.limit;
+                options.orderBy = me.orderBy;
                 parseQueryParamsToOptions();
                 me.searchByQuery(options, true);
             });
@@ -571,27 +565,18 @@
             };
             me.onSubmit = function(){
                 me.start = 0;
-                options = {
-                    start: me.start,
-                    limit: me.limit,
-                    constrainToSite: config.constrainToSite,
-                    predefinedFacets: config.predefinedFacets,
-                    displayMode: config.displayMode,
-                    displayedFacets: config.displayedFacets,
-                    query: me.query,
-                    orderby: me.orderBy,
-                    pageId: $scope.rubedo.current.page.id,
-                    siteId: $scope.rubedo.current.site.id
-                };
+                options = angular.copy(defaultOptions);
+                options.start = me.start;
+                options.limit = me.limit;
+                options.query = me.query;
+                options.orderBy = me.orderBy;
                 $location.search('query',me.query);
             };
             me.changeOrderBy = function(orderBy){
                 if(me.orderBy != orderBy){
                     me.orderBy = orderBy;
                     me.displayOrderBy = resolveOrderBy[orderBy];
-                    options.orderby = me.orderBy;
                     me.start = 0;
-                    options.start = me.start;
                     $location.search('orderby',me.orderBy);
                 }
             };
@@ -599,8 +584,6 @@
                 if(me.limit != limit){
                     me.limit = limit;
                     me.start = 0;
-                    options.limit = me.limit;
-                    options.start = me.start;
                     $location.search('limit',me.limit);
                 }
             }
@@ -782,6 +765,21 @@
 
 
         }
+    }]);
+
+    module.controller("SearchFormController",['$scope','$location','RubedoPagesService',function($scope, $location, RubedoPagesService){
+        var me = this;
+        var config = $scope.blockConfig;
+        console.log(config);
+        me.placeholder = config.placeholder;
+        me.onSubmit = function(){
+            var paramQuery = me.query?'?query='+me.query:'';
+            RubedoPagesService.getPageById(config.searchPage).then(function(response){
+                if (response.data.success){
+                    $location.url(response.data.url+paramQuery);
+                }
+            });
+        };
     }]);
 
 })();
