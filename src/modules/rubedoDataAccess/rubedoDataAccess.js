@@ -2,7 +2,7 @@
  * Module providing data access services
  */
 (function(){
-    var module = angular.module('rubedoDataAccess', ['ngCookies']);
+    var module = angular.module('rubedoDataAccess', ['ipCookie']);
 
     //global config
     var config = {
@@ -136,25 +136,32 @@
     }]);
 
     // authentication service
-    module.factory('RubedoAuthService',['$http','$cookies',function($http,$cookies){
+    module.factory('RubedoAuthService',['$http','ipCookie',function($http,ipCookie){
         var serviceInstance={};
-        serviceInstance.persistTokens=function(accessToken,refreshToken){
-            $cookies.accessToken=accessToken;
-            $cookies.refreshToken=refreshToken;
+        serviceInstance.persistTokens=function(accessToken,refreshToken,lifetime,remeberMe){
+            if (!lifetime){
+                lifetime=3600;
+            }
+            ipCookie("accessToken",accessToken,{path:"/", expires:lifetime, expirationUnit:"seconds"});
+            if (remeberMe){
+                ipCookie("refreshToken",refreshToken,{path:"/",expires:8760, expirationUnit:"hours"});
+            } else {
+                ipCookie("refreshToken",refreshToken,{path:"/"});
+            }
             config.accessToken=accessToken;
         };
         serviceInstance.clearPersistedTokens=function(){
-            delete($cookies.accessToken);
-            delete($cookies.refreshToken);
+            ipCookie.remove('accessToken',{path:"/"});
+            ipCookie.remove('refreshToken',{path:"/"});
             delete(config.accessToken);
         };
         serviceInstance.getPersistedTokens=function(){
             return {
-                accessToken:$cookies.accessToken,
-                refreshToken:$cookies.refreshToken
+                accessToken:ipCookie('accessToken'),
+                refreshToken:ipCookie('refreshToken')
             };
         };
-        serviceInstance.generateToken=function(credentials){
+        serviceInstance.generateToken=function(credentials,remeberMe){
             return ($http({
                 url:config.baseUrl+"/auth/oauth2/generate",
                 method:"POST",
@@ -164,7 +171,7 @@
                 transformResponse:function(data,headerGetter){
                     var dataObj=angular.fromJson(data);
                     if (dataObj.success){
-                        serviceInstance.persistTokens(dataObj.token.access_token,dataObj.token.refresh_token);
+                        serviceInstance.persistTokens(dataObj.token.access_token,dataObj.token.refresh_token, dataObj.token.lifetime,remeberMe);
                     }
                     return(dataObj);
                 }
@@ -180,7 +187,7 @@
                 transformResponse:function(data,headerGetter){
                     var dataObj=angular.fromJson(data);
                     if (dataObj.success){
-                        serviceInstance.persistTokens(dataObj.token.access_token,dataObj.token.refresh_token);
+                        serviceInstance.persistTokens(dataObj.token.access_token,dataObj.token.refresh_token, dataObj.token.lifetime);
                     } else {
                         serviceInstance.clearPersistedTokens();
                     }

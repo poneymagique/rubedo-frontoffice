@@ -53,6 +53,7 @@
                 }
             );
         }
+
         me.clearNotifications=function(){
             me.notifications=[ ];
         };

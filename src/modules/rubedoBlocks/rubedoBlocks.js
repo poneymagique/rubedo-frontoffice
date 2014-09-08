@@ -260,12 +260,13 @@
         }
         me.credentials={ };
         me.authError=null;
+        me.rememberMe=false;
         me.authenticate=function(){
             me.authError=null;
             if ((!me.credentials.login)||(!me.credentials.password)){
                 me.authError="Please fill in all required fields."
             } else {
-                RubedoAuthService.generateToken(me.credentials).then(
+                RubedoAuthService.generateToken(me.credentials,me.rememberMe).then(
                     function(response){
                         angular.element("#rubedoAuthModal").modal('hide');
                         $scope.rubedo.current.user=response.data.token.user;
