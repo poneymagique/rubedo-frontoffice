@@ -68,15 +68,24 @@
     }]);
 
     //block controllers start here
-    module.controller("MenuController",['$scope','$location','RubedoMenuService',function($scope,$location,RubedoMenuService){
+    module.controller("MenuController",['$scope','$location','RubedoMenuService','RubedoPagesService',function($scope,$location,RubedoMenuService,RubedoPagesService){
         var me=this;
         me.menu={};
         me.currentRouteleine=$location.path();
         var config=$scope.blockConfig;
         var pageId=$scope.rubedo.current.page.id;
+        me.searchEnabled = (config.useSearchEngine && config.searchPage);
         if (config.rootPage){
             pageId=config.rootPage;
         }
+        me.onSubmit = function(){
+            var paramQuery = me.query?'?query='+me.query:'';
+            RubedoPagesService.getPageById(config.searchPage).then(function(response){
+                if (response.data.success){
+                    $location.url(response.data.url+paramQuery);
+                }
+            });
+        };
         RubedoMenuService.getMenu(pageId, config.menuLevel).then(function(response){
             if (response.data.success){
                 me.menu=response.data.menu;
@@ -501,7 +510,6 @@
             };
             me.displayOrderBy = $routeParams.orderby?resolveOrderBy[$routeParams.orderby]:"relevance";
             me.template = "/components/webtales/rubedo-frontoffice/templates/blocks/searchResults/"+config.displayMode+".html";
-            console.log(config);
             var predefinedFacets = config.predefinedFacets==""?{}:JSON.parse(config.predefinedFacets);
             var facetsId = ['objectType','type','damType','userType','author','userName','lastUpdateTime','query'];
             var operatorByFacetId = {};
@@ -645,7 +653,6 @@
             me.searchByQuery = function(options, reloadPager){
                 RubedoSearchService.searchByQuery(options).then(function(response){
                     if(response.data.success){
-                        console.log(response.data.results);
                         me.query = response.data.results.query;
                         me.count = response.data.count;
                         me.data =  response.data.results.data;
@@ -770,7 +777,6 @@
     module.controller("SearchFormController",['$scope','$location','RubedoPagesService',function($scope, $location, RubedoPagesService){
         var me = this;
         var config = $scope.blockConfig;
-        console.log(config);
         me.placeholder = config.placeholder;
         me.onSubmit = function(){
             var paramQuery = me.query?'?query='+me.query:'';
