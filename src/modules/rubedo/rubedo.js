@@ -108,6 +108,7 @@
             if (response.data.success){
                 current.page=angular.copy(response.data.page);
                 current.site=angular.copy(response.data.site);
+                current.breadcrumb=angular.copy(response.data.breadcrumb);
                 me.currentBodyTemplate='/components/webtales/rubedo-frontoffice/templates/defaultPageBody.html';
             }
         },function(response){

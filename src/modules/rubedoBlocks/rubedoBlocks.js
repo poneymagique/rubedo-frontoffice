@@ -22,7 +22,8 @@
         searchResults:"/components/webtales/rubedo-frontoffice/templates/blocks/searchResults.html",
         userProfile:"/components/webtales/rubedo-frontoffice/templates/blocks/userProfile.html",
         externalMedia:"/components/webtales/rubedo-frontoffice/templates/blocks/externalMedia.html",
-        searchForm:"/components/webtales/rubedo-frontoffice/templates/blocks/searchForm.html"
+        searchForm:"/components/webtales/rubedo-frontoffice/templates/blocks/searchForm.html",
+        breadcrumb:"/components/webtales/rubedo-frontoffice/templates/blocks/breadcrumb.html"
     };
 
     mongoIdRegex = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
@@ -369,6 +370,7 @@
                                 allowBlank:false
                             }
                         });
+                        $scope.rubedo.current.breadcrumb.push({title:response.data.content.text});
                         me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail/default.html';
                     }
                 }
@@ -786,6 +788,9 @@
                 }
             });
         };
+    }]);
+
+    module.controller("BreadcrumbController",['$scope',function($scope){
     }]);
 
 })();
