@@ -42,6 +42,18 @@
         return serviceInstance;
     });
 
+    module.factory('RubedoPageComponents', function() {
+        var serviceInstance={};
+        serviceInstance.getRowTemplate=function(customTemplate){
+            if (customTemplate){
+                return("/components/webtales/rubedo-frontoffice/templates/customRow.html");
+            }  else {
+                return("/components/webtales/rubedo-frontoffice/templates/row.html");
+            }
+        };
+        return serviceInstance;
+    });
+
     //generic block directive
     module.directive("rubedoBlock",function(){
         return {

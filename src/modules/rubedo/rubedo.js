@@ -23,7 +23,7 @@
 
     });
 
-    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService','RubedoFieldTemplateResolver','snapRemote', function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService,RubedoFieldTemplateResolver,snapRemote){
+    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService','RubedoFieldTemplateResolver','snapRemote','RubedoPageComponents', function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService,RubedoFieldTemplateResolver,snapRemote, RubedoPageComponents){
         //set context and page-wide services
         var me=this;
         me.snapOpts={
@@ -36,6 +36,7 @@
         me.current=current;
         me.blockTemplateResolver=RubedoBlockTemplateResolver;
         me.fieldTemplateResolver=RubedoFieldTemplateResolver;
+        me.componentsService=RubedoPageComponents;
         me.imageUrl=RubedoImageUrlService;
         me.registeredEditCtrls=[ ];
         me.fieldEditMode=false;
