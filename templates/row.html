@@ -1,1 +1,4 @@
 <h3 ng-if="row.displayTitle">{{row.eTitle}}</h3>
+<div ng-repeat="column in row.columns"
+     ng-include="rubedo.componentsService.getColumnTemplate(column.customTemplate)"
+     ng-class="rubedo.componentsService.getColumnClass(column.span,column.offset,column.stackThreshold)"></div>

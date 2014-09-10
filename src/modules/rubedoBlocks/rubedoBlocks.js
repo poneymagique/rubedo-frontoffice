@@ -51,6 +51,19 @@
                 return("/components/webtales/rubedo-frontoffice/templates/row.html");
             }
         };
+        serviceInstance.getColumnTemplate=function(customTemplate){
+            if (customTemplate){
+                return("/components/webtales/rubedo-frontoffice/templates/customColumn.html");
+            }  else {
+                return("/components/webtales/rubedo-frontoffice/templates/column.html");
+            }
+        };
+        serviceInstance.getColumnClass=function(span,offset,stackThreshold){
+            if (!stackThreshold){
+                stackThreshold="xs"
+            }
+            return ("col-"+stackThreshold+"-"+span+" col-"+stackThreshold+"-offset-"+offset);
+        };
         return serviceInstance;
     });
 
