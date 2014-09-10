@@ -27,6 +27,13 @@
         languageMenu:"/components/webtales/rubedo-frontoffice/templates/blocks/languageMenu.html"
     };
 
+    var responsiveClasses = {
+        phone:"xs",
+        tablet:"sm",
+        desktop:"md",
+        largeDesktop:"lg"
+    };
+
     mongoIdRegex = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
 
     module.factory('RubedoBlockTemplateResolver', function() {
@@ -64,6 +71,15 @@
                 stackThreshold="sm"
             }
             return ("col-"+stackThreshold+"-"+span+" col-"+stackThreshold+"-offset-"+offset);
+        };
+        serviceInstance.resolveResponsiveClass=function(responsiveConfig){
+            var hiddenArray=[ ]
+            angular.forEach(responsiveConfig,function(value,key){
+                if (value===false){
+                    hiddenArray.push("hidden-"+responsiveClasses[key]);
+                }
+            });
+            return (hiddenArray.join(" "));
         };
         return serviceInstance;
     });

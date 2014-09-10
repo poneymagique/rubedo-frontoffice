@@ -2,4 +2,5 @@
 <rubedo-block ng-if="column.isTerminal" ng-repeat="block in column.blocks"></rubedo-block>
 <div ng-if="!column.isTerminal" ng-repeat="row in column.rows"
      ng-include="rubedo.componentsService.getRowTemplate(row.customTemplate)"
-     class="row"></div>
+     class="row"
+     ng-class="rubedo.componentsService.resolveResponsiveClass(row.responsive)"></div>

@@ -1,5 +1,6 @@
 <div class="container">
     <div ng-repeat="row in rubedo.current.page.rows"
          ng-include="rubedo.componentsService.getRowTemplate(row.customTemplate)"
-         class="row"></div>
+         class="row"
+         ng-class="rubedo.componentsService.resolveResponsiveClass(row.responsive)"></div>
 </div>
