@@ -103,7 +103,7 @@
 
     }]);
 
-    app.controller("PageBodyController",['RubedoPagesService',function(RubedoPagesService){
+    app.controller("PageBodyController",['RubedoPagesService', 'RubedoModuleConfigService',function(RubedoPagesService, RubedoModuleConfigService){
         var me=this;
         RubedoPagesService.getPageByCurrentRoute().then(function(response){
             if (response.data.success){
@@ -113,6 +113,9 @@
                 current.page=newPage;
                 current.site=angular.copy(response.data.site);
                 current.breadcrumb=angular.copy(response.data.breadcrumb);
+                if (response.data.site.locStrategy == 'fallback'){
+                    RubedoModuleConfigService.addFallbackLang(response.data.site.defaultLanguage);
+                }
                 if (newPage.pageProperties.customTemplate){
                     me.currentBodyTemplate='/components/webtales/rubedo-frontoffice/templates/customPageBody.html';
                 } else {

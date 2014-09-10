@@ -19,7 +19,8 @@
     module.config(function($httpProvider ){
         $httpProvider.interceptors.push(function(){
             return {
-              'request':function(outboundConfig){
+              'request':function(
+                  outboundConfig){
                   if (!outboundConfig.params){
                       outboundConfig.params={};
                   }
@@ -50,7 +51,13 @@
         return (queryString.join("&"));
     };
 
-
+    module.factory('RubedoModuleConfigService',[function(){
+        var serviceInstance = {};
+        serviceInstance.addFallbackLang=function(fallbackLang){
+            config.lang=config.lang+'-'+fallbackLang;
+        }
+        return serviceInstance;
+    }]);
 
     //service providing page json from current route
     module.factory('RubedoPagesService', ['$location','$route','$http',function($location,$route,$http) {

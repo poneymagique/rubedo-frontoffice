@@ -23,7 +23,8 @@
         userProfile:"/components/webtales/rubedo-frontoffice/templates/blocks/userProfile.html",
         externalMedia:"/components/webtales/rubedo-frontoffice/templates/blocks/externalMedia.html",
         searchForm:"/components/webtales/rubedo-frontoffice/templates/blocks/searchForm.html",
-        breadcrumb:"/components/webtales/rubedo-frontoffice/templates/blocks/breadcrumb.html"
+        breadcrumb:"/components/webtales/rubedo-frontoffice/templates/blocks/breadcrumb.html",
+        languageMenu:"/components/webtales/rubedo-frontoffice/templates/blocks/languageMenu.html"
     };
 
     mongoIdRegex = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
@@ -816,6 +817,13 @@
     }]);
 
     module.controller("BreadcrumbController",['$scope',function($scope){
+    }]);
+
+    module.controller("LanguageMenuController",['$scope',function($scope){
+        var me = this;
+        var config =  $scope.blockConfig;
+//        console.log($scope.rubedo.current.site);
+        console.log(config);
     }]);
 
 })();
