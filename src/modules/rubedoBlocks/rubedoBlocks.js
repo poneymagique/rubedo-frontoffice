@@ -73,7 +73,7 @@
             return ("col-"+stackThreshold+"-"+span+" col-"+stackThreshold+"-offset-"+offset);
         };
         serviceInstance.resolveResponsiveClass=function(responsiveConfig){
-            var hiddenArray=[ ]
+            var hiddenArray=[ ];
             angular.forEach(responsiveConfig,function(value,key){
                 if (value===false){
                     hiddenArray.push("hidden-"+responsiveClasses[key]);
