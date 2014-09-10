@@ -107,10 +107,17 @@
         var me=this;
         RubedoPagesService.getPageByCurrentRoute().then(function(response){
             if (response.data.success){
-                current.page=angular.copy(response.data.page);
+                var newPage=angular.copy(response.data.page);
+                newPage.pageProperties=angular.copy(response.data.mask.pageProperties);
+                newPage.mainColumnId=angular.copy(response.data.mask.mainColumnId);
+                current.page=newPage;
                 current.site=angular.copy(response.data.site);
                 current.breadcrumb=angular.copy(response.data.breadcrumb);
-                me.currentBodyTemplate='/components/webtales/rubedo-frontoffice/templates/defaultPageBody.html';
+                if (newPage.pageProperties.customTemplate){
+                    me.currentBodyTemplate='/components/webtales/rubedo-frontoffice/templates/customPageBody.html';
+                } else {
+                    me.currentBodyTemplate='/components/webtales/rubedo-frontoffice/templates/defaultPageBody.html';
+                }
             }
         },function(response){
             if (response.status==404){
