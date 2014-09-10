@@ -60,7 +60,7 @@
         };
         serviceInstance.getColumnClass=function(span,offset,stackThreshold){
             if (!stackThreshold){
-                stackThreshold="xs"
+                stackThreshold="sm"
             }
             return ("col-"+stackThreshold+"-"+span+" col-"+stackThreshold+"-offset-"+offset);
         };
