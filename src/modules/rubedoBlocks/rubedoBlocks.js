@@ -385,7 +385,7 @@
                     $scope.rubedo.addNotification("error","Content update error.");
                 }
             );
-        }
+        };
         $scope.registerFieldEditChanges=me.registerEditChanges;
     }]);
 
