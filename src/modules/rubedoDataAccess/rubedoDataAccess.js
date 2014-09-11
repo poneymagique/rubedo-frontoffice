@@ -56,6 +56,9 @@
         serviceInstance.addFallbackLang=function(fallbackLang){
             config.lang=config.lang+'-'+fallbackLang;
         }
+        serviceInstance.changeLang =  function(lang){
+            config.lang = lang;
+        }
         return serviceInstance;
     }]);
 

@@ -596,7 +596,7 @@
             me.disabled = function(term){
                 var disabled = false;
                 me.notRemovableTerms.forEach(function(notRemovableTerm){
-                   disabled = notRemovableTerm.term == term;
+                    disabled = notRemovableTerm.term == term;
                 });
             };
             me.changePageAction = function(){
@@ -820,16 +820,24 @@
     module.controller("BreadcrumbController",['$scope',function($scope){
     }]);
 
-    module.controller("LanguageMenuController",['$scope','$routeParams','$route','$location',function($scope,$routeParams,$route,$location){
-        var me = this;
-        var config =  $scope.blockConfig;
-        me.languages = $scope.rubedo.current.site.languages;
-        me.currentLang = $routeParams.lang;
-        me.changeLang = function(lang){
-          $route.current.params.lang = lang;
-    };
-        console.log($scope.rubedo.current.site);
-        console.log($route.current.params);
-    }]);
+    module.controller("LanguageMenuController", ['$scope', 'RubedoPagesService','RubedoModuleConfigService', '$route', '$location',
+        function ($scope, RubedoPagesService,RubedoModuleConfigService, $route, $location) {
+            var me = this;
+            var config = $scope.blockConfig;
+            me.languages = $scope.rubedo.current.site.languages;
+            me.currentLang = $route.current.params.lang;
+            me.changeLang = function (lang) {
+                RubedoModuleConfigService.changeLang(lang);
+                RubedoPagesService.getPageById($scope.rubedo.current.page.id).then(function(response){
+                    if (response.data.success){
+                        console.log(response.data);
+                        $route.current.params.route =  response.data.url;
+                        $location.path(response.data.url);
+                    }
+                });
+            };
+            console.log($scope.rubedo.current.page.id);
+            console.log($location.path());
+        }]);
 
 })();
