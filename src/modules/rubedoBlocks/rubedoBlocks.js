@@ -389,7 +389,7 @@
         $scope.registerFieldEditChanges=me.registerEditChanges;
     }]);
 
-    module.controller("ContentDetailController",["$scope","RubedoContentsService","$route",function($scope, RubedoContentsService, $route){
+    module.controller("ContentDetailController",["$scope","RubedoContentsService",function($scope, RubedoContentsService){
         var me = this;
         var config = $scope.blockConfig;
         $scope.$watch('rubedo.fieldEditMode', function(newValue) {
@@ -418,18 +418,7 @@
                 }
             );
         };
-        var detectedId=null;
-        if ($route.current.params.routeline){
-            var routeSegments=$route.current.params.routeline.split("/");
-            angular.forEach(routeSegments,function(segment){
-                if (mongoIdRegex.test(segment)){
-                    detectedId=segment;
-                }
-            });
-        }
-        if (detectedId){
-            me.getContentById(detectedId);
-        } else if (config.contentId){
+        if (config.contentId){
             me.getContentById(config.contentId);
         }
         me.revertChanges=function(){
