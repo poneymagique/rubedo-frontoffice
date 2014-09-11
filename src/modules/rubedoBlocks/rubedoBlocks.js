@@ -183,9 +183,6 @@
                     } else {
                         me.contentList=response.data.contents;
                     }
-                    if (me.showPaginator && reloadPager){
-                        $compile(angular.element('paginator'))($scope);
-                    }
                 }
             });
         };
@@ -203,16 +200,20 @@
             restrict: 'E',
             templateUrl: "/components/webtales/rubedo-frontoffice/templates/paginator.html",
             scope:{
-                start: '=start',
-                limit: '=limit',
-                count: '=count',
-                changePageAction: '&changePageAction'
+                start: '=',
+                limit: '=',
+                count: '=',
+                changePageAction: '&'
             },
+
             controller: function($scope, $timeout){
                 var me = this;
-                me.actualPage = 1;
-                me.nbPages = Math.ceil(($scope.count - $scope.start)/$scope.limit);
-                me.showPager = me.nbPages > 1;
+                me.showPager = false;
+                $scope.$watch('count',function(){
+                    me.actualPage = 1;
+                    me.nbPages = Math.ceil(($scope.count - $scope.start)/$scope.limit);
+                    me.showPager = me.nbPages > 1;
+                });
                 var resultsSkip = $scope.start;
                 me.showActive = function(value){
                     return value == me.actualPage;
@@ -503,6 +504,7 @@
             limit: me.limit,
             constrainToSite: config.constrainToSite,
             siteId: $scope.rubedo.current.site.id,
+            pageId: $scope.rubedo.current.page.id,
             predefinedFacets: config.facets
         };
         me.changePageAction = function(){
@@ -510,19 +512,16 @@
             me.getMedia(options);
         };
 
-        me.getMedia = function(options, reloadPager){
+        me.getMedia = function(options){
             RubedoSearchService.getMediaById(options).then(function(response){
                 if(response.data.success){
                     me.count = response.data.count;
                     me.media = response.data.results.data;
-                    if(reloadPager){
-                        $compile(angular.element('paginator'))($scope);
-                    }
                 }
             });
         };
 
-        me.getMedia(options, true);
+        me.getMedia(options);
     }]);
 
     module.controller("SearchResultsController",["$scope","$location","$routeParams","$compile","RubedoSearchService",
@@ -632,7 +631,7 @@
                 var del = false;
                 me.activeTerms.forEach(function(activeTerm){
                     if(!del){
-                        del = activeTerm.term==term;
+                        del = (activeTerm.term==term && activeTerm.facetId==facetId);
                     }
                 });
                 if(del){
@@ -683,7 +682,7 @@
                 options.start = me.start;
             };
 
-            me.searchByQuery = function(options, reloadPager){
+            me.searchByQuery = function(options){
                 RubedoSearchService.searchByQuery(options).then(function(response){
                     if(response.data.success){
                         me.query = response.data.results.query;
@@ -714,14 +713,11 @@
                                 });
                             }
                         });
-                        if(reloadPager){
-                            $compile(angular.element('paginator'))($scope);
-                        }
                     }
                 })
             };
             parseQueryParamsToOptions();
-            me.searchByQuery(options, true);
+            me.searchByQuery(options);
         }]);
 
     module.controller("UserProfileController",["$scope","RubedoUsersService","$route",function($scope, RubedoUsersService, $route){
@@ -824,11 +820,16 @@
     module.controller("BreadcrumbController",['$scope',function($scope){
     }]);
 
-    module.controller("LanguageMenuController",['$scope',function($scope){
+    module.controller("LanguageMenuController",['$scope','$routeParams','$route','$location',function($scope,$routeParams,$route,$location){
         var me = this;
         var config =  $scope.blockConfig;
-//        console.log($scope.rubedo.current.site);
-        console.log(config);
+        me.languages = $scope.rubedo.current.site.languages;
+        me.currentLang = $routeParams.lang;
+        me.changeLang = function(lang){
+          $route.current.params.lang = lang;
+    };
+        console.log($scope.rubedo.current.site);
+        console.log($route.current.params);
     }]);
 
 })();
