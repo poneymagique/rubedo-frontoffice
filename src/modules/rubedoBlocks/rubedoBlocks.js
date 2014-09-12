@@ -271,7 +271,7 @@
                 function(response){
                     if (response.data.success){
                         me.contents=response.data.contents;
-                        setTimeout(function(){me.initCarousel();},10);
+                        setTimeout(function(){me.initCarousel();},100);
                     }
                 }
             );
@@ -293,8 +293,8 @@
         };
         me.getImageOptions=function(){
             return({
-                width:angular.element("#block"+$scope.block.id).width(),
                 height:blockConfig.imageHeight,
+                width:blockConfig.imageWidth ? blockConfig.imageWidth : angular.element("#block"+$scope.block.id).width(),
                 mode:blockConfig.imageResizeMode
             });
         };
