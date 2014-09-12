@@ -24,7 +24,9 @@
         externalMedia:"/components/webtales/rubedo-frontoffice/templates/blocks/externalMedia.html",
         searchForm:"/components/webtales/rubedo-frontoffice/templates/blocks/searchForm.html",
         breadcrumb:"/components/webtales/rubedo-frontoffice/templates/blocks/breadcrumb.html",
-        languageMenu:"/components/webtales/rubedo-frontoffice/templates/blocks/languageMenu.html"
+        languageMenu:"/components/webtales/rubedo-frontoffice/templates/blocks/languageMenu.html",
+        directory:"/components/webtales/rubedo-frontoffice/templates/blocks/directory.html"
+
     };
 
     var responsiveClasses = {
@@ -847,5 +849,12 @@
                 }
             };
         }]);
+
+    module.controller('DirectoryController',['$scope', function($scope){
+        var me = this;
+        var config = $scope.blockConfig;
+        console.log(config);
+        console.log($scope.rubedo.current.page.id);
+    }]);
 
 })();
