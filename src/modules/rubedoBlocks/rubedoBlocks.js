@@ -41,7 +41,7 @@
     module.factory('RubedoBlockTemplateResolver', function() {
         var serviceInstance={};
         serviceInstance.getTemplate=function(bType,bConfig){
-            if (!angular.element.isEmptyObject(bConfig.customTemplate)){
+            if (bConfig.customTemplate){
                 return (blocksConfig.customTemplate);
             } else if (blocksConfig[bType]){
                 return (blocksConfig[bType]);
