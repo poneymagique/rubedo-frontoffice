@@ -1056,7 +1056,6 @@
     module.controller("AudioController",["$scope","RubedoMediaService",function($scope,RubedoMediaService){
         var me=this;
         var config = $scope.blockConfig;
-        console.log(config);
         var mediaId=config.audioFile;
         me.displayMedia=function(){
             if (me.media&&me.media.originalFileId){
