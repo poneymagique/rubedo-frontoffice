@@ -228,6 +228,12 @@
                 params: options
             }));
         };
+        //Users Research
+        serviceInstance.searchUsers = function(options){
+            return ($http.get(config.baseUrl+"/users/search",{
+                params: options
+            }));
+        };
         return serviceInstance;
     }]);
 

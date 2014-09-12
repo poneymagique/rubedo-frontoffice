@@ -1,3 +1,99 @@
 <div ng-controller="DirectoryController as directoryCtrl">
+    <nav class="navbar navbar-default">
+        <div class="navbar-header">
+            <span class="navbar-brand">There are <span class="badge">{{directoryCtrl.count}}</span> results</span>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href class="dropdown-toggle" data-toggle="dropdown">Order by {{directoryCtrl.displayOrderBy}} <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href ng-click="directoryCtrl.changeOrderBy('_score')">Order by relevance</a></li>
+                        <li><a href ng-click="directoryCtrl.changeOrderBy('lastUpdateTime')">Order by date</a></li>
+                        <li><a ng-click="directoryCtrl.changeOrderBy('authorName')" href>Order by author</a></li>
+                        <li><a ng-click="directoryCtrl.changeOrderBy('text')" href>Order by title</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href class="dropdown-toggle" data-toggle="dropdown">by page <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a ng-click="directoryCtrl.changeLimit(10)" href>10 by page</a></li>
+                        <li><a ng-click="directoryCtrl.changeLimit(20)" href>20 by page</a></li>
+                        <li><a ng-click="directoryCtrl.changeLimit(50)" href>50 by page</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <nav class="navbar navbar-default">
+        <div class="navbar-header">
+            <span class="navbar-brand">Search criteria :
+                <span ng-repeat-start="term in directoryCtrl.notRemovableTerms">{{term.operator}}</span><span
+                        class="badge" ng-repeat-end>
+                    {{term.label}}
+                </span><span ng-repeat-start="term in directoryCtrl.activeTerms">{{term.operator}}</span>
+                <span class="badge cursor-as-pointer" ng-repeat-end
+                      ng-click="directoryCtrl.clickOnFacets(term.facetId, term.term)">
+                    {{term.label}}&nbsp;&times;
+                </span>
+            </span>
+        </div>
+    </nav>
+    <div class="row">
+        <div class="text-center col-md-12">
+            <div class="btn-group">
+                <button ng-repeat="letter in directoryCtrl.alphabet.terms"
+                        ng-click="directoryCtrl.clickOnFacets(directoryCtrl.alphabet.id, letter.term)"
+                        type="button" class="btn btn-default">{{letter.label}}<sup>{{letter.count}}</sup>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <form ng-submit="directoryCtrl.onSubmit()" role="form">
+                        <div class="input-group">
+                            <input class="form-control" type="text" ng-model="directoryCtrl.query" placeholder="Search"/>
+                            <span class="input-group-btn"><button class="btn btn-default" type="submit">
+                                <span class="glyphicon glyphicon-search"></span></button></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="panel panel-default" ng-repeat="facet in directoryCtrl.facets" ng-if="facet.terms">
+                <div class="panel-heading">{{facet.label}}&nbsp;<span class="badge pull-right">{{facet.total - facet.other}}</span></div>
+                <div class="panel-body">
+                    <ul>
+                        <li class="cursor-as-pointer" ng-repeat="term in facet.terms"
+                            ng-click="directoryCtrl.clickOnFacets(facet.id, term.term)">
+                            {{term.label}}&nbsp;({{term.count}})
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div ng-repeat="datum in directoryCtrl.data">
+                <h4><a ng-href="{{datum.url}}">{{datum.title}}</a></h4>
+                <div>
+                    <div class="progress" style="width: 70px; float: left;">
+                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{datum.score}}"
+                             aria-valuemin="30" aria-valuemax="100" ng-style="{'width': datum.score+'%','min-width': '30%','max-width':'100%'}">
+                            {{datum.score}}%
+                        </div>
+                    </div>&nbsp;
+                    <span class="label label-danger" style="display: inline-block">{{datum.type}}</span>
+                </div>
+                <p style="clear: both">{{datum.summary}}</p>
+                <div>Published by {{datum.authorName}} on {{datum.lastUpdateTime * 1000 | date: 'fullDate'}}</div>
+                <hr/>
+            </div>
 
+            <paginator start="directoryCtrl.start" limit="directoryCtrl.limit"
+                       count="directoryCtrl.count"
+                       change-page-action="directoryCtrl.changePageAction()"></paginator>
+        </div>
+    </div>
 </div>
