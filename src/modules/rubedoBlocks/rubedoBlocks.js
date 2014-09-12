@@ -25,7 +25,8 @@
         searchForm:"/components/webtales/rubedo-frontoffice/templates/blocks/searchForm.html",
         breadcrumb:"/components/webtales/rubedo-frontoffice/templates/blocks/breadcrumb.html",
         languageMenu:"/components/webtales/rubedo-frontoffice/templates/blocks/languageMenu.html",
-        directory:"/components/webtales/rubedo-frontoffice/templates/blocks/directory.html"
+        directory:"/components/webtales/rubedo-frontoffice/templates/blocks/directory.html",
+        audio:"/components/webtales/rubedo-frontoffice/templates/blocks/audio.html"
 
     };
 
@@ -1050,6 +1051,37 @@
         };
         parseQueryParamsToOptions();
         me.searchByQuery(options);
+    }]);
+
+    module.controller("AudioController",["$scope","RubedoMediaService",function($scope,RubedoMediaService){
+        var me=this;
+        var config = $scope.blockConfig;
+        console.log(config);
+        var mediaId=config.audioFile;
+        me.displayMedia=function(){
+            if (me.media&&me.media.originalFileId){
+                        me.jwSettings={
+                            primary:"flash",
+                            height:40,
+                            width:"100%",
+                            controls:config.audioControls,
+                            autoStart:config.audioPlay,
+                            repeat:config.audioLoop,
+                            file:me.media.url
+                        };
+                        setTimeout(function(){jwplayer("audio"+me.media.originalFileId).setup(me.jwSettings);}, 200);
+            }
+        };
+        if (mediaId){
+            RubedoMediaService.getMediaById(mediaId).then(
+                function(response){
+                    if (response.data.success){
+                        me.media=response.data.media;
+                        me.displayMedia();
+                    }
+                }
+            );
+        }
     }]);
 
 })();
