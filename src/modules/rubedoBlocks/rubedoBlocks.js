@@ -328,13 +328,7 @@
             } else {
                 RubedoAuthService.generateToken(me.credentials,me.rememberMe).then(
                     function(response){
-                        angular.element("#rubedoAuthModal").modal('hide');
-                        $scope.rubedo.current.user=response.data.token.user;
-                        if (response.data.token.user.rights.canEdit){
-//                            snapRemote.getSnapper().then(function(snapper) {
-//                                snapper.enable();
-//                            });
-                        }
+                        window.location.reload();
                     },
                     function(response){
                         me.authError=response.data.message;
@@ -344,12 +338,7 @@
         };
         me.logOut=function(){
             RubedoAuthService.clearPersistedTokens();
-            $scope.rubedo.current.user=null;
-            $scope.rubedo.fieldEditMode=false;
-            snapRemote.close();
-//            snapRemote.getSnapper().then(function(snapper) {
-//                snapper.disable();
-//            });
+            window.location.reload();
         }
     }]);
 
