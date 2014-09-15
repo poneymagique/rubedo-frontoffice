@@ -1,0 +1,18 @@
+<div ng-controller="SiteMapController as siteMapCtrl">
+        <i ng-class="{'glyphicon glyphicon-chevron-right': siteMapCtrl.hidePages, 'glyphicon glyphicon-chevron-down': !siteMapCtrl.hidePages}"
+           ng-click="siteMapCtrl.showPagesClick('pages')" ng-if="siteMapCtrl.menu.pages"></i>
+        <a ng-href="{{siteMapCtrl.menu.url}}">{{siteMapCtrl.menu.title}}</a>
+    <ul ng-hide="siteMapCtrl.hidePages" style="list-style: none">
+        <li ng-repeat="page in siteMapCtrl.menu.pages">
+                <i ng-class="{'glyphicon glyphicon-chevron-right': siteMapCtrl.hideChildPages, 'glyphicon glyphicon-chevron-down': !siteMapCtrl.hideChildPages}"
+                   ng-click="siteMapCtrl.showPagesClick('childPages')" ng-if="page.pages" class="glyphicon glyphicon-chevron-right"></i>
+                <a ng-href="{{page.url}}">{{page.title}}</a>
+            <ul ng-hide="siteMapCtrl.hideChildPages" ng-if="page.pages" style="list-style: none">
+                <li ng-repeat="childPage in page.pages">
+                    <a ng-href="{{childPage.url}}">{{childPage.title}}</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+</div>
