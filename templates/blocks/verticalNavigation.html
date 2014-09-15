@@ -11,11 +11,16 @@
             </form>
         </div>
         <div class="panel-body">
-            <div class="nav nav-pills nav-stacked">
-                <li ng-repeat="page in menuCtrl.menu.pages" ng-class="{active:menuCtrl.currentRouteleine.indexOf(page.url) > -1}">
+            <ul class="nav nav-pills nav-stacked">
+                <li ng-repeat="page in menuCtrl.menu.pages" ng-class="{active:menuCtrl.currentRouteleine==page.url}">
                     <a ng-href="{{page.url}}">{{page.title}} <span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                    <ul ng-if="page.pages" class="nav nav-pills nav-stacked">
+                        <li ng-repeat="subPage in page.pages" ng-class="{active:menuCtrl.currentRouteleine==subPage.url}">
+                            <a ng-href="{{subPage.url}}">&nbsp; &nbsp;{{subPage.title}} <span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                        </li>
+                    </ul>
                 </li>
-            </div>
+            </ul>
         </div>
     </div>
 </div>
