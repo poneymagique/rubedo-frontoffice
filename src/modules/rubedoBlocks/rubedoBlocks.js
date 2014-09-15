@@ -26,8 +26,8 @@
         breadcrumb:"/components/webtales/rubedo-frontoffice/templates/blocks/breadcrumb.html",
         languageMenu:"/components/webtales/rubedo-frontoffice/templates/blocks/languageMenu.html",
         directory:"/components/webtales/rubedo-frontoffice/templates/blocks/directory.html",
-        audio:"/components/webtales/rubedo-frontoffice/templates/blocks/audio.html"
-
+        audio:"/components/webtales/rubedo-frontoffice/templates/blocks/audio.html",
+        video:"/components/webtales/rubedo-frontoffice/templates/blocks/video.html"
     };
 
     var responsiveClasses = {
@@ -1063,12 +1063,49 @@
                             primary:"flash",
                             height:40,
                             width:"100%",
-                            controls:config.audioControls,
-                            autoStart:config.audioPlay,
+                            controls:config.audioControls ? config.audioControls : false,
+                            autostart:config.audioPlay,
                             repeat:config.audioLoop,
                             file:me.media.url
                         };
                         setTimeout(function(){jwplayer("audio"+me.media.originalFileId).setup(me.jwSettings);}, 200);
+            }
+        };
+        if (mediaId){
+            RubedoMediaService.getMediaById(mediaId).then(
+                function(response){
+                    if (response.data.success){
+                        me.media=response.data.media;
+                        me.displayMedia();
+                    }
+                }
+            );
+        }
+    }]);
+
+    module.controller("VideoController",["$scope","RubedoMediaService","RubedoImageUrlService",function($scope,RubedoMediaService,RubedoImageUrlService){
+        var me=this;
+        var config = $scope.blockConfig;
+        var mediaId=config.videoFile;
+        me.displayMedia=function(){
+            if (me.media&&me.media.originalFileId){
+                me.jwSettings={
+                    width:"100%",
+                    controls:config.videoControls ? config.videoControls : false,
+                    autostart:config.videoAutoPlay,
+                    repeat:config.videoLoop,
+                    file:me.media.url
+                };
+                if (config.videoWidth){
+                    me.jwSettings.width=config.videoWidth;
+                }
+                if (config.videoHeight){
+                    me.jwSettings.height=config.videoHeight;
+                }
+                if (config.videoPoster){
+                    me.jwSettings.image=RubedoImageUrlService.getUrlByMediaId(config.videoPoster,{});
+                }
+                setTimeout(function(){jwplayer("video"+me.media.originalFileId).setup(me.jwSettings);}, 200);
             }
         };
         if (mediaId){
