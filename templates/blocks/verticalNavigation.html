@@ -1,8 +1,8 @@
 <div ng-controller="MenuController as menuCtrl">
+    <h3 class="text-center" ng-if="blockConfig.displayRootPage"><a ng-href="{{menuCtrl.menu.url}}">{{menuCtrl.menu.title}}</a></h3>
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title text-center" ng-if="blockConfig.displayRootPage"><a ng-href="{{menuCtrl.menu.url}}">{{menuCtrl.menu.title}}</a></h3>
-            <form class="navbar-form" ng-if="menuCtrl.searchEnabled" ng-submit="menuCtrl.onSubmit()" role="form">
+        <div class="panel-heading" ng-if="menuCtrl.searchEnabled">
+            <form class="form"  ng-submit="menuCtrl.onSubmit()" role="form">
                 <div class="input-group">
                     <input class="form-control" type="text" ng-model="menuCtrl.query" placeholder="Search"/>
                             <span class="input-group-btn"><button class="btn btn-default" type="submit">
