@@ -28,7 +28,8 @@
             <h4><a ng-href="{{datum.url}}">{{datum.title}}</a></h4>
             <div>
                 <div class="progress" style="width: 50px; float: left;">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{datum.score}}" aria-valuemin="0" aria-valuemax="100" ng-style="{'width': datum.score+'%'}">
+                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{datum.score}}"
+                         aria-valuemin="0" aria-valuemax="100" ng-style="{'width': datum.score+'%','min-width': '30%','max-width':'100%'}">
                         {{datum.score}}%
                     </div>
                 </div>&nbsp;

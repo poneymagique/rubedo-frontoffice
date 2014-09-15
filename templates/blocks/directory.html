@@ -39,9 +39,9 @@
             </span>
         </div>
     </nav>
-    <div class="row">
+    <div class="row" ng-if="directoryCtrl.alphabeticIndex">
         <div class="text-center col-md-12">
-            <div class="btn-group">
+            <div class="btn-group" style="padding-bottom: 10px">
                 <button ng-repeat="letter in directoryCtrl.alphabet.terms"
                         ng-click="directoryCtrl.clickOnFacets(directoryCtrl.alphabet.id, letter.term)"
                         type="button" class="btn btn-default">{{letter.label}}<sup>{{letter.count}}</sup>
@@ -51,7 +51,7 @@
     </div>
     <div class="row">
         <div class="col-md-3">
-            <div class="panel panel-default">
+            <div class="panel panel-default" ng-if="directoryCtrl.activateSearch">
                 <div class="panel-heading">
                     <form ng-submit="directoryCtrl.onSubmit()" role="form">
                         <div class="input-group">
@@ -75,20 +75,8 @@
             </div>
         </div>
         <div class="col-md-9">
-            <div ng-repeat="datum in directoryCtrl.data">
-                <h4><a ng-href="{{datum.url}}">{{datum.title}}</a></h4>
-                <div>
-                    <div class="progress" style="width: 70px; float: left;">
-                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{datum.score}}"
-                             aria-valuemin="30" aria-valuemax="100" ng-style="{'width': datum.score+'%','min-width': '30%','max-width':'100%'}">
-                            {{datum.score}}%
-                        </div>
-                    </div>&nbsp;
-                    <span class="label label-danger" style="display: inline-block">{{datum.type}}</span>
-                </div>
-                <p style="clear: both">{{datum.summary}}</p>
-                <div>Published by {{datum.authorName}} on {{datum.lastUpdateTime * 1000 | date: 'fullDate'}}</div>
-                <hr/>
+            <div class="row">
+                <ng-include src="directoryCtrl.template"></ng-include>
             </div>
 
             <paginator start="directoryCtrl.start" limit="directoryCtrl.limit"
