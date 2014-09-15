@@ -8,6 +8,7 @@
         image:"/components/webtales/rubedo-frontoffice/templates/blocks/image.html",
         blockNotFound:"/components/webtales/rubedo-frontoffice/templates/blocks/blockNotFound.html",
         navigation:"/components/webtales/rubedo-frontoffice/templates/blocks/navigation.html",
+        verticalNavigation:"/components/webtales/rubedo-frontoffice/templates/blocks/verticalNavigation.html",
         contentList:"/components/webtales/rubedo-frontoffice/templates/blocks/contentList.html",
         authentication:"/components/webtales/rubedo-frontoffice/templates/blocks/authentication.html",
         simpleText:"/components/webtales/rubedo-frontoffice/templates/blocks/simpleText.html",
@@ -44,6 +45,8 @@
         serviceInstance.getTemplate=function(bType,bConfig){
             if (bConfig.customTemplate){
                 return (blocksConfig.customTemplate);
+            } else if (bType=="navigation"&&bConfig.style&&bConfig.style=="Vertical") {
+                return (blocksConfig.verticalNavigation);
             } else if (blocksConfig[bType]){
                 return (blocksConfig[bType]);
             } else {
