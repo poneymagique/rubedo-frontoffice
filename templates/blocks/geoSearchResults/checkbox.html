@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <form ng-submit="geoSearchResultsCtrl.onSubmit()" role="form">
+                    <div class="input-group">
+                        <input class="form-control" type="text" ng-model="geoSearchResultsCtrl.query" placeholder="Search"/>
+                            <span class="input-group-btn"><button class="btn btn-default" type="submit">
+                                <span class="glyphicon glyphicon-search"></span></button></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-repeat="facet in geoSearchResultsCtrl.facets" ng-if="facet.terms">
+            <div class="panel-heading">{{facet.label}}&nbsp;<span class="badge pull-right">{{facet.total - facet.other}}</span></div>
+            <div class="panel-body">
+                <ul>
+                    <li ng-repeat="term in facet.terms">
+                        <input ng-class="{'disabled':geoSearchResultsCtrl.disabled(term.term)}" type="checkbox" ng-checked="geoSearchResultsCtrl.checked(term.term)" ng-click="geoSearchResultsCtrl.clickOnFacets(facet.id, term.term)"/>
+                        {{term.label}}&nbsp;({{term.count}})
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div ng-repeat="datum in geoSearchResultsCtrl.data">
+            <h4><a ng-href="{{datum.url}}">{{datum.title}}</a></h4>
+            <div>
+                <div class="progress" style="width: 50px; float: left;">
+                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{datum.score}}"
+                         aria-valuemin="0" aria-valuemax="100" ng-style="{'width': datum.score+'%','min-width': '30%','max-width':'100%'}">
+                        {{datum.score}}%
+                    </div>
+                </div>&nbsp;
+                <span class="label label-danger" style="display: inline-block">{{datum.type}}</span>
+            </div>
+            <p style="clear: both">{{datum.summary}}</p>
+            <div>Published by {{datum.authorName}} on {{datum.lastUpdateTime * 1000 | date: 'fullDate'}}</div>
+            <hr/>
+        </div>
+        <paginator start="geoSearchResultsCtrl.start" limit="geoSearchResultsCtrl.limit"
+                   count="geoSearchResultsCtrl.count"
+                   change-page-action="geoSearchResultsCtrl.changePageAction()"></paginator>
+    </div>
+</div>
