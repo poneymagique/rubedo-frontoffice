@@ -1,1 +1,7 @@
-<h3>Map goes here</h3>
+<google-map center="geoSearchResultsCtrl.map.center" zoom="geoSearchResultsCtrl.map.zoom" draggable="true">
+    <marker ng-repeat="item in geoSearchResultsCtrl.data"
+            idKey="item.id"
+            coords="item.coordinates"
+            >
+    </marker>
+</google-map>

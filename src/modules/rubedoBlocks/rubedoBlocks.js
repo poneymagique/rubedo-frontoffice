@@ -1192,6 +1192,13 @@
             me.activateSearch=config.activateSearch;
             me.start = 0;
             me.limit = config.pageSize ? config.pageSize : 5000;
+            me.map={
+                center:{
+                    latitude:48.8567,
+                    longitude:2.3508
+                },
+                zoom:config.zoom ? config.zoom : 14
+            };
             if (config.activateSearch){
                 if (!config.displayMode){
                     config.displayMode="default";
@@ -1316,13 +1323,35 @@
                 me.start = 0;
                 options.start = me.start;
             };
-
+            me.preprocessData=function(data){
+                var refinedData=[ ];
+                angular.forEach(data,function(item){
+                    if (item['fields.position.location.coordinates']&&item['fields.position.location.coordinates'][0]){
+                        var coords=item['fields.position.location.coordinates'][0].split(",");
+                        if (coords[0]&&coords[1]){
+                            refinedData.push({
+                                coordinates:{
+                                    latitude:coords[0],
+                                    longitude:coords[1]
+                                },
+                                id:item.id,
+                                objectType:item.objectType,
+                                title:item.title,
+                                summary:item.summary,
+                                type:item.type,
+                                author:item.authorName
+                            });
+                        }
+                    }
+                });
+                return refinedData;
+            };
             me.searchByQuery = function(options){
                 RubedoSearchService.searchGeo(options).then(function(response){
                     if(response.data.success){
                         me.query = response.data.results.query;
                         me.count = response.data.count;
-                        me.data =  response.data.results.data;
+                        me.data =  me.preprocessData(response.data.results.data);
                         me.facets = response.data.results.facets;
                         me.notRemovableTerms = [];
                         me.activeTerms = [];
