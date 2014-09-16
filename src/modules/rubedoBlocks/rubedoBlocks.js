@@ -30,6 +30,7 @@
         audio:"/components/webtales/rubedo-frontoffice/templates/blocks/audio.html",
         video:"/components/webtales/rubedo-frontoffice/templates/blocks/video.html",
         siteMap:"/components/webtales/rubedo-frontoffice/templates/blocks/siteMap.html",
+        geoSearchResults:"/components/webtales/rubedo-frontoffice/templates/blocks/geoSearchResults.html"
     };
 
     var responsiveClasses = {
