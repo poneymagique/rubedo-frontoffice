@@ -1370,7 +1370,10 @@
                                 title:item.title,
                                 summary:item.summary,
                                 type:item.type,
-                                author:item.authorName
+                                author:item.authorName,
+                                markerOptions:{
+                                    title:item.title
+                                }
                             });
                         }
                     }
