@@ -216,21 +216,27 @@
     module.factory('RubedoSearchService',['$http',function($http){
         var serviceInstance = {};
 
-        //Global Research
+        //Global Search
         serviceInstance.searchByQuery = function(options){
             return ($http.get(config.baseUrl+"/search", {
                 params: options
             }));
         };
-        //Media Research
+        //Media Search
         serviceInstance.getMediaById = function(options){
             return ($http.get(config.baseUrl+"/media/search", {
                 params: options
             }));
         };
-        //Users Research
+        //Users Search
         serviceInstance.searchUsers = function(options){
             return ($http.get(config.baseUrl+"/users/search",{
+                params: options
+            }));
+        };
+        //Geo Search
+        serviceInstance.searchGeo = function(options){
+            return ($http.get(config.baseUrl+"/geo/search",{
                 params: options
             }));
         };

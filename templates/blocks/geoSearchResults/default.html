@@ -37,25 +37,6 @@
             </div>
         </div>
     </div>
-    <div class="col-md-9">
-        <div ng-repeat="datum in geoSearchResultsCtrl.data">
-            <h4><a ng-href="{{datum.url}}">{{datum.title}}</a></h4>
-            <div>
-                <div class="progress" style="width: 70px; float: left;">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{datum.score}}"
-                         aria-valuemin="30" aria-valuemax="100" ng-style="{'width': datum.score+'%','min-width': '30%','max-width':'100%'}">
-                        {{datum.score}}%
-                    </div>
-                </div>&nbsp;
-                <span class="label label-danger" style="display: inline-block">{{datum.type}}</span>
-            </div>
-            <p style="clear: both">{{datum.summary}}</p>
-            <div>Published by {{datum.authorName}} on {{datum.lastUpdateTime * 1000 | date: 'fullDate'}}</div>
-            <hr/>
-        </div>
-
-        <paginator start="geoSearchResultsCtrl.start" limit="geoSearchResultsCtrl.limit"
-                   count="geoSearchResultsCtrl.count"
-                   change-page-action="geoSearchResultsCtrl.changePageAction()"></paginator>
+    <div class="col-md-9" ng-include="'/components/webtales/rubedo-frontoffice/templates/blocks/geoSearchResults/map.html'">
     </div>
 </div>
