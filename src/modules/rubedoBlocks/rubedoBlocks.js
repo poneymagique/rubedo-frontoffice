@@ -31,7 +31,8 @@
         video:"/components/webtales/rubedo-frontoffice/templates/blocks/video.html",
         siteMap:"/components/webtales/rubedo-frontoffice/templates/blocks/siteMap.html",
         twitter:"/components/webtales/rubedo-frontoffice/templates/blocks/twitter.html",
-        geoSearchResults:"/components/webtales/rubedo-frontoffice/templates/blocks/geoSearchResults.html"
+        geoSearchResults:"/components/webtales/rubedo-frontoffice/templates/blocks/geoSearchResults.html",
+        addThis:"/components/webtales/rubedo-frontoffice/templates/blocks/addThisShare.html"
     };
 
     var responsiveClasses = {
@@ -1144,7 +1145,6 @@
     module.controller('TwitterController',['$scope',function($scope){
         var me = this;
         var config = $scope.blockConfig;
-        console.log(config);
         angular.forEach(config, function(value, key){
             me[key] = value;
         });
@@ -1179,6 +1179,15 @@
                 me.chrome += res+' ';
             });
         }
+        me.loadTwitter = function(){
+            window.twttr = (function (d, s, id) {
+                var t, js, fjs = d.getElementsByTagName(s)[0];
+                js = d.createElement(s); js.id = id; js.src= "https://platform.twitter.com/widgets.js";
+                fjs.parentNode.insertBefore(js, fjs);
+                return window.twttr || (t = { _e: [], ready: function (f) { t._e.push(f) } });
+            }(document, "script", "twitter-wjs"));
+        };
+        me.loadTwitter();
     }]);
 
     module.controller("GeoSearchResultsController",["$scope","$location","$routeParams","$compile","RubedoSearchService",
@@ -1417,5 +1426,38 @@
             parseQueryParamsToOptions();
             me.searchByQuery(options);
         }]);
+
+    module.controller('AddThisShareController',['$scope',function($scope){
+        var me = this;
+        var config = $scope.blockConfig;
+        me.like = config.like == 1;
+        me.disposition = config.disposition;
+        me.class = 'addthis_toolbox';
+        if(me.like){
+            if(config.disposition == 'Horizontal'){
+                me.class += ' addthis_default_style';
+            } else {
+                me.class += ' addthis_floating_style addthis_counter_style addthis-pos';
+            }
+        } else {
+            if(config.disposition == 'Horizontal'){
+                me.class += ' addthis_default_style';
+                if(config.small == 1){
+                    me.class += ' addthis_32x32_style'
+                }
+            } else {
+                me.class += ' addthis_floating_style';
+                if(config.small == 0){
+                    me.class += ' addthis_16x16_style addthis-pos';
+                } else {
+                    me.class += ' addthis_32x32_style addthis-pos'
+                }
+            }
+        }
+        me.loadAddThis = function(){
+            addthis.toolbox('.addthis_toolbox');
+
+        };
+    }]);
 
 })();
