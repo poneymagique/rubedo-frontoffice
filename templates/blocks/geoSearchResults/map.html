@@ -1,8 +1,10 @@
 <google-map center="geoSearchResultsCtrl.map.center" zoom="geoSearchResultsCtrl.map.zoom" draggable="true">
-    <marker ng-repeat="item in geoSearchResultsCtrl.data"
-            idKey="item.id"
-            coords="item.coordinates"
-            options="item.markerOptions"
+    <markers
+            models="geoSearchResultsCtrl.data"
+            idKey="'id'"
+            coords="'coordinates'"
+            options="'markerOptions'"
+            doCluster="true"
             >
-    </marker>
+    </markers>
 </google-map>
