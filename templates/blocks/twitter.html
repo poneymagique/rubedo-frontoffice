@@ -1,0 +1,8 @@
+<div ng-controller="TwitterController as twitterCtrl">
+    <a class="twitter-timeline" ng-href="{{'https://twitter.com/'+twitterCtrl.account}}" data-widget-id="{{ twitterCtrl.widgetId }}"
+       data-screen-name="{{ twitterCtrl.tweetMode('tweets') }}" data-favorites-screen-name="{{ twitterCtrl.tweetMode('favorites') }}" data-tweet-limit="{{twitterCtrl.tweetLimit}}"
+       data-theme="{{twitterCtrl.theme}}" data-chrome="{{twitterCtrl.chrome}}">
+        Tweets by @{{twitterCtrl.account}}
+    </a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>

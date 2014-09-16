@@ -30,6 +30,7 @@
         audio:"/components/webtales/rubedo-frontoffice/templates/blocks/audio.html",
         video:"/components/webtales/rubedo-frontoffice/templates/blocks/video.html",
         siteMap:"/components/webtales/rubedo-frontoffice/templates/blocks/siteMap.html",
+        twitter:"/components/webtales/rubedo-frontoffice/templates/blocks/twitter.html",
         geoSearchResults:"/components/webtales/rubedo-frontoffice/templates/blocks/geoSearchResults.html"
     };
 
@@ -1049,16 +1050,16 @@
         var mediaId=config.audioFile;
         me.displayMedia=function(){
             if (me.media&&me.media.originalFileId){
-                        me.jwSettings={
-                            primary:"flash",
-                            height:40,
-                            width:"100%",
-                            controls:config.audioControls ? config.audioControls : false,
-                            autostart:config.audioPlay,
-                            repeat:config.audioLoop,
-                            file:me.media.url
-                        };
-                        setTimeout(function(){jwplayer("audio"+me.media.originalFileId).setup(me.jwSettings);}, 200);
+                me.jwSettings={
+                    primary:"flash",
+                    height:40,
+                    width:"100%",
+                    controls:config.audioControls ? config.audioControls : false,
+                    autostart:config.audioPlay,
+                    repeat:config.audioLoop,
+                    file:me.media.url
+                };
+                setTimeout(function(){jwplayer("audio"+me.media.originalFileId).setup(me.jwSettings);}, 200);
             }
         };
         if (mediaId){
@@ -1138,6 +1139,46 @@
                 me.menu={};
             }
         });
+    }]);
+
+    module.controller('TwitterController',['$scope',function($scope){
+        var me = this;
+        var config = $scope.blockConfig;
+        console.log(config);
+        angular.forEach(config, function(value, key){
+            me[key] = value;
+        });
+        me.chrome = '';
+        me.tweetMode = function(mode){
+            if(mode == config.mode) {
+                return config.account;
+            } else {
+                return '';
+            }
+        };
+        if(me.options){
+            angular.forEach(me.options, function(option, key){
+                var res = '';
+                switch (option){
+                    case 'noHeader':
+                        res = 'noheader';
+                        break;
+                    case 'noFooter':
+                        res = 'noffoter';
+                        break;
+                    case 'noBorder':
+                        res = 'noborders';
+                        break;
+                    case 'noScrollBar':
+                        res = 'noscrollbar';
+                        break;
+                    case 'transparentBackground':
+                        res = 'transparent';
+                        break;
+                }
+                me.chrome += res+' ';
+            });
+        }
     }]);
 
     module.controller("GeoSearchResultsController",["$scope","$location","$routeParams","$compile","RubedoSearchService",
