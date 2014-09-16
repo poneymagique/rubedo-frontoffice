@@ -1199,6 +1199,37 @@
                 },
                 zoom:config.zoom ? config.zoom : 14
             };
+            me.geocoder = new google.maps.Geocoder();
+            //set initial map center
+            if (config.useLocation&&navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    me.map.center={
+                        latitude:position.coords.latitude,
+                        longitude:position.coords.longitude
+                    };
+                }, function() {
+                    //handle geoloc error
+                });
+            } else if (config.centerAddress){
+                me.geocoder.geocode({
+                    'address' : config.centerAddress
+                }, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        me.map.center={
+                            latitude:results[0].geometry.location.lat(),
+                            longitude:results[0].geometry.location.lng()
+                        };
+
+                    }
+                });
+
+            } else if (config.centerLatitude && config.centerLongitude){
+                me.map.center={
+                    latitude:config.centerLatitude,
+                    longitude:config.centerLongitude
+                };
+            }
+
             if (config.activateSearch){
                 if (!config.displayMode){
                     config.displayMode="default";
