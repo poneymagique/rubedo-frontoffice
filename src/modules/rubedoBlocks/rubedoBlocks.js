@@ -1256,7 +1256,12 @@
                 "bounds_changed": function (map) {
                     clearTimeout(me.mapTimer);
                     me.mapTimer = setTimeout(function() {
-                        console.log(map.getBounds());
+                        var bounds=map.getBounds();
+                        options.inflat=bounds.getSouthWest().lat();
+                        options.suplat=bounds.getNorthEast().lat();
+                        options.inflon=bounds.getSouthWest().lng();
+                        options.suplon=bounds.getNorthEast().lng();
+                        me.searchByQuery(options);
                     }, 300);
                 }
             };
@@ -1452,7 +1457,6 @@
                 })
             };
             parseQueryParamsToOptions();
-            me.searchByQuery(options);
         }]);
 
     module.controller('AddThisShareController',['$scope',function($scope){
