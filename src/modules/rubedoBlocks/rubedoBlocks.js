@@ -143,7 +143,6 @@
         };
         RubedoMenuService.getMenu(pageId, config.menuLevel).then(function(response){
             if (response.data.success){
-                console.log(response.data);
                 me.menu=response.data.menu;
             } else {
                 me.menu={};
@@ -630,6 +629,13 @@
                     me.start = 0;
                     $location.search('limit',me.limit);
                 }
+            };
+            me.target = function(data){
+                var res = '';
+                if (data.objectType == 'dam'){
+                    res = '_blank';
+                }
+                return res;
             };
             me.clickOnFacets =  function(facetId,term){
                 var del = false;

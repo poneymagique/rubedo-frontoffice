@@ -39,7 +39,7 @@
     </div>
     <div class="col-md-9">
         <div ng-repeat="datum in searchResultsCtrl.data">
-            <h4><a ng-href="{{datum.url}}">{{datum.title}}</a></h4>
+            <h4><a target="{{searchResultsCtrl.target(datum)}}" ng-href="{{datum.url}}">{{datum.title}}</a></h4>
             <div>
                 <div class="progress" style="width: 70px; float: left;">
                     <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{datum.score}}"
