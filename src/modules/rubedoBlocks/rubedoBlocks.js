@@ -1297,7 +1297,7 @@
                 me.template = "/components/webtales/rubedo-frontoffice/templates/blocks/geoSearchResults/map.html";
             }
             var predefinedFacets = config.predefinedFacets==""?{}:JSON.parse(config.predefinedFacets);
-            var facetsId = ['objectType','type','damType','userType','author','userName','lastUpdateTime','query'];
+            var facetsId = ['objectType','type','damType','userType','author','userName','lastupdatetime','query'];
             var defaultOptions = {
                 start: me.start,
                 limit: me.limit,
@@ -1379,6 +1379,9 @@
                     } else if (facetId == 'query') {
                         $location.search('query',null);
                         delete options.query;
+                    } else if(facetId == 'lastupdatetime') {
+                        delete options[facetId];
+                        $location.search(facetId,null);
                     } else {
                         if(angular.isArray(options[facetId+'[]'])){
                             options[facetId+'[]'].splice(options[facetId+'[]'].indexOf(term),1);
@@ -1401,6 +1404,9 @@
                         }
                         options.taxonomies[facetId].push(term);
                         $location.search('taxonomies',JSON.stringify(options.taxonomies));
+                    } else if(facetId == 'lastupdatetime') {
+                        options[facetId] = term;
+                        $location.search(facetId,options[facetId]);
                     } else {
                         if(!options[facetId+'[]']){
                             options[facetId+'[]'] = [];
