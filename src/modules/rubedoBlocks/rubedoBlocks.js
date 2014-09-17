@@ -143,6 +143,7 @@
         };
         RubedoMenuService.getMenu(pageId, config.menuLevel).then(function(response){
             if (response.data.success){
+                console.log(response.data);
                 me.menu=response.data.menu;
             } else {
                 me.menu={};
