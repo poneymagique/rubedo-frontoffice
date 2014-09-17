@@ -50,7 +50,7 @@
                 <span class="label label-danger" style="display: inline-block">{{datum.type}}</span>
             </div>
             <p style="clear: both">{{datum.summary}}</p>
-            <div>Published by {{datum.authorName}} on {{datum.lastUpdateTime * 1000 | date: 'fullDate'}}</div>
+            <div>Published by <a ng-href="{{datum.authorUrl}}">{{datum.authorName}}</a> on {{datum.lastUpdateTime * 1000 | date: 'fullDate'}}</div>
             <hr/>
         </div>
 

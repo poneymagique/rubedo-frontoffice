@@ -557,6 +557,9 @@
             if (config.singlePage){
                 defaultOptions.detailPageId = config.singlePage;
             }
+            if(config.profilePage){
+                defaultOptions.profilePageId = config.profilePage;
+            }
             var options = angular.copy(defaultOptions);
             var parseQueryParamsToOptions = function(){
                 angular.forEach($location.search(), function(queryParam, key){
@@ -683,6 +686,7 @@
             me.searchByQuery = function(options){
                 RubedoSearchService.searchByQuery(options).then(function(response){
                     if(response.data.success){
+                        console.log(response.data.results);
                         me.query = response.data.results.query;
                         me.count = response.data.count;
                         me.data =  response.data.results.data;
