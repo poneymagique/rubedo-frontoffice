@@ -189,7 +189,7 @@
                 if (response.data.success){
                     me.count = response.data.count;
                     if (add){
-                        response.data.contents.forEach(function(newContent){
+                        angular.forEach(response.data.contents,function(newContent){
                             me.contentList.push(newContent);
                         });
                     } else {
@@ -478,7 +478,7 @@
                     me.getContents(config.query, pageId, siteId, options, function(data){
                         me.contents = data.contents;
                         var newEvents = [];
-                        me.contents.forEach(function(content){
+                        angular.forEach(me.contents,function(content){
                             var event = {};
                             event.title = content.fields.text;
                             event.start = moment.unix(content.fields[config['date']]).format('YYYY-MM-DD');
@@ -591,14 +591,14 @@
             });
             me.checked = function(term){
                 var checked = false;
-                me.activeTerms.forEach(function(activeTerm){
+                angular.forEach(me.activeTerms,function(activeTerm){
                     checked = activeTerm.term==term;
                 });
                 return checked;
             };
             me.disabled = function(term){
                 var disabled = false;
-                me.notRemovableTerms.forEach(function(notRemovableTerm){
+                angular.forEach(me.notRemovableTerms,function(notRemovableTerm){
                     disabled = notRemovableTerm.term == term;
                 });
             };
@@ -632,7 +632,7 @@
             };
             me.clickOnFacets =  function(facetId,term){
                 var del = false;
-                me.activeTerms.forEach(function(activeTerm){
+                angular.forEach(me.activeTerms,function(activeTerm){
                     if(!del){
                         del = (activeTerm.term==term && activeTerm.facetId==facetId);
                     }
@@ -695,9 +695,9 @@
                         me.notRemovableTerms = [];
                         me.activeTerms = [];
                         var previousFacetId;
-                        response.data.results.activeFacets.forEach(function(activeFacet){
+                        angular.forEach(response.data.results.activeFacets,function(activeFacet){
                             if(activeFacet.id != 'navigation'){
-                                activeFacet.terms.forEach(function(term){
+                                angular.forEach(activeFacet.terms,function(term){
                                     var newTerm = {};
                                     newTerm.term = term.term;
                                     newTerm.label = term.label;
@@ -917,7 +917,7 @@
             });
             me.disabled = function(term){
                 var disabled = false;
-                me.notRemovableTerms.forEach(function(notRemovableTerm){
+                angular.forEach(me.notRemovableTerms,function(notRemovableTerm){
                     disabled = notRemovableTerm.term == term;
                 });
             };
@@ -951,7 +951,7 @@
             };
             me.clickOnFacets =  function(facetId,term){
                 var del = false;
-                me.activeTerms.forEach(function(activeTerm){
+                angular.forEach(me.activeTerms,function(activeTerm){
                     if(!del){
                         del = (activeTerm.term==term && activeTerm.facetId==facetId);
                     }
@@ -1011,7 +1011,7 @@
                         me.count = response.data.count;
                         me.data =  response.data.results.data;
                         me.facets = [];
-                        response.data.results.facets.forEach(function(facet){
+                        angular.forEach(response.data.results.facets,function(facet){
                             if(facet.id == 'userName'){
                                 me.alphabet = facet;
                             } else {
@@ -1324,14 +1324,14 @@
             });
             me.checked = function(term){
                 var checked = false;
-                me.activeTerms.forEach(function(activeTerm){
+                angular.forEach(me.activeTerms,function(activeTerm){
                     checked = activeTerm.term==term;
                 });
                 return checked;
             };
             me.disabled = function(term){
                 var disabled = false;
-                me.notRemovableTerms.forEach(function(notRemovableTerm){
+                angular.forEach(me.notRemovableTerms,function(notRemovableTerm){
                     disabled = notRemovableTerm.term == term;
                 });
             };
@@ -1345,7 +1345,7 @@
             };
             me.clickOnFacets =  function(facetId,term){
                 var del = false;
-                me.activeTerms.forEach(function(activeTerm){
+                angular.forEach(me.activeTerms,function(activeTerm){
                     if(!del){
                         del = (activeTerm.term==term && activeTerm.facetId==facetId);
                     }
@@ -1433,9 +1433,9 @@
                         me.notRemovableTerms = [];
                         me.activeTerms = [];
                         var previousFacetId;
-                        response.data.results.activeFacets.forEach(function(activeFacet){
+                        angular.forEach(response.data.results.activeFacets,function(activeFacet){
                             if(activeFacet.id != 'navigation'){
-                                activeFacet.terms.forEach(function(term){
+                                angular.forEach(activeFacet.terms,function(term){
                                     var newTerm = {};
                                     newTerm.term = term.term;
                                     newTerm.label = term.label;
