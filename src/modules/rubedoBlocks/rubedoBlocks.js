@@ -32,7 +32,8 @@
         siteMap:"/components/webtales/rubedo-frontoffice/templates/blocks/siteMap.html",
         twitter:"/components/webtales/rubedo-frontoffice/templates/blocks/twitter.html",
         geoSearchResults:"/components/webtales/rubedo-frontoffice/templates/blocks/geoSearchResults.html",
-        addThis:"/components/webtales/rubedo-frontoffice/templates/blocks/addThisShare.html"
+        addThis:"/components/webtales/rubedo-frontoffice/templates/blocks/addThisShare.html",
+        resource:"/components/webtales/rubedo-frontoffice/templates/blocks/mediaDownload.html"
     };
 
     var responsiveClasses = {
@@ -686,7 +687,6 @@
             me.searchByQuery = function(options){
                 RubedoSearchService.searchByQuery(options).then(function(response){
                     if(response.data.success){
-                        console.log(response.data.results);
                         me.query = response.data.results.query;
                         me.count = response.data.count;
                         me.data =  response.data.results.data;
@@ -1486,6 +1486,16 @@
             addthis.toolbox('.addthis_toolbox');
 
         };
+    }]);
+
+    module.controller('MediaDownloadController',['$scope','RubedoMediaService',function($scope,RubedoMediaService){
+        var me = this;
+        var config = $scope.blockConfig;
+        RubedoMediaService.getMediaById(config.documentId).then(function(response){
+            if(response.data.success){
+                me.media =  response.data.media;
+            }
+        });
     }]);
 
 })();
