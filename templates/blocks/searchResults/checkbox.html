@@ -11,12 +11,16 @@
                 </form>
             </div>
         </div>
-        <div class="panel panel-default" ng-repeat="facet in searchResultsCtrl.facets" ng-if="facet.terms">
-            <div class="panel-heading">{{facet.label}}&nbsp;<span class="badge pull-right">{{facet.total - facet.other}}</span></div>
+        <div class="panel panel-default" ng-repeat="facet in searchResultsCtrl.facets" ng-if="facet.terms || facet.ranges">
+            <div class="panel-heading">{{facet.label}}&nbsp;<span ng-if="facet.total" class="badge pull-right">{{facet.total - facet.other}}</span></div>
             <div class="panel-body">
                 <ul>
-                    <li ng-repeat="term in facet.terms">
+                    <li ng-if="facet.terms" ng-repeat="term in facet.terms">
                         <input ng-class="{'disabled':searchResultsCtrl.disabled(term.term)}" type="checkbox" ng-checked="searchResultsCtrl.checked(term.term)" ng-click="searchResultsCtrl.clickOnFacets(facet.id, term.term)"/>
+                        {{term.label}}&nbsp;({{term.count}})
+                    </li>
+                    <li ng-if="facet.ranges && term.count > 0" ng-repeat="term in facet.ranges">
+                        <input ng-class="{'disabled':searchResultsCtrl.disabled(term.from)}" type="checkbox" ng-checked="searchResultsCtrl.checked(term.from)" ng-click="searchResultsCtrl.clickOnFacets(facet.id, term.from)"/>
                         {{term.label}}&nbsp;({{term.count}})
                     </li>
                 </ul>

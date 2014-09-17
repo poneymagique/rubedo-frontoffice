@@ -545,7 +545,7 @@
             me.displayOrderBy = $routeParams.orderby?resolveOrderBy[$routeParams.orderby]:"relevance";
             me.template = "/components/webtales/rubedo-frontoffice/templates/blocks/searchResults/"+config.displayMode+".html";
             var predefinedFacets = config.predefinedFacets==""?{}:JSON.parse(config.predefinedFacets);
-            var facetsId = ['objectType','type','damType','userType','author','userName','lastUpdateTime','query'];
+            var facetsId = ['objectType','type','damType','userType','author','userName','lastupdatetime','query'];
             var defaultOptions = {
                 start: me.start,
                 limit: me.limit,
@@ -659,6 +659,9 @@
                     } else if (facetId == 'query') {
                         $location.search('query',null);
                         delete options.query;
+                    } else if(facetId == 'lastupdatetime') {
+                        delete options[facetId];
+                        $location.search(facetId,null);
                     } else {
                         if(angular.isArray(options[facetId+'[]'])){
                             options[facetId+'[]'].splice(options[facetId+'[]'].indexOf(term),1);
@@ -681,6 +684,9 @@
                         }
                         options.taxonomies[facetId].push(term);
                         $location.search('taxonomies',JSON.stringify(options.taxonomies));
+                    } else if(facetId == 'lastupdatetime') {
+                        options[facetId] = term;
+                        $location.search(facetId,options[facetId]);
                     } else {
                         if(!options[facetId+'[]']){
                             options[facetId+'[]'] = [];
@@ -697,6 +703,7 @@
                 RubedoSearchService.searchByQuery(options).then(function(response){
                     if(response.data.success){
                         me.query = response.data.results.query;
+                        console.log(response.data.results);
                         me.count = response.data.count;
                         me.data =  response.data.results.data;
                         me.facets = response.data.results.facets;
@@ -978,6 +985,9 @@
                     } else if (facetId == 'query') {
                         $location.search('query',null);
                         delete options.query;
+                    } else if(facetId == 'lastupdatetime') {
+                        delete options[facetId];
+                        $location.search(facetId,null);
                     } else {
                         if(angular.isArray(options[facetId+'[]'])){
                             options[facetId+'[]'].splice(options[facetId+'[]'].indexOf(term),1);
@@ -1000,6 +1010,9 @@
                         }
                         options.taxonomies[facetId].push(term);
                         $location.search('taxonomies',JSON.stringify(options.taxonomies));
+                    } else if(facetId == 'lastupdatetime') {
+                        options[facetId] = term;
+                        $location.search(facetId,options[facetId]);
                     } else {
                         if(!options[facetId+'[]']){
                             options[facetId+'[]'] = [];
@@ -1525,7 +1538,7 @@
             me.divClass += ' addthis_vertical_style';
         }
         me.networkClass = function(network){
-          return 'addthis_button_'+network.name+'_follow';
+            return 'addthis_button_'+network.name+'_follow';
         };
         angular.forEach(config, function(value,key){
             if(key != 'disposition' && key != 'small'){

@@ -25,12 +25,16 @@
                 </form>
             </div>
         </div>
-        <div class="panel panel-default" ng-repeat="facet in searchResultsCtrl.facets" ng-if="facet.terms">
-            <div class="panel-heading">{{facet.label}}&nbsp;<span class="badge pull-right">{{facet.total - facet.other}}</span></div>
+        <div class="panel panel-default" ng-repeat="facet in searchResultsCtrl.facets" ng-if="facet.terms || facet.ranges">
+            <div class="panel-heading">{{facet.label}}&nbsp;<span ng-if="facet.total" class="badge pull-right">{{facet.total - facet.other}}</span></div>
             <div class="panel-body">
                 <ul>
-                    <li class="cursor-as-pointer" ng-repeat="term in facet.terms"
+                    <li ng-if="facet.terms" class="cursor-as-pointer" ng-repeat="term in facet.terms"
                         ng-click="searchResultsCtrl.clickOnFacets(facet.id, term.term)">
+                        {{term.label}}&nbsp;({{term.count}})
+                    </li>
+                    <li ng-if="facet.ranges" class="cursor-as-pointer" ng-repeat="term in facet.ranges"
+                        ng-click="searchResultsCtrl.clickOnFacets(facet.id, term.from)">
                         {{term.label}}&nbsp;({{term.count}})
                     </li>
                 </ul>
