@@ -4,5 +4,7 @@
          ng-init="blockConfig = {contentId:blockConfig.introduction}"
             >
     </div>
-    <rubedo-field ng-repeat="field in signUpCtrl.inputFields" ></rubedo-field>
+    <form class="form-horizontal" role="form">
+        <rubedo-field ng-repeat="field in signUpCtrl.inputFields" ></rubedo-field>
+    </form>
 </div>

@@ -1564,6 +1564,7 @@
         var me = this;
         var config = $scope.blockConfig;
         me.inputFields=[ ];
+        $scope.fieldIdPrefix="signUp"
         $scope.fieldEntity={ };
         $scope.fieldInputMode=true;
         console.log(config);
@@ -1572,6 +1573,7 @@
                 function(response){
                     if (response.data.success){
                         me.userType=response.data.userType;
+                        $scope.fieldIdPrefix="signUp"+"_"+me.userType.type;
                         me.userType.fields.unshift({
                             cType:"textfield",
                             config:{
