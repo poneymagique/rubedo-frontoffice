@@ -1,0 +1,13 @@
+<div class="form-group">
+    <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="col-sm-2 control-label">{{field.config.fieldLabel}}</label>
+    <div class="col-sm-10">
+        <input type="number"
+               class="form-control"
+               id="{{fieldIdPrefix+'_'+field.config.name}}"
+               ng-required="!field.config.allowBlank"
+               min="{{field.config.minValue}}"
+               max="{{field.config.maxValue}}"
+               ng-model="fieldEntity[field.config.name]"
+                >
+    </div>
+</div>

@@ -45,7 +45,9 @@
 
     var inputFieldsConfig={
         "textfield":"/components/webtales/rubedo-frontoffice/templates/inputFields/text.html",
-        "Ext.form.field.Text":"/components/webtales/rubedo-frontoffice/templates/inputFields/text.html"
+        "Ext.form.field.Text":"/components/webtales/rubedo-frontoffice/templates/inputFields/text.html",
+        "Ext.form.field.Number":"/components/webtales/rubedo-frontoffice/templates/inputFields/number.html",
+        "numberfield":"/components/webtales/rubedo-frontoffice/templates/inputFields/number.html"
     };
 
     //service for resolving field templates
