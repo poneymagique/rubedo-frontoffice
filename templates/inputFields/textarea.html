@@ -1,15 +1,16 @@
 <div class="form-group">
     <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="col-sm-2 control-label">{{field.config.fieldLabel}}</label>
     <div class="col-sm-10">
-        <input type="{{field.config.vtype=='email'||field.config.vtype=='url' ? field.config.vtype : 'text'}}"
+        <textarea
                class="form-control"
                id="{{fieldIdPrefix+'_'+field.config.name}}"
                ng-required="!field.config.allowBlank"
+               rows="4"
                minLength="{{field.config.minLength}}"
                maxLength="{{field.config.maxLength}}"
                ng-model="fieldEntity[field.config.name]"
                 >
+            </textarea>
         <span ng-if="field.config.tooltip" class="help-block">{{field.config.tooltip}}</span>
     </div>
-
 </div>

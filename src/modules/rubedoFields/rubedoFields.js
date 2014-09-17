@@ -47,7 +47,10 @@
         "textfield":"/components/webtales/rubedo-frontoffice/templates/inputFields/text.html",
         "Ext.form.field.Text":"/components/webtales/rubedo-frontoffice/templates/inputFields/text.html",
         "Ext.form.field.Number":"/components/webtales/rubedo-frontoffice/templates/inputFields/number.html",
-        "numberfield":"/components/webtales/rubedo-frontoffice/templates/inputFields/number.html"
+        "numberfield":"/components/webtales/rubedo-frontoffice/templates/inputFields/number.html",
+        "textarea":"/components/webtales/rubedo-frontoffice/templates/inputFields/textarea.html",
+        "textareafield":"/components/webtales/rubedo-frontoffice/templates/inputFields/textarea.html",
+        "Ext.form.field.TextArea":"/components/webtales/rubedo-frontoffice/templates/inputFields/textarea.html",
     };
 
     //service for resolving field templates

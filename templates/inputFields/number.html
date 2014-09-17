@@ -9,5 +9,6 @@
                max="{{field.config.maxValue}}"
                ng-model="fieldEntity[field.config.name]"
                 >
+        <span ng-if="field.config.tooltip" class="help-block">{{field.config.tooltip}}</span>
     </div>
 </div>
