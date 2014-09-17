@@ -703,7 +703,6 @@
                 RubedoSearchService.searchByQuery(options).then(function(response){
                     if(response.data.success){
                         me.query = response.data.results.query;
-                        console.log(response.data.results);
                         me.count = response.data.count;
                         me.data =  response.data.results.data;
                         me.facets = response.data.results.facets;
@@ -887,8 +886,7 @@
             me.activateSearch = config.activateSearch;
             me.alphabeticIndex =  config.alphabeticIndex;
             var predefinedFacets = config.predefinedFacets==""?{}:JSON.parse(config.predefinedFacets);
-            var facetsId = ['objectType','type','damType','userType','author','userName','lastUpdateTime','query'];
-            console.log(config);
+            var facetsId = ['objectType','type','damType','userType','author','userName','lastupdatetime','query'];
             var defaultOptions = {
                 start: me.start,
                 limit: me.limit,
@@ -1039,7 +1037,6 @@
                                 me.facets.push(facet);
                             }
                         });
-                        console.log(response.data);
                         me.notRemovableTerms = [];
                         me.activeTerms = [];
                         var previousFacetId;
