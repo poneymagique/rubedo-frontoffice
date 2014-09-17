@@ -1539,10 +1539,38 @@
         addthis.toolbox('.addthis_toolbox');
     }]);
 
-    module.controller('SignUpController',['$scope',function($scope){
+    module.controller('SignUpController',['$scope','RubedoUserTypesService', function($scope, RubedoUserTypesService){
         var me = this;
         var config = $scope.blockConfig;
+        me.inputFields=[ ];
         console.log(config);
+        if (config.userType){
+            RubedoUserTypesService.getUserTypeById(config.userType).then(
+                function(response){
+                    if (response.success){
+                        me.userType=response.userType;
+                        me.userType.fields.unshift({
+                            cType:"textfield",
+                            config:{
+                                name:"email",
+                                fieldLabel:"E-mail",
+                                allowBlank:false,
+                                vtype:"email"
+                            }
+                        });
+                        me.userType.fields.unshift({
+                            cType:"textfield",
+                            config:{
+                                name:"name",
+                                fieldLabel:"Name",
+                                allowBlank:false
+                            }
+                        });
+                        me.inputFields=me.userType.fields;
+                    }
+                }
+            );
+        }
     }]);
 
 })();

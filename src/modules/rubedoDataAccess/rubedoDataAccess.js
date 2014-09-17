@@ -270,4 +270,12 @@
         return serviceInstance;
     }]);
 
+    module.factory('RubedoUserTypesService', ['$http',function($http) {
+        var serviceInstance={};
+        serviceInstance.getUserTypeById=function(userTypeId){
+            return ($http.get(config.baseUrl+"/userTypes/"+userTypeId));
+        };
+        return serviceInstance;
+    }]);
+
 })();
