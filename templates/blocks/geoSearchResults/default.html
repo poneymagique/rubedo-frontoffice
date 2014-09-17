@@ -30,11 +30,11 @@
             <div class="panel-body">
                 <ul>
                     <li ng-if="facet.terms" class="cursor-as-pointer" ng-repeat="term in facet.terms"
-                        ng-click="searchResultsCtrl.clickOnFacets(facet.id, term.term)">
+                        ng-click="geoSearchResultsCtrl.clickOnFacets(facet.id, term.term)">
                         {{term.label}}&nbsp;({{term.count}})
                     </li>
                     <li ng-if="facet.ranges" class="cursor-as-pointer" ng-repeat="term in facet.ranges"
-                        ng-click="searchResultsCtrl.clickOnFacets(facet.id, term.from)">
+                        ng-click="geoSearchResultsCtrl.clickOnFacets(facet.id, term.from)">
                         {{term.label}}&nbsp;({{term.count}})
                     </li>
                 </ul>

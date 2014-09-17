@@ -1463,6 +1463,7 @@
                     if(response.data.success){
                         me.query = response.data.results.query;
                         me.count = response.data.count;
+                        console.log(response.data);
                         me.data =  me.preprocessData(response.data.results.Aggregations.buckets);
                         me.facets = response.data.results.facets;
                         me.notRemovableTerms = [];
