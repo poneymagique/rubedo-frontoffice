@@ -43,6 +43,11 @@
         "fieldNotFound":"/components/webtales/rubedo-frontoffice/templates/fields/fieldNotFound.html"
     };
 
+    var inputFieldsConfig={
+        "textfield":"/components/webtales/rubedo-frontoffice/templates/inputFields/text.html",
+        "Ext.form.field.Text":"/components/webtales/rubedo-frontoffice/templates/inputFields/text.html"
+    };
+
     //service for resolving field templates
     module.factory('RubedoFieldTemplateResolver', function() {
         var serviceInstance={};
@@ -51,6 +56,13 @@
                 return (fieldsConfig[type]);
             } else {
                 return (fieldsConfig.fieldNotFound);
+            }
+        };
+        serviceInstance.getInputTemplateByType=function(type){
+            if (inputFieldsConfig[type]){
+                return (inputFieldsConfig[type]);
+            } else {
+                return null;
             }
         };
         return serviceInstance;

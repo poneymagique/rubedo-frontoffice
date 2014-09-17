@@ -352,6 +352,7 @@
     module.controller("RichTextController",["$scope","$sce","RubedoContentsService",function($scope, $sce,RubedoContentsService){
         var me = this;
         var config = $scope.blockConfig;
+        $scope.fieldInputMode=false;
         $scope.$watch('rubedo.fieldEditMode', function(newValue) {
             $scope.fieldEditMode=me.content&&me.content.readOnly ? false : newValue;
 
@@ -395,6 +396,7 @@
     module.controller("ContentDetailController",["$scope","RubedoContentsService",function($scope, RubedoContentsService){
         var me = this;
         var config = $scope.blockConfig;
+        $scope.fieldInputMode=false;
         $scope.$watch('rubedo.fieldEditMode', function(newValue) {
             $scope.fieldEditMode=me.content&&me.content.readOnly ? false : newValue;
 
@@ -1275,11 +1277,6 @@
                 "bounds_changed": function (map) {
                     clearTimeout(me.mapTimer);
                     me.mapTimer = setTimeout(function() {
-                        var bounds=map.getBounds();
-                        options.inflat=bounds.getSouthWest().lat();
-                        options.suplat=bounds.getNorthEast().lat();
-                        options.inflon=bounds.getSouthWest().lng();
-                        options.suplon=bounds.getNorthEast().lng();
                         me.searchByQuery(options);
                     }, 300);
                 }
@@ -1418,35 +1415,49 @@
             me.preprocessData=function(data){
                 var refinedData=[ ];
                 angular.forEach(data,function(item){
-                    if (item['fields.position.location.coordinates']&&item['fields.position.location.coordinates'][0]){
-                        var coords=item['fields.position.location.coordinates'][0].split(",");
-                        if (coords[0]&&coords[1]){
-                            refinedData.push({
-                                coordinates:{
-                                    latitude:coords[0],
-                                    longitude:coords[1]
-                                },
-                                id:item.id,
-                                objectType:item.objectType,
-                                title:item.title,
-                                summary:item.summary,
-                                type:item.type,
-                                author:item.authorName,
-                                markerOptions:{
-                                    title:item.title
+//                    if (item['fields.position.location.coordinates']&&item['fields.position.location.coordinates'][0]){
+//                        var coords=item['fields.position.location.coordinates'][0].split(",");
+//                        if (coords[0]&&coords[1]){
+//                            refinedData.push({
+//                                coordinates:{
+//                                    latitude:coords[0],
+//                                    longitude:coords[1]
+//                                },
+//                                id:item.id,
+//                                objectType:item.objectType,
+//                                title:item.title,
+//                                summary:item.summary,
+//                                type:item.type,
+//                                author:item.authorName,
+//                                markerOptions:{
+//                                    title:item.title
+//                                }
+//                            });
+//                        }
+//                    }
+                    refinedData.push({
+                        id:item.key,
+                        coordinates:{
+                            latitude:item.medlat,
+                            longitude:item.medlon
+                        },
+                        markerOptions:{
                                 }
-                            });
-                        }
-                    }
+                    });
                 });
                 return refinedData;
             };
             me.searchByQuery = function(options){
+                var bounds=me.mapControl.getGMap().getBounds();
+                options.inflat=bounds.getSouthWest().lat();
+                options.suplat=bounds.getNorthEast().lat();
+                options.inflon=bounds.getSouthWest().lng();
+                options.suplon=bounds.getNorthEast().lng();
                 RubedoSearchService.searchGeo(options).then(function(response){
                     if(response.data.success){
                         me.query = response.data.results.query;
                         me.count = response.data.count;
-                        me.data =  me.preprocessData(response.data.results.data);
+                        me.data =  me.preprocessData(response.data.results.Aggregations.buckets);
                         me.facets = response.data.results.facets;
                         me.notRemovableTerms = [];
                         me.activeTerms = [];
@@ -1553,12 +1564,14 @@
         var me = this;
         var config = $scope.blockConfig;
         me.inputFields=[ ];
+        $scope.fieldEntity={ };
+        $scope.fieldInputMode=true;
         console.log(config);
         if (config.userType){
             RubedoUserTypesService.getUserTypeById(config.userType).then(
                 function(response){
-                    if (response.success){
-                        me.userType=response.userType;
+                    if (response.data.success){
+                        me.userType=response.data.userType;
                         me.userType.fields.unshift({
                             cType:"textfield",
                             config:{
