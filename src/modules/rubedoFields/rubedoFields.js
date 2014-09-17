@@ -51,6 +51,8 @@
         "textarea":"/components/webtales/rubedo-frontoffice/templates/inputFields/textarea.html",
         "textareafield":"/components/webtales/rubedo-frontoffice/templates/inputFields/textarea.html",
         "Ext.form.field.TextArea":"/components/webtales/rubedo-frontoffice/templates/inputFields/textarea.html",
+        "CKEField":"/components/webtales/rubedo-frontoffice/templates/inputFields/richText.html",
+        "Rubedo.view.CKEField":"/components/webtales/rubedo-frontoffice/templates/inputFields/richText.html"
     };
 
     //service for resolving field templates
@@ -129,13 +131,17 @@
             filebrowserImageBrowseUrl:"/backoffice/ext-finder?type=Image",
             filebrowserImageUploadUrl:null
         };
-
-        $scope.$watch("fieldEntity."+$scope.field.config.name, function(newValue) {
-                me.html=$sce.trustAsHtml(jQuery.htmlClean(newValue, {
-                    allowedAttributes:[["style"]],
-                    format: true
-                }));
-        });
+        if (!$scope.fieldInputMode){
+            $scope.$watch("fieldEntity."+$scope.field.config.name, function(newValue) {
+                    if (!newValue){
+                        newValue="";
+                    }
+                    me.html=$sce.trustAsHtml(jQuery.htmlClean(newValue, {
+                        allowedAttributes:[["style"]],
+                        format: true
+                    }));
+            });
+        }
     }]);
 
     module.controller("ExternalMediaFieldController",['$scope','$http','$sce',function($scope,$http,$sce){
