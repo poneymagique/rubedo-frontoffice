@@ -1,0 +1,7 @@
+<div ng-controller="SignUpController as signUpCtrl">
+    <div ng-if="blockConfig.introduction"
+         ng-include="rubedo.blockTemplateResolver.getTemplate('richText',{ })"
+         ng-init="blockConfig = {contentId:blockConfig.introduction}"
+            >
+    </div>
+</div>

@@ -34,7 +34,8 @@
         geoSearchResults:"/components/webtales/rubedo-frontoffice/templates/blocks/geoSearchResults.html",
         addThis:"/components/webtales/rubedo-frontoffice/templates/blocks/addThisShare.html",
         resource:"/components/webtales/rubedo-frontoffice/templates/blocks/mediaDownload.html",
-        addThisFollow:"/components/webtales/rubedo-frontoffice/templates/blocks/addThisFollow.html"
+        addThisFollow:"/components/webtales/rubedo-frontoffice/templates/blocks/addThisFollow.html",
+        signUp:"/components/webtales/rubedo-frontoffice/templates/blocks/signUp.html"
     };
 
     var responsiveClasses = {
@@ -1536,6 +1537,12 @@
             }
         });
         addthis.toolbox('.addthis_toolbox');
+    }]);
+
+    module.controller('SignUpController',['$scope',function($scope){
+        var me = this;
+        var config = $scope.blockConfig;
+        console.log(config);
     }]);
 
 })();
