@@ -1213,6 +1213,13 @@
                 zoom:config.zoom ? config.zoom : 14
             };
             me.geocoder = new google.maps.Geocoder();
+            //clustering options
+            me.clusterOptions={
+                batchSize : 20000,
+                averageCenter : false,
+                gridSize : 60,
+                batchSizeIE : 20000
+            };
             //set initial map center
             if (config.useLocation&&navigator.geolocation){
                 navigator.geolocation.getCurrentPosition(function(position) {
@@ -1242,7 +1249,24 @@
                     longitude:config.centerLongitude
                 };
             }
-
+            //map control object recieves several control methods upon map render
+            me.mapControl={ };
+            //map events
+            me.mapEvents = {
+                "bounds_changed": function (map) {
+                    clearTimeout(me.mapTimer);
+                    me.mapTimer = setTimeout(function() {
+                        console.log(map.getBounds());
+                    }, 300);
+                }
+            };
+            //marker events and timer
+            me.mapTimer = null;
+            me.markerEvents = {
+                click: function (gMarker, eventName, model) {
+                    console.log(model);
+                }
+            };
             if (config.activateSearch){
                 if (!config.displayMode){
                     config.displayMode="default";

@@ -1,10 +1,16 @@
-<google-map center="geoSearchResultsCtrl.map.center" zoom="geoSearchResultsCtrl.map.zoom" draggable="true">
+<google-map center="geoSearchResultsCtrl.map.center"
+            zoom="geoSearchResultsCtrl.map.zoom"
+            events="geoSearchResultsCtrl.mapEvents"
+            control="geoSearchResultsCtrl.mapControl"
+            draggable="true">
     <markers
             models="geoSearchResultsCtrl.data"
             idKey="'id'"
             coords="'coordinates'"
             options="'markerOptions'"
             doCluster="true"
+            clusterOptions="geoSearchResultsCtrl.clusterOptions"
+            events="geoSearchResultsCtrl.markerEvents"
             >
     </markers>
 </google-map>
