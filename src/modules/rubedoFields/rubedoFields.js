@@ -56,7 +56,9 @@
         "checkboxfield":"/components/webtales/rubedo-frontoffice/templates/inputFields/checkbox.html",
         "Ext.form.field.Checkbox":"/components/webtales/rubedo-frontoffice/templates/inputFields/checkbox.html",
         "combobox":"/components/webtales/rubedo-frontoffice/templates/inputFields/combobox.html",
-        "Ext.form.field.ComboBox":"/components/webtales/rubedo-frontoffice/templates/inputFields/combobox.html"
+        "Ext.form.field.ComboBox":"/components/webtales/rubedo-frontoffice/templates/inputFields/combobox.html",
+        "radiogroup":"/components/webtales/rubedo-frontoffice/templates/inputFields/radioGroup.html",
+        "Ext.form.RadioGroup":"/components/webtales/rubedo-frontoffice/templates/inputFields/radioGroup.html"
     };
 
     //service for resolving field templates
