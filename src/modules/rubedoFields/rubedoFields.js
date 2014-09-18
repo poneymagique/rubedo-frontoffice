@@ -37,7 +37,7 @@
         "treepicker":"/components/webtales/rubedo-frontoffice/templates/fields/pageLink.html",
         "Ext.ux.TreePicker":"/components/webtales/rubedo-frontoffice/templates/fields/pageLink.html",
         "checkboxfield":"/components/webtales/rubedo-frontoffice/templates/fields/checkbox.html",
-        "Ext.form.Checkbox":"/components/webtales/rubedo-frontoffice/templates/fields/checkbox.html",
+        "Ext.form.field.Checkbox":"/components/webtales/rubedo-frontoffice/templates/fields/checkbox.html",
         "ImagePickerField":"/components/webtales/rubedo-frontoffice/templates/fields/media.html",
         "Rubedo.view.ImagePickerField":"/components/webtales/rubedo-frontoffice/templates/fields/media.html",
         "fieldNotFound":"/components/webtales/rubedo-frontoffice/templates/fields/fieldNotFound.html"
@@ -52,7 +52,9 @@
         "textareafield":"/components/webtales/rubedo-frontoffice/templates/inputFields/textarea.html",
         "Ext.form.field.TextArea":"/components/webtales/rubedo-frontoffice/templates/inputFields/textarea.html",
         "CKEField":"/components/webtales/rubedo-frontoffice/templates/inputFields/richText.html",
-        "Rubedo.view.CKEField":"/components/webtales/rubedo-frontoffice/templates/inputFields/richText.html"
+        "Rubedo.view.CKEField":"/components/webtales/rubedo-frontoffice/templates/inputFields/richText.html",
+        "checkboxfield":"/components/webtales/rubedo-frontoffice/templates/inputFields/checkbox.html",
+        "Ext.form.field.Checkbox":"/components/webtales/rubedo-frontoffice/templates/inputFields/checkbox.html"
     };
 
     //service for resolving field templates
