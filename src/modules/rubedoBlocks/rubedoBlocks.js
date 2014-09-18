@@ -35,7 +35,8 @@
         addThis:"/components/webtales/rubedo-frontoffice/templates/blocks/addThisShare.html",
         resource:"/components/webtales/rubedo-frontoffice/templates/blocks/mediaDownload.html",
         addThisFollow:"/components/webtales/rubedo-frontoffice/templates/blocks/addThisFollow.html",
-        signUp:"/components/webtales/rubedo-frontoffice/templates/blocks/signUp.html"
+        signUp:"/components/webtales/rubedo-frontoffice/templates/blocks/signUp.html",
+        imageMap:"/components/webtales/rubedo-frontoffice/templates/blocks/imageMap.html"
     };
 
     var responsiveClasses = {
@@ -1206,8 +1207,9 @@
         }
         me.loadTwitter = function(){
             window.twttr = (function (d, s, id) {
-                var t, js, fjs = d.getElementsByTagName(s)[0];
-                js = d.createElement(s); js.id = id; js.src= "https://platform.twitter.com/widgets.js";
+                var t, js, fjs = angular.element(s)[0];
+                if (d.getElementById(id)) angular.element('#'+id).remove();
+                js = d.createElement(s); js.id = id;js.src= "https://platform.twitter.com/widgets.js";
                 fjs.parentNode.insertBefore(js, fjs);
                 return window.twttr || (t = { _e: [], ready: function (f) { t._e.push(f) } });
             }(document, "script", "twitter-wjs"));
@@ -1571,7 +1573,7 @@
         var me = this;
         var config = $scope.blockConfig;
         me.inputFields=[ ];
-        $scope.fieldIdPrefix="signUp"
+        $scope.fieldIdPrefix="signUp";
         $scope.fieldEntity={ };
         $scope.fieldInputMode=true;
         console.log(config);
@@ -1603,6 +1605,39 @@
                 }
             );
         }
+    }]);
+
+    module.controller('GalleryController',['$scope',function($scope){
+
+    }]);
+
+    module.controller('ImageMapController',['$scope','$element','RubedoMediaService',function($scope,$element,RubedoMediaService){
+        var me = this;
+        var config = $scope.blockConfig;
+        var map = angular.fromJson(config.map);
+        RubedoMediaService.getMediaById(config.image).then(function(response){
+            if(response.data.success){
+                me.image =  response.data.media;
+            }
+        });
+        me.prefix = config.image+'map';
+        angular.forEach(map, function(mapElement, key){
+            if(mapElement.type == 'polygon'){
+                map[key]['type'] = 'poly';
+            }
+            if(mapElement.type == 'rect'){
+                map[key]['params']['x1'] = mapElement.params.x + mapElement.params.width;
+                map[key]['params']['y1'] = mapElement.params.y + mapElement.params.height;
+                map[key]['coords'] = mapElement.params.x+','+mapElement.params.y+','+map[key]['params']['x1']+','+map[key]['params']['y1'];
+            } else {
+                map[key]['coords'] = '';
+                angular.forEach(mapElement.params,function(value){
+                    map[key]['coords'] += value+',';
+                });
+            }
+        });
+        me.map = map;
+        $element.find('img[usemap]').rwdImageMaps();
     }]);
 
 })();

@@ -1,7 +1,7 @@
 <div ng-controller="TwitterController as twitterCtrl">
-    <a class="twitter-timeline" ng-href="{{'https://twitter.com/'+twitterCtrl.account}}" data-widget-id="{{ twitterCtrl.widgetId }}"
-       data-screen-name="{{ twitterCtrl.tweetMode('tweets') }}" data-favorites-screen-name="{{ twitterCtrl.tweetMode('favorites') }}" data-tweet-limit="{{twitterCtrl.tweetLimit}}"
-       data-theme="{{twitterCtrl.theme}}" data-chrome="{{twitterCtrl.chrome}}">
+    <a class="twitter-timeline" ng-href="{{'https://twitter.com/'+twitterCtrl.account}}" ng-attr-data-widget-id="{{ twitterCtrl.widgetId }}"
+       ng-attr-data-screen-name="{{ twitterCtrl.tweetMode('tweets') }}" ng-attr-data-favorites-screen-name="{{ twitterCtrl.tweetMode('favorites') }}" ng-attr-data-tweet-limit="{{twitterCtrl.tweetLimit}}"
+       ng-attr-data-theme="{{twitterCtrl.theme}}" ng-attr-data-chrome="{{twitterCtrl.chrome}}">
         Tweets by @{{twitterCtrl.account}}
     </a>
 </div>
