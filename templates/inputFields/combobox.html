@@ -1,0 +1,21 @@
+<div class="form-group" ng-controller="ComboboxController as comboboxCtrl">
+    <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="col-sm-2 control-label">{{field.config.fieldLabel}}</label>
+    <div class="col-sm-10">
+        <select ng-if="field.config.multiSelect"
+               class="form-control"
+               multiple="multiple"
+               id="{{fieldIdPrefix+'_'+field.config.name}}"
+               ng-required="!field.config.allowBlank"
+               ng-options="s.valeur as s.nom for s in field.store.data"
+               ng-model="fieldEntity[field.config.name]"
+                ></select>
+        <select ng-if="!field.config.multiSelect"
+                class="form-control"
+                id="{{fieldIdPrefix+'_'+field.config.name}}"
+                ng-required="!field.config.allowBlank"
+                ng-options="s.valeur as s.nom for s in field.store.data"
+                ng-model="fieldEntity[field.config.name]"
+                ></select>
+        <span ng-if="field.config.tooltip" class="help-block">{{field.config.tooltip}}</span>
+    </div>
+</div>

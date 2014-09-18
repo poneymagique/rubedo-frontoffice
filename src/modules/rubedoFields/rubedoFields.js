@@ -54,7 +54,9 @@
         "CKEField":"/components/webtales/rubedo-frontoffice/templates/inputFields/richText.html",
         "Rubedo.view.CKEField":"/components/webtales/rubedo-frontoffice/templates/inputFields/richText.html",
         "checkboxfield":"/components/webtales/rubedo-frontoffice/templates/inputFields/checkbox.html",
-        "Ext.form.field.Checkbox":"/components/webtales/rubedo-frontoffice/templates/inputFields/checkbox.html"
+        "Ext.form.field.Checkbox":"/components/webtales/rubedo-frontoffice/templates/inputFields/checkbox.html",
+        "combobox":"/components/webtales/rubedo-frontoffice/templates/inputFields/combobox.html",
+        "Ext.form.field.ComboBox":"/components/webtales/rubedo-frontoffice/templates/inputFields/combobox.html"
     };
 
     //service for resolving field templates
@@ -195,6 +197,9 @@
 
     module.controller("ComboboxController",['$scope',function($scope){
         var me=this;
+        if (!$scope.field.store){
+            $scope.field.store=$scope.field.config.store;
+        }
         var items=$scope.field.store.data;
         var itemsObj={};
         if (!angular.isArray($scope.fieldEntity[$scope.field.config.name])&&$scope.field.config.multiSelect){
