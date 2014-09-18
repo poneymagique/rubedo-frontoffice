@@ -1243,6 +1243,36 @@
                 gridSize : 60,
                 batchSizeIE : 20000
             };
+            //api clustering options
+            me.apiClusterOptions={
+                batchSize : 20000,
+                averageCenter : false,
+                minimumClusterSize:1,
+                calculator:function (markers, numStyles) {
+                    var index = 0;
+                    var count = 0;
+                    angular.forEach(markers,function(marker){
+                        if (marker&&marker.counter){
+                            count=count+marker.counter;
+                        }
+                    });
+
+
+                    var dv = count;
+                    while (dv !== 0) {
+                        dv = parseInt(dv / 10, 10);
+                        index++;
+                    }
+
+                    index = Math.min(index, numStyles);
+                    return {
+                        text: count,
+                        index: index
+                    };
+                },
+                gridSize : 60,
+                batchSizeIE : 20000
+            };
             //set initial map center
             if (config.useLocation&&navigator.geolocation){
                 navigator.geolocation.getCurrentPosition(function(position) {
@@ -1421,38 +1451,46 @@
                 options.start = me.start;
             };
             me.preprocessData=function(data){
-                var refinedData=[ ];
-                angular.forEach(data,function(item){
-//                    if (item['fields.position.location.coordinates']&&item['fields.position.location.coordinates'][0]){
-//                        var coords=item['fields.position.location.coordinates'][0].split(",");
-//                        if (coords[0]&&coords[1]){
-//                            refinedData.push({
-//                                coordinates:{
-//                                    latitude:coords[0],
-//                                    longitude:coords[1]
-//                                },
-//                                id:item.id,
-//                                objectType:item.objectType,
-//                                title:item.title,
-//                                summary:item.summary,
-//                                type:item.type,
-//                                author:item.authorName,
-//                                markerOptions:{
-//                                    title:item.title
-//                                }
-//                            });
-//                        }
-//                    }
-                    refinedData.push({
-                        id:item.key,
-                        coordinates:{
-                            latitude:item.medlat,
-                            longitude:item.medlon
-                        },
-                        markerOptions:{
-                                }
+                var refinedData=[];
+                if (data.count>me.limit){
+                    me.apiClusterMode=true;
+                    angular.forEach(data.results.Aggregations.buckets,function(item){
+                        refinedData.push({
+                            id:item.key,
+                            coordinates:{
+                                latitude:item.medlat,
+                                longitude:item.medlon
+                            },
+                            markerOptions:{
+                                counter:item["doc_count"]
+                            }
+                        });
                     });
-                });
+                } else {
+                    me.apiClusterMode=false;
+                    angular.forEach(data.results.data,function(item){
+                        if (item['fields.position.location.coordinates']&&item['fields.position.location.coordinates'][0]){
+                            var coords=item['fields.position.location.coordinates'][0].split(",");
+                            if (coords[0]&&coords[1]){
+                                refinedData.push({
+                                    coordinates:{
+                                        latitude:coords[0],
+                                        longitude:coords[1]
+                                    },
+                                    id:item.id,
+                                    objectType:item.objectType,
+                                    title:item.title,
+                                    summary:item.summary,
+                                    type:item.type,
+                                    author:item.authorName,
+                                    markerOptions:{
+                                        title:item.title
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
                 return refinedData;
             };
             me.searchByQuery = function(options){
@@ -1465,8 +1503,7 @@
                     if(response.data.success){
                         me.query = response.data.results.query;
                         me.count = response.data.count;
-                        console.log(response.data);
-                        me.data =  me.preprocessData(response.data.results.Aggregations.buckets);
+                        me.data =  me.preprocessData(response.data);
                         me.facets = response.data.results.facets;
                         me.notRemovableTerms = [];
                         me.activeTerms = [];

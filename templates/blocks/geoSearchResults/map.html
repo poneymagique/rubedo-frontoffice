@@ -3,20 +3,24 @@
             events="geoSearchResultsCtrl.mapEvents"
             control="geoSearchResultsCtrl.mapControl"
             draggable="true">
-    <!--<markers-->
-            <!--models="geoSearchResultsCtrl.data"-->
-            <!--idKey="'id'"-->
-            <!--coords="'coordinates'"-->
-            <!--options="'markerOptions'"-->
-            <!--doCluster="true"-->
-            <!--clusterOptions="geoSearchResultsCtrl.clusterOptions"-->
-            <!--events="geoSearchResultsCtrl.markerEvents"-->
-            <!-->-->
-    <!--</markers>-->
     <markers
+            ng-if="!geoSearchResultsCtrl.apiClusterMode"
             models="geoSearchResultsCtrl.data"
             idKey="'id'"
             coords="'coordinates'"
+            options="'markerOptions'"
+            doCluster="true"
+            clusterOptions="geoSearchResultsCtrl.clusterOptions"
+            events="geoSearchResultsCtrl.markerEvents"
+            >
+    </markers>
+    <markers ng-if="geoSearchResultsCtrl.apiClusterMode"
+            models="geoSearchResultsCtrl.data"
+            idKey="'id'"
+            coords="'coordinates'"
+            doCluster="true"
+            clusterOptions="geoSearchResultsCtrl.apiClusterOptions"
+            options="'markerOptions'"
             >
     </markers>
 </google-map>
