@@ -23,7 +23,8 @@
 
     });
 
-    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService','RubedoFieldTemplateResolver','snapRemote','RubedoPageComponents', function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService,RubedoFieldTemplateResolver,snapRemote, RubedoPageComponents){
+    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService','RubedoFieldTemplateResolver','snapRemote','RubedoPageComponents','RubedoTranslationsService',
+        function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService,RubedoFieldTemplateResolver,snapRemote, RubedoPageComponents, RubedoTranslationsService){
         //set context and page-wide services
         var me=this;
         me.snapOpts={
@@ -33,6 +34,21 @@
         snapRemote.getSnapper().then(function(snapper) {
             snapper.disable();
         });
+        me.translations={ };
+        RubedoTranslationsService.getTranslations().then(
+            function(response){
+                if (response.data.success){
+                    me.translations=response.data.translations;
+                }
+            }
+        );
+        me.translate=function(transKey,fallbackString){
+            if (me.translations[transKey]){
+                return (me.translations[transKey]);
+            } else {
+                return (fallbackString);
+            }
+        };
         me.current=current;
         me.blockTemplateResolver=RubedoBlockTemplateResolver;
         me.fieldTemplateResolver=RubedoFieldTemplateResolver;

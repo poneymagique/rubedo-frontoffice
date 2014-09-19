@@ -278,4 +278,16 @@
         return serviceInstance;
     }]);
 
+    module.factory('RubedoTranslationsService', ['$http',function($http) {
+        var serviceInstance={};
+        serviceInstance.getTranslations=function(){
+            return ($http.get(config.baseUrl+"/translations",{
+                params:{
+                    lang:window.location.pathname.split("/")[1]
+                }
+            }));
+        };
+        return serviceInstance;
+    }]);
+
 })();
