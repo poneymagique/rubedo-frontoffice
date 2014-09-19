@@ -3,6 +3,10 @@
             events="geoSearchResultsCtrl.mapEvents"
             control="geoSearchResultsCtrl.mapControl"
             draggable="true">
+    <map-control ng-if="geoSearchResultsCtrl.activatePlacesSearch"
+                 template="{{geoSearchResultsCtrl.placesSearchTemplate}}"
+            >
+    </map-control>
     <markers
             ng-if="!geoSearchResultsCtrl.apiClusterMode"
             models="geoSearchResultsCtrl.data"
@@ -23,9 +27,5 @@
             options="'markerOptions'"
             >
     </markers>
-    <map-control ng-if="geoSearchResultsCtrl.activatePlacesSearch"
-            template="{{geoSearchResultsCtrl.placesSearchTemplate}}"
-            >
 
-    </map-control>
 </google-map>
