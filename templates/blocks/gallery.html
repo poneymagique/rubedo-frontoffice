@@ -1,3 +1,11 @@
 <div ng-controller="GalleryController as galleryCtrl">
+    <div ng-repeat="image in galleryCtrl.images" class="pull-left thumbnail" ng-style="{width:galleryCtrl.width}">
+        <a href data-toggle="modal" ng-click="galleryCtrl.loadModal()">
+            <img class="img-rounded" ng-src="{{image.thumbnailUrl}}" alt=""/>
+        </a>
+        <div class="caption" style="text-overflow: ellipsis">
+            {{image.title}}
+        </div>
+    </div>
 
 </div>

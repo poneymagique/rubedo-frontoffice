@@ -55,10 +55,10 @@
         var serviceInstance = {};
         serviceInstance.addFallbackLang=function(fallbackLang){
             config.lang=config.lang+'-'+fallbackLang;
-        }
+        };
         serviceInstance.changeLang =  function(lang){
             config.lang = lang;
-        }
+        };
         return serviceInstance;
     }]);
 
@@ -266,6 +266,11 @@
         var serviceInstance={};
         serviceInstance.getMediaById=function(mediaId){
             return ($http.get(config.baseUrl+"/media/"+mediaId));
+        };
+        serviceInstance.getMediaByQuery=function(options){
+            return ($http.get(config.baseUrl+"/media", {
+                params: options
+            }));
         };
         return serviceInstance;
     }]);

@@ -1665,8 +1665,28 @@
         }
     }]);
 
-    module.controller('GalleryController',['$scope',function($scope){
-
+    module.controller('GalleryController',['$scope','RubedoMediaService',function($scope,RubedoMediaService){
+        var me = this;
+        var config = $scope.blockConfig;
+        var prefix = 'gallery_'+$scope.block.id;
+        console.log(config);
+        var options = {
+            query: config.query,
+            start: 0,
+            limit: 8,
+            pageWorkspace: $scope.rubedo.current.page.workspace,
+            imageThumbnailHeight: config.imageThumbnailHeight?config.imageThumbnailHeight:100,
+            imageThumbnailWidth: config.imageThumbnailWidth?config.imageThumbnailWidth:100
+        };
+        me.width = options.imageThumbnailWidth;
+        me.getMedia = function(options){
+            RubedoMediaService.getMediaByQuery(options).then(function(response){
+                if(response.data.success){
+                    me.images = response.data.media.data;
+                }
+            });
+        };
+        me.getMedia(options);
     }]);
 
     module.controller('ImageMapController',['$scope','$element','RubedoMediaService',function($scope,$element,RubedoMediaService){
