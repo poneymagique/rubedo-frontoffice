@@ -23,4 +23,9 @@
             options="'markerOptions'"
             >
     </markers>
+    <map-control ng-if="geoSearchResultsCtrl.activatePlacesSearch"
+            template="{{geoSearchResultsCtrl.placesSearchTemplate}}"
+            >
+
+    </map-control>
 </google-map>

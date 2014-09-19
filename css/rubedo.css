@@ -34,3 +34,7 @@
 .angular-google-map-container {
     height: 500px;
 }
+.rubedo-places-search{
+    max-width: 300px;
+    margin-top: 10px;
+}

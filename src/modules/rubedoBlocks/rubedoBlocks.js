@@ -1217,8 +1217,8 @@
         me.loadTwitter();
     }]);
 
-    module.controller("GeoSearchResultsController",["$scope","$location","$routeParams","$compile","RubedoSearchService",
-        function($scope,$location,$routeParams,$compile,RubedoSearchService){
+    module.controller("GeoSearchResultsController",["$scope","$location","$routeParams","$compile","RubedoSearchService","$element",
+        function($scope,$location,$routeParams,$compile,RubedoSearchService,$element){
             var me = this;
             var config = $scope.blockConfig;
             console.log(config);
@@ -1236,6 +1236,11 @@
                 zoom:config.zoom ? config.zoom : 14
             };
             me.geocoder = new google.maps.Geocoder();
+            //places search
+            if (config.showPlacesSearch){
+                me.activatePlacesSearch=true;
+                me.placesSearchTemplate="/components/webtales/rubedo-frontoffice/templates/blocks/geoSearchResults/placesSearch.html";
+            }
             //clustering options
             me.clusterOptions={
                 batchSize : 20000,
@@ -1533,6 +1538,22 @@
                 })
             };
             parseQueryParamsToOptions();
+            if (me.activatePlacesSearch){
+                setTimeout(function(){
+                    var input=$element.find(".rubedo-places-search");
+                    var searchBox = new google.maps.places.SearchBox(input[0]);
+                    google.maps.event.addListener(searchBox, 'places_changed', function() {
+                        var places = searchBox.getPlaces();
+                        me.mapControl.getGMap().setCenter(places[0].geometry.location);
+                        if (config.zoomOnAddress) {
+                            me.mapControl.getGMap().setZoom(config.zoomOnAddress);
+                        } else {
+                            me.mapControl.getGMap().setZoom(14);
+                        }
+
+                    });
+                },1200);
+            }
         }]);
 
     module.controller('AddThisShareController',['$scope',function($scope){
