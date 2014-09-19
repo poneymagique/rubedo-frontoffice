@@ -1461,7 +1461,7 @@
                     me.apiClusterMode=true;
                     angular.forEach(data.results.Aggregations.buckets,function(item){
                         refinedData.push({
-                            id:item.key,
+                            id:item.key+item["doc_count"],
                             coordinates:{
                                 latitude:item.medlat,
                                 longitude:item.medlon
