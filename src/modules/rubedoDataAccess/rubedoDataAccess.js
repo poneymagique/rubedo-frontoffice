@@ -257,7 +257,17 @@
                     user:user
                 }
             }));
-
+        };
+        serviceInstance.createUser=function(fields,userType){
+            return ($http({
+                url:config.baseUrl+"/users",
+                method:"POST",
+                data : {
+                    fields:fields,
+                    usertype:userType,
+                    currentUrl:window.location.href
+                }
+            }));
         };
         return serviceInstance;
     }]);

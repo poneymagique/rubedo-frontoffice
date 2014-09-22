@@ -1635,7 +1635,7 @@
         addthis.toolbox('.addthis_toolbox');
     }]);
 
-    module.controller('SignUpController',['$scope','RubedoUserTypesService', function($scope, RubedoUserTypesService){
+    module.controller('SignUpController',['$scope','RubedoUserTypesService','RubedoUsersService', function($scope, RubedoUserTypesService, RubedoUsersService){
         var me = this;
         var config = $scope.blockConfig;
         me.inputFields=[ ];
@@ -1648,9 +1648,17 @@
             me.signupError=null;
             if (config.collectPassword&&$scope.fieldEntity.confirmPassword!=$scope.fieldEntity.password){
                 me.signupError="Passwords do not match.";
-                return false;
+                return;
             }
-            console.log($scope.fieldEntity);
+            var fields=angular.copy($scope.fieldEntity);
+            delete (fields.confirmPassword);
+            fields.login=fields.email;
+            RubedoUsersService.createUser(fields,config.userType).then(
+                function(response){console.log(response);},
+                function(response){console.log(response);}
+            );
+
+
         };
         if (config.userType){
             RubedoUserTypesService.getUserTypeById(config.userType).then(
