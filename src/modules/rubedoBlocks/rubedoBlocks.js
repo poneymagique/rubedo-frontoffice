@@ -643,6 +643,7 @@
                 return res;
             };
             me.clickOnFacets =  function(facetId,term){
+                console.log(facetId,term);
                 var del = false;
                 angular.forEach(me.activeTerms,function(activeTerm){
                     if(!del){
