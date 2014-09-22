@@ -305,4 +305,16 @@
         return serviceInstance;
     }]);
 
+    module.factory('RubedoContactService', ['$http',function($http) {
+        var serviceInstance={};
+        serviceInstance.sendContact=function(payload){
+            return ($http({
+                url:config.baseUrl+"/contact",
+                method:"POST",
+                data : payload
+            }));
+        };
+        return serviceInstance;
+    }]);
+
 })();

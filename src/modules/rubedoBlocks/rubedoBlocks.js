@@ -1784,7 +1784,7 @@
         $element.find('img[usemap]').rwdImageMaps();
     }]);
 
-    module.controller('ContactController',['$scope',function($scope){
+    module.controller('ContactController',['$scope','RubedoContactService',function($scope,RubedoContactService){
         var me = this;
         var config = $scope.blockConfig;
         me.contactData={ };
@@ -1794,7 +1794,29 @@
         }
         me.submit=function(){
             me.contactError=null;
-            console.log(me.contactData);
+            var contactSnap=angular.copy(me.contactData);
+            var payload={
+                mailingListId:config.mailingListId,
+                from:contactSnap.email,
+                subject:contactSnap.subject
+            };
+            delete (contactSnap.email);
+            delete (contactSnap.subject);
+            payload.fields=contactSnap;
+            RubedoContactService.sendContact(payload).then(
+                function(response){
+                    if (response.data.success){
+                        me.contactData={ };
+                        me.showForm=false;
+                        me.showConfirmMessage=true;
+                    } else {
+                        me.contactError=response.data.message;
+                    }
+                },
+                function(response){
+                    me.contactError=response.data.message;
+                }
+            );
         };
 
     }]);
