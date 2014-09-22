@@ -282,6 +282,11 @@
                 params: options
             }));
         };
+        serviceInstance.getProtectedMediaById = function(options){
+            return ($http.get(config.baseUrl+"/media/protected", {
+                params: options
+            }));
+        };
         return serviceInstance;
     }]);
 

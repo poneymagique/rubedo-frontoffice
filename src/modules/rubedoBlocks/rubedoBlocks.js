@@ -37,7 +37,8 @@
         addThisFollow:"/components/webtales/rubedo-frontoffice/templates/blocks/addThisFollow.html",
         signUp:"/components/webtales/rubedo-frontoffice/templates/blocks/signUp.html",
         imageMap:"/components/webtales/rubedo-frontoffice/templates/blocks/imageMap.html",
-        contact:"/components/webtales/rubedo-frontoffice/templates/blocks/contact.html"
+        contact:"/components/webtales/rubedo-frontoffice/templates/blocks/contact.html",
+        protectedResource:"/components/webtales/rubedo-frontoffice/templates/blocks/mediaProtectedDownload.html"
     };
 
     var responsiveClasses = {
@@ -643,7 +644,6 @@
                 return res;
             };
             me.clickOnFacets =  function(facetId,term){
-                console.log(facetId,term);
                 var del = false;
                 angular.forEach(me.activeTerms,function(activeTerm){
                     if(!del){
@@ -1666,7 +1666,6 @@
             RubedoUserTypesService.getUserTypeById(config.userType).then(
                 function(response){
                     if (response.data.success){
-                        me.showForm=true;
                         me.userType=response.data.userType;
                         $scope.fieldIdPrefix="signUp"+"_"+me.userType.type;
                         if (config.collectPassword){
@@ -1736,7 +1735,6 @@
                 if(response.data.success){
                     me.count = response.data.count;
                     me.images = response.data.media.data;
-                    console.log(me.images);
                 }
             });
         };
@@ -1819,6 +1817,18 @@
                 }
             );
         };
+    }]);
 
+    module.controller('MediaProtectedDownloadController',['$scope','RubedoMediaService',function($scope,RubedoMediaService){
+        var me = this;
+        var config = $scope.blockConfig;
+        console.log(config);
+        var options = {
+            mediaId: config.documentId,
+            introContentId: config.introduction
+        };
+        RubedoMediaService.getProtectedMediaById(options).then(function(response){
+            console.log(response.data);
+        });
     }]);
 })();
