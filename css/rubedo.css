@@ -38,3 +38,28 @@
     max-width: 300px;
     margin-top: 10px;
 }
+
+.leftZoneModal, .rightZoneModal {
+    top: 15px;
+    bottom: 15px;
+    position: absolute;
+    vertical-align: bottom;
+    min-width: 120px;
+}
+
+.rightZoneModal, .rightZoneModal span.glyphicon {
+    right: 0;
+}
+
+.leftZoneModal, .leftZoneModal span.glyphicon {
+    left: 0;
+}
+
+.rightZoneModal span.glyphicon, .leftZoneModal span.glyphicon{
+    position: absolute;
+    top: 50%;
+}
+
+.rightZoneModal:hover, .leftZoneModal:hover {
+    background-color: rgba(0, 0, 0, 0.20);
+}

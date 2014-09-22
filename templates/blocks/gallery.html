@@ -1,11 +1,32 @@
 <div ng-controller="GalleryController as galleryCtrl">
     <div ng-repeat="image in galleryCtrl.images" class="pull-left thumbnail" ng-style="{width:galleryCtrl.width}">
-        <a href data-toggle="modal" ng-click="galleryCtrl.loadModal()">
+        <a href data-toggle="modal" ng-click="galleryCtrl.loadModal($index)">
             <img class="img-rounded" ng-src="{{image.thumbnailUrl}}" alt=""/>
         </a>
         <div class="caption" style="text-overflow: ellipsis">
             {{image.title}}
         </div>
     </div>
-
+    <div class="clearfix"></div>
+    <paginator start="galleryCtrl.start" limit="galleryCtrl.limit"
+               count="galleryCtrl.count" change-page-action="galleryCtrl.changePageAction()"></paginator>
+    <div id="rubedoGalleryDetailModal" class="modal fade" aria-hidden="true" style="z-index: 2000">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">{{galleryCtrl.images[galleryCtrl.currentIndex].title}}</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <div ng-if="galleryCtrl.currentIndex < galleryCtrl.images.length - 1" class="rightZoneModal cursor-as-pointer" ng-click="galleryCtrl.changeImage('right')">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </div>
+                    <div ng-if="galleryCtrl.currentIndex > 0" class="leftZoneModal cursor-as-pointer" ng-click="galleryCtrl.changeImage('left')">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </div>
+                    <img class="img-responsive" ng-src="{{galleryCtrl.currentImage.url}}" ng-attr-alt="{{galleryCtrl.currentImage.title}}" style="display: inline; max-height: 800px">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
