@@ -1788,9 +1788,14 @@
         var me = this;
         var config = $scope.blockConfig;
         me.contactData={ };
+        me.contactError=null;
         if (config.mailingListId){
             me.showForm=true;
         }
+        me.submit=function(){
+            me.contactError=null;
+            console.log(me.contactData);
+        };
 
     }]);
 })();
