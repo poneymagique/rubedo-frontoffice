@@ -1787,6 +1787,7 @@
     module.controller('ContactController',['$scope',function($scope){
         var me = this;
         var config = $scope.blockConfig;
+        me.contactData={ };
         if (config.mailingListId){
             me.showForm=true;
         }
