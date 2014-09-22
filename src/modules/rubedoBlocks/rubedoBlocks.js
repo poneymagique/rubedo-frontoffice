@@ -1643,12 +1643,41 @@
         $scope.fieldEntity={ };
         $scope.fieldInputMode=true;
         console.log(config);
+        me.signupError=null;
+        me.submit=function(){
+            me.signupError=null;
+            if (config.collectPassword&&$scope.fieldEntity.confirmPassword!=$scope.fieldEntity.password){
+                me.signupError="Passwords do not match.";
+                return false;
+            }
+            console.log($scope.fieldEntity);
+        };
         if (config.userType){
             RubedoUserTypesService.getUserTypeById(config.userType).then(
                 function(response){
                     if (response.data.success){
                         me.userType=response.data.userType;
                         $scope.fieldIdPrefix="signUp"+"_"+me.userType.type;
+                        if (config.collectPassword){
+                            me.userType.fields.unshift({
+                                cType:"textfield",
+                                config:{
+                                    name:"confirmPassword",
+                                    fieldLabel:"Confirm password",
+                                    allowBlank:false,
+                                    vtype:"password"
+                                }
+                            });
+                            me.userType.fields.unshift({
+                                cType:"textfield",
+                                config:{
+                                    name:"password",
+                                    fieldLabel:"Password",
+                                    allowBlank:false,
+                                    vtype:"password"
+                                }
+                            });
+                        }
                         me.userType.fields.unshift({
                             cType:"textfield",
                             config:{

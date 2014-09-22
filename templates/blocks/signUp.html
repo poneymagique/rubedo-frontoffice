@@ -4,7 +4,16 @@
          ng-init="blockConfig = {contentId:blockConfig.introduction}"
             >
     </div>
-    <form class="form-horizontal" role="form">
+    <form class="form-horizontal" role="form" ng-submit="signUpCtrl.submit()">
         <rubedo-field ng-repeat="field in signUpCtrl.inputFields" ></rubedo-field>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div ng-show="signUpCtrl.signupError" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <strong>Error !</strong> {{signUpCtrl.signupError}}
+                </div>
+                <button type="submit" class="btn btn-primary">Sign up</button>
+            </div>
+        </div>
     </form>
 </div>
