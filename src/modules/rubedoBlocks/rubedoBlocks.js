@@ -36,7 +36,8 @@
         resource:"/components/webtales/rubedo-frontoffice/templates/blocks/mediaDownload.html",
         addThisFollow:"/components/webtales/rubedo-frontoffice/templates/blocks/addThisFollow.html",
         signUp:"/components/webtales/rubedo-frontoffice/templates/blocks/signUp.html",
-        imageMap:"/components/webtales/rubedo-frontoffice/templates/blocks/imageMap.html"
+        imageMap:"/components/webtales/rubedo-frontoffice/templates/blocks/imageMap.html",
+        contact:"/components/webtales/rubedo-frontoffice/templates/blocks/contact.html"
     };
 
     var responsiveClasses = {
@@ -1782,4 +1783,12 @@
         $element.find('img[usemap]').rwdImageMaps();
     }]);
 
+    module.controller('ContactController',['$scope',function($scope){
+        var me = this;
+        var config = $scope.blockConfig;
+        if (config.mailingListId){
+            me.showForm=true;
+        }
+
+    }]);
 })();
