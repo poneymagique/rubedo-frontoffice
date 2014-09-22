@@ -1221,7 +1221,6 @@
         function($scope,$location,$routeParams,$compile,RubedoSearchService,$element){
             var me = this;
             var config = $scope.blockConfig;
-            console.log(config);
             me.data = [];
             me.facets = [];
             me.activeFacets = [];
@@ -1253,6 +1252,7 @@
                 batchSize : 20000,
                 averageCenter : false,
                 minimumClusterSize:1,
+                zoomOnClick:false,
                 calculator:function (markers, numStyles) {
                     var index = 0;
                     var count = 0;
@@ -1261,14 +1261,11 @@
                             count=count+marker.counter;
                         }
                     });
-
-
                     var dv = count;
                     while (dv !== 0) {
                         dv = parseInt(dv / 10, 10);
                         index++;
                     }
-
                     index = Math.min(index, numStyles);
                     return {
                         text: count,
@@ -1297,7 +1294,6 @@
                             latitude:results[0].geometry.location.lat(),
                             longitude:results[0].geometry.location.lng()
                         };
-
                     }
                 });
 
@@ -1323,6 +1319,13 @@
             me.markerEvents = {
                 click: function (gMarker, eventName, model) {
                     console.log(model);
+                }
+            };
+            me.clusterEvents= {
+                click: function(cluster){
+                    var map=cluster.getMap();
+                    map.setCenter(cluster.getCenter());
+                    map.setZoom(map.getZoom()+2);
                 }
             };
             if (config.activateSearch){
@@ -1553,6 +1556,11 @@
 
                     });
                 },2000);
+            }
+            if (config.height&&config.height!=500){
+                setTimeout(function(){
+                    $element.find(".angular-google-map-container").height(config.height);
+                },190);
             }
         }]);
 
