@@ -27,17 +27,15 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <div ng-show="contactCtrl.contactError" class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <strong>Error !</strong> {{contactCtrl.contactError}}
+                <div ng-if="contactCtrl.contactError" ng-init="notification = {type:'error',text:contactCtrl.contactError}">
+                    <rubedo-notification></rubedo-notification>
                 </div>
                 <button type="submit" class="btn btn-primary">{{rubedo.translate("Blocks.Contact.Input.Submit.Label","Submit")}}</button>
             </div>
         </div>
     </form>
 
-    <div ng-show="contactCtrl.showConfirmMessage" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <strong>Success !</strong> Message sent
+    <div ng-if="contactCtrl.showConfirmMessage" ng-init="notification = {type:'success',text:'Message sent'}">
+        <rubedo-notification></rubedo-notification>
     </div>
 </div>
