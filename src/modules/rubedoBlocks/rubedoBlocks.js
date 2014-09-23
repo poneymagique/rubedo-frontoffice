@@ -1643,7 +1643,7 @@
         addthis.toolbox('.addthis_toolbox');
     }]);
 
-    module.controller('SignUpController',['$scope','RubedoUserTypesService','RubedoUsersService', function($scope, RubedoUserTypesService, RubedoUsersService){
+    module.controller('SignUpController',['$scope','RubedoUserTypesService','RubedoUsersService', '$location', function($scope, RubedoUserTypesService, RubedoUsersService, $location){
         var me = this;
         var config = $scope.blockConfig;
         me.inputFields=[ ];
@@ -1686,6 +1686,8 @@
 
 
         };
+        var queryParams=$location.search();
+        console.log(queryParams);
         if (config.userType){
             RubedoUserTypesService.getUserTypeById(config.userType).then(
                 function(response){
