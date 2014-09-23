@@ -1684,6 +1684,7 @@
             RubedoUserTypesService.getUserTypeById(config.userType).then(
                 function(response){
                     if (response.data.success){
+                        me.showForm=true;
                         me.userType=response.data.userType;
                         $scope.fieldIdPrefix="signUp"+"_"+me.userType.type;
                         if (config.collectPassword){
