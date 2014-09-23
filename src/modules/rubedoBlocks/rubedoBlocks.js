@@ -457,7 +457,7 @@
         $scope.registerFieldEditChanges=me.registerEditChanges;
     }]);
 
-    module.controller("CalendarController",["$scope","$route","RubedoContentsService",function($scope,$route,RubedoContentsService){
+    module.controller("CalendarController",["$scope","$route","RubedoContentsService","$element",function($scope,$route,RubedoContentsService, $element){
         var me = this;
 
         var config = $scope.blockConfig;
@@ -479,7 +479,7 @@
             })
         };
         me.init = function(){
-            me.calendar = angular.element('#'+me.calendarId);
+            me.calendar = $element.find('#'+me.calendarId);
             me.calendar.fullCalendar({
                 lang: $route.current.params.lang,
                 weekMode: 'liquid',
@@ -494,7 +494,9 @@
                             var event = {};
                             event.title = content.fields.text;
                             event.start = moment.unix(content.fields[config['date']]).format('YYYY-MM-DD');
-                            event.end = moment.unix(content.fields[config['endDate']]).format('YYYY-MM-DD');
+                            event.end = content.fields[config['endDate']]?
+                                moment.unix(content.fields[config['endDate']]).format('YYYY-MM-DD'):
+                                moment.unix(content.fields[config['date']]).format('YYYY-MM-DD');
                             newEvents.push(event);
                         });
                         me.calendar.fullCalendar('removeEvents');
