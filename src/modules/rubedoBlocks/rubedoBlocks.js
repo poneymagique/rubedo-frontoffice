@@ -1683,12 +1683,11 @@
                     me.signupError=response.data.message;
                 }
             );
-
-
         };
         var queryParams=$location.search();
-        console.log(queryParams);
-        if (config.userType){
+        if (queryParams.confirmingEmail&&queryParams.userId&&queryParams.signupTime){
+
+        } else if (config.userType){
             RubedoUserTypesService.getUserTypeById(config.userType).then(
                 function(response){
                     if (response.data.success){
