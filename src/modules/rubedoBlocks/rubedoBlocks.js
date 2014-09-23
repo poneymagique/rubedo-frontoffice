@@ -1656,8 +1656,26 @@
             delete (fields.confirmPassword);
             fields.login=fields.email;
             RubedoUsersService.createUser(fields,config.userType).then(
-                function(response){console.log(response);},
-                function(response){console.log(response);}
+                function(response){
+                    if (response.data.success){
+                        me.showForm=false;
+                        if (me.userType.signUpType=="open"){
+                            me.confirmMessage="Blocks.SignUp.done.created";
+                            me.confirmMessageDefault="Account created.";
+                        } else if (me.userType.signUpType=="moderated"){
+                            me.confirmMessage="Blocks.SignUp.moderated.created";
+                            me.confirmMessageDefault="Account created. You will be able to log in as soon as an administrator validates your account.";
+                        } else if (me.userType.signUpType=="emailConfirmation"){
+                            me.confirmMessage="Blocks.SignUp.confirmEmail.emailSent";
+                            me.confirmMessageDefault="A confirmation email has been sent to the provided address.";
+                        }
+                    } else {
+                        me.signupError=response.data.message;
+                    }
+                },
+                function(response){
+                    me.signupError=response.data.message;
+                }
             );
 
 
