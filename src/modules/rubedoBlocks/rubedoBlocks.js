@@ -321,6 +321,7 @@
     module.controller("AuthenticationController",["$scope","RubedoAuthService","snapRemote","RubedoPagesService",function($scope,RubedoAuthService,snapRemote,RubedoPagesService){
         var me=this;
         me.blockConfig=$scope.blockConfig;
+        console.log(me.blockConfig);
         if (me.blockConfig&&me.blockConfig.profilePage&&mongoIdRegex.test(me.blockConfig.profilePage)){
             RubedoPagesService.getPageById(me.blockConfig.profilePage).then(function(response){
                 if (response.data.success){
@@ -331,6 +332,9 @@
         me.credentials={ };
         me.authError=null;
         me.rememberMe=false;
+        me.showModal=function(){
+            angular.element('#rubedoAuthModal').appendTo('body').modal('show');
+        };
         me.authenticate=function(){
             me.authError=null;
             if ((!me.credentials.login)||(!me.credentials.password)){
