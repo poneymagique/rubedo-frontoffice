@@ -361,17 +361,23 @@
 
         });
         me.getContentById = function (contentId){
-            RubedoContentsService.getContentById(contentId).then(
-                function(response){
-                    if(response.data.success){
-                        me.content=response.data.content;
-                        $scope.fieldEntity=angular.copy(me.content.fields);
-                        $scope.fieldLanguage=me.content.locale;
+            if(config.fromFront){
+                me.content = config.content;
+                $scope.fieldEntity=angular.copy(me.content.fields);
+                $scope.fieldLanguage=me.content.locale;
+            } else {
+                RubedoContentsService.getContentById(contentId).then(
+                    function(response){
+                        if(response.data.success){
+                            me.content=response.data.content;
+                            $scope.fieldEntity=angular.copy(me.content.fields);
+                            $scope.fieldLanguage=me.content.locale;
+                        }
                     }
-                }
-            )
+                )
+            }
         };
-        if (config.contentId){
+        if (config.contentId || config.content){
             me.getContentById(config.contentId);
         }
         me.revertChanges=function(){
@@ -1847,7 +1853,33 @@
             introContentId: config.introduction
         };
         RubedoMediaService.getProtectedMediaById(options).then(function(response){
-            console.log(response.data);
+            if(response.data.success){
+                console.log(response.data);
+                me.media = response.data.media;
+                me.introduction = response.data.introduction?response.data.introduction : undefined;
+            }
         });
+
+        me.postMail = function(){
+            if(config.mailingListId && config.documentId){
+                options.siteId = $scope.rubedo.current.site.id;
+                options.mailingListId = config.mailingListId;
+                options.email = me.email;
+                RubedoMediaService.postProtectedMediaById(options).then(function(response){
+                   if(response.data.success){
+                       $scope.notification = {
+                           type: 'success',
+                           text: 'Email sent'
+                       };
+                   }
+                    me.email = '';
+                },function(){
+                    $$scope.notification = {
+                        type: 'error',
+                        text: 'Email not sent'
+                    };
+                });
+            }
+        };
     }]);
 })();

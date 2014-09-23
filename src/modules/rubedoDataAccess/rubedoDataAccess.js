@@ -287,6 +287,13 @@
                 params: options
             }));
         };
+        serviceInstance.postProtectedMediaById = function(options){
+            return ($http({
+                url:config.baseUrl+"/media/protected",
+                method:"POST",
+                data : options
+            }));
+        };
         return serviceInstance;
     }]);
 

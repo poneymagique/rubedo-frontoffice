@@ -1,3 +1,19 @@
 <div ng-controller="MediaProtectedDownloadController as mediaPrtcdDlCtrl">
-
+    <rubedo-notification></rubedo-notification>
+    <div ng-if="mediaPrtcdDlCtrl.introduction"
+         ng-include="rubedo.blockTemplateResolver.getTemplate('richText',{ })"
+         ng-init="blockConfig = {content:mediaPrtcdDlCtrl.introduction, fromFront: true}"
+            >
+    </div>
+    <p><h4>{{mediaPrtcdDlCtrl.media.title}}</h4>
+    <span class="badge">{{mediaPrtcdDlCtrl.media.mainFileType}}</span></p>
+    <form class="form-inline" role="form" ng-submit="mediaPrtcdDlCtrl.postMail()">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon">@</div>
+                <input required ng-model="mediaPrtcdDlCtrl.email" class="form-control" type="email" placeholder="Enter email">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-default">Download</button>
+    </form>
 </div>
