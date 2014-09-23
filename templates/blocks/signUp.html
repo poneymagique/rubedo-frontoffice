@@ -8,16 +8,14 @@
         <rubedo-field ng-repeat="field in signUpCtrl.inputFields" ></rubedo-field>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <div ng-show="signUpCtrl.signupError" class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <strong>Error !</strong> {{signUpCtrl.signupError}}
+                <div ng-if="signUpCtrl.signupError" ng-init="notification = {type:'error',text:signUpCtrl.signupError}">
+                    <rubedo-notification></rubedo-notification>
                 </div>
                 <button type="submit" class="btn btn-primary">Sign up</button>
             </div>
         </div>
     </form>
-    <div ng-show="signUpCtrl.confirmMessage" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <strong>Success !</strong> {{rubedo.translate(signUpCtrl.confirmMessage,signUpCtrl.confirmMessageDefault)}}
+    <div ng-if="signUpCtrl.confirmMessage" ng-init="notification = {type:'success',text:rubedo.translate(signUpCtrl.confirmMessage,signUpCtrl.confirmMessageDefault)}">
+        <rubedo-notification></rubedo-notification>
     </div>
 </div>
