@@ -561,7 +561,7 @@
             };
             me.displayOrderBy = $routeParams.orderby?resolveOrderBy[$routeParams.orderby]:"relevance";
             me.template = "/components/webtales/rubedo-frontoffice/templates/blocks/searchResults/"+config.displayMode+".html";
-            var predefinedFacets = config.predefinedFacets==""?{}:JSON.parse(config.predefinedFacets);
+            var predefinedFacets = !config.predefinedFacets ? {} : JSON.parse(config.predefinedFacets);
             var facetsId = ['objectType','type','damType','userType','author','userName','lastupdatetime','query'];
             var defaultOptions = {
                 start: me.start,
