@@ -1,9 +1,14 @@
-<ul ng-if="paginatorCtrl.showPager" class="pagination">
-    <li ng-if="paginatorCtrl.actualPage != 1" ng-click="paginatorCtrl.changePage('prev')" class="cursor-as-pointer"><a>&laquo;</a></li>
-    <li ng-repeat="page in paginatorCtrl.getIteration(paginatorCtrl.nbPages) track by $index"
-        ng-click="paginatorCtrl.changePage(paginatorCtrl.getPagesNumber($index)-1)"
-        ng-class="{'active':paginatorCtrl.showActive(paginatorCtrl.getPagesNumber($index))}" class="cursor-as-pointer">
-        <a>{{ paginatorCtrl.getPagesNumber($index) }}</a>
-    </li>
-    <li ng-if="paginatorCtrl.actualPage != paginatorCtrl.nbPages" ng-click="paginatorCtrl.changePage('next')" class="cursor-as-pointer"><a>&raquo;</a></li>
-</ul>
+<div ng-if="paginatorCtrl.showPager" class="text-center">
+    <ul class="pagination">
+        <li ng-if="paginatorCtrl.actualPage != 1" ng-click="paginatorCtrl.changePage('prev')" class="cursor-as-pointer">
+            <a>&laquo;</a></li>
+        <li ng-repeat="page in paginatorCtrl.getIteration(paginatorCtrl.nbPages) track by $index"
+            ng-click="paginatorCtrl.changePage(paginatorCtrl.getPagesNumber($index)-1)"
+            ng-class="{'active':paginatorCtrl.showActive(paginatorCtrl.getPagesNumber($index))}"
+            class="cursor-as-pointer">
+            <a>{{ paginatorCtrl.getPagesNumber($index) }}</a>
+        </li>
+        <li ng-if="paginatorCtrl.actualPage != paginatorCtrl.nbPages" ng-click="paginatorCtrl.changePage('next')"
+            class="cursor-as-pointer"><a>&raquo;</a></li>
+    </ul>
+</div>
