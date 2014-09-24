@@ -93,24 +93,18 @@
     module.controller("RTEFieldController",['$scope','$sce',function($scope,$sce){
         var me=this;
         var CKEMode=$scope.field.config.CKETBConfig;
-        console.log(CKEMode);
         var myTBConfig=[
             { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', '-', 'NewPage', 'Preview', 'Print', '-', 'Templates' ] },
             { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo',"Source"  ] },
             { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ], items: [ 'Find', 'Replace', '-', 'SelectAll', '-', 'Scayt' ] },
-
-
             { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
             '/',
             { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']},
-
-
             { name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
             '/',
             { name: 'colors', items: [ 'TextColor', '-','BGColor' ] },
             { name: 'tools', items: [ 'Maximize', '-','ShowBlocks' ] },
             { name: 'links', items: [ 'Link', "Rubedolink", 'Unlink','-','Anchor' ] },
-
             { name: 'insert', items: [ 'Image',  '-', 'Table', 'HorizontalRule', 'SpecialChar', 'PageBreak' ] }
         ];
         if (CKEMode=="Standard"){
@@ -129,8 +123,6 @@
                 { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-',  'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock','-','Image']},
                 { name: 'colors', items: [ 'TextColor','BGColor' ,'-', 'Scayt'] },
                 { name: 'styles', items: [ 'Font', 'FontSize' ] }
-
-
             ];
         }
         $scope.editorOptions={
