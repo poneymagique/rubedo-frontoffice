@@ -350,6 +350,9 @@
         me.credentials={ };
         me.authError=null;
         me.rememberMe=false;
+        me.showModal=function(){
+            angular.element('#rubedoAuthModal').appendTo('body').modal('show');
+        };
         me.authenticate=function(){
             me.authError=null;
             if ((!me.credentials.login)||(!me.credentials.password)){
