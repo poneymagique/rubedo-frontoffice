@@ -133,10 +133,13 @@
         me.menu={};
         me.currentRouteleine=$location.path();
         var config=$scope.blockConfig;
-        var pageId=$scope.rubedo.current.page.id;
         me.searchEnabled = (config.useSearchEngine && config.searchPage);
         if (config.rootPage){
-            pageId=config.rootPage;
+           var pageId=config.rootPage;
+        } else if (config.fallbackRoot&&config.fallbackRoot=="parent"&&mongoIdRegex.test($scope.rubedo.current.page.parentId)){
+            var pageId=$scope.rubedo.current.page.parentId;
+        } else {
+            var pageId=$scope.rubedo.current.page.id;
         }
         me.onSubmit = function(){
             var paramQuery = me.query?'?query='+me.query:'';
