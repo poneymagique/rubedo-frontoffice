@@ -1,5 +1,4 @@
 <div ng-controller="MenuController as menuCtrl">
-    <h3 class="text-center" ng-if="blockConfig.displayRootPage"><a ng-href="{{menuCtrl.menu.url}}">{{menuCtrl.menu.title}}</a></h3>
     <div class="panel panel-default">
         <div class="panel-heading" ng-if="menuCtrl.searchEnabled">
             <form class="form"  ng-submit="menuCtrl.onSubmit()" role="form">
@@ -12,6 +11,7 @@
         </div>
         <div class="panel-body">
             <ul class="nav nav-pills nav-stacked">
+                <li ng-if="blockConfig.displayRootPage" ng-class="{active:menuCtrl.currentRouteleine==menuCtrl.menu.url}"><a ng-href="{{menuCtrl.menu.url}}">{{menuCtrl.menu.title}} <span class="glyphicon glyphicon-chevron-right pull-right"></span></a></li>
                 <li ng-repeat="page in menuCtrl.menu.pages" ng-class="{active:menuCtrl.currentRouteleine==page.url}">
                     <a ng-href="{{page.url}}">{{page.title}} <span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                     <ul ng-if="page.pages" class="nav nav-pills nav-stacked">
