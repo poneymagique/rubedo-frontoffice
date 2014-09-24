@@ -132,6 +132,9 @@
         me.menu={};
         me.currentRouteleine=$location.path();
         var config=$scope.blockConfig;
+        if (config.logo){
+            me.logo=config.logo;
+        }
         var pageId=$scope.rubedo.current.page.id;
         me.searchEnabled = (config.useSearchEngine && config.searchPage);
         if (config.rootPage){
