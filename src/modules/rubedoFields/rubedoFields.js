@@ -2,7 +2,7 @@
  * Module that manages fields for display and edit
  */
 (function(){
-    var module = angular.module('rubedoFields',['rubedoDataAccess','xeditable','checklist-model','ngCkeditor','google-maps']);
+    var module = angular.module('rubedoFields',['rubedoDataAccess','xeditable','checklist-model','ckeditor','google-maps']);
 
     module.run(function(editableOptions ) {
         editableOptions.theme = 'bs3';
@@ -93,6 +93,7 @@
     module.controller("RTEFieldController",['$scope','$sce',function($scope,$sce){
         var me=this;
         var CKEMode=$scope.field.config.CKETBConfig;
+        console.log(CKEMode);
         var myTBConfig=[
             { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', '-', 'NewPage', 'Preview', 'Print', '-', 'Templates' ] },
             { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo',"Source"  ] },
@@ -139,6 +140,7 @@
         };
         if (!$scope.fieldInputMode){
             $scope.$watch("fieldEntity."+$scope.field.config.name, function(newValue) {
+                if(!$scope.fieldEditMode||!me.html){
                     if (!newValue){
                         newValue="";
                     }
@@ -146,6 +148,7 @@
                         allowedAttributes:[["style"]],
                         format: true
                     }));
+                }
             });
         }
     }]);
