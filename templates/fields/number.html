@@ -3,6 +3,8 @@
        e-ng-required="!field.config.allowBlank"
        e-min="{{field.config.minValue}}"
        e-max="{{field.config.maxValue}}"
+       blur="submit"
+       buttons="no"
        onaftersave="registerFieldEditChanges()">
     {{fieldEntity[field.config.name] |number : field.config.decimalPrecision}}
 </p>

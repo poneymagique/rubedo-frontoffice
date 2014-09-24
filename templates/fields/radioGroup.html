@@ -3,6 +3,8 @@
     <p ng-if="fieldEditMode" editable-radiolist="fieldEntity[field.config.name][field.config.name]"
        e-ng-required="!field.config.allowBlank"
        e-ng-options="s.inputValue as s.boxLabel for s in field.config.items"
+       blur="submit"
+       buttons="no"
        onaftersave="registerFieldEditChanges()">
         {{radioGroupCtrl.options[fieldEntity[field.config.name][field.config.name]]}}
     </p>

@@ -7,6 +7,8 @@
    e-min="{{field.config.minValue}}"
    e-max="{{field.config.maxValue}}"
    e-step="{{field.config.increment}}"
+   blur="submit"
+   buttons="no"
    onaftersave="registerFieldEditChanges()">
     <div class="progress">
         <div class="progress-bar" role="progressbar" aria-valuenow="{{percentage}}" aria-valuemin="{{field.config.minValue}}" aria-valuemax="{{field.config.maxValue}}" ng-style="{'width':fieldEntity[field.config.name]/(field.config.maxValue-field.config.minValue) * 100+'%'}">

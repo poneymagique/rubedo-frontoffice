@@ -3,6 +3,8 @@
    e-ng-required="!field.config.allowBlank"
    e-rows="4"
    e-cols="40"
+   blur="submit"
+   buttons="no"
    e-minLength="{{field.config.minLength}}"
    e-maxLength="{{field.config.maxLength}}"
    onaftersave="registerFieldEditChanges()">

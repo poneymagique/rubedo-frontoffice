@@ -1,6 +1,8 @@
 <h1 ng-if="!fieldEditMode">{{fieldEntity[field.config.name]}}</h1>
 <h1 ng-if="fieldEditMode" editable-text="fieldEntity[field.config.name]"
    e-ng-required="!field.config.allowBlank"
+   blur="submit"
+   buttons="no"
    onaftersave="registerFieldEditChanges()">
     {{fieldEntity[field.config.name]}}
 </h1>

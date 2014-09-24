@@ -3,12 +3,16 @@
     <p ng-if="fieldEditMode&&field.config.multiSelect" editable-select="fieldEntity[field.config.name]"
        e-ng-required="!field.config.allowBlank"
        e-multiple="multiple"
+       blur="submit"
+       buttons="no"
        e-ng-options="s.valeur as s.nom for s in field.store.data"
        onaftersave="registerFieldEditChanges()">
         {{comboboxCtrl.displayValue(fieldEntity[field.config.name])}}
     </p>
     <p ng-if="fieldEditMode&&!field.config.multiSelect" editable-select="fieldEntity[field.config.name]"
        e-ng-required="!field.config.allowBlank"
+       blur="submit"
+       buttons="no"
        e-ng-options="s.valeur as s.nom for s in field.store.data"
        onaftersave="registerFieldEditChanges()">
         {{comboboxCtrl.displayValue(fieldEntity[field.config.name])}}
