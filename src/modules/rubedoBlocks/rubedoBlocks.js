@@ -321,6 +321,7 @@
     module.controller("AuthenticationController",["$scope","RubedoAuthService","snapRemote","RubedoPagesService",function($scope,RubedoAuthService,snapRemote,RubedoPagesService){
         var me=this;
         me.blockConfig=$scope.blockConfig;
+        console.log(me.blockConfig);
         if (me.blockConfig&&me.blockConfig.profilePage&&mongoIdRegex.test(me.blockConfig.profilePage)){
             RubedoPagesService.getPageById(me.blockConfig.profilePage).then(function(response){
                 if (response.data.success){
@@ -331,6 +332,9 @@
         me.credentials={ };
         me.authError=null;
         me.rememberMe=false;
+        me.showModal=function(){
+            angular.element('#rubedoAuthModal').appendTo('body').modal('show');
+        };
         me.authenticate=function(){
             me.authError=null;
             if ((!me.credentials.login)||(!me.credentials.password)){
@@ -557,7 +561,7 @@
             };
             me.displayOrderBy = $routeParams.orderby?resolveOrderBy[$routeParams.orderby]:"relevance";
             me.template = "/components/webtales/rubedo-frontoffice/templates/blocks/searchResults/"+config.displayMode+".html";
-            var predefinedFacets = config.predefinedFacets==""?{}:JSON.parse(config.predefinedFacets);
+            var predefinedFacets = !config.predefinedFacets ? {} : JSON.parse(config.predefinedFacets);
             var facetsId = ['objectType','type','damType','userType','author','userName','lastupdatetime','query'];
             var defaultOptions = {
                 start: me.start,
