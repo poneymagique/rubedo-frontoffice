@@ -1,0 +1,19 @@
+<div ng-controller="MailingListSuscribeController as mailingListSusCtrl">
+    <form role="form">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Name</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Name">
+        </div>
+        <h4>Mailing List</h4>
+        <div ng-repeat="mailingList in mailingListSusCtrl.mailingLists" class="checkbox">
+            <label>
+                <input ng-model="mailingList.checked" type="checkbox"> {{mailingList.name}}
+            </label>
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+</div>

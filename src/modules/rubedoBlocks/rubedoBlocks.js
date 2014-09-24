@@ -38,7 +38,8 @@
         signUp:"/components/webtales/rubedo-frontoffice/templates/blocks/signUp.html",
         imageMap:"/components/webtales/rubedo-frontoffice/templates/blocks/imageMap.html",
         contact:"/components/webtales/rubedo-frontoffice/templates/blocks/contact.html",
-        protectedResource:"/components/webtales/rubedo-frontoffice/templates/blocks/mediaProtectedDownload.html"
+        protectedResource:"/components/webtales/rubedo-frontoffice/templates/blocks/mediaProtectedDownload.html",
+        mailingList:"/components/webtales/rubedo-frontoffice/templates/blocks/mailingListSuscribe.html"
     };
 
     var responsiveClasses = {
@@ -132,9 +133,6 @@
         me.menu={};
         me.currentRouteleine=$location.path();
         var config=$scope.blockConfig;
-        if (config.logo){
-            me.logo=config.logo;
-        }
         var pageId=$scope.rubedo.current.page.id;
         me.searchEnabled = (config.useSearchEngine && config.searchPage);
         if (config.rootPage){
@@ -1884,12 +1882,12 @@
                 options.mailingListId = config.mailingListId;
                 options.email = me.email;
                 RubedoMediaService.postProtectedMediaById(options).then(function(response){
-                   if(response.data.success){
-                       $scope.notification = {
-                           type: 'success',
-                           text: 'Email sent'
-                       };
-                   }
+                    if(response.data.success){
+                        $scope.notification = {
+                            type: 'success',
+                            text: 'Email sent'
+                        };
+                    }
                     me.email = '';
                 },function(){
                     $$scope.notification = {
@@ -1916,4 +1914,28 @@
 
     }]);
 
+
+    module.controller('MailingListSuscribeController',['$scope','RubedoMailingListService',function($scope,RubedoMailingListService){
+        var me = this;
+        var config = $scope.blockConfig;
+        console.log(config);
+        me.mailingLists = {};
+        RubedoMailingListService.getAllMailingList().then(function(response){
+            console.log(response.data);
+            if(response.data.success){
+                angular.forEach(config.mailingListId, function(mailing){
+                    var newMailing = {};
+                    angular.forEach(response.data.mailinglists, function(mailingInfo){
+                        if(mailingInfo.id == mailing){
+                            newMailing.id = mailing;
+                            newMailing.name = mailingInfo.name;
+                            newMailing.checked = false;
+                            me.mailingLists[mailing] = newMailing;
+                        }
+                    });
+                });
+                console.log(me.mailingLists);
+            }
+        });
+    }])
 })();

@@ -329,4 +329,13 @@
         return serviceInstance;
     }]);
 
+    module.factory('RubedoMailingListService',['$http',function($http){
+        var serviceInstance = {};
+        serviceInstance.getAllMailingList = function(){
+            return ($http.get(config.baseUrl+"/mailinglists",{
+            }));
+        };
+        return serviceInstance;
+    }])
+
 })();
