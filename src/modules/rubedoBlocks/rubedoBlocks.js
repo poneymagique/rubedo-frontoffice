@@ -170,6 +170,8 @@
         if(config.singlePage){
             options.detailPageId = config.singlePage;
         }
+        me.titleOnly = config.showOnlyTitle;
+        me.columns = config.columns && !config.infiniteScroll ? 'col-md-'+(12/config.columns):'col-md-12';
         me.showPaginator = config.showPager && !config.infiniteScroll;
         me.changePageAction = function(){
             options.start = me.start;
@@ -188,16 +190,27 @@
                 'overflow-y': 'visible'
             };
         }
-        me.getContents = function (queryId, pageId, siteId, options, add, reloadPager){
+        me.getContents = function (queryId, pageId, siteId, options, add){
             RubedoContentsService.getContents(queryId,pageId,siteId, options).then(function(response){
                 if (response.data.success){
                     me.count = response.data.count;
+                    var columnContentList = [];
                     if (add){
                         angular.forEach(response.data.contents,function(newContent){
-                            me.contentList.push(newContent);
+                            columnContentList.push(newContent);
                         });
+                        me.contentList.push(columnContentList);
                     } else {
-                        me.contentList=response.data.contents;
+                        angular.forEach(response.data.contents,function(newContent, key){
+                            columnContentList.push(newContent);
+                            if(config.columns && (key+1) % (Math.ceil(me.limit/config.columns)) == 0){
+                                me.contentList.push(columnContentList);
+                                columnContentList = [];
+                            }
+                        });
+                        if (columnContentList.length > 0){
+                            me.contentList.push(columnContentList);
+                        }
                     }
                 }
             });
@@ -208,7 +221,7 @@
                 me.getContents(config.query, pageId, siteId, options, true);
             }
         };
-        me.getContents(config.query, pageId, siteId, options, false, true);
+        me.getContents(config.query, pageId, siteId, options, false);
     }]);
 
     module.directive("paginator",["$timeout",function($timeout){
@@ -321,7 +334,6 @@
     module.controller("AuthenticationController",["$scope","RubedoAuthService","snapRemote","RubedoPagesService",function($scope,RubedoAuthService,snapRemote,RubedoPagesService){
         var me=this;
         me.blockConfig=$scope.blockConfig;
-        console.log(me.blockConfig);
         if (me.blockConfig&&me.blockConfig.profilePage&&mongoIdRegex.test(me.blockConfig.profilePage)){
             RubedoPagesService.getPageById(me.blockConfig.profilePage).then(function(response){
                 if (response.data.success){
@@ -332,9 +344,6 @@
         me.credentials={ };
         me.authError=null;
         me.rememberMe=false;
-        me.showModal=function(){
-            angular.element('#rubedoAuthModal').appendTo('body').modal('show');
-        };
         me.authenticate=function(){
             me.authError=null;
             if ((!me.credentials.login)||(!me.credentials.password)){
@@ -561,7 +570,7 @@
             };
             me.displayOrderBy = $routeParams.orderby?resolveOrderBy[$routeParams.orderby]:"relevance";
             me.template = "/components/webtales/rubedo-frontoffice/templates/blocks/searchResults/"+config.displayMode+".html";
-            var predefinedFacets = !config.predefinedFacets ? {} : JSON.parse(config.predefinedFacets);
+            var predefinedFacets = config.predefinedFacets==""?{}:JSON.parse(config.predefinedFacets);
             var facetsId = ['objectType','type','damType','userType','author','userName','lastupdatetime','query'];
             var defaultOptions = {
                 start: me.start,

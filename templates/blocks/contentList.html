@@ -1,23 +1,26 @@
 <div ng-controller="ContentListController as contentListCtrl">
-    <div ng-attr-lr-infinite-scroll="loadMoreContents"
-         ng-attr-scroll-threshold="{{ contentListCtrl.scrollThreshold }}" ng-attr-time-threshold="{{ contentListCtrl.timeThreshold }}"
-         ng-style="contentListCtrl.blockStyle">
-        <!--<div id="infiniteScrollCtrl">-->
-        <div class="media" ng-repeat="content in contentListCtrl.contentList" ng-style="{'height':contentListCtrl.contentHeight,
-         'overflow':'hidden', 'text-overflow': 'ellipsis' }">
-            <img class="media-object pull-left" ng-if="content.fields.image"
-                 ng-src="{{rubedo.imageUrl.getUrlByMediaId(content.fields.image,{size:'thumbnail'}) }}" alt="{{ content.fields.text }}" />
-
-            <div class="media-body">
-                <h4 class="media-heading">
-                    <a ng-href="{{ content.detailPageUrl }}">
-                        {{ content.fields.text }}
-                    </a>
-                </h4>
-                <p>
-                    {{ content.fields.summary }}
-                </p></div>
-            <hr/>
+    <div class="row">
+        <div ng-attr-lr-infinite-scroll="loadMoreContents"
+             ng-attr-scroll-threshold="{{ contentListCtrl.scrollThreshold }}" ng-attr-time-threshold="{{ contentListCtrl.timeThreshold }}"
+             ng-style="contentListCtrl.blockStyle">
+            <!--<div id="infiniteScrollCtrl">-->
+            <div ng-class="contentListCtrl.columns" ng-repeat="columnContents in contentListCtrl.contentList" >
+                <div class="media" ng-repeat="content in columnContents" ng-style="{'height':contentListCtrl.contentHeight,
+                 'overflow':'hidden', 'text-overflow': 'ellipsis' }">
+                    <img class="media-object pull-left" ng-if="content.fields.image && !contentListCtrl.titleOnly"
+                         ng-src="{{rubedo.imageUrl.getUrlByMediaId(content.fields.image,{size:'thumbnail'}) }}"
+                         alt="{{ content.fields.text }}"/>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <a ng-href="{{ content.detailPageUrl }}">
+                                {{ content.fields.text }}
+                            </a>
+                        </h4>
+                        <p ng-if="!contentListCtrl.titleOnly">
+                            {{ content.fields.summary }}
+                        </p></div>
+                </div>
+            </div>
         </div>
     </div>
 
