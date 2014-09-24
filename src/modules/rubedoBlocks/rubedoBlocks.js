@@ -292,8 +292,9 @@
         me.contents=[];
         var blockConfig=$scope.blockConfig;
         var queryOptions={
-            start: !angular.element.isEmptyObject(blockConfig.resultsSkip) ? blockConfig.resultsSkip : 0,
-            limit: !angular.element.isEmptyObject(blockConfig.pageSize) ? blockConfig.pageSize : 6
+            start: blockConfig.resultsSkip ? blockConfig.resultsSkip : 0,
+            limit: blockConfig.pageSize ? blockConfig.pageSize : 6,
+            'fields[]' : ["text","summary",blockConfig.imageField]
         };
         var pageId=$scope.rubedo.current.page.id;
         var siteId=$scope.rubedo.current.site.id;
