@@ -29,18 +29,18 @@
         </div>
     </div>
     <div class="col-md-9">
-        <div ng-repeat="datum in searchResultsCtrl.data">
+        <div ng-repeat="datum in searchResultsCtrl.data" class="resultData">
             <h4><a target="{{searchResultsCtrl.target(datum)}}" ng-href="{{datum.url}}">{{datum.title}}</a></h4>
-            <div>
-                <div class="progress" style="width: 50px; float: left;">
+            <div class="clearfix">
+                <div class="progress">
                     <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{datum.score}}"
-                         aria-valuemin="0" aria-valuemax="100" ng-style="{'width': datum.score+'%','min-width': '30%','max-width':'100%'}">
+                         aria-valuemin="0" aria-valuemax="100" ng-style="{'width': datum.score+'%'}">
                         {{datum.score}}%
                     </div>
                 </div>&nbsp;
-                <span class="label label-danger" style="display: inline-block">{{datum.type}}</span>
+                <span class="label label-danger">{{datum.type}}</span>
             </div>
-            <p style="clear: both">{{datum.summary}}</p>
+            <p>{{datum.summary}}</p>
             <div>Published by <a href ng-click="searchResultsCtrl.clickOnFacets('author', datum.author)">{{datum.authorName}}</a> on {{datum.lastUpdateTime * 1000 | date: 'fullDate'}}</div>
             <hr/>
         </div>

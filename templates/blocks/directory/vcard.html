@@ -1,21 +1,18 @@
-<div ng-repeat="datum in directoryCtrl.data" class="col-md-6">
-    <div class="well" style="height: 140px"><img ng-if="datum.avatar" ng-src="{{datum.avatar}}"
-                                                 alt="{{datum.title}}"
-                                                 class="img-responsive img-thumbnail pull-left"
-                                                 style="margin-right: 20px; margin-bottom: 10px"/>
-        <h4><a ng-href="{{datum.url}}">{{datum.title}}</a></h4>
-
-        <div>
-            <div class="progress" style="width: 70px; float: left;">
+<div ng-repeat="datum in directoryCtrl.data" class="col-md-6 resultData">
+    <div class="well media">
+        <img ng-if="datum.avatar" ng-src="{{datum.avatar}}" alt="{{datum.title}}" class="img-responsive img-thumbnail pull-left media-object"/>
+        <div class="media-body">
+            <h4 class="media-heading"><a ng-href="{{datum.url}}">{{datum.title}}</a></h4>
+            <div class="progress">
                 <div class="progress-bar progress-bar-success" role="progressbar"
                      aria-valuenow="{{datum.score}}"
                      aria-valuemin="30" aria-valuemax="100"
-                     ng-style="{'width': datum.score+'%','min-width': '30%','max-width':'100%'}">
+                     ng-style="{'width': datum.score+'%'}">
                     {{datum.score}}%
                 </div>
             </div>
             &nbsp;
-            <span class="label label-danger" style="display: inline-block">{{datum.type}}</span>
+            <span class="label label-danger">{{datum.type}}</span>
         </div>
     </div>
 </div>

@@ -1,9 +1,9 @@
 <div ng-controller="GalleryController as galleryCtrl">
-    <div ng-repeat="image in galleryCtrl.images" class="pull-left thumbnail" ng-style="{width:galleryCtrl.width}">
+    <div ng-repeat="image in galleryCtrl.images" class="pull-left thumbnail gallery" ng-style="{width:galleryCtrl.width}">
         <a href data-toggle="modal" ng-click="galleryCtrl.loadModal($index)">
             <img class="img-rounded" ng-src="{{image.thumbnailUrl}}" alt=""/>
         </a>
-        <div class="caption" style="text-overflow: ellipsis; overflow: hidden; height: 30px">
+        <div class="caption" >
             {{image.title}}
         </div>
     </div>
@@ -24,7 +24,7 @@
                     <div ng-if="galleryCtrl.currentIndex > 0" class="leftZoneModal cursor-as-pointer" ng-click="galleryCtrl.changeImage('left')">
                         <span class="glyphicon glyphicon-chevron-left"></span>
                     </div>
-                    <img class="img-responsive" ng-src="{{galleryCtrl.currentImage.url}}" ng-attr-alt="{{galleryCtrl.currentImage.title}}" style="display: inline; max-height: 800px">
+                    <img class="img-responsive" ng-src="{{galleryCtrl.currentImage.url}}" ng-attr-alt="{{galleryCtrl.currentImage.title}}">
                 </div>
             </div>
         </div>

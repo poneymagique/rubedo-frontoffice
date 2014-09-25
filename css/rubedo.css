@@ -1,6 +1,11 @@
 .cursor-as-pointer{
     cursor:pointer;
 }
+
+.no-list-style{
+    list-style: none
+}
+
 .rubedo-caption{
     background: rgba(0,0,0,0.75);
     width:100%;
@@ -62,4 +67,42 @@
 
 .rightZoneModal:hover, .leftZoneModal:hover {
     background-color: rgba(0, 0, 0, 0.20);
+}
+
+.alphabeticalIndex {
+    padding-bottom: 10px;
+}
+
+.gallery {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.gallery .caption {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 30px;
+}
+
+#rubedoGalleryDetailModal img.img-responsive {
+    display: inline;
+    max-height: 800px;
+}
+
+.resultData .progress {
+    width: 70px;
+    float: left;
+}
+
+.resultData .progress-bar {
+    min-width: 30%;
+    max-width: 100%;
+}
+
+.resultData span.label {
+    display: inline-block;
+}
+
+.resultData .well {
+    height: 140px
 }
