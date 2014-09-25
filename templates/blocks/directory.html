@@ -42,7 +42,7 @@
     <div class="row" ng-if="directoryCtrl.alphabeticIndex">
         <div class="text-center col-md-12">
             <div class="btn-group alphabeticalIndex">
-                <button ng-repeat="letter in directoryCtrl.alphabet.terms"
+                <button ng-repeat="letter in directoryCtrl.alphabet.terms" ng-disabled="!letter.term"
                         ng-click="directoryCtrl.clickOnFacets(directoryCtrl.alphabet.id, letter.term)"
                         type="button" class="btn btn-default">{{letter.label}}<sup>{{letter.count}}</sup>
                 </button>

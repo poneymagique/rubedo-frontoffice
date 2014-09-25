@@ -1061,6 +1061,11 @@
             me.searchByQuery = function(options){
                 RubedoSearchService.searchUsers(options).then(function(response){
                     if(response.data.success){
+                        var alphabetTerms = {'A':{label:'A'},'B':{label:'B'},'C':{label:'C'},'D':{label:'D'},'E':{label:'E'},
+                            'F':{label:'F'},'G':{label:'G'},'H':{label:'H'},'I':{label:'I'},'J':{label:'J'},'K':{label:'K'},
+                            'L':{label:'L'},'M':{label:'M'},'N':{label:'N'},'O':{label:'O'},'P':{label:'P'},'Q':{label:'Q'},
+                            'R':{label:'R'},'S':{label:'S'},'T':{label:'T'},'U':{label:'U'},'V':{label:'V'},'W':{label:'W'},
+                            'X':{label:'X'},'Y':{label:'Y'},'Z':{label:'Z'}};
                         me.query = response.data.results.query;
                         me.count = response.data.count;
                         me.data =  response.data.results.data;
@@ -1068,6 +1073,12 @@
                         angular.forEach(response.data.results.facets,function(facet){
                             if(facet.id == 'userName'){
                                 me.alphabet = facet;
+                                angular.forEach(me.alphabet.terms, function(term){
+                                    if(alphabetTerms[term.label]){
+                                        alphabetTerms[term.label] = term;
+                                    }
+                                });
+                                me.alphabet.terms = alphabetTerms;
                             } else {
                                 me.facets.push(facet);
                             }
