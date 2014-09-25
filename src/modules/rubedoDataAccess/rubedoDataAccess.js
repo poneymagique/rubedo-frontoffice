@@ -335,6 +335,13 @@
             return ($http.get(config.baseUrl+"/mailinglists",{
             }));
         };
+        serviceInstance.subscribeToMailingLists=function(options){
+            return ($http({
+                url:config.baseUrl+"/mailinglists/subscribe",
+                method:"POST",
+                data : options
+            }));
+        };
         return serviceInstance;
     }])
 

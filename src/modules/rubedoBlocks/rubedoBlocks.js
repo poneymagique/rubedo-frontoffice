@@ -1929,7 +1929,6 @@
         console.log(config);
         me.mailingLists = {};
         RubedoMailingListService.getAllMailingList().then(function(response){
-            console.log(response.data);
             if(response.data.success){
                 angular.forEach(config.mailingListId, function(mailing){
                     var newMailing = {};
@@ -1942,8 +1941,23 @@
                         }
                     });
                 });
-                console.log(me.mailingLists);
             }
         });
+        me.submit = function(){
+            console.log(me.mailingLists);
+            //var mailingListsSuscribe = [];
+            //angular.forEach(me.mailingLists, function(mailingList){
+            //    if(mailingList.checked){
+            //        mailingListsSuscribe.push(mailingList.id);
+            //    }
+            //});
+            //if(mailingListsSuscribe.length > 0){
+            //    RubedoMailingListService.subscribeToMailingLists({'mailingLists[]':mailingListsSuscribe}).then(function(response){
+            //        console.log(response);
+            //    },function(response){
+            //        console.log(response);
+            //    });
+            //}
+        };
     }])
 })();

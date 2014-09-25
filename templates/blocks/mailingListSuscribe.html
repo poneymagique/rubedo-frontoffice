@@ -1,5 +1,5 @@
 <div ng-controller="MailingListSuscribeController as mailingListSusCtrl">
-    <form role="form">
+    <form role="form" ng-submit="mailingListSusCtrl.submit()">
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
             <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
