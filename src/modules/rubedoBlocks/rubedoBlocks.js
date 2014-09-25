@@ -208,7 +208,7 @@
                         me.contentList=[];
                         angular.forEach(response.data.contents,function(newContent, key){
                             columnContentList.push(newContent);
-                            if(config.columns && (key+1) % (Math.ceil(me.limit/config.columns)) == 0){
+                            if(config.columns && (key+1) % (Math.ceil(response.data.contents.length/config.columns)) == 0){
                                 me.contentList.push(columnContentList);
                                 columnContentList = [];
                             }
