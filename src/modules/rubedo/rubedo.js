@@ -119,8 +119,11 @@
 
     }]);
 
-    app.controller("PageBodyController",['RubedoPagesService', 'RubedoModuleConfigService',function(RubedoPagesService, RubedoModuleConfigService){
+    app.controller("PageBodyController",['RubedoPagesService', 'RubedoModuleConfigService','$scope',function(RubedoPagesService, RubedoModuleConfigService,$scope){
         var me=this;
+        if ($scope.rubedo.fieldEditMode){
+            $scope.rubedo.revertChanges();
+        }
         RubedoPagesService.getPageByCurrentRoute().then(function(response){
             if (response.data.success){
                 var newPage=angular.copy(response.data.page);
