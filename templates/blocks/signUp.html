@@ -18,4 +18,7 @@
     <div ng-if="signUpCtrl.confirmMessage" ng-init="notification = {type:'success',text:rubedo.translate(signUpCtrl.confirmMessage,signUpCtrl.confirmMessageDefault)}">
         <rubedo-notification></rubedo-notification>
     </div>
+    <div ng-if="signUpCtrl.emailConfirmError" ng-init="notification = {type:'error',text:signUpCtrl.emailConfirmError}">
+        <rubedo-notification></rubedo-notification>
+    </div>
 </div>

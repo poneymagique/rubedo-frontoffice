@@ -269,6 +269,16 @@
                 }
             }));
         };
+        serviceInstance.confirmUserEmail=function(userId,signupTime){
+            return ($http({
+                url:config.baseUrl+"/users/confirmemail",
+                method:"POST",
+                data : {
+                    userId:userId,
+                    signupTime:signupTime
+                }
+            }));
+        };
         return serviceInstance;
     }]);
 

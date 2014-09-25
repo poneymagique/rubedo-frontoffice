@@ -1720,7 +1720,19 @@
         };
         var queryParams=$location.search();
         if (queryParams.confirmingEmail&&queryParams.userId&&queryParams.signupTime){
-
+            RubedoUsersService.confirmUserEmail(queryParams.userId,queryParams.signupTime).then(
+                function(response){
+                    if (response.data.success){
+                        me.confirmMessage="Blocks.SignUp.emailConfirmed.activated";
+                        me.confirmMessageDefault="Account activated.";
+                    } else {
+                        me.emailConfirmError=response.data.message;
+                    }
+                },
+                function(response){
+                    me.emailConfirmError=response.data.message;
+                }
+            );
         } else if (config.userType){
             RubedoUserTypesService.getUserTypeById(config.userType).then(
                 function(response){
