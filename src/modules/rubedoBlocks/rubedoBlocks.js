@@ -509,22 +509,24 @@
                 viewRender: function(view){
                     options.date = moment(view.start.format()).unix();
                     options.endDate = moment(view.end.format()).unix();
-                    me.getContents(config.query, pageId, siteId, options, function(data){
-                        me.contents = data.contents;
-                        var newEvents = [];
-                        angular.forEach(me.contents,function(content){
-                            var event = {};
-                            event.title = content.fields.text;
-                            event.start = moment.unix(content.fields[config['date']]).format('YYYY-MM-DD');
-                            event.end = content.fields[config['endDate']]?
-                                moment.unix(content.fields[config['endDate']]).format('YYYY-MM-DD'):
-                                moment.unix(content.fields[config['date']]).format('YYYY-MM-DD');
-                            newEvents.push(event);
+                    if(config.query){
+                        me.getContents(config.query, pageId, siteId, options, function(data){
+                            me.contents = data.contents;
+                            var newEvents = [];
+                            angular.forEach(me.contents,function(content){
+                                var event = {};
+                                event.title = content.fields.text;
+                                event.start = moment.unix(content.fields[config['date']]).format('YYYY-MM-DD');
+                                event.end = content.fields[config['endDate']]?
+                                    moment.unix(content.fields[config['endDate']]).format('YYYY-MM-DD'):
+                                    moment.unix(content.fields[config['date']]).format('YYYY-MM-DD');
+                                newEvents.push(event);
+                            });
+                            me.calendar.fullCalendar('removeEvents');
+                            me.calendar.fullCalendar('addEventSource', newEvents);
+                            me.calendar.fullCalendar('refetchEvents');
                         });
-                        me.calendar.fullCalendar('removeEvents');
-                        me.calendar.fullCalendar('addEventSource', newEvents);
-                        me.calendar.fullCalendar('refetchEvents');
-                    });
+                    }
                 }
             });
         };
