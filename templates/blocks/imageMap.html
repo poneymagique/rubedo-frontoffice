@@ -1,6 +1,6 @@
 <div ng-controller="ImageMapController as imageMapCtrl">
-    <img ng-src="{{imageMapCtrl.image.url}}" ng-attr-usemap="{{'#'+imageMapCtrl.prefix}}"/>
-    <map name="{{imageMapCtrl.prefix}}">
+    <img class="img-responsive" ng-src="{{imageMapCtrl.image.url}}" ng-attr-usemap="{{'#'+imageMapCtrl.prefix}}"/>
+    <map ng-if="imageMapCtrl.map" name="{{imageMapCtrl.prefix}}">
         <area ng-repeat="mapElement in imageMapCtrl.map" ng-attr-shape="{{mapElement.type}}" ng-attr-coords="{{mapElement.coords}}"
               ng-attr-href="{{mapElement.href}}" ng-attr-alt="{{mapElement.alt}}" ng-attr-title="{{mapElement.title}}"/>
     </map>
