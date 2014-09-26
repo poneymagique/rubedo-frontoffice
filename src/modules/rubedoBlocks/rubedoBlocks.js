@@ -879,6 +879,7 @@
             me.languages = $scope.rubedo.current.site.languages;
             me.currentLang = $scope.rubedo.current.site.languages[$route.current.params.lang];
             me.mode = config.displayAs == "select";
+            me.showFlags = config.showFlags;
             me.isDisabled =  function(lang){
                 return me.currentLang.lang == lang;
             };
