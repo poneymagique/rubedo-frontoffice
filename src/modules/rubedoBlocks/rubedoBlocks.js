@@ -1386,7 +1386,7 @@
                             console.log(model.itemData);
                             $compile($element.find('#gmapitem'+$scope.block.id+model.id)[0])(newScope);
                             gMarker.getMap().setCenter(gMarker.getMap().getCenter());
-                        }, 100);
+                        }, 140);
                     }
                 }
             };

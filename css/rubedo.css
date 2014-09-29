@@ -108,6 +108,10 @@
 }
 
 .rubedo-gmapitem{
-    min-height: 100px;
-    min-width:200px;
+    min-height: 120px;
+    min-width:260px;
+}
+.gm-style-iw{
+    height: auto !important;
+    width: auto !important;
 }
