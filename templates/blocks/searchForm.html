@@ -1,5 +1,5 @@
 <div ng-controller="SearchFormController as searchFormCtrl">
-    <form ng-submit="searchFormCtrl.onSubmit()" role="form">
+    <form ng-if="searchFormCtrl.show" ng-submit="searchFormCtrl.onSubmit()" role="form">
         <div class="input-group">
             <input class="form-control" type="text" ng-model="searchFormCtrl.query" placeholder="{{searchFormCtrl.placeholder}}"/>
                             <span class="input-group-btn"><button class="btn btn-default" type="submit">
