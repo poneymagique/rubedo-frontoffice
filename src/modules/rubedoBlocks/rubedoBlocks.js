@@ -297,7 +297,8 @@
         var queryOptions={
             start: blockConfig.resultsSkip ? blockConfig.resultsSkip : 0,
             limit: blockConfig.pageSize ? blockConfig.pageSize : 6,
-            'fields[]' : ["text","summary",blockConfig.imageField]
+            'fields[]' : ["text","summary",blockConfig.imageField],
+            'requiredFields[]':[blockConfig.imageField]
         };
         var pageId=$scope.rubedo.current.page.id;
         var siteId=$scope.rubedo.current.site.id;
