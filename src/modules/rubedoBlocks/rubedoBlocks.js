@@ -1383,7 +1383,6 @@
                         setTimeout(function(){
                             var newScope=$element.find('#gmapitem'+$scope.block.id+model.id).scope();
                             newScope.itemData=model.itemData;
-                            console.log(model.itemData);
                             $compile($element.find('#gmapitem'+$scope.block.id+model.id)[0])(newScope);
                             gMarker.getMap().setCenter(gMarker.getMap().getCenter());
                         }, 140);
