@@ -352,6 +352,11 @@
                 data : options
             }));
         };
+        serviceInstance.unsubscribeToMailingLists = function(options){
+            return ($http.delete(config.baseUrl+"/mailinglists/subscribe",{
+                params: options
+            }));
+        };
         return serviceInstance;
     }])
 

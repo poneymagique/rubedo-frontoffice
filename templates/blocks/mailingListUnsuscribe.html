@@ -1,0 +1,10 @@
+<div ng-controller="MailingListUnsuscribeController as mailingListUnsusCtrl">
+    <rubedo-notification></rubedo-notification>
+    <form class="form-inline" role="form" ng-submit="mailingListUnsusCtrl.onSubmit()">
+        <div class="form-group">
+            <label class="sr-only" for="exampleInputEmail2">Email</label>
+            <input required ng-model="mailingListUnsusCtrl.email" type="email" class="form-control" id="exampleInputEmail2" placeholder="Enter email">
+        </div>
+        <button type="submit" class="btn btn-primary">Unsuscribe</button>
+    </form>
+</div>

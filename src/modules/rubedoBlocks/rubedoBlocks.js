@@ -39,7 +39,8 @@
         imageMap:"/components/webtales/rubedo-frontoffice/templates/blocks/imageMap.html",
         contact:"/components/webtales/rubedo-frontoffice/templates/blocks/contact.html",
         protectedResource:"/components/webtales/rubedo-frontoffice/templates/blocks/mediaProtectedDownload.html",
-        mailingList:"/components/webtales/rubedo-frontoffice/templates/blocks/mailingListSuscribe.html"
+        mailingList:"/components/webtales/rubedo-frontoffice/templates/blocks/mailingListSuscribe.html",
+        unsubscribe:"/components/webtales/rubedo-frontoffice/templates/blocks/mailingListUnsuscribe.html"
     };
 
     var responsiveClasses = {
@@ -2010,23 +2011,59 @@
                         if(response.data.success){
                             $scope.notification = {
                                 type: 'success',
-                                text: 'You have been successfully add to the mailing list(s)'
+                                text: 'You have successfully subscribed to the selected newsletter(s)'
                             };
                         }
                         me.email = '';
                     },function(){
-                        $$scope.notification = {
+                        $scope.notification = {
                             type: 'error',
                             text: 'The subscribe process failed'
                         };
                     });
                 }
             } else {
-                $$scope.notification = {
+                $scope.notification = {
                     type: 'error',
                     text: 'Email and/or name are required'
                 };
             }
         };
-    }])
+    }]);
+
+    module.controller('MailingListUnsuscribeController',['$scope','RubedoMailingListService',function($scope,RubedoMailingListService){
+        var me = this;
+        me.onSubmit = function(){
+            if(me.email){
+                var options = {
+                    mailingLists:'all',
+                    email: me.email
+                };
+                RubedoMailingListService.unsubscribeToMailingLists(options).then(function(response){
+                    if(response.data.success){
+                        me.email = '';
+                        $scope.notification = {
+                            type: 'success',
+                            text: 'You have successfully unsubscribed to all newsletters'
+                        };
+                    } else {
+                        $scope.notification = {
+                            type: 'error',
+                            text: 'The unsubscribe process failed'
+                        };
+                    }
+                },function(){
+                    $scope.notification = {
+                        type: 'error',
+                        text: 'The unsubscribe process failed'
+                    };
+                });
+            } else {
+                $scope.notification = {
+                    type: 'error',
+                    text: 'Email is required'
+                };
+            }
+        }
+    }]);
 })();
