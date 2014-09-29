@@ -106,3 +106,8 @@
 .resultData .well {
     height: 140px
 }
+
+.rubedo-gmapitem{
+    min-height: 100px;
+    min-width:200px;
+}
