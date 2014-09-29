@@ -863,6 +863,7 @@
     module.controller("SearchFormController",['$scope','$location','RubedoPagesService',function($scope, $location, RubedoPagesService){
         var me = this;
         var config = $scope.blockConfig;
+        me.show = config.searchPage;
         me.placeholder = config.placeholder;
         me.onSubmit = function(){
             var paramQuery = me.query?'?query='+me.query:'';
@@ -1962,10 +1963,16 @@
     module.controller('MailingListSuscribeController',['$scope','RubedoMailingListService',function($scope,RubedoMailingListService){
         var me = this;
         var config = $scope.blockConfig;
-        console.log(config);
         me.mailingLists = {};
+        $scope.fieldIdPrefix="mailingLists";
+        me.prefix = "mailingLists_"+$scope.block.id;
+        $scope.fieldEntity={ };
+        $scope.fieldInputMode=true;
+        $scope.isBasic = true;
         RubedoMailingListService.getAllMailingList().then(function(response){
             if(response.data.success){
+                me.userType = response.data.userType;
+                $scope.fieldIdPrefix=me.prefix+me.userType.type;
                 angular.forEach(config.mailingListId, function(mailing){
                     var newMailing = {};
                     angular.forEach(response.data.mailinglists, function(mailingInfo){
@@ -1980,20 +1987,46 @@
             }
         });
         me.submit = function(){
-            console.log(me.mailingLists);
-            //var mailingListsSuscribe = [];
-            //angular.forEach(me.mailingLists, function(mailingList){
-            //    if(mailingList.checked){
-            //        mailingListsSuscribe.push(mailingList.id);
-            //    }
-            //});
-            //if(mailingListsSuscribe.length > 0){
-            //    RubedoMailingListService.subscribeToMailingLists({'mailingLists[]':mailingListsSuscribe}).then(function(response){
-            //        console.log(response);
-            //    },function(response){
-            //        console.log(response);
-            //    });
-            //}
+            if (me.email && me.name) {
+                var mailingListsSuscribe = [];
+                angular.forEach(me.mailingLists, function(mailingList){
+                    if(mailingList.checked){
+                        mailingListsSuscribe.push(mailingList.id);
+                    }
+                });
+                if(mailingListsSuscribe.length > 0){
+                    var options={
+                        mailingLists:mailingListsSuscribe,
+                        email: me.email,
+                        name: me.name
+                    };
+                    if($scope.fieldEntity){
+                        options.fields = $scope.fieldEntity;
+                    }
+                    RubedoMailingListService.subscribeToMailingLists(options).then(function(response){
+                        me.email = '';
+                        me.name = '';
+                        $scope.fieldEntity = {};
+                        if(response.data.success){
+                            $scope.notification = {
+                                type: 'success',
+                                text: 'You have been successfully add to the mailing list(s)'
+                            };
+                        }
+                        me.email = '';
+                    },function(){
+                        $$scope.notification = {
+                            type: 'error',
+                            text: 'The subscribe process failed'
+                        };
+                    });
+                }
+            } else {
+                $$scope.notification = {
+                    type: 'error',
+                    text: 'Email and/or name are required'
+                };
+            }
         };
     }])
 })();
