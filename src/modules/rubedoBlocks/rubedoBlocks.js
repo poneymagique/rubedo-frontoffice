@@ -393,6 +393,10 @@
                 $scope.fieldEntity=angular.copy(me.content.fields);
                 $scope.fieldLanguage=me.content.locale;
             } else {
+                var options = {
+                    siteId: $scope.rubedo.current.site.id,
+                    pageId: $scope.rubedo.current.page.id
+                };
                 RubedoContentsService.getContentById(contentId).then(
                     function(response){
                         if(response.data.success){
@@ -438,9 +442,14 @@
 
         });
         me.getContentById = function (contentId){
-            RubedoContentsService.getContentById(contentId).then(
+            var options = {
+                siteId: $scope.rubedo.current.site.id,
+                pageId: $scope.rubedo.current.page.id
+            };
+            RubedoContentsService.getContentById(contentId, options).then(
                 function(response){
                     if(response.data.success){
+                        $scope.rubedo.current.page.contentCanonicalUrl = response.data.content.canonicalUrl;
                         me.content=response.data.content;
                         $scope.fieldEntity=angular.copy(me.content.fields);
                         $scope.fieldLanguage=me.content.locale;

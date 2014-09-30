@@ -129,6 +129,19 @@
                 var newPage=angular.copy(response.data.page);
                 newPage.pageProperties=angular.copy(response.data.mask.pageProperties);
                 newPage.mainColumnId=angular.copy(response.data.mask.mainColumnId);
+                if(newPage.keywords){
+                    angular.forEach(newPage.keywords, function(keyword){
+                       newPage.metaKeywords = newPage.metaKeywords?newPage.metaKeywords+','+keyword:keyword;
+                    });
+                } else if (response.data.site.keywords){
+                    angular.forEach(response.data.site.keywords, function(keyword){
+                        newPage.metaKeywords = newPage.metaKeywords?newPage.metaKeywords+','+keyword:keyword;
+                    });
+                }
+                if(newPage.noIndex || newPage.noFollow){
+                    newPage.metaRobots = (newPage.noIndex?'noindex':'') + (newPage.noFollow?',nofollow':'');
+                }
+                newPage.metaAuthor = response.data.site.author?response.data.site.author:'Rubedo by Webtales';
                 current.page=newPage;
                 current.site=angular.copy(response.data.site);
                 current.breadcrumb=angular.copy(response.data.breadcrumb);

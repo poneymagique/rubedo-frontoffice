@@ -129,8 +129,10 @@
                 params: params
             }));
         };
-        serviceInstance.getContentById = function(contentId){
-          return ($http.get(config.baseUrl+"/contents/"+contentId));
+        serviceInstance.getContentById = function(contentId, options){
+          return ($http.get(config.baseUrl+"/contents/"+contentId, {
+              params: options
+          }));
         };
         serviceInstance.updateContent=function(content){
             return ($http({
