@@ -1407,6 +1407,9 @@
             }
             var predefinedFacets = config.predefinedFacets==""?{}:JSON.parse(config.predefinedFacets);
             var facetsId = ['objectType','type','damType','userType','author','userName','lastupdatetime','query'];
+            if (config.displayedFacets=="all"){
+                config.displayedFacets="['all']";
+            }
             var defaultOptions = {
                 start: me.start,
                 limit: me.limit,
