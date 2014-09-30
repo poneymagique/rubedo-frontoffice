@@ -2093,6 +2093,7 @@
                 start: 0,
                 limit: $scope.pageSize,
                 predefinedFacets: $scope.predefinedFacets,
+                displayedFacets: "['all']",
                 pageId: $scope.rubedo.current.page.id,
                 siteId: $scope.rubedo.current.site.id
             };
