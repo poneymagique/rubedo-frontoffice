@@ -40,7 +40,8 @@
         contact:"/components/webtales/rubedo-frontoffice/templates/blocks/contact.html",
         protectedResource:"/components/webtales/rubedo-frontoffice/templates/blocks/mediaProtectedDownload.html",
         mailingList:"/components/webtales/rubedo-frontoffice/templates/blocks/mailingListSuscribe.html",
-        unsubscribe:"/components/webtales/rubedo-frontoffice/templates/blocks/mailingListUnsuscribe.html"
+        unsubscribe:"/components/webtales/rubedo-frontoffice/templates/blocks/mailingListUnsuscribe.html",
+        d3Script:"/components/webtales/rubedo-frontoffice/templates/blocks/d3Script.html"
     };
 
     var responsiveClasses = {
@@ -2079,5 +2080,29 @@
                 };
             }
         }
+    }]);
+
+    module.controller('D3ScriptController',['$scope','$sce','RubedoSearchService',function($scope,$sce,RubedoSearchService){
+        var me = this;
+        var config = $scope.blockConfig;
+        var d3Code = config.d3Code ? config.d3Code : "";
+        $scope.predefinedFacets = config.predefinedFacets ? config.predefinedFacets : "{ }";
+        $scope.pageSize = config.pageSize ? config.pageSize : 5000;
+        $scope.retrieveData=function(params, successFunction, failureFunction ){
+            var options={
+                start: 0,
+                limit: $scope.pageSize,
+                predefinedFacets: $scope.predefinedFacets
+            };
+            RubedoSearchService.searchByQuery(options).then(
+                function(response){
+                    successFunction(response.data.results);
+                },
+                function(response){
+                    failureFunction(response.data);
+                }
+            );
+        };
+        me.html=$sce.trustAsHtml(d3Code);
     }]);
 })();
