@@ -2092,7 +2092,9 @@
             var options={
                 start: 0,
                 limit: $scope.pageSize,
-                predefinedFacets: $scope.predefinedFacets
+                predefinedFacets: $scope.predefinedFacets,
+                pageId: $scope.rubedo.current.page.id,
+                siteId: $scope.rubedo.current.site.id
             };
             RubedoSearchService.searchByQuery(options).then(
                 function(response){
