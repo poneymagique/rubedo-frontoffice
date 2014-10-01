@@ -449,7 +449,10 @@
                 }
             });
             return field;
-        }
+        };
+        me.showTab=function(target){
+            angular.element('a[href="#'+target+'"]').tab('show');
+        };
 
         me.getContentById = function (contentId){
             var options = {
@@ -2207,5 +2210,17 @@
             }
         };
     }]);
+
+    module.directive('showtab',
+        function () {
+            return {
+                link: function (scope, element, attrs) {
+                    element.click(function(e) {
+                        e.preventDefault();
+                        $(element).tab('show');
+                    });
+                }
+            };
+        });
 
 })();
