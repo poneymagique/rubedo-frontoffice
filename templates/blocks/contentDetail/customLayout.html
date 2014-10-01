@@ -1,0 +1,24 @@
+<div class="container-fluid">
+    <div ng-repeat="row in contentDetailCtrl.customLayout.rows"
+         class="row"
+         ng-class="rubedo.componentsService.resolveResponsiveClass(row.responsive)">
+
+        <div ng-repeat="column in row.columns"
+             ng-class="rubedo.componentsService.getColumnClass(column.span,column.offset,column.stackThreshold)+' '+rubedo.componentsService.resolveResponsiveClass(column.responsive)">
+            <div ng-repeat="columnField in column.fields"
+                 ng-class="rubedo.componentsService.resolveResponsiveClass(columnField.responsive)"
+                 ng-init="field = contentDetailCtrl.getFieldByName(columnField.name)"
+                 >
+                <div ng-if="field&&(fieldEntity[field.config.name]||field.cType=='checkboxfield')">
+                    <rubedo-field></rubedo-field>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<dir-disqus ng-if="contentDetailCtrl.activateDisqus"
+            disqus-shortname="{{contentDetailCtrl.disqusShortname}}"
+            disqus-identifier="{{ contentDetailCtrl.disqusIdentifier }}"
+            disqus-url="{{ contentDetailCtrl.disqusUrl}}"
+            disqus-title="{{ contentDetailCtrl.disqusTitle }}">
+</dir-disqus>

@@ -441,6 +441,16 @@
             $scope.fieldEditMode=me.content&&me.content.readOnly ? false : newValue;
 
         });
+        me.getFieldByName=function(name){
+            var field=null;
+            angular.forEach(me.content.type.fields,function(candidate){
+                if (candidate.config.name==name){
+                    field=candidate;
+                }
+            });
+            return field;
+        }
+
         me.getContentById = function (contentId){
             var options = {
                 siteId: $scope.rubedo.current.site.id,
@@ -451,9 +461,9 @@
                     if(response.data.success){
                         $scope.rubedo.current.page.contentCanonicalUrl = response.data.content.canonicalUrl;
                         me.content=response.data.content;
+                        console.log(me.content);
                         $scope.fieldEntity=angular.copy(me.content.fields);
                         $scope.fieldLanguage=me.content.locale;
-                        //use only default template for now
                         me.content.type.fields.unshift({
                             cType:"title",
                             config:{
@@ -470,7 +480,19 @@
                             me.disqusUrl=window.location.href;
                             me.disqusTitle=me.content.text;
                         }
-                        me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail/default.html';
+                        me.customLayout=null;
+                        if (angular.isArray(me.content.type.layouts)){
+                            angular.forEach(me.content.type.layouts,function(layout){
+                                if (layout.active&&layout.site==$scope.rubedo.current.site.id){
+                                    me.customLayout=layout;
+                                }
+                            });
+                        }
+                        if (me.customLayout){
+                            me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail/customLayout.html'
+                        } else {
+                            me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail/default.html';
+                        }
                     }
                 }
             );
