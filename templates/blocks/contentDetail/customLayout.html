@@ -1,4 +1,3 @@
-<div class="container-fluid">
     <div ng-repeat="row in contentDetailCtrl.customLayout.rows"
          class="row"
          ng-class="rubedo.componentsService.resolveResponsiveClass(row.responsive)">
@@ -10,12 +9,14 @@
                  ng-init="field = contentDetailCtrl.getFieldByName(columnField.name)"
                  >
                 <div ng-if="field&&(fieldEntity[field.config.name]||field.cType=='checkboxfield')">
-                    <rubedo-field></rubedo-field>
+                    <label ng-if="columnField.showLabel&&field.cType!='checkboxfield'">{{field.config.fieldLabel}} :
+                        <rubedo-field></rubedo-field>
+                    </label>
+                    <rubedo-field ng-if="!columnField.showLabel||field.cType=='checkboxfield'"></rubedo-field>
                 </div>
             </div>
         </div>
     </div>
-</div>
 <dir-disqus ng-if="contentDetailCtrl.activateDisqus"
             disqus-shortname="{{contentDetailCtrl.disqusShortname}}"
             disqus-identifier="{{ contentDetailCtrl.disqusIdentifier }}"
