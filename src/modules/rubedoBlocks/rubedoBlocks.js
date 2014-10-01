@@ -450,9 +450,6 @@
             });
             return field;
         };
-        me.showTab=function(target){
-            angular.element('a[href="#'+target+'"]').tab('show');
-        };
 
         me.getContentById = function (contentId){
             var options = {
@@ -464,7 +461,6 @@
                     if(response.data.success){
                         $scope.rubedo.current.page.contentCanonicalUrl = response.data.content.canonicalUrl;
                         me.content=response.data.content;
-                        console.log(me.content);
                         $scope.fieldEntity=angular.copy(me.content.fields);
                         $scope.fieldLanguage=me.content.locale;
                         me.content.type.fields.unshift({
@@ -491,7 +487,9 @@
                                 }
                             });
                         }
-                        if (me.customLayout){
+                        if (me.customLayout&&me.customLayout.customTemplate){
+                            me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail/customTemplate.html'
+                        } else if (me.customLayout){
                             me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail/customLayout.html'
                         } else {
                             me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail/default.html';
