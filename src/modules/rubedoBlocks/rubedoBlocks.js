@@ -488,9 +488,9 @@
                             });
                         }
                         if (me.customLayout&&me.customLayout.customTemplate){
-                            me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail/customTemplate.html'
+                            me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail/customTemplate.html';
                         } else if (me.customLayout){
-                            me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail/customLayout.html'
+                            me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail/customLayout.html';
                         } else {
                             me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail/default.html';
                         }
