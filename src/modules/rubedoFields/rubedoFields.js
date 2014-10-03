@@ -153,6 +153,9 @@
         var myValue=$scope.fieldEntity[$scope.field.config.name];
         if ((myValue)&&(myValue.url)){
             var url = "http://iframe.ly/api/oembed?callback=JSON_CALLBACK&url="+encodeURIComponent(myValue.url);
+            if ($scope.rubedo.current.site.iframelyKey){
+                url=url+"&api_key="+$scope.current.site.iframelyKey;
+            }
             $http.jsonp(url).success(function(response){
                     me.html=$sce.trustAsHtml(response.html);
                 });
