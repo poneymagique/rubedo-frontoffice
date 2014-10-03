@@ -1337,6 +1337,7 @@
                 batchSize : 20000,
                 averageCenter : false,
                 gridSize : 60,
+                zoomOnClick:false,
                 batchSizeIE : 20000
             };
             //api clustering options
@@ -1434,6 +1435,37 @@
                     var map=cluster.getMap();
                     map.setCenter(cluster.getCenter());
                     map.setZoom(map.getZoom()+2);
+                }
+            };
+            me.smallClusterEvents= {
+                click: function(cluster,markers){
+                    if (cluster.getMap().getZoom()>19){
+                        var targetId=markers[0].id;
+                        var markerHolder=cluster.getMarkerClusterer().getMarkers().get(targetId);
+
+                        if ($element.find('#gmapitem'+targetId).length==0){
+                            if (me.activeInfoWindow){
+                                me.activeInfoWindow.close();
+                            }
+                            var newInfoWin = new google.maps.InfoWindow({
+                                content : '<div class="rubedo-gmapitem" id="gmapitem'+targetId+'" ><div ng-repeat="mData in mDatas" ng-init="itemData = mData.itemData" ng-include="\'/components/webtales/rubedo-frontoffice/templates/blocks/geoSearchResults/detail/\'+itemData.objectType+\'.html\'"></div></div>',
+                                position : markerHolder.getPosition()
+                            });
+                            var map=cluster.getMap();
+                            newInfoWin.open(map);
+                            me.activeInfoWindow=newInfoWin;
+                            setTimeout(function(){
+                                var newScope=$element.find('#gmapitem'+targetId).scope();
+                                newScope.mDatas=markers;
+                                $compile($element.find('#gmapitem'+targetId)[0])(newScope);
+                                cluster.getMap().setCenter(cluster.getMap().getCenter());
+                            }, 200);
+                        }
+                    } else {
+                        var map=cluster.getMap();
+                        map.setCenter(cluster.getCenter());
+                        map.setZoom(map.getZoom()+2);
+                    }
                 }
             };
             if (config.activateSearch){
@@ -1664,7 +1696,7 @@
                         }
 
                     });
-                },2000);
+                },4000);
             }
             if (config.height&&config.height!=500){
                 setTimeout(function(){
