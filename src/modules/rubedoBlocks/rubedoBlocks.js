@@ -5,44 +5,46 @@
     var module = angular.module('rubedoBlocks',['rubedoDataAccess', 'lrInfiniteScroll','rubedoFields','snap']);
 
     var blocksConfig = {
-        image:"/components/webtales/rubedo-frontoffice/templates/blocks/image.html",
-        blockNotFound:"/components/webtales/rubedo-frontoffice/templates/blocks/blockNotFound.html",
-        navigation:"/components/webtales/rubedo-frontoffice/templates/blocks/navigation.html",
-        verticalNavigation:"/components/webtales/rubedo-frontoffice/templates/blocks/verticalNavigation.html",
-        contentList:"/components/webtales/rubedo-frontoffice/templates/blocks/contentList.html",
-        authentication:"/components/webtales/rubedo-frontoffice/templates/blocks/authentication.html",
-        simpleText:"/components/webtales/rubedo-frontoffice/templates/blocks/simpleText.html",
-        richText:"/components/webtales/rubedo-frontoffice/templates/blocks/richText.html",
-        contentDetail:"/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail.html",
-        calendar:"/components/webtales/rubedo-frontoffice/templates/blocks/calendar.html",
-        development:"/components/webtales/rubedo-frontoffice/templates/blocks/development.html",
-        customTemplate:"/components/webtales/rubedo-frontoffice/templates/blocks/customTemplate.html",
-        carrousel:"/components/webtales/rubedo-frontoffice/templates/blocks/carousel.html",
-        imageGallery:"/components/webtales/rubedo-frontoffice/templates/blocks/gallery.html",
-        damList:"/components/webtales/rubedo-frontoffice/templates/blocks/mediaList.html",
-        searchResults:"/components/webtales/rubedo-frontoffice/templates/blocks/searchResults.html",
-        userProfile:"/components/webtales/rubedo-frontoffice/templates/blocks/userProfile.html",
-        externalMedia:"/components/webtales/rubedo-frontoffice/templates/blocks/externalMedia.html",
-        searchForm:"/components/webtales/rubedo-frontoffice/templates/blocks/searchForm.html",
-        breadcrumb:"/components/webtales/rubedo-frontoffice/templates/blocks/breadcrumb.html",
-        languageMenu:"/components/webtales/rubedo-frontoffice/templates/blocks/languageMenu.html",
-        directory:"/components/webtales/rubedo-frontoffice/templates/blocks/directory.html",
-        audio:"/components/webtales/rubedo-frontoffice/templates/blocks/audio.html",
-        video:"/components/webtales/rubedo-frontoffice/templates/blocks/video.html",
-        siteMap:"/components/webtales/rubedo-frontoffice/templates/blocks/siteMap.html",
-        twitter:"/components/webtales/rubedo-frontoffice/templates/blocks/twitter.html",
-        geoSearchResults:"/components/webtales/rubedo-frontoffice/templates/blocks/geoSearchResults.html",
-        addThis:"/components/webtales/rubedo-frontoffice/templates/blocks/addThisShare.html",
-        resource:"/components/webtales/rubedo-frontoffice/templates/blocks/mediaDownload.html",
-        addThisFollow:"/components/webtales/rubedo-frontoffice/templates/blocks/addThisFollow.html",
-        signUp:"/components/webtales/rubedo-frontoffice/templates/blocks/signUp.html",
-        imageMap:"/components/webtales/rubedo-frontoffice/templates/blocks/imageMap.html",
-        contact:"/components/webtales/rubedo-frontoffice/templates/blocks/contact.html",
-        protectedResource:"/components/webtales/rubedo-frontoffice/templates/blocks/mediaProtectedDownload.html",
-        mailingList:"/components/webtales/rubedo-frontoffice/templates/blocks/mailingListSuscribe.html",
-        unsubscribe:"/components/webtales/rubedo-frontoffice/templates/blocks/mailingListUnsuscribe.html",
-        d3Script:"/components/webtales/rubedo-frontoffice/templates/blocks/d3Script.html"
+        image:"/templates/blocks/image.html",
+        blockNotFound:"/templates/blocks/blockNotFound.html",
+        navigation:"/templates/blocks/navigation.html",
+        verticalNavigation:"/templates/blocks/verticalNavigation.html",
+        contentList:"/templates/blocks/contentList.html",
+        authentication:"/templates/blocks/authentication.html",
+        simpleText:"/templates/blocks/simpleText.html",
+        richText:"/templates/blocks/richText.html",
+        contentDetail:"/templates/blocks/contentDetail.html",
+        calendar:"/templates/blocks/calendar.html",
+        development:"/templates/blocks/development.html",
+        customTemplate:"/templates/blocks/customTemplate.html",
+        carrousel:"/templates/blocks/carousel.html",
+        imageGallery:"/templates/blocks/gallery.html",
+        damList:"/templates/blocks/mediaList.html",
+        searchResults:"/templates/blocks/searchResults.html",
+        userProfile:"/templates/blocks/userProfile.html",
+        externalMedia:"/templates/blocks/externalMedia.html",
+        searchForm:"/templates/blocks/searchForm.html",
+        breadcrumb:"/templates/blocks/breadcrumb.html",
+        languageMenu:"/templates/blocks/languageMenu.html",
+        directory:"/templates/blocks/directory.html",
+        audio:"/templates/blocks/audio.html",
+        video:"/templates/blocks/video.html",
+        siteMap:"/templates/blocks/siteMap.html",
+        twitter:"/templates/blocks/twitter.html",
+        geoSearchResults:"/templates/blocks/geoSearchResults.html",
+        addThis:"/templates/blocks/addThisShare.html",
+        resource:"/templates/blocks/mediaDownload.html",
+        addThisFollow:"/templates/blocks/addThisFollow.html",
+        signUp:"/templates/blocks/signUp.html",
+        imageMap:"/templates/blocks/imageMap.html",
+        contact:"/templates/blocks/contact.html",
+        protectedResource:"/templates/blocks/mediaProtectedDownload.html",
+        mailingList:"/templates/blocks/mailingListSuscribe.html",
+        unsubscribe:"/templates/blocks/mailingListUnsuscribe.html",
+        d3Script:"/templates/blocks/d3Script.html"
     };
+
+    var themePath="/theme/"+window.rubedoConfig.siteTheme;
 
     var responsiveClasses = {
         phone:"xs",
@@ -57,13 +59,13 @@
         var serviceInstance={};
         serviceInstance.getTemplate=function(bType,bConfig){
             if (bConfig.customTemplate){
-                return (blocksConfig.customTemplate);
+                return (themePath+blocksConfig.customTemplate);
             } else if (bType=="navigation"&&bConfig.style&&bConfig.style=="Vertical") {
-                return (blocksConfig.verticalNavigation);
+                return (themePath+blocksConfig.verticalNavigation);
             } else if (blocksConfig[bType]){
-                return (blocksConfig[bType]);
+                return (themePath+blocksConfig[bType]);
             } else {
-                return (blocksConfig.blockNotFound);
+                return (themePath+blocksConfig.blockNotFound);
             }
         };
         return serviceInstance;
@@ -73,16 +75,16 @@
         var serviceInstance={};
         serviceInstance.getRowTemplate=function(customTemplate){
             if (customTemplate){
-                return("/components/webtales/rubedo-frontoffice/templates/customRow.html");
+                return(themePath+"/templates/customRow.html");
             }  else {
-                return("/components/webtales/rubedo-frontoffice/templates/row.html");
+                return(themePath+"/templates/row.html");
             }
         };
         serviceInstance.getColumnTemplate=function(customTemplate){
             if (customTemplate){
-                return("/components/webtales/rubedo-frontoffice/templates/customColumn.html");
+                return(themePath+"/templates/customColumn.html");
             }  else {
-                return("/components/webtales/rubedo-frontoffice/templates/column.html");
+                return(themePath+"/templates/column.html");
             }
         };
         serviceInstance.getColumnClass=function(span,offset,stackThreshold){
@@ -107,7 +109,7 @@
     module.directive("rubedoBlock",function(){
         return {
             restrict:"E",
-            templateUrl:"/components/webtales/rubedo-frontoffice/templates/rubedoBlock.html"
+            templateUrl:themePath+"/templates/rubedoBlock.html"
         };
     });
 
@@ -236,7 +238,7 @@
     module.directive("paginator",["$timeout",function($timeout){
         return {
             restrict: 'E',
-            templateUrl: "/components/webtales/rubedo-frontoffice/templates/paginator.html",
+            templateUrl: themePath+"/templates/paginator.html",
             scope:{
                 start: '=',
                 limit: '=',
@@ -488,11 +490,11 @@
                             });
                         }
                         if (me.customLayout&&me.customLayout.customTemplate){
-                            me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail/customTemplate.html';
+                            me.detailTemplate=themePath+'/templates/blocks/contentDetail/customTemplate.html';
                         } else if (me.customLayout){
-                            me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail/customLayout.html';
+                            me.detailTemplate=themePath+'/templates/blocks/contentDetail/customLayout.html';
                         } else {
-                            me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/contentDetail/default.html';
+                            me.detailTemplate=themePath+'/templates/blocks/contentDetail/default.html';
                         }
                     }
                 }
@@ -624,7 +626,7 @@
                 'text': 'title'
             };
             me.displayOrderBy = $routeParams.orderby?resolveOrderBy[$routeParams.orderby]:"relevance";
-            me.template = "/components/webtales/rubedo-frontoffice/templates/blocks/searchResults/"+config.displayMode+".html";
+            me.template = themePath+"/templates/blocks/searchResults/"+config.displayMode+".html";
             var predefinedFacets = config.predefinedFacets==""?{}:JSON.parse(config.predefinedFacets);
             var facetsId = ['objectType','type','damType','userType','author','userName','lastupdatetime','query'];
             var defaultOptions = {
@@ -850,7 +852,7 @@
                                 allowBlank:false
                             }
                         });
-                        me.detailTemplate='/components/webtales/rubedo-frontoffice/templates/blocks/userDetail/default.html';
+                        me.detailTemplate=themePath+'/templates/blocks/userDetail/default.html';
                     }
                 }
             );
@@ -968,7 +970,7 @@
                 'text': 'title'
             };
             me.displayOrderBy = $routeParams.orderby?resolveOrderBy[$routeParams.orderby]:"relevance";
-            me.template = "/components/webtales/rubedo-frontoffice/templates/blocks/directory/"+config.userDisplayMode+".html";
+            me.template = themePath+"/templates/blocks/directory/"+config.userDisplayMode+".html";
             me.activateSearch = config.activateSearch;
             me.alphabeticIndex =  config.alphabeticIndex;
             var predefinedFacets = config.predefinedFacets==""?{}:JSON.parse(config.predefinedFacets);
@@ -1333,7 +1335,7 @@
             //places search
             if (config.showPlacesSearch){
                 me.activatePlacesSearch=true;
-                me.placesSearchTemplate="/components/webtales/rubedo-frontoffice/templates/blocks/geoSearchResults/placesSearch.html";
+                me.placesSearchTemplate=themePath+"/templates/blocks/geoSearchResults/placesSearch.html";
             }
             //clustering options
             me.clusterOptions={
@@ -1419,7 +1421,7 @@
                             me.activeInfoWindow.close();
                         }
                         var newInfoWin = new google.maps.InfoWindow({
-                            content : '<div class="rubedo-gmapitem" id="gmapitem'+$scope.block.id+model.id+'" ng-include="\'/components/webtales/rubedo-frontoffice/templates/blocks/geoSearchResults/detail/'+model.objectType+'.html\'"></div>'
+                            content : '<div class="rubedo-gmapitem" id="gmapitem'+$scope.block.id+model.id+'" ng-include="\''+themePath+'/templates/blocks/geoSearchResults/detail/'+model.objectType+'.html\'"></div>'
                         });
                         newInfoWin.open(gMarker.getMap(),gMarker);
                         me.activeInfoWindow=newInfoWin;
@@ -1451,7 +1453,7 @@
                                 me.activeInfoWindow.close();
                             }
                             var newInfoWin = new google.maps.InfoWindow({
-                                content : '<div class="rubedo-gmapitem" id="gmapitem'+targetId+'" ><div ng-repeat="mData in mDatas" ng-init="itemData = mData.itemData" ng-include="\'/components/webtales/rubedo-frontoffice/templates/blocks/geoSearchResults/detail/\'+itemData.objectType+\'.html\'"></div></div>',
+                                content : '<div class="rubedo-gmapitem" id="gmapitem'+targetId+'" ><div ng-repeat="mData in mDatas" ng-init="itemData = mData.itemData" ng-include="\''+themePath+'/templates/blocks/geoSearchResults/detail/\'+itemData.objectType+\'.html\'"></div></div>',
                                 position : markerHolder.getPosition()
                             });
                             var map=cluster.getMap();
@@ -1475,9 +1477,9 @@
                 if (!config.displayMode){
                     config.displayMode="default";
                 }
-                me.template = "/components/webtales/rubedo-frontoffice/templates/blocks/geoSearchResults/"+config.displayMode+".html";
+                me.template = themePath+"/templates/blocks/geoSearchResults/"+config.displayMode+".html";
             } else {
-                me.template = "/components/webtales/rubedo-frontoffice/templates/blocks/geoSearchResults/map.html";
+                me.template = themePath+"/templates/blocks/geoSearchResults/map.html";
             }
             var predefinedFacets = config.predefinedFacets==""?{}:JSON.parse(config.predefinedFacets);
             var facetsId = ['objectType','type','damType','userType','author','userName','lastupdatetime','query'];
