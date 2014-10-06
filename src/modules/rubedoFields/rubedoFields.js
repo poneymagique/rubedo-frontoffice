@@ -76,7 +76,7 @@
         };
         serviceInstance.getInputTemplateByType=function(type){
             if (inputFieldsConfig[type]){
-                return (inputFieldsConfig[type]);
+                return (themePath+inputFieldsConfig[type]);
             } else {
                 return null;
             }

@@ -4,6 +4,17 @@
 (function(){
     var module = angular.module('rubedoBlocks',['rubedoDataAccess', 'lrInfiniteScroll','rubedoFields','snap']);
 
+
+    module.config(function ($controllerProvider, $compileProvider, $filterProvider, $provide) {
+        module.lazy = {
+            controller: $controllerProvider.register,
+            directive: $compileProvider.directive,
+            filter: $filterProvider.register,
+            factory: $provide.factory,
+            service: $provide.service
+        };
+    });
+
     var blocksConfig = {
         image:"/templates/blocks/image.html",
         blockNotFound:"/templates/blocks/blockNotFound.html",
@@ -139,7 +150,7 @@
         var config=$scope.blockConfig;
         me.searchEnabled = (config.useSearchEngine && config.searchPage);
         if (config.rootPage){
-           var pageId=config.rootPage;
+            var pageId=config.rootPage;
         } else if (config.fallbackRoot&&config.fallbackRoot=="parent"&&mongoIdRegex.test($scope.rubedo.current.page.parentId)){
             var pageId=$scope.rubedo.current.page.parentId;
         } else {
