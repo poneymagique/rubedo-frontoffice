@@ -1,5 +1,8 @@
 (function(){
     var app = angular.module('rubedo', ['rubedoDataAccess','rubedoBlocks','ngRoute','snap']);
+
+    var themePath="/theme/"+window.rubedoConfig.siteTheme;
+
     var current={
         page:{
             blocks:[]
@@ -17,7 +20,7 @@
                 controllerAs: "pageBodyCtrl",
                 reloadOnSearch: false
             }).otherwise({
-                templateUrl:'/components/webtales/rubedo-frontoffice/templates/404.html'
+                templateUrl:themePath+'/templates/404.html'
         });
         $locationProvider.html5Mode(true);
 
@@ -49,6 +52,7 @@
                 return (fallbackString);
             }
         };
+        me.themePath=themePath;
         me.current=current;
         me.blockTemplateResolver=RubedoBlockTemplateResolver;
         me.fieldTemplateResolver=RubedoFieldTemplateResolver;
@@ -149,9 +153,9 @@
                     RubedoModuleConfigService.addFallbackLang(response.data.site.defaultLanguage);
                 }
                 if (newPage.pageProperties.customTemplate){
-                    me.currentBodyTemplate='/components/webtales/rubedo-frontoffice/templates/customPageBody.html';
+                    me.currentBodyTemplate=themePath+'/templates/customPageBody.html';
                 } else {
-                    me.currentBodyTemplate='/components/webtales/rubedo-frontoffice/templates/defaultPageBody.html';
+                    me.currentBodyTemplate=themePath+'/templates/defaultPageBody.html';
                 }
             }
         },function(response){
@@ -160,7 +164,7 @@
                     text:"404",
                     blocks:[]
                 };
-                me.currentBodyTemplate='/components/webtales/rubedo-frontoffice/templates/404.html';
+                me.currentBodyTemplate=themePath+'/templates/404.html';
             }
             // @TODO handle other error codes or use generic error template
         });
@@ -170,7 +174,7 @@
     app.directive("rubedoNotification",function(){
         return {
             restrict:"E",
-            templateUrl:"/components/webtales/rubedo-frontoffice/templates/notification.html"
+            templateUrl:themePath+"/templates/notification.html"
         };
     });
 
