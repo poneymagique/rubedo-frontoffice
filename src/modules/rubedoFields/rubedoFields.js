@@ -7,58 +7,61 @@
     module.run(function(editableOptions ) {
         editableOptions.theme = 'bs3';
     });
+
+    var themePath="/theme/"+window.rubedoConfig.siteTheme;
+    
     var fieldsConfig={
-        "textarea":"/components/webtales/rubedo-frontoffice/templates/fields/textarea.html",
-        "textareafield":"/components/webtales/rubedo-frontoffice/templates/fields/textarea.html",
-        "Ext.form.field.TextArea":"/components/webtales/rubedo-frontoffice/templates/fields/textarea.html",
-        "title":"/components/webtales/rubedo-frontoffice/templates/fields/title.html",
-        "datefield":"/components/webtales/rubedo-frontoffice/templates/fields/date.html",
-        "Ext.form.field.Date":"/components/webtales/rubedo-frontoffice/templates/fields/date.html",
-        "Ext.form.field.Time":"/components/webtales/rubedo-frontoffice/templates/fields/time.html",
-        "timefield":"/components/webtales/rubedo-frontoffice/templates/fields/time.html",
-        "Ext.form.field.Number":"/components/webtales/rubedo-frontoffice/templates/fields/number.html",
-        "numberfield":"/components/webtales/rubedo-frontoffice/templates/fields/number.html",
-        "slider":"/components/webtales/rubedo-frontoffice/templates/fields/slider.html",
-        "Ext.slider.Single":"/components/webtales/rubedo-frontoffice/templates/fields/slider.html",
-        "textfield":"/components/webtales/rubedo-frontoffice/templates/fields/text.html",
-        "Ext.form.field.Text":"/components/webtales/rubedo-frontoffice/templates/fields/text.html",
-        "CKEField":"/components/webtales/rubedo-frontoffice/templates/fields/richText.html",
-        "Rubedo.view.CKEField":"/components/webtales/rubedo-frontoffice/templates/fields/richText.html",
-        "externalMediaField":"/components/webtales/rubedo-frontoffice/templates/fields/externalMedia.html",
-        "Rubedo.view.externalMediaField":"/components/webtales/rubedo-frontoffice/templates/fields/externalMedia.html",
-        "radiogroup":"/components/webtales/rubedo-frontoffice/templates/fields/radioGroup.html",
-        "Ext.form.RadioGroup":"/components/webtales/rubedo-frontoffice/templates/fields/radioGroup.html",
-        "checkboxgroup":"/components/webtales/rubedo-frontoffice/templates/fields/checkboxGroup.html",
-        "Ext.form.CheckboxGroup":"/components/webtales/rubedo-frontoffice/templates/fields/checkboxGroup.html",
-        "combobox":"/components/webtales/rubedo-frontoffice/templates/fields/combobox.html",
-        "Ext.form.field.ComboBox":"/components/webtales/rubedo-frontoffice/templates/fields/combobox.html",
-        "localiserField":"/components/webtales/rubedo-frontoffice/templates/fields/localiser.html",
-        "Rubedo.view.localiserField":"/components/webtales/rubedo-frontoffice/templates/fields/localiser.html",
-        "treepicker":"/components/webtales/rubedo-frontoffice/templates/fields/pageLink.html",
-        "Ext.ux.TreePicker":"/components/webtales/rubedo-frontoffice/templates/fields/pageLink.html",
-        "checkboxfield":"/components/webtales/rubedo-frontoffice/templates/fields/checkbox.html",
-        "Ext.form.field.Checkbox":"/components/webtales/rubedo-frontoffice/templates/fields/checkbox.html",
-        "ImagePickerField":"/components/webtales/rubedo-frontoffice/templates/fields/media.html",
-        "Rubedo.view.ImagePickerField":"/components/webtales/rubedo-frontoffice/templates/fields/media.html",
-        "fieldNotFound":"/components/webtales/rubedo-frontoffice/templates/fields/fieldNotFound.html"
+        "textarea":"/templates/fields/textarea.html",
+        "textareafield":"/templates/fields/textarea.html",
+        "Ext.form.field.TextArea":"/templates/fields/textarea.html",
+        "title":"/templates/fields/title.html",
+        "datefield":"/templates/fields/date.html",
+        "Ext.form.field.Date":"/templates/fields/date.html",
+        "Ext.form.field.Time":"/templates/fields/time.html",
+        "timefield":"/templates/fields/time.html",
+        "Ext.form.field.Number":"/templates/fields/number.html",
+        "numberfield":"/templates/fields/number.html",
+        "slider":"/templates/fields/slider.html",
+        "Ext.slider.Single":"/templates/fields/slider.html",
+        "textfield":"/templates/fields/text.html",
+        "Ext.form.field.Text":"/templates/fields/text.html",
+        "CKEField":"/templates/fields/richText.html",
+        "Rubedo.view.CKEField":"/templates/fields/richText.html",
+        "externalMediaField":"/templates/fields/externalMedia.html",
+        "Rubedo.view.externalMediaField":"/templates/fields/externalMedia.html",
+        "radiogroup":"/templates/fields/radioGroup.html",
+        "Ext.form.RadioGroup":"/templates/fields/radioGroup.html",
+        "checkboxgroup":"/templates/fields/checkboxGroup.html",
+        "Ext.form.CheckboxGroup":"/templates/fields/checkboxGroup.html",
+        "combobox":"/templates/fields/combobox.html",
+        "Ext.form.field.ComboBox":"/templates/fields/combobox.html",
+        "localiserField":"/templates/fields/localiser.html",
+        "Rubedo.view.localiserField":"/templates/fields/localiser.html",
+        "treepicker":"/templates/fields/pageLink.html",
+        "Ext.ux.TreePicker":"/templates/fields/pageLink.html",
+        "checkboxfield":"/templates/fields/checkbox.html",
+        "Ext.form.field.Checkbox":"/templates/fields/checkbox.html",
+        "ImagePickerField":"/templates/fields/media.html",
+        "Rubedo.view.ImagePickerField":"/templates/fields/media.html",
+        "fieldNotFound":"/templates/fields/fieldNotFound.html"
     };
 
     var inputFieldsConfig={
-        "textfield":"/components/webtales/rubedo-frontoffice/templates/inputFields/text.html",
-        "Ext.form.field.Text":"/components/webtales/rubedo-frontoffice/templates/inputFields/text.html",
-        "Ext.form.field.Number":"/components/webtales/rubedo-frontoffice/templates/inputFields/number.html",
-        "numberfield":"/components/webtales/rubedo-frontoffice/templates/inputFields/number.html",
-        "textarea":"/components/webtales/rubedo-frontoffice/templates/inputFields/textarea.html",
-        "textareafield":"/components/webtales/rubedo-frontoffice/templates/inputFields/textarea.html",
-        "Ext.form.field.TextArea":"/components/webtales/rubedo-frontoffice/templates/inputFields/textarea.html",
-        "CKEField":"/components/webtales/rubedo-frontoffice/templates/inputFields/richText.html",
-        "Rubedo.view.CKEField":"/components/webtales/rubedo-frontoffice/templates/inputFields/richText.html",
-        "checkboxfield":"/components/webtales/rubedo-frontoffice/templates/inputFields/checkbox.html",
-        "Ext.form.field.Checkbox":"/components/webtales/rubedo-frontoffice/templates/inputFields/checkbox.html",
-        "combobox":"/components/webtales/rubedo-frontoffice/templates/inputFields/combobox.html",
-        "Ext.form.field.ComboBox":"/components/webtales/rubedo-frontoffice/templates/inputFields/combobox.html",
-        "radiogroup":"/components/webtales/rubedo-frontoffice/templates/inputFields/radioGroup.html",
-        "Ext.form.RadioGroup":"/components/webtales/rubedo-frontoffice/templates/inputFields/radioGroup.html"
+        "textfield":"/templates/inputFields/text.html",
+        "Ext.form.field.Text":"/templates/inputFields/text.html",
+        "Ext.form.field.Number":"/templates/inputFields/number.html",
+        "numberfield":"/templates/inputFields/number.html",
+        "textarea":"/templates/inputFields/textarea.html",
+        "textareafield":"/templates/inputFields/textarea.html",
+        "Ext.form.field.TextArea":"/templates/inputFields/textarea.html",
+        "CKEField":"/templates/inputFields/richText.html",
+        "Rubedo.view.CKEField":"/templates/inputFields/richText.html",
+        "checkboxfield":"/templates/inputFields/checkbox.html",
+        "Ext.form.field.Checkbox":"/templates/inputFields/checkbox.html",
+        "combobox":"/templates/inputFields/combobox.html",
+        "Ext.form.field.ComboBox":"/templates/inputFields/combobox.html",
+        "radiogroup":"/templates/inputFields/radioGroup.html",
+        "Ext.form.RadioGroup":"/templates/inputFields/radioGroup.html"
     };
 
     //service for resolving field templates
@@ -66,9 +69,9 @@
         var serviceInstance={};
         serviceInstance.getTemplateByType=function(type){
             if (fieldsConfig[type]){
-                return (fieldsConfig[type]);
+                return (themePath+fieldsConfig[type]);
             } else {
-                return (fieldsConfig.fieldNotFound);
+                return (themePath+fieldsConfig.fieldNotFound);
             }
         };
         serviceInstance.getInputTemplateByType=function(type){
@@ -85,7 +88,7 @@
     module.directive("rubedoField",function(){
         return {
             restrict:"E",
-            templateUrl:"/components/webtales/rubedo-frontoffice/templates/rubedoField.html"
+            templateUrl:themePath+"/templates/rubedoField.html"
         };
     });
 
@@ -282,10 +285,10 @@
             if (me.media&&me.media.originalFileId){
                 switch(me.media.mainFileType) {
                     case "Image":
-                        me.fileTypeTemplate="/components/webtales/rubedo-frontoffice/templates/fields/media/image.html";
+                        me.fileTypeTemplate=themePath+"/templates/fields/media/image.html";
                         break;
                     case "Document":
-                        me.fileTypeTemplate="/components/webtales/rubedo-frontoffice/templates/fields/media/document.html";
+                        me.fileTypeTemplate=themePath+"/templates/fields/media/document.html";
                         break;
                     case "Audio":
                         me.jwSettings={
@@ -294,18 +297,18 @@
                             width:"100%",
                             file:me.media.url
                         };
-                        me.fileTypeTemplate="/components/webtales/rubedo-frontoffice/templates/fields/media/audio.html";
+                        me.fileTypeTemplate=themePath+"/templates/fields/media/audio.html";
                         setTimeout(function(){jwplayer("audio"+me.media.originalFileId).setup(me.jwSettings);}, 200);
                         break;
                     case "video":
                         me.jwSettings={
                             file:me.media.url
                         };
-                        me.fileTypeTemplate="/components/webtales/rubedo-frontoffice/templates/fields/media/video.html";
+                        me.fileTypeTemplate=themePath+"/templates/fields/media/video.html";
                         setTimeout(function(){jwplayer("video"+me.media.originalFileId).setup(me.jwSettings);}, 200);
                         break;
                     default:
-                        me.fileTypeTemplate="/components/webtales/rubedo-frontoffice/templates/fields/media/fieldNotFound.html";
+                        me.fileTypeTemplate=themePath+"/templates/fields/media/fieldNotFound.html";
                 }
             }
         };
