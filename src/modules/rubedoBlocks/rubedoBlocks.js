@@ -19,7 +19,8 @@
 
     var blocksConfig = {
         "image": {
-            "template": "/templates/blocks/image.html"
+            "template": "/templates/blocks/image.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/ImageController.js"]
         },
         "blockNotFound": {
             "template": "/templates/blocks/blockNotFound.html"
@@ -131,7 +132,7 @@
         },
         "resource": {
             "template": "/templates/blocks/mediaDownload.html",
-            "internalDependencies":["/src/modules/rubedoBlocks/controllers/RichTextController.js"]
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/RichTextController.js","/src/modules/rubedoBlocks/controllers/MediaDowloadController.js"]
         },
         "addThisFollow": {
             "template": "/templates/blocks/addThisFollow.html",
@@ -148,11 +149,12 @@
             "externalDependencies":['/components/stowball/jQuery-rwdImageMaps/jquery.rwdImageMaps.min.js']
         },
         "contact": {
-            "template": "/templates/blocks/contact.html"
+            "template": "/templates/blocks/contact.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/ContactController.js"]
         },
         "protectedResource": {
             "template": "/templates/blocks/mediaProtectedDownload.html",
-            "internalDependencies":["/src/modules/rubedoBlocks/controllers/RichTextController.js"]
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/RichTextController.js","/src/modules/rubedoBlocks/controllers/MediaProtectedDownloadController.js"]
         },
         "mailingList": {
             "template": "/templates/blocks/mailingListSuscribe.html",
@@ -282,137 +284,6 @@
             }
         };
     }]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    module.controller('MediaDownloadController',['$scope','RubedoMediaService',function($scope,RubedoMediaService){
-        var me = this;
-        var config = $scope.blockConfig;
-        RubedoMediaService.getMediaById(config.documentId).then(function(response){
-            if(response.data.success){
-                me.media =  response.data.media;
-            }
-        });
-    }]);
-
-
-
-
-
-
-
-
-    module.controller('ContactController',['$scope','RubedoContactService',function($scope,RubedoContactService){
-        var me = this;
-        var config = $scope.blockConfig;
-        me.contactData={ };
-        me.contactError=null;
-        if (config.mailingListId){
-            me.showForm=true;
-        }
-        me.submit=function(){
-            me.contactError=null;
-            var contactSnap=angular.copy(me.contactData);
-            var payload={
-                mailingListId:config.mailingListId,
-                from:contactSnap.email,
-                subject:contactSnap.subject
-            };
-            delete (contactSnap.email);
-            delete (contactSnap.subject);
-            payload.fields=contactSnap;
-            RubedoContactService.sendContact(payload).then(
-                function(response){
-                    if (response.data.success){
-                        me.contactData={ };
-                        me.showForm=false;
-                        me.showConfirmMessage=true;
-                    } else {
-                        me.contactError=response.data.message;
-                    }
-                },
-                function(response){
-                    me.contactError=response.data.message;
-                }
-            );
-        };
-    }]);
-
-    module.controller('MediaProtectedDownloadController',['$scope','RubedoMediaService',function($scope,RubedoMediaService){
-        var me = this;
-        var config = $scope.blockConfig;
-        console.log(config);
-        var options = {
-            mediaId: config.documentId,
-            introContentId: config.introduction
-        };
-        RubedoMediaService.getProtectedMediaById(options).then(function(response){
-            if(response.data.success){
-                console.log(response.data);
-                me.media = response.data.media;
-                me.introduction = response.data.introduction?response.data.introduction : undefined;
-            }
-        });
-
-        me.postMail = function(){
-            if(config.mailingListId && config.documentId){
-                options.siteId = $scope.rubedo.current.site.id;
-                options.mailingListId = config.mailingListId;
-                options.email = me.email;
-                RubedoMediaService.postProtectedMediaById(options).then(function(response){
-                    if(response.data.success){
-                        $scope.notification = {
-                            type: 'success',
-                            text: 'Email sent'
-                        };
-                    }
-                    me.email = '';
-                },function(){
-                    $$scope.notification = {
-                        type: 'error',
-                        text: 'Email not sent'
-                    };
-                });
-            }
-        };
-    }]);
-
-    module.controller("ImageController",["$scope","RubedoPagesService", function($scope,RubedoPagesService){
-        var me = this;
-        var config = $scope.blockConfig;
-        if (config.externalURL){
-            me.url=config.externalURL;
-        } else if (config.imageLink&&mongoIdRegex.test(config.imageLink)){
-            RubedoPagesService.getPageById(config.imageLink).then(function(response){
-                if (response.data.success){
-                    me.url=response.data.url;
-                }
-            });
-        }
-
-    }]);
-
-
-
-
-
-
-
-
-
 
     module.directive('showtab',
         function () {
