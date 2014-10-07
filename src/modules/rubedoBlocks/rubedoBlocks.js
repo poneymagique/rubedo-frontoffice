@@ -136,7 +136,9 @@
             "internalDependencies":["/src/modules/rubedoBlocks/controllers/RichTextController.js","/src/modules/rubedoBlocks/controllers/SignUpController.js"]
         },
         "imageMap": {
-            "template": "/templates/blocks/imageMap.html"
+            "template": "/templates/blocks/imageMap.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/ImageMapController.js"],
+            "externalDependencies":['/components/stowball/jQuery-rwdImageMaps/jquery.rwdImageMaps.min.js']
         },
         "contact": {
             "template": "/templates/blocks/contact.html"
@@ -558,39 +560,7 @@
 
 
 
-    module.controller('ImageMapController',['$scope','$element','RubedoMediaService',function($scope,$element,RubedoMediaService){
-        var me = this;
-        var config = $scope.blockConfig;
-        if(config.image){
-            RubedoMediaService.getMediaById(config.image).then(function(response){
-                if(response.data.success){
-                    me.image =  response.data.media;
-                }
-            });
-            me.prefix = config.image+'map';
-        }
-        if(config.map){
-            var map = angular.fromJson(config.map);
-            angular.forEach(map, function(mapElement, key){
-                if(mapElement.type == 'polygon'){
-                    map[key]['type'] = 'poly';
-                }
-                if(mapElement.type == 'rect'){
-                    map[key]['params']['x1'] = mapElement.params.x + mapElement.params.width;
-                    map[key]['params']['y1'] = mapElement.params.y + mapElement.params.height;
-                    map[key]['coords'] = mapElement.params.x+','+mapElement.params.y+','+map[key]['params']['x1']+','+map[key]['params']['y1'];
-                } else {
-                    map[key]['coords'] = '';
-                    angular.forEach(mapElement.params,function(value){
-                        map[key]['coords'] += value+',';
-                    });
-                }
-            });
-            me.map = map;
-            $element.find('img[usemap]').rwdImageMaps();
-        }
 
-    }]);
 
     module.controller('ContactController',['$scope','RubedoContactService',function($scope,RubedoContactService){
         var me = this;
