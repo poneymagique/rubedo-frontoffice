@@ -93,23 +93,28 @@
             "internalDependencies":["/src/modules/rubedoBlocks/controllers/SearchFormController.js"]
         },
         "breadcrumb": {
-            "template": "/templates/blocks/breadcrumb.html"
+            "template": "/templates/blocks/breadcrumb.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/BreadcrumbController.js"]
         },
         "languageMenu": {
-            "template": "/templates/blocks/languageMenu.html"
+            "template": "/templates/blocks/languageMenu.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/LanguageMenuController.js"]
         },
         "directory": {
             "template": "/templates/blocks/directory.html",
             "internalDependencies":["/src/modules/rubedoBlocks/controllers/DirectoryController.js","/src/modules/rubedoBlocks/directives/PaginatorDirective.js"]
         },
         "audio": {
-            "template": "/templates/blocks/audio.html"
+            "template": "/templates/blocks/audio.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/AudioController.js"]
         },
         "video": {
-            "template": "/templates/blocks/video.html"
+            "template": "/templates/blocks/video.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/VideoController.js"]
         },
         "siteMap": {
-            "template": "/templates/blocks/siteMap.html"
+            "template": "/templates/blocks/siteMap.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/SiteMapController.js"]
         },
         "twitter": {
             "template": "/templates/blocks/twitter.html",
@@ -278,137 +283,16 @@
         };
     }]);
 
-    module.controller("BreadcrumbController",['$scope',function($scope){
-    }]);
-
-    module.controller("LanguageMenuController", ['$scope', 'RubedoPagesService','RubedoModuleConfigService', '$route', '$location',
-        function ($scope, RubedoPagesService,RubedoModuleConfigService, $route, $location) {
-            var me = this;
-            var config = $scope.blockConfig;
-            me.languages = $scope.rubedo.current.site.languages;
-            me.currentLang = $scope.rubedo.current.site.languages[$route.current.params.lang];
-            me.mode = config.displayAs == "select";
-            me.showFlags = config.showFlags;
-            me.isDisabled =  function(lang){
-                return me.currentLang.lang == lang;
-            };
-            if(!config.showCurrentLanguage){
-                delete me.languages[$route.current.params.lang];
-            }
-            me.getFlagUrl = function(flagCode){
-                return '/assets/flags/16/'+flagCode+'.png';
-            };
-            me.changeLang = function (lang) {
-                if(lang != me.currentLang.lang){
-                    RubedoModuleConfigService.changeLang(lang);
-                    RubedoPagesService.getPageById($scope.rubedo.current.page.id).then(function(response){
-                        if (response.data.success){
-                            $location.path(response.data.url);
-                        }
-                    });
-                }
-            };
-        }]);
 
 
-    module.controller("AudioController",["$scope","RubedoMediaService",function($scope,RubedoMediaService){
-        var me=this;
-        var config = $scope.blockConfig;
-        var mediaId=config.audioFile;
-        me.displayMedia=function(){
-            if (me.media&&me.media.originalFileId){
-                me.jwSettings={
-                    primary:"flash",
-                    height:40,
-                    width:"100%",
-                    controls:config.audioControls ? config.audioControls : false,
-                    autostart:config.audioPlay,
-                    repeat:config.audioLoop,
-                    file:me.media.url
-                };
-                setTimeout(function(){jwplayer("audio"+me.media.originalFileId).setup(me.jwSettings);}, 200);
-            }
-        };
-        if (mediaId){
-            RubedoMediaService.getMediaById(mediaId).then(
-                function(response){
-                    if (response.data.success){
-                        me.media=response.data.media;
-                        me.displayMedia();
-                    }
-                }
-            );
-        }
-    }]);
 
-    module.controller("VideoController",["$scope","RubedoMediaService","RubedoImageUrlService",function($scope,RubedoMediaService,RubedoImageUrlService){
-        var me=this;
-        var config = $scope.blockConfig;
-        var mediaId=config.videoFile;
-        me.displayMedia=function(){
-            if (me.media&&me.media.originalFileId){
-                me.jwSettings={
-                    width:"100%",
-                    controls:config.videoControls ? config.videoControls : false,
-                    autostart:config.videoAutoPlay,
-                    repeat:config.videoLoop,
-                    file:me.media.url
-                };
-                if (config.videoWidth){
-                    me.jwSettings.width=config.videoWidth;
-                }
-                if (config.videoHeight){
-                    me.jwSettings.height=config.videoHeight;
-                }
-                if (config.videoPoster){
-                    me.jwSettings.image=RubedoImageUrlService.getUrlByMediaId(config.videoPoster,{});
-                }
-                setTimeout(function(){jwplayer("video"+me.media.originalFileId).setup(me.jwSettings);}, 200);
-            }
-        };
-        if (mediaId){
-            RubedoMediaService.getMediaById(mediaId).then(
-                function(response){
-                    if (response.data.success){
-                        me.media=response.data.media;
-                        me.displayMedia();
-                    }
-                }
-            );
-        }
-    }]);
 
-    module.controller("SiteMapController",['$scope','$location','RubedoMenuService',function($scope,$location,RubedoMenuService){
-        var me=this;
-        var config=$scope.blockConfig;
-        if(config.rootPage){
-            me.menu={};
-            me.currentRouteline=$location.path();
-            var pageId=$scope.rubedo.current.page.id;
-            me.hidePages = true;
-            me.hideChildPages = true;
-            me.showPagesClick = function(pageType){
-                if(pageType == 'pages'){
-                    me.hidePages = !me.hidePages;
-                } else {
-                    me.hideChildPages = !me.hideChildPages;
-                }
-            };
-            if(config.displayLevel == 2){
-                me.hidePages = false;
-            } else if (config.displayLevel > 2){
-                me.hidePages = false;
-                me.hideChildPages = false;
-            }
-            RubedoMenuService.getMenu(config.rootPage, 5).then(function(response){
-                if (response.data.success){
-                    me.menu=response.data.menu;
-                } else {
-                    me.menu={};
-                }
-            });
-        }
-    }]);
+
+
+
+
+
+
 
 
 
