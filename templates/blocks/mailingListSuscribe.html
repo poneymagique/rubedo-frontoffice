@@ -1,5 +1,5 @@
 <div ng-controller="MailingListSuscribeController as mailingListSusCtrl">
-    <rubedo-notification></rubedo-notification>
+    <rubedo-notification ng-if="notification"></rubedo-notification>
     <form role="form" ng-submit="mailingListSusCtrl.submit()">
         <div class="form-group">
             <label ng-attr-for="{{mailingListSusCtrl.prefix+'email'}}">Email address</label>

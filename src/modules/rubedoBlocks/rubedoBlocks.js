@@ -133,7 +133,7 @@
         },
         "signUp": {
             "template": "/templates/blocks/signUp.html",
-            "internalDependencies":["/src/modules/rubedoBlocks/controllers/RichTextController.js"]
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/RichTextController.js","/src/modules/rubedoBlocks/controllers/SignUpController.js"]
         },
         "imageMap": {
             "template": "/templates/blocks/imageMap.html"
@@ -146,10 +146,12 @@
             "internalDependencies":["/src/modules/rubedoBlocks/controllers/RichTextController.js"]
         },
         "mailingList": {
-            "template": "/templates/blocks/mailingListSuscribe.html"
+            "template": "/templates/blocks/mailingListSuscribe.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/MailingListSubscribeController.js"]
         },
         "unsubscribe": {
-            "template": "/templates/blocks/mailingListUnsuscribe.html"
+            "template": "/templates/blocks/mailingListUnsuscribe.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/MailingListUnsubscribeController.js"]
         },
         "d3Script": {
             "template": "/templates/blocks/d3Script.html"
@@ -551,112 +553,7 @@
 
 
 
-    module.controller('SignUpController',['$scope','RubedoUserTypesService','RubedoUsersService', '$location', function($scope, RubedoUserTypesService, RubedoUsersService, $location){
-        var me = this;
-        var config = $scope.blockConfig;
-        me.inputFields=[ ];
-        $scope.fieldIdPrefix="signUp";
-        $scope.fieldEntity={ };
-        $scope.fieldInputMode=true;
-        console.log(config);
-        me.signupError=null;
-        me.submit=function(){
-            me.signupError=null;
-            if (config.collectPassword&&$scope.fieldEntity.confirmPassword!=$scope.fieldEntity.password){
-                me.signupError="Passwords do not match.";
-                return;
-            }
-            var fields=angular.copy($scope.fieldEntity);
-            delete (fields.confirmPassword);
-            fields.login=fields.email;
-            RubedoUsersService.createUser(fields,config.userType).then(
-                function(response){
-                    if (response.data.success){
-                        me.showForm=false;
-                        if (me.userType.signUpType=="open"){
-                            me.confirmMessage="Blocks.SignUp.done.created";
-                            me.confirmMessageDefault="Account created.";
-                        } else if (me.userType.signUpType=="moderated"){
-                            me.confirmMessage="Blocks.SignUp.moderated.created";
-                            me.confirmMessageDefault="Account created. You will be able to log in as soon as an administrator validates your account.";
-                        } else if (me.userType.signUpType=="emailConfirmation"){
-                            me.confirmMessage="Blocks.SignUp.confirmEmail.emailSent";
-                            me.confirmMessageDefault="A confirmation email has been sent to the provided address.";
-                        }
-                    } else {
-                        me.signupError=response.data.message;
-                    }
-                },
-                function(response){
-                    me.signupError=response.data.message;
-                }
-            );
-        };
-        var queryParams=$location.search();
-        if (queryParams.confirmingEmail&&queryParams.userId&&queryParams.signupTime){
-            RubedoUsersService.confirmUserEmail(queryParams.userId,queryParams.signupTime).then(
-                function(response){
-                    if (response.data.success){
-                        me.confirmMessage="Blocks.SignUp.emailConfirmed.activated";
-                        me.confirmMessageDefault="Account activated.";
-                    } else {
-                        me.emailConfirmError=response.data.message;
-                    }
-                },
-                function(response){
-                    me.emailConfirmError=response.data.message;
-                }
-            );
-        } else if (config.userType){
-            RubedoUserTypesService.getUserTypeById(config.userType).then(
-                function(response){
-                    if (response.data.success){
-                        me.showForm=true;
-                        me.userType=response.data.userType;
-                        $scope.fieldIdPrefix="signUp"+"_"+me.userType.type;
-                        if (config.collectPassword){
-                            me.userType.fields.unshift({
-                                cType:"textfield",
-                                config:{
-                                    name:"confirmPassword",
-                                    fieldLabel:"Confirm password",
-                                    allowBlank:false,
-                                    vtype:"password"
-                                }
-                            });
-                            me.userType.fields.unshift({
-                                cType:"textfield",
-                                config:{
-                                    name:"password",
-                                    fieldLabel:"Password",
-                                    allowBlank:false,
-                                    vtype:"password"
-                                }
-                            });
-                        }
-                        me.userType.fields.unshift({
-                            cType:"textfield",
-                            config:{
-                                name:"email",
-                                fieldLabel:"E-mail",
-                                allowBlank:false,
-                                vtype:"email"
-                            }
-                        });
-                        me.userType.fields.unshift({
-                            cType:"textfield",
-                            config:{
-                                name:"name",
-                                fieldLabel:"Name",
-                                allowBlank:false
-                            }
-                        });
-                        me.inputFields=me.userType.fields;
-                    }
-                }
-            );
-        }
-    }]);
+
 
 
     module.controller('ImageMapController',['$scope','$element','RubedoMediaService',function($scope,$element,RubedoMediaService){
@@ -784,111 +681,9 @@
     }]);
 
 
-    module.controller('MailingListSuscribeController',['$scope','RubedoMailingListService',function($scope,RubedoMailingListService){
-        var me = this;
-        var config = $scope.blockConfig;
-        me.mailingLists = {};
-        $scope.fieldIdPrefix="mailingLists";
-        me.prefix = "mailingLists_"+$scope.block.id;
-        $scope.fieldEntity={ };
-        $scope.fieldInputMode=true;
-        $scope.isBasic = true;
-        RubedoMailingListService.getAllMailingList().then(function(response){
-            if(response.data.success){
-                me.userType = response.data.userType;
-                $scope.fieldIdPrefix=me.prefix+me.userType.type;
-                angular.forEach(config.mailingListId, function(mailing){
-                    var newMailing = {};
-                    angular.forEach(response.data.mailinglists, function(mailingInfo){
-                        if(mailingInfo.id == mailing){
-                            newMailing.id = mailing;
-                            newMailing.name = mailingInfo.name;
-                            newMailing.checked = false;
-                            me.mailingLists[mailing] = newMailing;
-                        }
-                    });
-                });
-            }
-        });
-        me.submit = function(){
-            if (me.email && me.name) {
-                var mailingListsSuscribe = [];
-                angular.forEach(me.mailingLists, function(mailingList){
-                    if(mailingList.checked){
-                        mailingListsSuscribe.push(mailingList.id);
-                    }
-                });
-                if(mailingListsSuscribe.length > 0){
-                    var options={
-                        mailingLists:mailingListsSuscribe,
-                        email: me.email,
-                        name: me.name
-                    };
-                    if($scope.fieldEntity){
-                        options.fields = $scope.fieldEntity;
-                    }
-                    RubedoMailingListService.subscribeToMailingLists(options).then(function(response){
-                        me.email = '';
-                        me.name = '';
-                        $scope.fieldEntity = {};
-                        if(response.data.success){
-                            $scope.notification = {
-                                type: 'success',
-                                text: 'You have successfully subscribed to the selected newsletter(s)'
-                            };
-                        }
-                        me.email = '';
-                    },function(){
-                        $scope.notification = {
-                            type: 'error',
-                            text: 'The subscribe process failed'
-                        };
-                    });
-                }
-            } else {
-                $scope.notification = {
-                    type: 'error',
-                    text: 'Email and/or name are required'
-                };
-            }
-        };
-    }]);
 
-    module.controller('MailingListUnsuscribeController',['$scope','RubedoMailingListService',function($scope,RubedoMailingListService){
-        var me = this;
-        me.onSubmit = function(){
-            if(me.email){
-                var options = {
-                    mailingLists:'all',
-                    email: me.email
-                };
-                RubedoMailingListService.unsubscribeToMailingLists(options).then(function(response){
-                    if(response.data.success){
-                        me.email = '';
-                        $scope.notification = {
-                            type: 'success',
-                            text: 'You have successfully unsubscribed to all newsletters'
-                        };
-                    } else {
-                        $scope.notification = {
-                            type: 'error',
-                            text: 'The unsubscribe process failed'
-                        };
-                    }
-                },function(){
-                    $scope.notification = {
-                        type: 'error',
-                        text: 'The unsubscribe process failed'
-                    };
-                });
-            } else {
-                $scope.notification = {
-                    type: 'error',
-                    text: 'Email is required'
-                };
-            }
-        }
-    }]);
+
+
 
     module.controller('D3ScriptController',['$scope','$sce','RubedoSearchService',function($scope,$sce,RubedoSearchService){
         var me = this;
