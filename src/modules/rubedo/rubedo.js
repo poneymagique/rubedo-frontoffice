@@ -123,7 +123,7 @@
 
     }]);
 
-    app.controller("PageBodyController",['RubedoPagesService', 'RubedoModuleConfigService','$scope',function(RubedoPagesService, RubedoModuleConfigService,$scope){
+    app.controller("PageBodyController",['RubedoPagesService', 'RubedoModuleConfigService','$scope','RubedoBlockDependencyResolver',function(RubedoPagesService, RubedoModuleConfigService,$scope,RubedoBlockDependencyResolver){
         var me=this;
         if ($scope.rubedo.fieldEditMode){
             $scope.rubedo.revertChanges();
@@ -152,11 +152,25 @@
                 if (response.data.site.locStrategy == 'fallback'){
                     RubedoModuleConfigService.addFallbackLang(response.data.site.defaultLanguage);
                 }
-                if (newPage.pageProperties.customTemplate){
-                    me.currentBodyTemplate=themePath+'/templates/customPageBody.html';
+                var usedblockTypes=angular.copy(response.data.blockTypes);
+                var dependencies=RubedoBlockDependencyResolver.getDependencies(usedblockTypes);
+                if (dependencies.length>0){
+                    $script(dependencies, function() {
+                        if (newPage.pageProperties.customTemplate){
+                            me.currentBodyTemplate=themePath+'/templates/customPageBody.html';
+                        } else {
+                            me.currentBodyTemplate=themePath+'/templates/defaultPageBody.html';
+                        }
+                        $scope.$apply();
+                    });
                 } else {
-                    me.currentBodyTemplate=themePath+'/templates/defaultPageBody.html';
+                    if (newPage.pageProperties.customTemplate){
+                        me.currentBodyTemplate=themePath+'/templates/customPageBody.html';
+                    } else {
+                        me.currentBodyTemplate=themePath+'/templates/defaultPageBody.html';
+                    }
                 }
+
             }
         },function(response){
             if (response.status==404){
