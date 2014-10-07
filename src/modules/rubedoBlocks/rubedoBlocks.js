@@ -154,7 +154,9 @@
             "internalDependencies":["/src/modules/rubedoBlocks/controllers/MailingListUnsubscribeController.js"]
         },
         "d3Script": {
-            "template": "/templates/blocks/d3Script.html"
+            "template": "/templates/blocks/d3Script.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/D3ScriptController.js"],
+            "externalDependencies":['/components/mbostock/d3/d3.min.js']
         }
     };
 
@@ -685,32 +687,7 @@
 
 
 
-    module.controller('D3ScriptController',['$scope','$sce','RubedoSearchService',function($scope,$sce,RubedoSearchService){
-        var me = this;
-        var config = $scope.blockConfig;
-        var d3Code = config.d3Code ? config.d3Code : "";
-        $scope.predefinedFacets = config.predefinedFacets ? config.predefinedFacets : "{ }";
-        $scope.pageSize = config.pageSize ? config.pageSize : 5000;
-        $scope.retrieveData=function(params, successFunction, failureFunction ){
-            var options={
-                start: 0,
-                limit: $scope.pageSize,
-                predefinedFacets: $scope.predefinedFacets,
-                displayedFacets: "['all']",
-                pageId: $scope.rubedo.current.page.id,
-                siteId: $scope.rubedo.current.site.id
-            };
-            RubedoSearchService.searchByQuery(options).then(
-                function(response){
-                    successFunction(response.data.results);
-                },
-                function(response){
-                    failureFunction(response.data);
-                }
-            );
-        };
-        me.html=$sce.trustAsHtml(d3Code);
-    }]);
+
 
 
 
