@@ -8,6 +8,16 @@
         editableOptions.theme = 'bs3';
     });
 
+    module.config(function ($controllerProvider, $compileProvider, $filterProvider, $provide) {
+        module.lazy = {
+            controller: $controllerProvider.register,
+            directive: $compileProvider.directive,
+            filter: $filterProvider.register,
+            factory: $provide.factory,
+            service: $provide.service
+        };
+    });
+
     var themePath="/theme/"+window.rubedoConfig.siteTheme;
     
     var fieldsConfig={

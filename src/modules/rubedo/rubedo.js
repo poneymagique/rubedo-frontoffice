@@ -13,7 +13,14 @@
         user:null
     };
 
-    app.config(function($routeProvider,$locationProvider) {
+    app.config(function($routeProvider,$locationProvider,$controllerProvider, $compileProvider, $filterProvider, $provide) {
+        app.lazy = {
+            controller: $controllerProvider.register,
+            directive: $compileProvider.directive,
+            filter: $filterProvider.register,
+            factory: $provide.factory,
+            service: $provide.service
+        };
         $routeProvider.when('/:lang/:routeline*?', {
                 template: '<ng-include src="pageBodyCtrl.currentBodyTemplate"></ng-include>',
                 controller:'PageBodyController',
