@@ -37,7 +37,8 @@
             "internalDependencies":["/src/modules/rubedoBlocks/controllers/ContentListController.js"]
         },
         "authentication": {
-            "template": "/templates/blocks/authentication.html"
+            "template": "/templates/blocks/authentication.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/AuthenticationController.js"]
         },
         "simpleText": {
             "template": "/templates/blocks/simpleText.html",
@@ -70,10 +71,12 @@
             "internalDependencies":["/src/modules/rubedoBlocks/controllers/GalleryController.js"]
         },
         "damList": {
-            "template": "/templates/blocks/mediaList.html"
+            "template": "/templates/blocks/mediaList.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/MediaListController.js"]
         },
         "searchResults": {
-            "template": "/templates/blocks/searchResults.html"
+            "template": "/templates/blocks/searchResults.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/SearchResultsController.js"]
         },
         "userProfile": {
             "template": "/templates/blocks/userProfile.html"
@@ -327,42 +330,7 @@
 
 
 
-    module.controller("AuthenticationController",["$scope","RubedoAuthService","snapRemote","RubedoPagesService",function($scope,RubedoAuthService,snapRemote,RubedoPagesService){
-        var me=this;
-        me.blockConfig=$scope.blockConfig;
-        if (me.blockConfig&&me.blockConfig.profilePage&&mongoIdRegex.test(me.blockConfig.profilePage)){
-            RubedoPagesService.getPageById(me.blockConfig.profilePage).then(function(response){
-                if (response.data.success){
-                    me.profilePageUrl=response.data.url;
-                }
-            });
-        }
-        me.credentials={ };
-        me.authError=null;
-        me.rememberMe=false;
-        me.showModal=function(){
-            angular.element('#rubedoAuthModal').appendTo('body').modal('show');
-        };
-        me.authenticate=function(){
-            me.authError=null;
-            if ((!me.credentials.login)||(!me.credentials.password)){
-                me.authError="Please fill in all required fields."
-            } else {
-                RubedoAuthService.generateToken(me.credentials,me.rememberMe).then(
-                    function(response){
-                        window.location.reload();
-                    },
-                    function(response){
-                        me.authError=response.data.message;
-                    }
-                );
-            }
-        };
-        me.logOut=function(){
-            RubedoAuthService.clearPersistedTokens();
-            window.location.reload();
-        }
-    }]);
+
 
 
 
@@ -419,247 +387,9 @@
         };
     }]);
 
-    module.controller("MediaListController",["$scope","$compile","RubedoSearchService",function($scope,$compile,RubedoSearchService){
-        var me = this;
-        var config = $scope.blockConfig;
-        me.media = [];
-        me.start = 0;
-        me.limit = config.pagesize?config.pagesize:12;
-        var options = {
-            start: me.start,
-            limit: me.limit,
-            constrainToSite: config.constrainToSite,
-            siteId: $scope.rubedo.current.site.id,
-            pageId: $scope.rubedo.current.page.id,
-            predefinedFacets: config.facets
-        };
-        me.changePageAction = function(){
-            options.start = me.start;
-            me.getMedia(options);
-        };
 
-        me.getMedia = function(options){
-            RubedoSearchService.getMediaById(options).then(function(response){
-                if(response.data.success){
-                    me.count = response.data.count;
-                    me.media = response.data.results.data;
-                }
-            });
-        };
 
-        me.getMedia(options);
-    }]);
 
-    module.controller("SearchResultsController",["$scope","$location","$routeParams","$compile","RubedoSearchService",
-        function($scope,$location,$routeParams,$compile,RubedoSearchService){
-            var me = this;
-            var config = $scope.blockConfig;
-            me.data = [];
-            me.facets = [];
-            me.activeFacets = [];
-            me.start = 0;
-            me.limit = $routeParams.limit?$routeParams.limit:10;
-            me.orderBy = $routeParams.orderby?$routeParams.orderby:"_score";
-            var resolveOrderBy = {
-                '_score': 'relevance',
-                'lastUpdateTime': 'date',
-                'authorName': 'author',
-                'text': 'title'
-            };
-            me.displayOrderBy = $routeParams.orderby?resolveOrderBy[$routeParams.orderby]:"relevance";
-            me.template = themePath+"/templates/blocks/searchResults/"+config.displayMode+".html";
-            var predefinedFacets = config.predefinedFacets==""?{}:JSON.parse(config.predefinedFacets);
-            var facetsId = ['objectType','type','damType','userType','author','userName','lastupdatetime','query'];
-            var defaultOptions = {
-                start: me.start,
-                limit: me.limit,
-                constrainToSite: config.constrainToSite,
-                predefinedFacets: config.predefinedFacets,
-                displayMode: config.displayMode,
-                displayedFacets: config.displayedFacets,
-                orderby: me.orderBy,
-                pageId: $scope.rubedo.current.page.id,
-                siteId: $scope.rubedo.current.site.id
-            };
-            if (config.singlePage){
-                defaultOptions.detailPageId = config.singlePage;
-            }
-            if(config.profilePage){
-                defaultOptions.profilePageId = config.profilePage;
-            }
-            var options = angular.copy(defaultOptions);
-            var parseQueryParamsToOptions = function(){
-                angular.forEach($location.search(), function(queryParam, key){
-                    if(typeof queryParam !== "boolean"){
-                        if(key == 'taxonomies'){
-                            options[key] = JSON.parse(queryParam);
-                        } else {
-                            if(key == 'query'){
-                                me.query = queryParam;
-                            }
-                            options[key] = queryParam;
-                        }
-                    }
-                });
-            };
-            if(predefinedFacets.query) {
-                me.query = options.query = predefinedFacets.query;
-                $location.search('query',me.query);
-            }
-            $scope.$on('$routeUpdate', function(scope, next, current) {
-                options = angular.copy(defaultOptions);
-                options.start = me.start;
-                options.limit = me.limit;
-                options.orderBy = me.orderBy;
-                parseQueryParamsToOptions();
-                me.searchByQuery(options, true);
-            });
-            me.checked = function(term){
-                var checked = false;
-                angular.forEach(me.activeTerms,function(activeTerm){
-                    checked = activeTerm.term==term;
-                });
-                return checked;
-            };
-            me.disabled = function(term){
-                var disabled = false;
-                angular.forEach(me.notRemovableTerms,function(notRemovableTerm){
-                    disabled = notRemovableTerm.term == term;
-                });
-            };
-            me.changePageAction = function(){
-                options.start = me.start;
-                me.searchByQuery(options);
-            };
-            me.onSubmit = function(){
-                me.start = 0;
-                options = angular.copy(defaultOptions);
-                options.start = me.start;
-                options.limit = me.limit;
-                options.query = me.query;
-                options.orderBy = me.orderBy;
-                $location.search('query',me.query);
-            };
-            me.changeOrderBy = function(orderBy){
-                if(me.orderBy != orderBy){
-                    me.orderBy = orderBy;
-                    me.displayOrderBy = resolveOrderBy[orderBy];
-                    me.start = 0;
-                    $location.search('orderby',me.orderBy);
-                }
-            };
-            me.changeLimit = function(limit){
-                if(me.limit != limit){
-                    me.limit = limit;
-                    me.start = 0;
-                    $location.search('limit',me.limit);
-                }
-            };
-            me.target = function(data){
-                var res = '';
-                if (data.objectType == 'dam'){
-                    res = '_blank';
-                }
-                return res;
-            };
-            me.clickOnFacets =  function(facetId,term){
-                var del = false;
-                angular.forEach(me.activeTerms,function(activeTerm){
-                    if(!del){
-                        del = (activeTerm.term==term && activeTerm.facetId==facetId);
-                    }
-                });
-                if(del){
-                    if(facetsId.indexOf(facetId)==-1){
-                        options.taxonomies[facetId].splice(options.taxonomies[facetId].indexOf(term),1);
-                        if(options.taxonomies[facetId].length == 0){
-                            delete options.taxonomies[facetId];
-                        }
-                        if(Object.keys(options['taxonomies']).length == 0){
-                            $location.search('taxonomies',null);
-                        } else {
-                            $location.search('taxonomies',JSON.stringify(options.taxonomies));
-                        }
-                    } else if (facetId == 'query') {
-                        $location.search('query',null);
-                        delete options.query;
-                    } else if(facetId == 'lastupdatetime') {
-                        delete options[facetId];
-                        $location.search(facetId,null);
-                    } else {
-                        if(angular.isArray(options[facetId+'[]'])){
-                            options[facetId+'[]'].splice(options[facetId+'[]'].indexOf(term),1);
-                        } else {
-                            delete options[facetId+'[]'];
-                        }
-                        if(!options[facetId+'[]'] || options[facetId+'[]'].length == 0){
-                            $location.search(facetId+'[]',null)
-                        } else {
-                            $location.search(facetId+'[]',options[facetId+'[]']);
-                        }
-                    }
-                } else {
-                    if(facetsId.indexOf(facetId)==-1){
-                        if(!options.taxonomies){
-                            options.taxonomies = {};
-                        }
-                        if(!options.taxonomies[facetId]){
-                            options.taxonomies[facetId] = [];
-                        }
-                        options.taxonomies[facetId].push(term);
-                        $location.search('taxonomies',JSON.stringify(options.taxonomies));
-                    } else if(facetId == 'lastupdatetime') {
-                        options[facetId] = term;
-                        $location.search(facetId,options[facetId]);
-                    } else {
-                        if(!options[facetId+'[]']){
-                            options[facetId+'[]'] = [];
-                        }
-                        options[facetId+'[]'].push(term);
-                        $location.search(facetId+'[]',options[facetId+'[]']);
-                    }
-                }
-                me.start = 0;
-                options.start = me.start;
-            };
-
-            me.searchByQuery = function(options){
-                RubedoSearchService.searchByQuery(options).then(function(response){
-                    if(response.data.success){
-                        me.query = response.data.results.query;
-                        me.count = response.data.count;
-                        me.data =  response.data.results.data;
-                        me.facets = response.data.results.facets;
-                        me.notRemovableTerms = [];
-                        me.activeTerms = [];
-                        var previousFacetId;
-                        angular.forEach(response.data.results.activeFacets,function(activeFacet){
-                            if(activeFacet.id != 'navigation'){
-                                angular.forEach(activeFacet.terms,function(term){
-                                    var newTerm = {};
-                                    newTerm.term = term.term;
-                                    newTerm.label = term.label;
-                                    newTerm.facetId = activeFacet.id;
-                                    if(previousFacetId == activeFacet.id){
-                                        newTerm.operator =' '+(activeFacet.operator)+' ';
-                                    } else if (previousFacetId && me.notRemovableTerms.length != 0){
-                                        newTerm.operator = ', ';
-                                    }
-                                    if(predefinedFacets.hasOwnProperty(activeFacet.id) && predefinedFacets[activeFacet.id]==term.term){
-                                        me.notRemovableTerms.push(newTerm);
-                                    } else {
-                                        me.activeTerms.push(newTerm);
-                                    }
-                                    previousFacetId = activeFacet.id;
-                                });
-                            }
-                        });
-                    }
-                })
-            };
-            parseQueryParamsToOptions();
-            me.searchByQuery(options);
-        }]);
 
     module.controller("UserProfileController",["$scope","RubedoUsersService","$route",function($scope, RubedoUsersService, $route){
         var me = this;
