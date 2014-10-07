@@ -107,13 +107,17 @@
             "template": "/templates/blocks/geoSearchResults.html"
         },
         "addThis": {
-            "template": "/templates/blocks/addThisShare.html"
+            "template": "/templates/blocks/addThisShare.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/AddThisShareController.js"],
+            "externalDependencies":['//s7.addthis.com/js/300/addthis_widget.js']
         },
         "resource": {
             "template": "/templates/blocks/mediaDownload.html"
         },
         "addThisFollow": {
-            "template": "/templates/blocks/addThisFollow.html"
+            "template": "/templates/blocks/addThisFollow.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/AddThisFollowController.js"],
+            "externalDependencies":['//s7.addthis.com/js/300/addthis_widget.js']
         },
         "signUp": {
             "template": "/templates/blocks/signUp.html"
@@ -1613,39 +1617,6 @@
             }
         }]);
 
-    module.controller('AddThisShareController',['$scope',function($scope){
-        var me = this;
-        var config = $scope.blockConfig;
-        me.like = config.like == 1;
-        me.disposition = config.disposition;
-        me.class = 'addthis_toolbox';
-        if(me.like){
-            if(config.disposition == 'Horizontal'){
-                me.class += ' addthis_default_style';
-            } else {
-                me.class += ' addthis_floating_style addthis_counter_style addthis-pos';
-            }
-        } else {
-            if(config.disposition == 'Horizontal'){
-                me.class += ' addthis_default_style';
-                if(config.small == 1){
-                    me.class += ' addthis_32x32_style'
-                }
-            } else {
-                me.class += ' addthis_floating_style';
-                if(config.small == 0){
-                    me.class += ' addthis_16x16_style addthis-pos';
-                } else {
-                    me.class += ' addthis_32x32_style addthis-pos'
-                }
-            }
-        }
-        me.loadAddThis = function(){
-            addthis.toolbox('.addthis_toolbox');
-
-        };
-    }]);
-
     module.controller('MediaDownloadController',['$scope','RubedoMediaService',function($scope,RubedoMediaService){
         var me = this;
         var config = $scope.blockConfig;
@@ -1656,33 +1627,7 @@
         });
     }]);
 
-    module.controller('AddThisFollowController',['$scope',function($scope){
-        var me = this;
-        var config = $scope.blockConfig;
-        me.networks = [];
-        me.divClass = 'addthis_toolbox';
-        if(config.small == 1){
-            me.divClass += ' addthis_32x32_style';
-        }
-        if(config.disposition == 'Horizontal'){
-            me.divClass += ' addthis_default_style';
-        } else {
-            me.divClass += ' addthis_vertical_style';
-        }
-        me.networkClass = function(network){
-            return 'addthis_button_'+network.name+'_follow';
-        };
-        angular.forEach(config, function(value,key){
-            if(key != 'disposition' && key != 'small'){
-                var network = {
-                    name: key,
-                    id: value
-                };
-                me.networks.push(network);
-            }
-        });
-        addthis.toolbox('.addthis_toolbox');
-    }]);
+
 
     module.controller('SignUpController',['$scope','RubedoUserTypesService','RubedoUsersService', '$location', function($scope, RubedoUserTypesService, RubedoUsersService, $location){
         var me = this;
