@@ -39,10 +39,12 @@
             "template": "/templates/blocks/authentication.html"
         },
         "simpleText": {
-            "template": "/templates/blocks/simpleText.html"
+            "template": "/templates/blocks/simpleText.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/RichTextController.js"]
         },
         "richText": {
-            "template": "/templates/blocks/richText.html"
+            "template": "/templates/blocks/richText.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/RichTextController.js"]
         },
         "contentDetail": {
             "template": "/templates/blocks/contentDetail.html"
@@ -459,60 +461,6 @@
             RubedoAuthService.clearPersistedTokens();
             window.location.reload();
         }
-    }]);
-
-    module.controller("RichTextController",["$scope","$sce","RubedoContentsService",function($scope, $sce,RubedoContentsService){
-        var me = this;
-        var config = $scope.blockConfig;
-        $scope.fieldInputMode=false;
-        $scope.$watch('rubedo.fieldEditMode', function(newValue) {
-            $scope.fieldEditMode=me.content&&me.content.readOnly ? false : newValue;
-
-        });
-        me.getContentById = function (contentId){
-            if(config.fromFront){
-                me.content = config.content;
-                $scope.fieldEntity=angular.copy(me.content.fields);
-                $scope.fieldLanguage=me.content.locale;
-            } else {
-                var options = {
-                    siteId: $scope.rubedo.current.site.id,
-                    pageId: $scope.rubedo.current.page.id
-                };
-                RubedoContentsService.getContentById(contentId).then(
-                    function(response){
-                        if(response.data.success){
-                            me.content=response.data.content;
-                            $scope.fieldEntity=angular.copy(me.content.fields);
-                            $scope.fieldLanguage=me.content.locale;
-                        }
-                    }
-                )
-            }
-        };
-        if (config.contentId || config.content){
-            me.getContentById(config.contentId);
-        }
-        me.revertChanges=function(){
-            $scope.fieldEntity=angular.copy(me.content.fields);
-        };
-        me.registerEditChanges=function(){
-            $scope.rubedo.registerEditCtrl(me);
-        };
-        me.persistChanges=function(){
-            var payload=angular.copy(me.content);
-            payload.fields=angular.copy($scope.fieldEntity);
-            delete (payload.type);
-            RubedoContentsService.updateContent(payload).then(
-                function(response){
-                    $scope.rubedo.addNotification("success","Content updated.");
-                },
-                function(response){
-                    $scope.rubedo.addNotification("error","Content update error.");
-                }
-            );
-        };
-        $scope.registerFieldEditChanges=me.registerEditChanges;
     }]);
 
     module.controller("ContentDetailController",["$scope","RubedoContentsService",function($scope, RubedoContentsService){
