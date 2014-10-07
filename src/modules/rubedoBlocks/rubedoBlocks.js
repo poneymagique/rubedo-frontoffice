@@ -34,7 +34,7 @@
         },
         "contentList": {
             "template": "/templates/blocks/contentList.html",
-            "internalDependencies":["/src/modules/rubedoBlocks/controllers/ContentListController.js"]
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/ContentListController.js","/src/modules/rubedoBlocks/directives/PaginatorDirective.js"]
         },
         "authentication": {
             "template": "/templates/blocks/authentication.html",
@@ -70,15 +70,15 @@
         },
         "imageGallery": {
             "template": "/templates/blocks/gallery.html",
-            "internalDependencies":["/src/modules/rubedoBlocks/controllers/GalleryController.js"]
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/GalleryController.js","/src/modules/rubedoBlocks/directives/PaginatorDirective.js"]
         },
         "damList": {
             "template": "/templates/blocks/mediaList.html",
-            "internalDependencies":["/src/modules/rubedoBlocks/controllers/MediaListController.js"]
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/MediaListController.js","/src/modules/rubedoBlocks/directives/PaginatorDirective.js"]
         },
         "searchResults": {
             "template": "/templates/blocks/searchResults.html",
-            "internalDependencies":["/src/modules/rubedoBlocks/controllers/SearchResultsController.js"]
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/SearchResultsController.js","/src/modules/rubedoBlocks/directives/PaginatorDirective.js"]
         },
         "userProfile": {
             "template": "/templates/blocks/userProfile.html",
@@ -100,7 +100,7 @@
         },
         "directory": {
             "template": "/templates/blocks/directory.html",
-            "internalDependencies":["/src/modules/rubedoBlocks/controllers/DirectoryController.js"]
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/DirectoryController.js","/src/modules/rubedoBlocks/directives/PaginatorDirective.js"]
         },
         "audio": {
             "template": "/templates/blocks/audio.html"
@@ -277,88 +277,6 @@
             }
         };
     }]);
-
-    //block controllers start here
-
-
-
-    module.directive("paginator",["$timeout",function($timeout){
-        return {
-            restrict: 'E',
-            templateUrl: themePath+"/templates/paginator.html",
-            scope:{
-                start: '=',
-                limit: '=',
-                count: '=',
-                changePageAction: '&'
-            },
-
-            controller: function($scope, $timeout){
-                var me = this;
-                me.showPager = false;
-                $scope.$watch('count',function(){
-                    me.actualPage = 1;
-                    me.nbPages = Math.ceil(($scope.count - $scope.start)/$scope.limit);
-                    me.showPager = me.nbPages > 1;
-                });
-                var resultsSkip = $scope.start;
-                me.showActive = function(value){
-                    return value == me.actualPage;
-                };
-                me.getPagesNumber = function (index){
-                    var res;
-                    if (me.actualPage < 6 || (me.nbPages <= 9? me.nbPages : 9) < 9){
-                        res = index+1;
-                    } else if (me.actualPage + 4 >= me.nbPages) {
-                        res = me.nbPages - (8 - index);
-                    } else {
-                        res = me.actualPage + (index - 4);
-                    }
-                    return res;
-                };
-                me.getIteration = function(num){
-                    return new Array(num <= 9? num : 9);
-                };
-                me.changePage = function(value){
-                    if (me.actualPage != value + 1){
-                        if (value == 'prev'){
-                            me.actualPage -= 1;
-                            value = me.actualPage -1;
-                        } else if (value == 'next'){
-                            me.actualPage += 1;
-                            value = me.actualPage -1;
-                        } else {
-                            me.actualPage = value + 1;
-                        }
-                        $scope.start = (value * $scope.limit);
-                        if (resultsSkip)
-                            $scope.start += resultsSkip;
-                        $timeout($scope.changePageAction);
-                    }
-                };
-            },
-            controllerAs: 'paginatorCtrl'
-        }
-    }]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     module.controller("BreadcrumbController",['$scope',function($scope){
     }]);
