@@ -98,7 +98,17 @@
     module.directive("rubedoField",function(){
         return {
             restrict:"E",
-            templateUrl:themePath+"/templates/rubedoField.html"
+            scope:true,
+            templateUrl:themePath+"/templates/rubedoField.html",
+            link: function ( scope, element, attrs ) {
+                var el;
+                attrs.$observe( 'field', function ( field ) {
+                    if ( angular.isDefined( field ) ) {
+                        scope.field=angular.fromJson(field);
+                    }
+                });
+            }
+
         };
     });
 
