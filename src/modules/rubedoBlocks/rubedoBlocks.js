@@ -185,7 +185,7 @@
         var serviceInstance={};
         serviceInstance.getTemplate=function(bType,bConfig){
             if (bConfig.customTemplate){
-                return (themePath+blocksConfig.customTemplate);
+                return (themePath+blocksConfig.customTemplate.template);
             } else if (bType=="navigation"&&bConfig.style&&bConfig.style=="Vertical") {
                 return (themePath+blocksConfig.verticalNavigation.template);
             } else if (blocksConfig[bType]){
