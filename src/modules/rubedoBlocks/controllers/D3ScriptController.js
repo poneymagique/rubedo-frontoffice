@@ -11,7 +11,8 @@ angular.module("rubedoBlocks").lazy.controller('D3ScriptController',['$scope','$
             predefinedFacets: $scope.predefinedFacets,
             displayedFacets: "['all']",
             pageId: $scope.rubedo.current.page.id,
-            siteId: $scope.rubedo.current.site.id
+            siteId: $scope.rubedo.current.site.id,
+            searchMode:"aggregate"
         };
         RubedoSearchService.searchByQuery(options).then(
             function(response){
