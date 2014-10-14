@@ -156,6 +156,11 @@
             filebrowserImageBrowseUrl:"/backoffice/ext-finder?type=Image",
             filebrowserImageUploadUrl:null
         };
+        me.isCKEReady=false;
+        $scope.setCKEIsReady=function( ){
+            setTimeout(function(){me.isCKEReady=true;},200);
+
+        };
         if (!$scope.fieldInputMode){
             $scope.$watch("fieldEntity."+$scope.field.config.name, function(newValue) {
                 if(!$scope.fieldEditMode||!me.html){
@@ -166,6 +171,9 @@
                         allowedAttributes:[["style"]],
                         format: true
                     }));
+                }
+                if ($scope.fieldEditMode&&me.isCKEReady){
+                    $scope.registerFieldEditChanges();
                 }
             });
         }

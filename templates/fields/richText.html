@@ -2,6 +2,6 @@
     <div ng-if="fieldEditMode" ng-controller="RTEFieldController as rteFieldCtrl" ng-model="fieldEntity[field.config.name]"
        ckeditor="editorOptions"
        contenteditable="true"
-       ready="registerFieldEditChanges()"
+       ready="setCKEIsReady()"
        ng-bind-html="rteFieldCtrl.html">
     </div>
