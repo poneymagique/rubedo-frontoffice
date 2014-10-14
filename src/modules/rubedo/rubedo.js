@@ -67,7 +67,6 @@
         me.imageUrl=RubedoImageUrlService;
         me.registeredEditCtrls=[ ];
         me.fieldEditMode=false;
-        me.notifications=[ ];
         me.refreshAuth=function(forceRefresh){
             var curentTokens=RubedoAuthService.getPersistedTokens();
             if (curentTokens.refreshToken&&(!curentTokens.accessToken||forceRefresh)){
@@ -86,21 +85,8 @@
 
         me.refreshAuth(true);
         setInterval(function () {me.refreshAuth(false);}, 300000);
-        me.clearNotifications=function(){
-            me.notifications=[ ];
-        };
-        me.addNotification=function(type,text){
-            me.notifications.push({
-                type:type,
-                text:text
-            });
-        };
-        me.hasNotifications=function(){
-            if (angular.element.isEmptyObject(me.notifications)){
-                return false;
-            } else {
-                return true;
-            }
+        me.addNotification=function(type,title,text){
+            angular.element.toaster({ priority : type, title : title, message : text});
         };
         me.toggleAdminPanel=function(){
             snapRemote.toggle("left");
