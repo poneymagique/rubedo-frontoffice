@@ -79,10 +79,15 @@ angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scop
         delete (payload.type);
         RubedoContentsService.updateContent(payload).then(
             function(response){
-                $scope.rubedo.addNotification("success","Success","Content updated.");
+                if (response.data.success){
+                    $scope.rubedo.addNotification("success","Success","Content updated.");
+                } else {
+                    $scope.rubedo.addNotification("danger","Error","Content update error.");
+                }
+
             },
             function(response){
-                $scope.rubedo.addNotification("error","Error","Content update error.");
+                $scope.rubedo.addNotification("danger","Error","Content update error.");
             }
         );
     };
