@@ -2,6 +2,15 @@ angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope"
     var me = this;
     var config = $scope.blockConfig;
     var themePath="/theme/"+window.rubedoConfig.siteTheme;
+    me.getFieldByName=function(name){
+        var field=null;
+        angular.forEach(me.user.type.fields,function(candidate){
+            if (candidate.config.name==name){
+                field=candidate;
+            }
+        });
+        return field;
+    };
     $scope.fieldEditMode=false;
     me.canEdit=false;
     me.getUserById = function (userId){
@@ -31,7 +40,22 @@ angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope"
                             allowBlank:false
                         }
                     });
-                    me.detailTemplate=themePath+'/templates/blocks/userDetail/default.html';
+                    me.customLayout=null;
+                    if (angular.isArray(me.user.type.layouts)){
+                        angular.forEach(me.user.type.layouts,function(layout){
+                            if (layout.active&&layout.site==$scope.rubedo.current.site.id){
+                                me.customLayout=layout;
+                            }
+                        });
+                    }
+                    if (me.customLayout&&me.customLayout.customTemplate){
+                        me.detailTemplate=themePath+'/templates/blocks/userDetail/customTemplate.html';
+                    } else if (me.customLayout){
+                        me.detailTemplate=themePath+'/templates/blocks/userDetail/customLayout.html';
+                    } else {
+                        me.detailTemplate=themePath+'/templates/blocks/userDetail/default.html'
+                    }
+                    //me.detailTemplate=themePath+'/templates/blocks/userDetail/default.html';
                 }
             }
         );
