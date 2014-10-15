@@ -1,4 +1,4 @@
-angular.module("rubedoBlocks").lazy.controller("AuthenticationController",["$scope","RubedoAuthService","snapRemote","RubedoPagesService",function($scope,RubedoAuthService,snapRemote,RubedoPagesService){
+angular.module("rubedoBlocks").lazy.controller("AuthenticationController",["$scope","RubedoAuthService","snapRemote","RubedoPagesService","$location",function($scope,RubedoAuthService,snapRemote,RubedoPagesService,$location){
     var me=this;
     me.blockConfig=$scope.blockConfig;
     if (me.blockConfig&&me.blockConfig.profilePage&&mongoIdRegex.test(me.blockConfig.profilePage)){
@@ -8,11 +8,41 @@ angular.module("rubedoBlocks").lazy.controller("AuthenticationController",["$sco
             }
         });
     }
+    var requestParams = $location.search();
+    if (requestParams.recoverEmail && requestParams.token){
+        angular.element('#rubedoChangePwdModal').appendTo('body').modal('show');
+    }
     me.credentials={ };
     me.authError=null;
     me.rememberMe=false;
     me.showModal=function(){
         angular.element('#rubedoAuthModal').appendTo('body').modal('show');
+    };
+    me.recoverPwdModal=function(){
+        angular.element('#rubedoAuthModal').appendTo('body').modal('hide');
+        angular.element('#rubedoRecoverPwdModal').appendTo('body').modal('show');
+    };
+    me.recoverPassword = function(){
+        var options = {
+            email: me.recoverUserEmail,
+            siteId: $scope.rubedo.current.site.id
+        };
+        RubedoAuthService.recoverPassword(options).then(
+            function(response){
+                if(response.data.success){
+                    $scope.notification = {
+                        type: 'success',
+                        text: 'Email sent'
+                    };
+                }
+                me.recoverUserEmail = '';
+            },function(){
+                $scope.notification = {
+                    type: 'error',
+                    text: 'Email not sent'
+                };
+            }
+        )
     };
     me.authenticate=function(){
         me.authError=null;

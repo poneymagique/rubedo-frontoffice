@@ -218,6 +218,18 @@
                 }
             }));
         };
+        serviceInstance.recoverPassword = function(options){
+            return ($http.get(config.baseUrl+"/users/password/token", {
+                params: options
+            }));
+        };
+        serviceInstance.changePassword =  function(options){
+            return ($http({
+                url:config.baseUrl+"/users/password/token",
+                method:"POST",
+                params:options
+            }));
+        };
         return serviceInstance;
     }]);
 

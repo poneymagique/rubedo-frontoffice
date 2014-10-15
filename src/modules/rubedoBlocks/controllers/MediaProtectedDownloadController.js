@@ -28,7 +28,7 @@ angular.module("rubedoBlocks").lazy.controller('MediaProtectedDownloadController
                 }
                 me.email = '';
             },function(){
-                $$scope.notification = {
+                $scope.notification = {
                     type: 'error',
                     text: 'Email not sent'
                 };

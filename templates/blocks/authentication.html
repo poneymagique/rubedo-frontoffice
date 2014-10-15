@@ -37,6 +37,7 @@
                             </div>
                             <input type="submit" class="hidden">
                         </form>
+                        <a href ng-click="authCtrl.recoverPwdModal()">I lost my password</a>
                         <div ng-show="authCtrl.authError" class="alert alert-danger alert-dismissible" role="alert">
                             <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                             <strong>Error !</strong> {{authCtrl.authError}}
@@ -46,6 +47,66 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
                         <button type="button" class="btn btn-primary" ng-click="authCtrl.authenticate()"><span class="glyphicon glyphicon-ok"></span> Submit</button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="rubedoRecoverPwdModal" tabindex="-1" role="dialog" aria-labelledby="rubedoRecoverPwdModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="rubedoRecoverPwdModalLabel">Recover your password</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" ng-submit="authCtrl.recoverPassword()">
+                        <div class="form-group">
+                            <label for="inputEmailRecoverPwd" class="col-sm-2 control-label">Email</label>
+                            <div class="col-sm-10">
+                                <input required ng-model="authCtrl.recoverUserEmail" type="email" class="form-control" id="inputEmailRecoverPwd" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary">Recover your password</button>
+                            </div>
+                        </div>
+                    </form>
+                    <rubedo-notification></rubedo-notification>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="rubedoChangePwdModal" tabindex="-1" role="dialog" aria-labelledby="rubedoChangePwdModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="rubedoChangePwdModalLabel">Change your password</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" ng-submit="authCtrl.recoverPassword()">
+                        <div class="form-group">
+                            <label for="inputPwdRecoverPwd" class="col-sm-3 control-label">Password</label>
+                            <div class="col-sm-9">
+                                <input required ng-model="authCtrl.changePassword" type="text" class="form-control" id="inputPwdRecoverPwd" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputConfirmPwdRecoverPwd" class="col-sm-3 control-label">Confirm password</label>
+                            <div class="col-sm-9">
+                                <input required ng-model="authCtrl.changeConfirmPassword" type="text"
+                                       class="form-control" id="inputConfirmPwdRecoverPwd"
+                                       placeholder="Confirm password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button type="submit" class="btn btn-primary">Change my password</button>
+                            </div>
+                        </div>
+                    </form>
+                    <rubedo-notification></rubedo-notification>
                 </div>
             </div>
         </div>
