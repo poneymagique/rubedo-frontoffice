@@ -10,7 +10,7 @@ angular.module("rubedoBlocks").lazy.controller("AuthenticationController",["$sco
     }
     var requestParams = $location.search();
     if (requestParams.recoverEmail && requestParams.token){
-        angular.element('#rubedoChangePwdModal').appendTo('body').modal('show');
+        setTimeout(function(){angular.element('#rubedoChangePwdModal').appendTo('body').modal('show')},200);
     }
     me.credentials={ };
     me.authError=null;
@@ -21,6 +21,39 @@ angular.module("rubedoBlocks").lazy.controller("AuthenticationController",["$sco
     me.recoverPwdModal=function(){
         angular.element('#rubedoAuthModal').appendTo('body').modal('hide');
         angular.element('#rubedoRecoverPwdModal').appendTo('body').modal('show');
+    };
+    me.changePassword = function(){
+        if(me.newPassword != me.newConfirmPassword){
+            $scope.notification = {
+                type: 'error',
+                text: 'Passwords not equal'
+            };
+        } else {
+            var options = {
+                token: requestParams.token,
+                password: me.newPassword,
+                email: requestParams.recoverEmail
+            };
+            RubedoAuthService.changePassword(options).then(
+                function(response){
+                    if(response.data.success){
+                        $scope.notification = {
+                            type: 'success',
+                            text: 'Password changed'
+                        };
+                        $location.search('recoverEmail',null);
+                        $location.search('token',null);
+                    }
+                    me.recoverUserEmail = '';
+                },function(response){
+                    console.log(response);
+                    $scope.notification = {
+                        type: 'error',
+                        text: 'Password not changed'+(response.data.message?' : '+response.data.message:'')
+                    };
+                }
+            )
+        }
     };
     me.recoverPassword = function(){
         var options = {
@@ -36,10 +69,11 @@ angular.module("rubedoBlocks").lazy.controller("AuthenticationController",["$sco
                     };
                 }
                 me.recoverUserEmail = '';
-            },function(){
+            },function(response){
+                console.log(response);
                 $scope.notification = {
                     type: 'error',
-                    text: 'Email not sent'
+                    text: 'Email not sent'+(response.data.message?' : '+response.data.message:'')
                 };
             }
         )
