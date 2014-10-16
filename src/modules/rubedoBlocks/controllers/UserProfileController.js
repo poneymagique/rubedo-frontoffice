@@ -1,4 +1,4 @@
-angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope","RubedoUsersService","$route",function($scope, RubedoUsersService, $route){
+angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope","RubedoUsersService","$route","$location",function($scope, RubedoUsersService, $route,$location){
     var me = this;
     var config = $scope.blockConfig;
     var themePath="/theme/"+window.rubedoConfig.siteTheme;
@@ -55,12 +55,14 @@ angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope"
                     } else {
                         me.detailTemplate=themePath+'/templates/blocks/userDetail/default.html'
                     }
-                    //me.detailTemplate=themePath+'/templates/blocks/userDetail/default.html';
                 }
             }
         );
     };
-    if ($scope.rubedo.current.user&&$scope.rubedo.current.user.id){
+    var queryParams=$location.search();
+    if (queryParams.userprofile&&mongoIdRegex.test(queryParams.userprofile)){
+        me.getUserById(queryParams.userprofile);
+    } else if ($scope.rubedo.current.user&&$scope.rubedo.current.user.id){
         me.getUserById($scope.rubedo.current.user.id);
     }
     me.revertChanges=function(){
