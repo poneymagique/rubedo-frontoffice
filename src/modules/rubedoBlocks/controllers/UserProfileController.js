@@ -24,13 +24,6 @@ angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope"
                     $scope.userPhotoUrl=me.user.photoUrl;
                     me.canEdit=!me.user.readOnly;
                     me.user.type.fields.unshift({
-                        cType:"userPhoto",
-                        config:{
-                            name:"photo",
-                            fieldLabel:"Photo"
-                        }
-                    });
-                    me.user.type.fields.unshift({
                         cType:"textfield",
                         config:{
                             name:"email",
@@ -45,6 +38,13 @@ angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope"
                             name:"name",
                             fieldLabel:"Name",
                             allowBlank:false
+                        }
+                    });
+                    me.user.type.fields.unshift({
+                        cType:"userPhoto",
+                        config:{
+                            name:"photo",
+                            fieldLabel:"Photo"
                         }
                     });
                     me.customLayout=null;
