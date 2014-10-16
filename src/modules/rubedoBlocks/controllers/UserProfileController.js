@@ -21,8 +21,15 @@ angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope"
                     me.hasChanges=false;
                     $scope.fieldEntity=angular.copy(me.user.fields);
                     $scope.fieldLanguage=$route.current.params.lang;
+                    $scope.userPhotoUrl=me.user.photoUrl;
                     me.canEdit=!me.user.readOnly;
-                    //use only default template for now
+                    me.user.type.fields.unshift({
+                        cType:"userPhoto",
+                        config:{
+                            name:"photo",
+                            fieldLabel:"Photo"
+                        }
+                    });
                     me.user.type.fields.unshift({
                         cType:"textfield",
                         config:{

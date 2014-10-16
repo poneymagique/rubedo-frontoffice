@@ -53,6 +53,7 @@
         "Ext.form.field.Checkbox":"/templates/fields/checkbox.html",
         "ImagePickerField":"/templates/fields/media.html",
         "Rubedo.view.ImagePickerField":"/templates/fields/media.html",
+        "userPhoto":"/templates/fields/userPhoto.html",
         "fieldNotFound":"/templates/fields/fieldNotFound.html"
     };
 
