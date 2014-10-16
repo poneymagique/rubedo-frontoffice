@@ -26,7 +26,7 @@ angular.module("rubedoBlocks").lazy.controller("AuthenticationController",["$sco
         if(me.newPassword != me.newConfirmPassword){
             $scope.notification = {
                 type: 'error',
-                text: 'Passwords not equal'
+                text: 'Passwords do not match.'
             };
         } else {
             var options = {

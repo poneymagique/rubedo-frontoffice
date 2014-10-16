@@ -1,11 +1,10 @@
-angular.module("rubedoBlocks").lazy.controller('SignUpController',['$scope','RubedoUserTypesService','RubedoUsersService', '$location', function($scope, RubedoUserTypesService, RubedoUsersService, $location){
+angular.module("rubedoBlocks").lazy.controller('SignUpController',['$scope','RubedoUserTypesService','RubedoUsersService', '$location','RubedoMailingListService', function($scope, RubedoUserTypesService, RubedoUsersService, $location, RubedoMailingListService){
     var me = this;
     var config = $scope.blockConfig;
     me.inputFields=[ ];
     $scope.fieldIdPrefix="signUp";
     $scope.fieldEntity={ };
     $scope.fieldInputMode=true;
-    console.log(config);
     me.signupError=null;
     me.submit=function(){
         me.signupError=null;
@@ -19,6 +18,7 @@ angular.module("rubedoBlocks").lazy.controller('SignUpController',['$scope','Rub
         RubedoUsersService.createUser(fields,config.userType).then(
             function(response){
                 if (response.data.success){
+                    console.log(response);
                     me.showForm=false;
                     if (me.userType.signUpType=="open"){
                         me.confirmMessage="Blocks.SignUp.done.created";
@@ -29,6 +29,15 @@ angular.module("rubedoBlocks").lazy.controller('SignUpController',['$scope','Rub
                     } else if (me.userType.signUpType=="emailConfirmation"){
                         me.confirmMessage="Blocks.SignUp.confirmEmail.emailSent";
                         me.confirmMessageDefault="A confirmation email has been sent to the provided address.";
+                    }
+                    if (config.mailingListId){
+                        var options = {
+                            mailingLists: config.mailingListId,
+                            email: response.data.user.data.email
+                        };
+                        RubedoMailingListService.subscribeToMailingLists(options).then(function(response){
+                        },function(response){
+                        });
                     }
                 } else {
                     me.signupError=response.data.message;
