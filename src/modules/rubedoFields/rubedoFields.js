@@ -20,7 +20,7 @@
 
     var themePath="/theme/"+window.rubedoConfig.siteTheme;
     
-    var fieldsConfig={
+    fieldsConfig={
         "textarea":"/templates/fields/textarea.html",
         "textareafield":"/templates/fields/textarea.html",
         "Ext.form.field.TextArea":"/templates/fields/textarea.html",
@@ -57,7 +57,7 @@
         "fieldNotFound":"/templates/fields/fieldNotFound.html"
     };
 
-    var inputFieldsConfig={
+    inputFieldsConfig={
         "textfield":"/templates/inputFields/text.html",
         "Ext.form.field.Text":"/templates/inputFields/text.html",
         "Ext.form.field.Number":"/templates/inputFields/number.html",

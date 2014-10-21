@@ -17,7 +17,7 @@
 
     var themePath="/theme/"+window.rubedoConfig.siteTheme;
 
-    var blocksConfig = {
+    blocksConfig = {
         "image": {
             "template": "/templates/blocks/image.html",
             "internalDependencies":["/src/modules/rubedoBlocks/controllers/ImageController.js"]
