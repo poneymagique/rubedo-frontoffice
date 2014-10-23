@@ -189,7 +189,11 @@
             } else if (bType=="navigation"&&bConfig.style&&bConfig.style=="Vertical") {
                 return (themePath+blocksConfig.verticalNavigation.template);
             } else if (blocksConfig[bType]){
-                return (themePath+blocksConfig[bType].template);
+                if (blocksConfig[bType].absoluteUrl){
+                    return (blocksConfig[bType].template);
+                } else {
+                    return (themePath+blocksConfig[bType].template);
+                }
             } else {
                 return (themePath+blocksConfig.blockNotFound.template);
             }
@@ -212,7 +216,7 @@
                     }
                     if (blocksConfig[bType].internalDependencies){
                         angular.forEach(blocksConfig[bType].internalDependencies,function(dependency){
-                            var dependencyPath=themePath+dependency;
+                            var dependencyPath=blocksConfig[bType].absoluteUrl?dependency:themePath+dependency;
                             if (dependenciesArray.indexOf(dependencyPath)<0){
                                 dependenciesArray.push(dependencyPath);
                             }
