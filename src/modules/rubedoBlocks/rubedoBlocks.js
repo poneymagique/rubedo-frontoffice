@@ -2,7 +2,9 @@
  * Module that manages blocks
  */
 (function(){
-    var module = angular.module('rubedoBlocks',['rubedoDataAccess', 'lrInfiniteScroll','rubedoFields','snap']);
+    var defaultModules = ['rubedoDataAccess', 'lrInfiniteScroll','rubedoFields','snap'];
+    var modulesArray = window.rubedoConfig.extensionAngularModules?defaultModules.concat(window.rubedoConfig.extensionAngularModules):defaultModules;
+    var module = angular.module('rubedoBlocks',modulesArray);
 
 
     module.config(function ($controllerProvider, $compileProvider, $filterProvider, $provide) {
