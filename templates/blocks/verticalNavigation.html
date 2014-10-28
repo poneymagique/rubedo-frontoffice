@@ -14,7 +14,7 @@
                 <li ng-if="blockConfig.displayRootPage" ng-class="{active:menuCtrl.currentRouteleine==menuCtrl.menu.url}"><a ng-href="{{menuCtrl.menu.url}}">{{menuCtrl.menu.text}} <span class="glyphicon glyphicon-chevron-right pull-right"></span></a></li>
                 <li ng-repeat="page in menuCtrl.menu.pages" ng-class="{active:menuCtrl.currentRouteleine==page.url}">
                     <a ng-href="{{page.url}}">{{page.text}} <span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
-                    <ul ng-if="page.pages" class="nav nav-pills nav-stacked">
+                    <ul ng-if="page.pages&&blockConfig.menuLevel>1" class="nav nav-pills nav-stacked">
                         <li ng-repeat="subPage in page.pages" ng-class="{active:menuCtrl.currentRouteleine==subPage.url}">
                             <a ng-href="{{subPage.url}}">&nbsp; &nbsp;{{subPage.text}} <span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                         </li>
