@@ -43,6 +43,7 @@ angular.module("rubedoBlocks").lazy.controller("RichTextController",["$scope","$
         RubedoContentsService.updateContent(payload).then(
             function(response){
                 if (response.data.success){
+                    me.content.version = response.data.version;
                     $scope.rubedo.addNotification("success","Success","Content updated.");
                 } else {
                     $scope.rubedo.addNotification("danger","Error","Content update error.");
