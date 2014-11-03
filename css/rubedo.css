@@ -17,7 +17,7 @@
     color: #ffffff !important;
 }
 .rubedo-page-holder{
-    background: #ffffff;
+    background: inherit;
     box-shadow: rgb(136, 136, 136) 0px 0px 20px 0px;
 }
 .rubedo-admin-drawer{
