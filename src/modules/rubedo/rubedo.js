@@ -37,12 +37,20 @@
         function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService,RubedoFieldTemplateResolver,snapRemote, RubedoPageComponents, RubedoTranslationsService){
         //set context and page-wide services
         var me=this;
+        me.adminBtnIconClass="glyphicon glyphicon-arrow-right";
         me.snapOpts={
           disable:'right',
           tapToClose:false
         };
         snapRemote.getSnapper().then(function(snapper) {
             snapper.disable();
+            snapper.on('open', function() {
+                me.adminBtnIconClass="glyphicon glyphicon-arrow-left";
+            });
+
+            snapper.on('close', function() {
+                me.adminBtnIconClass="glyphicon glyphicon-arrow-right";
+            });
         });
         me.translations={ };
         RubedoTranslationsService.getTranslations().then(

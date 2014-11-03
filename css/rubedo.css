@@ -18,10 +18,10 @@
 }
 .rubedo-page-holder{
     background: inherit;
-    box-shadow: rgb(136, 136, 136) 0px 0px 20px 0px;
 }
 .rubedo-admin-drawer{
-    width:256px !important;
+    background: #f9f9f9;
+    color: #000000 !important;
 }
 .rubedo-admin-btn{
     position:fixed;
@@ -30,6 +30,10 @@
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     z-index: 10000;
+}
+.rubedo-admin-image-holder{
+    margin-top: 60px;
+    margin-bottom: 20px;
 }
 .editable-click{
     border-bottom: none !important;
