@@ -1,0 +1,16 @@
+<div class="text-center rubedo-admin-image-holder">
+    <img alt="Rubedo" title="Rubedo" ng-src="{{rubedo.themePath}}/img/salamander.png">
+</div>
+<ul class="nav nav-pills nav-stacked rubedo-admin-nav">
+    <li ng-if="rubedo.current.user.rights.boAccess" >
+        <a
+           href="/backoffice" target="_blank">
+            <span class="glyphicon glyphicon-cog"></span> Back Office
+        </a>
+    </li>
+    <li ng-if="rubedo.current.user.rights.canEdit">
+        <a ng-click="rubedo.changeAdminInterfaceView('contentEdit')">
+            <span class="glyphicon glyphicon-pencil"></span> Content editing
+        </a>
+    </li>
+</ul>

@@ -1,23 +1,2 @@
-<div class="text-center rubedo-admin-image-holder">
-    <img alt="Rubedo" title="Rubedo" ng-src="{{rubedo.themePath}}/img/salamander.png">
-</div>
-<div class="container-fluid">
-    <a ng-if="rubedo.current.user.rights.boAccess" href="/backoffice" target="_blank"><button type="button" class="btn btn-default btn-block"><span class="glyphicon glyphicon-cog"></span> Back Office</button></a>
-    <br>
-    <div ng-if="rubedo.current.user.rights.canEdit" class="panel panel-default" ng-class="{'panel-primary':rubedo.fieldEditMode}">
-        <div class="panel-heading">
-            <h3 class="panel-title text-center">In-context editing</h3>
-        </div>
-        <div class="panel-body">
-            <button ng-if="!rubedo.fieldEditMode" type="button" class="btn btn-default btn-block" ng-click="rubedo.enterEditMode()">
-                <span class="glyphicon glyphicon-pencil"></span> Begin edit
-            </button>
-            <button ng-if="rubedo.fieldEditMode" type="button" class="btn btn-primary btn-block" ng-click="rubedo.persistChanges()">
-                <span class="glyphicon glyphicon-floppy-saved"></span> Save changes
-            </button>
-            <button ng-if="rubedo.fieldEditMode" type="button" class="btn btn-default btn-block" ng-click="rubedo.revertChanges()">
-                <span class="glyphicon glyphicon-trash"></span> Discard changes
-            </button>
-        </div>
-    </div>
+<div class="container-fluid" ng-include="rubedo.adminInterfaceViewPath">
 </div>

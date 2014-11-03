@@ -68,6 +68,10 @@
             }
         };
         me.themePath=themePath;
+        me.adminInterfaceViewPath=themePath+"/templates/admin/menuViews/home.html";
+        me.changeAdminInterfaceView=function(viewName){
+            me.adminInterfaceViewPath=themePath+"/templates/admin/menuViews/"+viewName+".html";
+        };
         me.current=current;
         me.blockTemplateResolver=RubedoBlockTemplateResolver;
         me.fieldTemplateResolver=RubedoFieldTemplateResolver;

@@ -31,6 +31,14 @@
     border-bottom-left-radius: 0;
     z-index: 10000;
 }
+.rubedo-admin-nav a {
+    color: #000000;
+    text-align: center;
+}
+.rubedo-admin-back-btn{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 .rubedo-admin-image-holder{
     margin-top: 60px;
     margin-bottom: 20px;

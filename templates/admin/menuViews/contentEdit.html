@@ -1,0 +1,21 @@
+<button class="btn btn-default rubedo-admin-back-btn"
+        ng-click="rubedo.changeAdminInterfaceView('home')">
+    <span class="glyphicon glyphicon-arrow-left"></span>
+    Back
+</button>
+<div ng-if="rubedo.current.user.rights.canEdit" class="panel panel-default" ng-class="{'panel-primary':rubedo.fieldEditMode}">
+    <div class="panel-heading">
+        <h3 class="panel-title text-center">Content editing</h3>
+    </div>
+    <div class="panel-body">
+        <button ng-if="!rubedo.fieldEditMode" type="button" class="btn btn-default btn-block" ng-click="rubedo.enterEditMode()">
+            <span class="glyphicon glyphicon-pencil"></span> Begin edit
+        </button>
+        <button ng-if="rubedo.fieldEditMode" type="button" class="btn btn-primary btn-block" ng-click="rubedo.persistChanges()">
+            <span class="glyphicon glyphicon-floppy-saved"></span> Save changes
+        </button>
+        <button ng-if="rubedo.fieldEditMode" type="button" class="btn btn-default btn-block" ng-click="rubedo.revertChanges()">
+            <span class="glyphicon glyphicon-trash"></span> Discard changes
+        </button>
+    </div>
+</div>
