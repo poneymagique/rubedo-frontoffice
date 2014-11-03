@@ -1,4 +1,4 @@
-angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scope","RubedoContentsService",function($scope, RubedoContentsService){
+angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scope","RubedoContentsService","$http",function($scope, RubedoContentsService,$http){
     var me = this;
     var config = $scope.blockConfig;
     var themePath="/theme/"+window.rubedoConfig.siteTheme;
@@ -58,7 +58,19 @@ angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scop
                     } else if (me.customLayout){
                         me.detailTemplate=themePath+'/templates/blocks/contentDetail/customLayout.html';
                     } else {
-                        me.detailTemplate=themePath+'/templates/blocks/contentDetail/default.html';
+                        if(me.content.type.code&&me.content.type.code!=""){
+                            $http.get(themePath+'/templates/blocks/contentDetail/'+me.content.type.code+".html").then(
+                                function (response){
+                                    me.detailTemplate=themePath+'/templates/blocks/contentDetail/'+me.content.type.code+".html";
+                                },
+                                function (response){
+                                    me.detailTemplate=themePath+'/templates/blocks/contentDetail/default.html';
+                                }
+                            );
+                        } else {
+                            me.detailTemplate=themePath+'/templates/blocks/contentDetail/default.html';
+                        }
+                        //$http.get(themePath+'/templates/blocks/contentDetail/)
                     }
                 }
             }
