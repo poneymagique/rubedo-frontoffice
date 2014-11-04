@@ -87,7 +87,6 @@ angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scop
     };
     me.persistChanges=function(){
         var payload=angular.copy(me.content);
-        console.log(me.content);
         payload.fields=angular.copy($scope.fieldEntity);
         delete (payload.type);
         RubedoContentsService.updateContent(payload).then(
