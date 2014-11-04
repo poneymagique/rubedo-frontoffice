@@ -2,14 +2,13 @@ angular.module("rubedoBlocks").lazy.controller("ExternalMediaController",['$scop
     var me=this;
     var config=$scope.blockConfig;
     if ((config)&&(config.url)){
-        var url = "http://iframe.ly/api/oembed?callback=JSON_CALLBACK&url="+encodeURIComponent(config.url);
+        var url = "http://iframe.ly/api/oembed?url="+encodeURIComponent(config.url);
         if ($scope.rubedo.current.site.iframelyKey){
             url=url+"&api_key="+$scope.rubedo.current.site.iframelyKey;
         }
+        url=url+"&callback=JSON_CALLBACK";
         $http.jsonp(url).success(function(response){
             me.html=$sce.trustAsHtml(response.html);
         });
-
-
     }
 }]);
