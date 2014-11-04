@@ -113,6 +113,19 @@
         };
     });
 
+    module.directive('rubedoPageLink',["RubedoPagesService",function (RubedoPagesService) {
+            return {
+                link: function (scope, element, attrs) {
+                    RubedoPagesService.getPageById(attrs.rubedoPageLink).then(function(response){
+                        if (response.data.success){
+                            attrs.$set("href",response.data.url);
+                        }
+                    });
+
+
+                }
+            };
+        }]);
     //field controllers
     module.controller("RTEFieldController",['$scope','$sce',function($scope,$sce){
         var me=this;
@@ -164,7 +177,17 @@
         };
         if (!$scope.fieldInputMode){
             $scope.$watch("fieldEntity."+$scope.field.config.name, function(newValue) {
-                if(!$scope.fieldEditMode||!me.html){
+                if(!$scope.fieldEditMode){
+                    if (!newValue){
+                        newValue="";
+                    }
+
+                    me.html=jQuery.htmlClean(newValue, {
+                        allowedAttributes:[["style"],["rubedo-page-link"]],
+                        format: true
+                    });
+
+                } else if ($scope.fieldEditMode&&!me.html){
                     if (!newValue){
                         newValue="";
                     }

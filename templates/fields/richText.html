@@ -1,4 +1,6 @@
-    <div ng-if="!fieldEditMode" ng-controller="RTEFieldController as rteFieldCtrl" ng-bind-html="rteFieldCtrl.html"></div>
+    <div ng-if="!fieldEditMode" ng-controller="RTEFieldController as rteFieldCtrl">
+        <rubedo-custom-template template="{{rteFieldCtrl.html}}"></rubedo-custom-template>
+    </div>
     <div ng-if="fieldEditMode" ng-controller="RTEFieldController as rteFieldCtrl" ng-model="fieldEntity[field.config.name]"
        ckeditor="editorOptions"
        contenteditable="true"
