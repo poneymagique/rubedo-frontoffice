@@ -169,7 +169,7 @@
                         newValue="";
                     }
                     me.html=$sce.trustAsHtml(jQuery.htmlClean(newValue, {
-                        allowedAttributes:[["style"]],
+                        allowedAttributes:[["style"],["rubedo-page-link"]],
                         format: true
                     }));
                 }
