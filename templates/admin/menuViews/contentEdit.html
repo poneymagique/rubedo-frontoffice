@@ -15,10 +15,11 @@
     <li ng-if="rubedo.fieldEditMode&&rubedo.current.user.rights.canEdit">
         <a ng-click="rubedo.persistChanges()"
            class="cursor-as-pointer">
-            <span class="glyphicon glyphicon-floppy-saved"></span> Save changes</a>
+            <span class="glyphicon glyphicon-ok"></span> Save changes</a>
     </li>
     <li ng-if="rubedo.fieldEditMode&&rubedo.current.user.rights.canEdit">
         <a ng-click="rubedo.revertChanges()"
-           class="cursor-as-pointer"><span class="glyphicon glyphicon-trash"></span> Discard changes</a>
+           class="cursor-as-pointer">
+            <span class="glyphicon glyphicon-remove"></span> Discard changes</a>
     </li>
 </ul>

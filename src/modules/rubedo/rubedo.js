@@ -105,6 +105,7 @@
         };
         me.enterEditMode=function(){
             me.fieldEditMode=true;
+            me.toggleAdminPanel();
         };
         me.revertChanges=function(){
             me.fieldEditMode=false;
