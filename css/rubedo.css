@@ -22,6 +22,9 @@
 .rubedo-admin-drawer{
     background: #f9f9f9;
     color: #000000 !important;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 .rubedo-admin-btn{
     position:fixed;

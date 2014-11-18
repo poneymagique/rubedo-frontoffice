@@ -42,14 +42,17 @@
           disable:'right',
           tapToClose:false
         };
+
         snapRemote.getSnapper().then(function(snapper) {
             snapper.disable();
             snapper.on('open', function() {
                 me.adminBtnIconClass="glyphicon glyphicon-arrow-left";
+                angular.element(".rubedo-admin-drawer").show();
             });
 
             snapper.on('close', function() {
                 me.adminBtnIconClass="glyphicon glyphicon-arrow-right";
+                angular.element(".rubedo-admin-drawer").hide();
             });
         });
         me.translations={ };
