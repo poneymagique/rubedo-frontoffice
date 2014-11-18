@@ -304,16 +304,45 @@
         });
 
     module.directive('scrollTo', function ($location, $anchorScroll) {
-        return function(scope, element, attrs) {
-            element.bind('click', function(event) {
-                event.stopPropagation();
-                scope.$on('$locationChangeStart', function(ev) {
-                    ev.preventDefault();
+        return {
+            restrict: 'A',
+            link: function(scope, $elm, attrs) {
+                var idToScroll = attrs.href;
+                $elm.bind('click', function(event) {
+                    event.preventDefault();
+                    var location = attrs.scrollTo.substr(1);
+                    $location.hash(location);
+                    var $target;
+                    if (idToScroll) {
+                        $target = angular.element(idToScroll);
+                    } else {
+                        $target = $elm;
+                    }
+                    angular.element("body").animate({scrollTop: $target.offset().top}, "slow");
                 });
-                var location = attrs.scrollTo;
-                $location.hash(location);
-                $anchorScroll();
-            });
+            }
+        }
+    });
+
+    module.directive('executeJs',function(){
+        return {
+            restrict: 'A',
+            link: function(scope, element, attrs ){
+                var fct = attrs.executeJs;
+                var ready = 0;
+                var attrsLength = 0;
+                angular.forEach(attrs.$attr,function(){attrsLength++;});
+                angular.forEach(attrs.$attr,function(attr, attrKey){
+                    attrs.$observe(attrKey,function(newAttr){
+                        if(newAttr !== undefined){
+                            ready ++;
+                            if(ready == attrsLength){
+                                window[fct]();
+                            }
+                        }
+                    });
+                })
+            }
         }
     });
 
