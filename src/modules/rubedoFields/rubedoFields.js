@@ -2,7 +2,11 @@
  * Module that manages fields for display and edit
  */
 (function(){
-    var module = angular.module('rubedoFields',['rubedoDataAccess','xeditable','checklist-model','ckeditor','google-maps']);
+    var moduleDependencies=['rubedoDataAccess','xeditable','checklist-model','ckeditor'];
+    if (typeof(google)!="undefined"){
+        moduleDependencies.push('google-maps');
+    }
+    var module = angular.module('rubedoFields',moduleDependencies);
 
     module.run(function(editableOptions ) {
         editableOptions.theme = 'bs3';
