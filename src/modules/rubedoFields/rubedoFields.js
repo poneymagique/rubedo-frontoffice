@@ -380,4 +380,42 @@
         }
     }]);
 
+    module.directive('fileModel', ['$parse', function ($parse) {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attrs) {
+                var model = $parse(attrs.fileModel);
+                var modelSetter = model.assign;
+
+                element.bind('change', function(){
+                    scope.$apply(function(){
+                        modelSetter(scope, element[0].files[0]);
+                    });
+                });
+            }
+        };
+    }]);
+
+    module.controller("UserPhotoFieldController",["$scope","RubedoUsersService",function($scope,RubedoUsersService){
+        var me=this;
+        me.submitPhoto=function(){
+            if (me.photoFile){
+                RubedoUsersService.changeUserPhoto($scope.rubedo.current.user.id, me.photoFile).then(
+                    function(response){
+                        if (response.data.success){
+                            $scope.userPhotoUrl=response.data.photoUrl;
+                        } else {
+                            console.log(response);
+                        }
+                    },
+                    function(response){
+                        console.log(response);
+                    }
+                );
+            }
+
+        }
+
+    }]);
+
 })();

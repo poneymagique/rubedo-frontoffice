@@ -300,6 +300,15 @@
                 }
             }));
         };
+        serviceInstance.changeUserPhoto=function(userId,file){
+            var fd = new FormData();
+            fd.append('file', file);
+            fd.append('userId', userId);
+            return($http.post(config.baseUrl+"/users/changephoto", fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            }));
+        };
         return serviceInstance;
     }]);
 
