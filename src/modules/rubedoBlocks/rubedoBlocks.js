@@ -134,7 +134,7 @@
         },
         "resource": {
             "template": "/templates/blocks/mediaDownload.html",
-            "internalDependencies":["/src/modules/rubedoBlocks/controllers/RichTextController.js","/src/modules/rubedoBlocks/controllers/MediaDowloadController.js"]
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/RichTextController.js","/src/modules/rubedoBlocks/controllers/MediaDownloadController.js"]
         },
         "addThisFollow": {
             "template": "/templates/blocks/addThisFollow.html",

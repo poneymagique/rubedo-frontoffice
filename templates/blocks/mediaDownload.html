@@ -1,4 +1,9 @@
 <div ng-controller="MediaDownloadController as mediaDownloadCtrl">
+    <div ng-if="mediaDownloadCtrl.intro"
+         ng-include="rubedo.blockTemplateResolver.getTemplate('richText',{ })"
+         ng-init="blockConfig = {content:mediaDownloadCtrl.intro, fromFront: true}"
+            >
+    </div>
     <a class="btn btn-primary" target="_blank" ng-href="{{mediaDownloadCtrl.media.url}}">
         <i class="glyphicon glyphicon-download"></i> Download
     </a>

@@ -305,8 +305,10 @@
 
     module.factory('RubedoMediaService', ['$http',function($http) {
         var serviceInstance={};
-        serviceInstance.getMediaById=function(mediaId){
-            return ($http.get(config.baseUrl+"/media/"+mediaId));
+        serviceInstance.getMediaById=function(options){
+            return ($http.get(config.baseUrl+"/media/"+options.mediaId, {
+                params: options
+            }));
         };
         serviceInstance.getMediaByQuery=function(options){
             return ($http.get(config.baseUrl+"/media", {
