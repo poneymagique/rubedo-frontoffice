@@ -15,6 +15,7 @@
                                 {{ content.fields.text }}
                             </a>
                         </h4>
+                        <span>{{ content.createTime*1000 | date }}</span>
                         <p  ng-style="{'height':contentListCtrl.contentHeight}" ng-if="!contentListCtrl.titleOnly">
                             {{ content.fields.summary }}
                         </p>
