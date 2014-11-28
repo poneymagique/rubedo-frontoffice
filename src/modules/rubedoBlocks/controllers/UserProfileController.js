@@ -80,6 +80,7 @@ angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope"
     me.registerEditChanges=function(){
         me.hasChanges=true;
     };
+
     me.persistChanges=function(){
         var payload=angular.copy(me.user);
         payload.fields=angular.copy($scope.fieldEntity);
@@ -100,4 +101,8 @@ angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope"
         $scope.fieldEditMode=false;
     };
     $scope.registerFieldEditChanges=me.registerEditChanges;
+    $scope.updatePhotoUrl=function(photoUrl){
+        $scope.userPhotoUrl=photoUrl;
+        me.user.photoUrl=photoUrl;
+    }
 }]);

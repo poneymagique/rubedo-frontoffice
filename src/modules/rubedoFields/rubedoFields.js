@@ -404,6 +404,8 @@
                     function(response){
                         if (response.data.success){
                             $scope.userPhotoUrl=response.data.photoUrl;
+                            $scope.updatePhotoUrl(response.data.photoUrl);
+                            $scope.registerFieldEditChanges();
                         } else {
                             console.log(response);
                         }
