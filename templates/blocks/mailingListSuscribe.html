@@ -1,22 +1,24 @@
 <div ng-controller="MailingListSuscribeController as mailingListSusCtrl">
-    <rubedo-notification ng-if="notification"></rubedo-notification>
-    <form role="form" ng-submit="mailingListSusCtrl.submit()">
-        <div class="form-group">
-            <label ng-attr-for="{{mailingListSusCtrl.prefix+'email'}}">Email address</label>
-            <input ng-model="mailingListSusCtrl.email" type="email" class="form-control" ng-attr-id="{{mailingListSusCtrl.prefix+'email'}}" placeholder="Enter email" required>
-        </div>
-        <div class="form-group">
-            <label ng-attr-for="{{mailingListSusCtrl.prefix+'name'}}">Name</label>
-            <input ng-model="mailingListSusCtrl.name" type="text" class="form-control" ng-attr-id="{{mailingListSusCtrl.prefix+'name'}}" placeholder="Name" required>
-        </div>
-        <rubedo-field ng-repeat="field in mailingListSusCtrl.userType.fields"></rubedo-field>
+    <div ng-if="mailingListSusCtrl.display && mailingListSusCtrl.userType">
+        <rubedo-notification ng-if="notification"></rubedo-notification>
+        <form role="form" ng-submit="mailingListSusCtrl.submit()" ng-if="mailingListSusCtrl.display">
+            <div class="form-group">
+                <label ng-attr-for="{{mailingListSusCtrl.prefix+'email'}}">Email address</label>
+                <input ng-model="mailingListSusCtrl.email" type="email" class="form-control" ng-attr-id="{{mailingListSusCtrl.prefix+'email'}}" placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+                <label ng-attr-for="{{mailingListSusCtrl.prefix+'name'}}">Name</label>
+                <input ng-model="mailingListSusCtrl.name" type="text" class="form-control" ng-attr-id="{{mailingListSusCtrl.prefix+'name'}}" placeholder="Name" required>
+            </div>
+            <rubedo-field ng-repeat="field in mailingListSusCtrl.userType.fields"></rubedo-field>
 
-        <h4>Mailing List</h4>
-        <div ng-repeat="mailingList in mailingListSusCtrl.mailingLists" class="checkbox">
-            <label>
-                <input ng-model="mailingList.checked" type="checkbox"> {{mailingList.name}}
-            </label>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+            <h4>Mailing List</h4>
+            <div ng-repeat="mailingList in mailingListSusCtrl.mailingLists" class="checkbox">
+                <label>
+                    <input ng-model="mailingList.checked" type="checkbox"> {{mailingList.name}}
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
 </div>

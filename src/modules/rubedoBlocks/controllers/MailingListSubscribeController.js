@@ -1,6 +1,7 @@
 angular.module("rubedoBlocks").lazy.controller('MailingListSuscribeController',['$scope','RubedoMailingListService',function($scope,RubedoMailingListService){
     var me = this;
     var config = $scope.blockConfig;
+    me.display = false;
     me.mailingLists = {};
     $scope.fieldIdPrefix="mailingLists";
     me.prefix = "mailingLists_"+$scope.block.id;
@@ -13,6 +14,7 @@ angular.module("rubedoBlocks").lazy.controller('MailingListSuscribeController',[
             $scope.fieldIdPrefix=me.prefix+me.userType.type;
             angular.forEach(config.mailingListId, function(mailing){
                 var newMailing = {};
+                me.display = true;
                 angular.forEach(response.data.mailinglists, function(mailingInfo){
                     if(mailingInfo.id == mailing){
                         newMailing.id = mailing;
