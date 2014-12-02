@@ -2,6 +2,8 @@ angular.module("rubedoBlocks").lazy.controller('SignUpController',['$scope','Rub
     var me = this;
     var config = $scope.blockConfig;
     me.inputFields=[ ];
+    me.mailingLists = {};
+    me.prefix = "mailingLists_"+$scope.block.id;
     $scope.fieldIdPrefix="signUp";
     $scope.fieldEntity={ };
     $scope.fieldInputMode=true;
@@ -18,7 +20,6 @@ angular.module("rubedoBlocks").lazy.controller('SignUpController',['$scope','Rub
         RubedoUsersService.createUser(fields,config.userType).then(
             function(response){
                 if (response.data.success){
-                    console.log(response);
                     me.showForm=false;
                     if (me.userType.signUpType=="open"){
                         me.confirmMessage="Blocks.SignUp.done.created";
@@ -112,4 +113,21 @@ angular.module("rubedoBlocks").lazy.controller('SignUpController',['$scope','Rub
             }
         );
     }
+    RubedoMailingListService.getAllMailingList().then(function(response){
+        if(response.data.success){
+            me.userType = response.data.userType;
+            $scope.fieldIdPrefix=me.prefix+me.userType.type;
+            angular.forEach(config.mailingListId, function(mailing){
+                var newMailing = {};
+                angular.forEach(response.data.mailinglists, function(mailingInfo){
+                    if(mailingInfo.id == mailing){
+                        newMailing.id = mailing;
+                        newMailing.name = mailingInfo.name;
+                        newMailing.checked = false;
+                        me.mailingLists[mailing] = newMailing;
+                    }
+                });
+            });
+        }
+    });
 }]);
