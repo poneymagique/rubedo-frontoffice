@@ -5,7 +5,7 @@ angular.module("rubedoBlocks").lazy.controller('MediaDownloadController',['$scop
         mediaId: config.documentId,
         contentId: config.introduction
     };
-    RubedoMediaService.getMediaById(options).then(function(response){
+    RubedoMediaService.getMediaById(options.mediaId, options).then(function(response){
         if(response.data.success){
             me.media =  response.data.media;
             me.intro = response.data.intro.content;
