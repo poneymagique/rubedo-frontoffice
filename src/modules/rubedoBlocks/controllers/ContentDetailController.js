@@ -56,6 +56,14 @@ angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scop
                     if (me.customLayout&&me.customLayout.customTemplate){
                         me.detailTemplate=themePath+'/templates/blocks/contentDetail/customTemplate.html';
                     } else if (me.customLayout){
+                        me.content.type.fields.unshift({
+                            cType:"textarea",
+                            config:{
+                                name:"summary",
+                                fieldLabel:"Summary",
+                                allowBlank:false
+                            }
+                        });
                         me.detailTemplate=themePath+'/templates/blocks/contentDetail/customLayout.html';
                     } else {
                         if(me.content.type.code&&me.content.type.code!=""){
