@@ -1,6 +1,6 @@
 <div ng-controller="AddThisFollowController as addThisFollowCtrl">
     <div ng-class="addThisFollowCtrl.divClass">
         <a ng-repeat="network in addThisFollowCtrl.networks" ng-if="network.id"
-           ng-class="addThisFollowCtrl.networkClass(network)" addthis:userid="{{network.userId}}"></a>
+           ng-class="addThisFollowCtrl.networkClass(network)" addthis:userid="{{network.id}}"></a>
     </div>
 </div>
