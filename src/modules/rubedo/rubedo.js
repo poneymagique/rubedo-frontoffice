@@ -63,12 +63,19 @@
                 }
             }
         );
-        me.translate=function(transKey,fallbackString){
+        me.translate=function(transKey,fallbackString,toRelaceArray,toReplaceWithArray){
+            var stringToReturn="";
             if (me.translations[transKey]){
-                return (me.translations[transKey]);
+                stringToReturn=me.translations[transKey];
             } else {
-                return (fallbackString);
+                stringToReturn=fallbackString;
             }
+            if (toRelaceArray&&toReplaceWithArray&&angular.isArray(toRelaceArray)&&angular.isArray(toReplaceWithArray)){
+                angular.forEach(toRelaceArray, function(value, key) {
+                    stringToReturn=stringToReturn.replace(value,toReplaceWithArray[key]);
+                });
+            }
+            return(stringToReturn);
         };
         me.themePath=themePath;
         me.adminInterfaceViewPath=themePath+"/templates/admin/menuViews/home.html";
