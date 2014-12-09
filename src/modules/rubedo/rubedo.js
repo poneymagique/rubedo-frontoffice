@@ -1,5 +1,9 @@
 (function(){
-    var app = angular.module('rubedo', ['rubedoDataAccess','rubedoBlocks','ngRoute','snap']);
+    var app = angular.module('rubedo', ['rubedoDataAccess','rubedoBlocks','ngRoute','snap'])
+        .config(function($locationProvider) {
+            $locationProvider.html5Mode(true);
+            $locationProvider.hashPrefix('!');
+        });
 
     var themePath="/theme/"+window.rubedoConfig.siteTheme;
 
