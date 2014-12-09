@@ -9,9 +9,10 @@
                  ng-init="field = contentDetailCtrl.getFieldByName(columnField.name)"
                  >
                 <div ng-if="field&&(fieldEntity[field.config.name]||field.cType=='checkboxfield')">
-                    <label ng-if="columnField.showLabel&&field.cType!='checkboxfield'">{{field.config.fieldLabel}} :
+                    <div ng-if="columnField.showLabel&&field.cType!='checkboxfield'">
+                        <label>{{field.config.fieldLabel}} :</label>
                         <rubedo-field></rubedo-field>
-                    </label>
+                    </div>
                     <rubedo-field ng-if="!columnField.showLabel||field.cType=='checkboxfield'"></rubedo-field>
                 </div>
             </div>
@@ -28,9 +29,10 @@
                          ng-init="field = contentDetailCtrl.getFieldByName(columnField.name)"
                             >
                         <div ng-if="field&&(fieldEntity[field.config.name]||field.cType=='checkboxfield')">
-                            <label ng-if="columnField.showLabel&&field.cType!='checkboxfield'">{{field.config.fieldLabel}} :
+                            <div ng-if="columnField.showLabel&&field.cType!='checkboxfield'">
+                                <label>{{field.config.fieldLabel}} :</label>
                                 <rubedo-field></rubedo-field>
-                            </label>
+                            </div>
                             <rubedo-field ng-if="!columnField.showLabel||field.cType=='checkboxfield'"></rubedo-field>
                         </div>
                     </div>

@@ -4,6 +4,13 @@ angular.module("rubedoBlocks").lazy.controller("MediaListController",["$scope","
     me.media = [];
     me.start = 0;
     me.limit = config.pagesize?config.pagesize:12;
+
+    if(config.facets.length == 0){
+        me.display = false;
+    } else {
+        me.display = true;
+    }
+
     var options = {
         start: me.start,
         limit: me.limit,
@@ -16,7 +23,7 @@ angular.module("rubedoBlocks").lazy.controller("MediaListController",["$scope","
         options.start = me.start;
         me.getMedia(options);
     };
-
+    console.log(config.facets.length);
     me.getMedia = function(options){
         RubedoSearchService.getMediaById(options).then(function(response){
             if(response.data.success){

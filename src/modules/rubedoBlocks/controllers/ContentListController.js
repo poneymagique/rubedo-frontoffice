@@ -7,9 +7,11 @@ angular.module("rubedoBlocks").lazy.controller("ContentListController",['$scope'
     me.contentHeight = config.summaryHeight?config.summaryHeight:80;
     me.start = config.resultsSkip?config.resultsSkip:0;
     me.limit = config.pageSize?config.pageSize:12;
+    me.ismagic = config.magicQuery ? config.magicQuery : false;
     var options = {
         start: me.start,
-        limit: me.limit
+        limit: me.limit,
+        ismagic: me.ismagic
     };
     if(config.singlePage){
         options.detailPageId = config.singlePage;
