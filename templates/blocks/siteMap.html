@@ -1,18 +1,8 @@
 <div ng-controller="SiteMapController as siteMapCtrl">
-        <i ng-class="{'glyphicon glyphicon-chevron-right': siteMapCtrl.hidePages, 'glyphicon glyphicon-chevron-down': !siteMapCtrl.hidePages}"
-           ng-click="siteMapCtrl.showPagesClick('pages')" ng-if="siteMapCtrl.menu.pages"></i>
-        <a ng-href="{{siteMapCtrl.menu.url}}">{{siteMapCtrl.menu.text}}</a>
-    <ul class="no-list-style" ng-hide="siteMapCtrl.hidePages">
-        <li ng-repeat="page in siteMapCtrl.menu.pages">
-                <i ng-class="{'glyphicon glyphicon-chevron-right': siteMapCtrl.hideChildPages, 'glyphicon glyphicon-chevron-down': !siteMapCtrl.hideChildPages}"
-                   ng-click="siteMapCtrl.showPagesClick('childPages')" ng-if="page.pages" class="glyphicon glyphicon-chevron-right"></i>
-                <a ng-href="{{page.url}}">{{page.title}}</a>
-            <ul class="no-list-style" ng-hide="siteMapCtrl.hideChildPages" ng-if="page.pages">
-                <li ng-repeat="childPage in page.pages">
-                    <a ng-href="{{childPage.url}}">{{childPage.title}}</a>
-                </li>
-            </ul>
-        </li>
+    <span ng-class="{'glyphicon glyphicon-chevron-right': siteMapCtrl.getPageDisplay(menu.id), 'glyphicon glyphicon-chevron-down': !siteMapCtrl.getPageDisplay(menu.id)}"
+           ng-click="siteMapCtrl.setPageDisplay(menu.id)" ng-if="menu.pages"></span>
+    <a ng-href="{{menu.url}}">{{menu.text}}</a>
+    <ul class="no-list-style" ng-hide="siteMapCtrl.getPageDisplay(menu.id)" ng-if="menu.pages">
+        <li ng-repeat="menu in menu.pages" ng-include="rubedo.themePath+'/templates/blocks/siteMap/list.html'"></li>
     </ul>
-
 </div>
