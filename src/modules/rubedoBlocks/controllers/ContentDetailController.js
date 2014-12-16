@@ -2,6 +2,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scop
     var me = this;
     var config = $scope.blockConfig;
     var themePath="/theme/"+window.rubedoConfig.siteTheme;
+    var previousFields;
     $scope.fieldInputMode=false;
     $scope.$watch('rubedo.fieldEditMode', function(newValue) {
         $scope.fieldEditMode=me.content&&me.content.readOnly ? false : newValue;
@@ -88,14 +89,14 @@ angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scop
         me.getContentById(config.contentId);
     }
     me.revertChanges=function(){
-        $scope.fieldEntity=angular.copy(me.content.fields);
+        $scope.fieldEntity=angular.copy(previousFields);
     };
     me.registerEditChanges=function(){
         $scope.rubedo.registerEditCtrl(me);
     };
     me.persistChanges=function(){
         var payload=angular.copy(me.content);
-        payload.fields=angular.copy($scope.fieldEntity);
+        payload.fields=transformForPersist();
         delete (payload.type);
         RubedoContentsService.updateContent(payload).then(
             function(response){
@@ -111,6 +112,57 @@ angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scop
                 $scope.rubedo.addNotification("danger","Error","Content update error.");
             }
         );
+    };
+    var transformForPersist = function(){
+        var returnFields = angular.copy(me.content.fields);
+        angular.forEach(me.content.fields, function(field, fieldKey){
+            if(angular.isArray(field)){
+                angular.forEach(field, function(fld, fldKey){
+                    if(fldKey === 0){
+                        returnFields[fieldKey][fldKey]=$scope.fieldEntity[fieldKey];
+                    } else {
+                        returnFields[fieldKey][fldKey]=$scope.fieldEntity[fieldKey+fldKey];
+                    }
+                })
+            } else {
+                returnFields[fieldKey] = $scope.fieldEntity[fieldKey];
+            }
+        });
+        return returnFields;
+    };
+    me.transformForFront = function(fieldsType){
+        var res = [];
+        angular.forEach(fieldsType, function(fieldTp){
+            var fieldType;
+            if(!fieldTp.config&&fieldTp.name){
+                fieldTp.field=me.getFieldByName(fieldTp.name);
+                fieldType = fieldTp.field;
+            } else {
+                fieldType = fieldTp;
+            }
+            res.push(fieldTp);
+            if(angular.isArray(me.content.fields[fieldType.config.name])&&fieldType.config.multivalued){
+                var fields = $scope.fieldEntity[fieldType.config.name];
+                angular.forEach(fields, function(fld, keyFld){
+                    if(keyFld === 0){
+                        $scope.fieldEntity[fieldType.config.name] = me.content.fields[fieldType.config.name][keyFld];
+                    } else {
+                        var name = fieldType.config.name + keyFld;
+                        var newField = angular.copy(fieldTp);
+                        if(!newField.config&&newField.name){
+                            newField.field = angular.copy(fieldType);
+                            newField.field.config.name = name;
+                        } else {
+                            newField.config.name = name;
+                        }
+                        res.push(newField);
+                        $scope.fieldEntity[name] = me.content.fields[fieldType.config.name][keyFld];
+                    }
+                });
+            }
+        });
+        previousFields = angular.copy($scope.fieldEntity);
+        return res;
     };
     $scope.registerFieldEditChanges=me.registerEditChanges;
 }]);

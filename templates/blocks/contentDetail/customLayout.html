@@ -2,11 +2,10 @@
          class="row"
          ng-class="rubedo.componentsService.resolveResponsiveClass(row.responsive)">
 
-        <div ng-if="!row.displayAsTabs" ng-repeat="column in row.columns"
+        <div ng-if="!row.displayAsTabs" ng-repeat="column in row.columns" ng-init="fields = contentDetailCtrl.transformForFront(column.fields)"
              ng-class="rubedo.componentsService.getColumnClass(column.span,column.offset,column.stackThreshold)+' '+rubedo.componentsService.resolveResponsiveClass(column.responsive)">
-            <div ng-repeat="columnField in column.fields"
-                 ng-class="rubedo.componentsService.resolveResponsiveClass(columnField.responsive)"
-                 ng-init="field = contentDetailCtrl.getFieldByName(columnField.name)"
+            <div ng-repeat="columnField in fields"
+                 ng-class="rubedo.componentsService.resolveResponsiveClass(columnField.responsive)" ng-init="field = columnField.field"
                  >
                 <div ng-if="field&&(fieldEntity[field.config.name]||field.cType=='checkboxfield')">
                     <div ng-if="columnField.showLabel&&field.cType!='checkboxfield'">
@@ -23,10 +22,11 @@
                 <li ng-repeat="column in row.columns" ng-class="{'active':$index==0}"><a showtab href="#{{'contentTab'+column.$$hashKey}}" role="tab" data-toggle="tab">{{column.eTitle}}</a></li>
             </ul>
             <div class="tab-content">
-                <div ng-repeat="column in row.columns" class="tab-pane"  ng-class="{'active':$index==0}" id="{{'contentTab'+column.$$hashKey}}">
-                    <div ng-repeat="columnField in column.fields"
+                <div ng-repeat="column in row.columns" class="tab-pane"  ng-class="{'active':$index==0}" id="{{'contentTab'+column.$$hashKey}}"
+                     ng-init="fields = contentDetailCtrl.transformForFront(column.fields)">
+                    <div ng-repeat="columnField in fields"
                          ng-class="rubedo.componentsService.resolveResponsiveClass(columnField.responsive)"
-                         ng-init="field = contentDetailCtrl.getFieldByName(columnField.name)"
+                         ng-init="field = columnField.field"
                             >
                         <div ng-if="field&&(fieldEntity[field.config.name]||field.cType=='checkboxfield')">
                             <div ng-if="columnField.showLabel&&field.cType!='checkboxfield'">
