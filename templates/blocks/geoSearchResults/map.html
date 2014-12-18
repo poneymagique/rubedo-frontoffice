@@ -1,5 +1,6 @@
 <div style="height:{{geoSearchResultsCtrl.height}};width:100%;">
-    <google-map center="geoSearchResultsCtrl.map.center"
+    <google-map ng-if="geoSearchResultsCtrl.display()"
+                center="geoSearchResultsCtrl.map.center"
                 zoom="geoSearchResultsCtrl.map.zoom"
                 events="geoSearchResultsCtrl.mapEvents"
                 control="geoSearchResultsCtrl.mapControl"

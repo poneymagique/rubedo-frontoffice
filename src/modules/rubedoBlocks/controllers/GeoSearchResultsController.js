@@ -389,6 +389,14 @@ angular.module("rubedoBlocks").lazy.controller("GeoSearchResultsController",["$s
                 });
             },4000);
         }
+        me.display = function () {
+            /**
+             * Hack to avoid the partial loading map (gray parts)
+             *
+             * With this hack, the map will be added to the dom after the HTML rendering
+             */
+            return true;
+        }
         if (config.height&&config.height!=500){
             setTimeout(function(){
                 $element.find(".angular-google-map-container").height(config.height);
