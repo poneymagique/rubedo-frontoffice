@@ -28,7 +28,7 @@ angular.module("rubedoBlocks").lazy.controller("LanguageMenuController", ['$scop
                             contentId = urlArray[urlArray.length-2];
 
                             // Redirect without title
-                            $location.url(response.data.url + "/" + contentId + "/");
+                            window.location.href = "/" + lang + "/" + contentId + "/";
 
                             //Redirect with title
                             //RubedoContentsService.getContentById(contentId).then(function(contentResponse){
@@ -37,7 +37,7 @@ angular.module("rubedoBlocks").lazy.controller("LanguageMenuController", ['$scop
                             //    }
                             //});
                         } else {
-                            $location.url(response.data.url);
+                            window.location.href = "/" + lang + "/";
                         }
                     }
                 });
