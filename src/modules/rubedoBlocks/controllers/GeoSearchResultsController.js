@@ -9,6 +9,7 @@ angular.module("rubedoBlocks").lazy.controller("GeoSearchResultsController",["$s
         me.activateSearch=config.activateSearch;
         me.start = 0;
         me.limit = config.pageSize ? config.pageSize : 5000;
+        me.height = config.height ? config.height + "px" : "500px";
         me.map={
             center:{
                 latitude:48.8567,

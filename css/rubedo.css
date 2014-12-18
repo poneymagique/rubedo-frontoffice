@@ -52,8 +52,15 @@
     color: inherit !important;
     text-decoration: inherit !important;
 }
+
+.angular-google-map {
+    height: 100%;
+    width: 100%;
+}
+
 .angular-google-map-container {
-    height: 500px;
+    height: 100%;
+    width: 100%;
 }
 .rubedo-places-search{
     max-width: 300px;
