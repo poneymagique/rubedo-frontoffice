@@ -28,7 +28,7 @@ angular.module("rubedoBlocks").lazy.controller("LanguageMenuController", ['$scop
                             contentId = urlArray[urlArray.length-2];
 
                             // Redirect without title
-                            window.location.href = response.data.url + "/" + contentId + "/";
+                            window.location.href = response.data.url + "/" + contentId + "/title";
 
                             //Redirect with title
                             //RubedoContentsService.getContentById(contentId).then(function(contentResponse){
