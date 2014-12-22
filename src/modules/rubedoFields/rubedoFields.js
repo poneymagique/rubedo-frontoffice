@@ -108,12 +108,11 @@
             link: function ( scope, element, attrs ) {
                 var el;
                 attrs.$observe( 'field', function ( field ) {
-                    if ( angular.isDefined( field ) ) {
+                    if ( angular.isDefined( field ) && field ) {
                         scope.field=angular.fromJson(field);
                     }
                 });
             }
-
         };
     });
 

@@ -149,7 +149,15 @@
                     content:content
                 }
             }));
-
+        };
+        serviceInstance.updateContents=function(contents){
+            return ($http({
+                url:config.baseUrl+"/contents",
+                method:"PATCH",
+                data:{
+                    contents:contents
+                }
+            }));
         };
         return serviceInstance;
     }]);

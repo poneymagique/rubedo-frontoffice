@@ -4,6 +4,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentListController",['$scope'
     var config=$scope.blockConfig;
     var pageId=$scope.rubedo.current.page.id;
     var siteId=$scope.rubedo.current.site.id;
+    var alreadyPersist = false;
     me.contentHeight = config.summaryHeight?config.summaryHeight:80;
     me.start = config.resultsSkip?config.resultsSkip:0;
     me.limit = config.pageSize?config.pageSize:12;
@@ -23,6 +24,11 @@ angular.module("rubedoBlocks").lazy.controller("ContentListController",['$scope'
         options.start = me.start;
         me.getContents(config.query, pageId, siteId, options);
     };
+    $scope.$watch('rubedo.fieldEditMode', function(newValue) {
+        alreadyPersist = false;
+        me.showPaginator = newValue ? false : config.showPager && !config.infiniteScroll;
+
+    });
     if (config.infiniteScroll){
         me.limit = options['limit'];
         me.blockStyle = {
@@ -63,12 +69,101 @@ angular.module("rubedoBlocks").lazy.controller("ContentListController",['$scope'
         });
     };
     $scope.loadMoreContents = function(){
-        if (options['start'] + options['limit'] < me.count){
+        if (options['start'] + options['limit'] < me.count && !$scope.rubedo.fieldEditMode){
             options['start'] += options['limit'];
             me.getContents(config.query, pageId, siteId, options, true);
+        }
+    };
+    $scope.persistAllChanges = function(){
+        var contentsToPerist = [];
+        var keysContent = [];
+        if(!alreadyPersist){
+            angular.forEach($scope.rubedo.registeredEditCtrls, function(contentCtrl){
+                if(contentCtrl.index || contentCtrl.index === 0){
+                    delete (contentCtrl.content.type);
+                    contentsToPerist.push(contentCtrl.content);
+                    keysContent.push({
+                        index: contentCtrl.index,
+                        parentIndex: contentCtrl.parentIndex
+                    });
+                }
+            });
+            RubedoContentsService.updateContents(contentsToPerist).then(
+                function(response){
+                    if (response.data.success){
+                        var notUpdateContents = [];
+                        angular.forEach(response.data.versions, function(version, key){
+                            if(version){
+                                me.contentList[keysContent[key]['parentIndex']][keysContent[key]['index']]['version'] = version;
+                            } else {
+                                notUpdateContents.push(me.contentList[keysContent[key]['parentIndex']][keysContent[key]['index']]['fields']['text']);
+                            }
+                        });
+                        if (notUpdateContents.length === 0){
+                            $scope.rubedo.addNotification("success","Success","Contents updated.");
+                        } else {
+                            $scope.rubedo.addNotification("warning","Warning","Some contents have not been updated",6000);
+                            angular.forEach(notUpdateContents, function(notUpdate){
+                                $scope.rubedo.addNotification("danger","Error","Contents update error : "+notUpdate, 6000);
+                            });
+                        }
+                    } else {
+                        $scope.rubedo.addNotification("danger","Error","Contents update error.");
+                    }
+
+                },
+                function(response){
+                    $scope.rubedo.addNotification("danger","Error","Contents update error.");
+                }
+            );
+            alreadyPersist = true;
         }
     };
     if(config.query){
         me.getContents(config.query, pageId, siteId, options, false);
     }
+}]);
+angular.module("rubedoBlocks").lazy.controller("ContentListDetailController",['$scope','$compile','RubedoContentsService',function($scope,$compile,RubedoContentsService){
+    var me = this;
+    me.index = $scope.$index;
+    me.parentIndex = $scope.columnIndex;
+    me.content = $scope.content;
+    $scope.fieldEntity=angular.copy(me.content.fields);
+    $scope.fieldLanguage=me.content.locale;
+    $scope.fieldInputMode=false;
+    $scope.$watch('rubedo.fieldEditMode', function(newValue) {
+        $scope.fieldEditMode=$scope.content.content&&me.content.readOnly ? false : newValue;
+
+    });
+    me.registerEditChanges=function(){
+        $scope.rubedo.registerEditCtrl(me);
+    };
+    me.persistChanges = function(){
+        me.content.fields = angular.copy($scope.fieldEntity);
+        $scope.$parent.$parent.$parent.persistAllChanges();
+    };
+    me.revertChanges = function(){
+      $scope.fieldEntity = angular.copy(me.content.fields);
+    };
+    $scope.content.type = {
+        title:
+        {
+            cType:"textfield",
+            config:{
+                name:"text",
+                fieldLabel:"Title",
+                allowBlank:false
+            }
+        },
+        summary:
+        {
+            cType:"textarea",
+            config:{
+                name:"summary",
+                fieldLabel:"Summary",
+                allowBlank:false
+            }
+        }
+    };
+    $scope.registerFieldEditChanges = me.registerEditChanges;
 }]);
