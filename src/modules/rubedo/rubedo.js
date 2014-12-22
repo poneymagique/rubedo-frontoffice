@@ -111,8 +111,8 @@
 
         me.refreshAuth(true);
         setInterval(function () {me.refreshAuth(false);}, 300000);
-        me.addNotification=function(type,title,text){
-            angular.element.toaster({ priority : type, title : title, message : text});
+        me.addNotification=function(type,title,text,timeout){
+            angular.element.toaster({ priority : type, title : title, message : text, settings:{timeout:timeout}});
         };
         me.toggleAdminPanel=function(){
             snapRemote.toggle("left");
