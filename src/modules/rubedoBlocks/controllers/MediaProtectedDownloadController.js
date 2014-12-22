@@ -1,7 +1,6 @@
 angular.module("rubedoBlocks").lazy.controller('MediaProtectedDownloadController',['$scope','RubedoMediaService',function($scope,RubedoMediaService){
     var me = this;
     var config = $scope.blockConfig;
-    console.log(config);
     var options = {
         mediaId: config.documentId,
         introContentId: config.introduction

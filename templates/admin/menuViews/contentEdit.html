@@ -2,24 +2,24 @@
     <li>
         <a ng-click="rubedo.changeAdminInterfaceView('home')"
            class="rubedo-admin-back-btn cursor-as-pointer">
-            <span class="glyphicon glyphicon-arrow-left"></span> Back</a>
+            <span class="glyphicon glyphicon-arrow-left"></span> {{rubedo.translate('Label.Cancel','Cancel')}}</a>
     </li>
 </ul>
-<h3 class="text-center">Content editing</h3>
+<h3 class="text-center">{{rubedo.translate('Edition.Label.ContentEditing','Content editing')}}</h3>
 <ul class="nav nav-pills nav-stacked rubedo-admin-nav">
     <li ng-if="!rubedo.fieldEditMode&&rubedo.current.user.rights.canEdit">
        <a ng-click="rubedo.enterEditMode()"
           class="cursor-as-pointer">
-           <span class="glyphicon glyphicon-pencil"></span> Begin edit</a>
+           <span class="glyphicon glyphicon-pencil"></span> {{rubedo.translate('Label.Edit','Edit')}}</a>
     </li>
     <li ng-if="rubedo.fieldEditMode&&rubedo.current.user.rights.canEdit">
         <a ng-click="rubedo.persistChanges()"
            class="cursor-as-pointer">
-            <span class="glyphicon glyphicon-ok"></span> Save changes</a>
+            <span class="glyphicon glyphicon-ok"></span> {{rubedo.translate('Edition.Label.SaveChanges','Save changes')}}</a>
     </li>
     <li ng-if="rubedo.fieldEditMode&&rubedo.current.user.rights.canEdit">
         <a ng-click="rubedo.revertChanges()"
            class="cursor-as-pointer">
-            <span class="glyphicon glyphicon-remove"></span> Discard changes</a>
+            <span class="glyphicon glyphicon-remove"></span> {{rubedo.translate('Edition.Label.DiscardChanges','Discard changes')}}</a>
     </li>
 </ul>

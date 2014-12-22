@@ -16,7 +16,7 @@
                 <div ng-if="signUpCtrl.signupError" ng-init="notification = {type:'error',text:signUpCtrl.signupError}">
                     <rubedo-notification></rubedo-notification>
                 </div>
-                <button type="submit" class="btn btn-primary">Sign up</button>
+                <button type="submit" class="btn btn-primary">{{rubedo.translate("Blocks.SignUp.label.signUp", "Sign up")}}</button>
             </div>
         </div>
     </form>

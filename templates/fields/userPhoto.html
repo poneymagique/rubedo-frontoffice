@@ -4,11 +4,11 @@
     <div class="caption">
         <form class="form" ng-submit="userPhotoFieldCtrl.submitPhoto()">
             <div class="form-group">
-                <label >Upload a new photo</label>
+                <label >{{rubedo.translate('Fields.User.Label.UploadPhoto', 'Upload a new photo')}}</label>
                 <input type="file" file-model="userPhotoFieldCtrl.photoFile" required>
-                <p class="help-block">Acceptable formats are...</p>
+                <p class="help-block">{{rubedo.translate('Fields.User.Label.Formats', 'Acceptable formats are...')}}</p>
             </div>
-            <button type="submit" class="btn btn-primary">Upload</button>
+            <button type="submit" class="btn btn-primary">{{rubedo.translate('Label.Upload', 'Upload')}}</button>
         </form>
     </div>
 </div>

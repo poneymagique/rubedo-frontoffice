@@ -1,5 +1,5 @@
 <div ng-controller="MediaProtectedDownloadController as mediaPrtcdDlCtrl">
-    <rubedo-notification></rubedo-notification>
+    <rubedo-notification ng-if="MediaProtectedDownloadController.notification"></rubedo-notification>
     <div ng-if="mediaPrtcdDlCtrl.introduction"
          ng-include="rubedo.blockTemplateResolver.getTemplate('richText',{ })"
          ng-init="blockConfig = {content:mediaPrtcdDlCtrl.introduction, fromFront: true}"
@@ -11,9 +11,9 @@
         <div class="form-group">
             <div class="input-group">
                 <div class="input-group-addon">@</div>
-                <input required ng-model="mediaPrtcdDlCtrl.email" class="form-control" type="email" placeholder="Enter email">
+                <input required ng-model="mediaPrtcdDlCtrl.email" class="form-control" type="email" placeholder="{{rubedo.translate('Label.Email', 'Email')}}">
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Download</button>
+        <button type="submit" class="btn btn-primary">{{rubedo.translate('Label.Download', 'Download')}}</button>
     </form>
 </div>

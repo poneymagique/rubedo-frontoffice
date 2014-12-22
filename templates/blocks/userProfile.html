@@ -1,9 +1,9 @@
 <div ng-controller="UserProfileController as userProfileCtrl">
     <div ng-if="userProfileCtrl.canEdit">
-        <button ng-show="!fieldEditMode" ng-click="userProfileCtrl.enterEditMode()" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
-        <button ng-show="fieldEditMode&&userProfileCtrl.hasChanges" ng-click="userProfileCtrl.persistChanges()" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-saved"></span> Save changes</button>
-        <button ng-show="fieldEditMode&&userProfileCtrl.hasChanges" ng-click="userProfileCtrl.revertChanges()" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span> Discard changes</button>
-        <button ng-show="fieldEditMode&&!userProfileCtrl.hasChanges" ng-click="userProfileCtrl.cancelEditMode()" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+        <button ng-show="!fieldEditMode" ng-click="userProfileCtrl.enterEditMode()" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> {{rubedo.translate("Label.Edit", "Edit")}}</button>
+        <button ng-show="fieldEditMode&&userProfileCtrl.hasChanges" ng-click="userProfileCtrl.persistChanges()" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-saved"></span> {{rubedo.translate('Edition.Label.SaveChanges','Save changes')}}</button>
+        <button ng-show="fieldEditMode&&userProfileCtrl.hasChanges" ng-click="userProfileCtrl.revertChanges()" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span> {{rubedo.translate('Edition.Label.DiscardChanges','Discard changes')}}</button>
+        <button ng-show="fieldEditMode&&!userProfileCtrl.hasChanges" ng-click="userProfileCtrl.cancelEditMode()" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> {{rubedo.translate("Label.Cancel", "Cancel")}}</button>
     </div>
     <div ng-include="userProfileCtrl.detailTemplate"></div>
 </div>
