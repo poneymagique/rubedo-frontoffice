@@ -54,9 +54,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scop
                             }
                         });
                     }
-                    if (me.customLayout&&me.customLayout.customTemplate){
-                        me.detailTemplate=themePath+'/templates/blocks/contentDetail/customTemplate.html';
-                    } else if (me.customLayout){
+                    if(me.customLayout){
                         me.content.type.fields.unshift({
                             cType:"textarea",
                             config:{
@@ -65,7 +63,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scop
                                 allowBlank:false
                             }
                         });
-                        me.detailTemplate=themePath+'/templates/blocks/contentDetail/customLayout.html';
+                        me.detailTemplate=me.customLayout.customTemplate?themePath+'/templates/blocks/contentDetail/customTemplate.html':themePath+'/templates/blocks/contentDetail/customLayout.html';
                     } else {
                         if(me.content.type.code&&me.content.type.code!=""){
                             $http.get(themePath+'/templates/blocks/contentDetail/'+me.content.type.code+".html").then(
