@@ -11,15 +11,14 @@
                          alt="{{ content.fields.text }}"/>
                     <div class="media-body">
                         <h4 class="media-heading">
-                            <a ng-href="{{ content.detailPageUrl }}">
-                                <rubedo-field field="{{content.type.title}}"></rubedo-field>
-                                <!--{{ content.fields.text }}-->
+                            <a ng-if="!fieldEditMode" ng-href="{{ content.detailPageUrl }}">
+                                {{content.fields.text}}
                             </a>
+                            <rubedo-field ng-if="fieldEditMode" field="{{content.type.title}}"></rubedo-field>
                         </h4>
                         <span>{{ content.createTime*1000 | date }}</span>
                         <p  ng-style="{'height':contentListCtrl.contentHeight}" ng-if="!contentListCtrl.titleOnly">
                             <rubedo-field field="{{content.type.summary}}"></rubedo-field>
-                            <!--{{ content.fields.summary }}-->
                         </p>
                     </div>
                     <a class="pull-right" ng-href="{{ content.detailPageUrl }}">
