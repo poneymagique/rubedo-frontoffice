@@ -9,9 +9,9 @@
                 <li class="dropdown">
                     <a href class="dropdown-toggle" data-toggle="dropdown">{{rubedo.translate("Blocks.Search.Label.OrderBy", "Order by")}} {{searchResultsCtrl.displayOrderBy}} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href ng-click="searchResultsCtrl.changeOrderBy('_score')">{{rubedo.translate("Blocks.Search.Label.OrderByRelevance", "Order by relevance")}}</a></li>
-                        <li><a href ng-click="searchResultsCtrl.changeOrderBy('lastUpdateTime')">{{rubedo.translate("Blocks.Search.Label.OrderByDate", "Order by date")}}</a></li>
-                        <li><a ng-click="searchResultsCtrl.changeOrderBy('authorName')" href>{{rubedo.translate("Blocks.Search.Label.OrderByAuthor", "Order by author")}}</a></li>
+                        <li><a href ng-click="searchResultsCtrl.changeOrderBy('_score')">{{rubedo.translate("Search.Label.OrderByRelevance", "Order by relevance")}}</a></li>
+                        <li><a href ng-click="searchResultsCtrl.changeOrderBy('lastUpdateTime')">{{rubedo.translate("Search.Label.OrderByDate", "Order by date")}}</a></li>
+                        <li><a ng-click="searchResultsCtrl.changeOrderBy('authorName')" href>{{rubedo.translate("Search.Label.OrderByAuthor", "Order by author")}}</a></li>
                         <li><a ng-click="searchResultsCtrl.changeOrderBy('text')" href>{{rubedo.translate("Blocks.Search.Label.OrderByTitle", "Order by title")}}</a></li>
                     </ul>
                 </li>
