@@ -86,6 +86,10 @@
         me.changeAdminInterfaceView=function(viewName){
             me.adminInterfaceViewPath=themePath+"/templates/admin/menuViews/"+viewName+".html";
         };
+        me.logOut=function(){
+            RubedoAuthService.clearPersistedTokens();
+            window.location.reload();
+        };
         me.current=current;
         me.blockTemplateResolver=RubedoBlockTemplateResolver;
         me.fieldTemplateResolver=RubedoFieldTemplateResolver;
