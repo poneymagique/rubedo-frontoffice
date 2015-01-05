@@ -28,14 +28,14 @@ angular.module("rubedoBlocks").lazy.controller("LanguageMenuController", ['$scop
                             contentId = urlArray[urlArray.length-2];
 
                             // Redirect without title
-                            window.location.href = response.data.url + "/" + contentId + "/title";
+                            //window.location.href = response.data.url + "/" + contentId + "/title";
 
                             //Redirect with title
-                            //RubedoContentsService.getContentById(contentId).then(function(contentResponse){
-                            //    if (contentResponse.data.success){
-                            //        $location.url(response.data.url + "/" + contentId + "/" + angular.lowercase(contentResponse.data.content.text.replace(/ /g, "-")));
-                            //    }
-                            //});
+                            RubedoContentsService.getContentById(contentId).then(function(contentResponse){
+                                if (contentResponse.data.success){
+                                    window.location.href =response.data.url + "/" + contentId + "/" + angular.lowercase(contentResponse.data.content.text.replace(/ /g, "-"));
+                                }
+                            });
                         } else {
                             window.location.href =  response.data.url;
                         }
