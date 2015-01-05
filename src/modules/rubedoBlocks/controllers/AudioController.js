@@ -8,7 +8,6 @@ angular.module("rubedoBlocks").lazy.controller("AudioController",["$scope","Rube
                 primary:"flash",
                 height:40,
                 width:"100%",
-                controls:config.audioControls ? config.audioControls : false,
                 autostart:config.audioPlay,
                 repeat:config.audioLoop,
                 file:me.media.url
