@@ -71,12 +71,13 @@ angular.module("rubedoBlocks").lazy.controller('SignUpController',['$scope','Rub
                     me.showForm=true;
                     me.userType=response.data.userType;
                     $scope.fieldIdPrefix="signUp"+"_"+me.userType.type;
+                    console.log(response.data);
                     if (config.collectPassword){
                         me.userType.fields.unshift({
                             cType:"textfield",
                             config:{
                                 name:"confirmPassword",
-                                fieldLabel:"Confirm password",
+                                fieldLabel:$scope.rubedo.translate("Blocks.SignUp.label.confirmPassword"),
                                 allowBlank:false,
                                 vtype:"password"
                             }
@@ -85,7 +86,7 @@ angular.module("rubedoBlocks").lazy.controller('SignUpController',['$scope','Rub
                             cType:"textfield",
                             config:{
                                 name:"password",
-                                fieldLabel:"Password",
+                                fieldLabel:$scope.rubedo.translate("Blocks.SignUp.label.password"),
                                 allowBlank:false,
                                 vtype:"password"
                             }
@@ -95,7 +96,7 @@ angular.module("rubedoBlocks").lazy.controller('SignUpController',['$scope','Rub
                         cType:"textfield",
                         config:{
                             name:"email",
-                            fieldLabel:"E-mail",
+                            fieldLabel:$scope.rubedo.translate("Label.Email"),
                             allowBlank:false,
                             vtype:"email"
                         }
@@ -104,7 +105,7 @@ angular.module("rubedoBlocks").lazy.controller('SignUpController',['$scope','Rub
                         cType:"textfield",
                         config:{
                             name:"name",
-                            fieldLabel:"Name",
+                            fieldLabel:$scope.rubedo.translate("Blocks.SignUp.label.name"),
                             allowBlank:false
                         }
                     });
