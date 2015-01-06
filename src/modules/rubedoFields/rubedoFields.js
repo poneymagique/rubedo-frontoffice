@@ -400,6 +400,7 @@
                         setTimeout(function(){jwplayer("audio"+me.media.originalFileId).setup(me.jwSettings);}, 200);
                         break;
                     case "video":
+                    case "Video":
                         me.jwSettings={
                             file:me.media.url
                         };
