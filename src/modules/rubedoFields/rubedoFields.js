@@ -130,6 +130,13 @@
             };
         }]);
     //field controllers
+
+    CKEDITOR.on('instanceCreated', function(event) {
+        if (event.editor.element.getAttribute("output-plain-text")){
+            event.editor.getData=function(){return(event.editor.editable().getText());};
+        }
+
+    });
     module.controller("RTEFieldController",['$scope','$sce',function($scope,$sce){
         var me=this;
         var CKEMode=$scope.field.config.CKETBConfig;
@@ -165,16 +172,26 @@
                 { name: 'styles', items: [ 'Font', 'FontSize' ] }
             ];
         }
-        $scope.editorOptions={
+        var editorOptions={
             toolbar:  myTBConfig,
             allowedContent:true,
             language:$scope.fieldLanguage,
+            entities:false,
+            entities_latin:false,
             extraPlugins:'rubedolink',
             filebrowserImageBrowseUrl:"/backoffice/ext-finder?type=Image",
             filebrowserImageUploadUrl:null
         };
+        if (!CKEMode){
+            editorOptions.removePlugins= 'colorbutton,find,flash,font,' + 'forms,iframe,image,newpage,removeformat' + 'smiley,specialchar,stylescombo,templates,wsc';
+            editorOptions.toolbar = [
+                { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', '-', 'Undo', 'Redo' ] }
+            ];
+            editorOptions.rubedoPlainTextMode=true;
+        }
+        $scope.editorOptions=editorOptions;
         me.isCKEReady=false;
-        $scope.setCKEIsReady=function( ){
+        $scope.setCKEIsReady=function(){
             setTimeout(function(){me.isCKEReady=true;},200);
 
         };

@@ -1,12 +1,10 @@
 <p ng-if="!fieldEditMode">{{fieldEntity[field.config.name]}}</p>
-<p ng-if="fieldEditMode" editable-textarea="fieldEntity[field.config.name]"
-   e-ng-required="!field.config.allowBlank"
-   e-rows="4"
-   e-cols="40"
-   blur="submit"
-   buttons="no"
-   e-minLength="{{field.config.minLength}}"
-   e-maxLength="{{field.config.maxLength}}"
-   onaftersave="registerFieldEditChanges()">
-    {{fieldEntity[field.config.name]}}
+<p ng-if="fieldEditMode"
+   ng-controller="RTEFieldController as rteFieldCtrl"
+   ckeditor="editorOptions"
+   contenteditable="true"
+   ready="setCKEIsReady()"
+   ng-model="fieldEntity[field.config.name]"
+   output-plain-text="true"
+   ng-bind-html="rteFieldCtrl.html">
 </p>
