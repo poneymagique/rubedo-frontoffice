@@ -182,7 +182,7 @@
             filebrowserImageBrowseUrl:"/backoffice/ext-finder?type=Image",
             filebrowserImageUploadUrl:null
         };
-        if (!CKEMode){
+        if ($scope.field.cType!="CKEField"&&$scope.field.cType!="Rubedo.view.CKEField"){
             editorOptions.removePlugins= 'colorbutton,find,flash,font,' + 'forms,iframe,image,newpage,removeformat' + 'smiley,specialchar,stylescombo,templates,wsc';
             editorOptions.toolbar = [
                 { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', '-', 'Undo', 'Redo' ] }
