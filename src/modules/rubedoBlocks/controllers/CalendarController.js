@@ -4,7 +4,6 @@ angular.module("rubedoBlocks").lazy.controller("CalendarController",["$scope","$
     var config = $scope.blockConfig;
     var pageId=$scope.rubedo.current.page.id;
     var siteId=$scope.rubedo.current.site.id;
-    console.log(config);
     me.contents = [];
     me.calendarId = 'block-'+$scope.block.id+'-calendar';
     var showCal = false;
@@ -14,7 +13,6 @@ angular.module("rubedoBlocks").lazy.controller("CalendarController",["$scope","$
         showCal = displ == 'showCal' ? true : showCal;
         showList = displ == 'showList' ? true : showList;
     });
-    console.log(showCal, showList);
     if(showCal && !showList){
         displayMode = 'showCal';
     } else if (!showCal && showList){
