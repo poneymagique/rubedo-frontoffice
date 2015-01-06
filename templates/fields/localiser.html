@@ -1,7 +1,19 @@
-<div ng-controller="LocaliserFieldController as localiserFieldCtrl" class="rubedo-map-field">
-    <google-map center="localiserFieldCtrl.map.center" zoom="localiserFieldCtrl.map.zoom" draggable="true">
-        <marker ng-if="localiserFieldCtrl.positionMarker" idKey="'positionMarker'" coords="localiserFieldCtrl.positionMarker.coords">
-            <marker-label ng-if="localiserFieldCtrl.positionMarker.label" content="localiserFieldCtrl.positionMarker.label" anchor="2 0" class="badge"></marker-label>
-        </marker>
-    </google-map>
+<div ng-controller="LocaliserFieldController as localiserFieldCtrl">
+    <div class="rubedo-map-field">
+        <google-map center="localiserFieldCtrl.map.center" zoom="localiserFieldCtrl.map.zoom" draggable="true">
+            <marker ng-if="localiserFieldCtrl.positionMarker" idKey="'positionMarker'" coords="localiserFieldCtrl.positionMarker.coords">
+                <marker-label ng-if="localiserFieldCtrl.positionMarker.label" content="localiserFieldCtrl.positionMarker.label" anchor="2 0" class="badge"></marker-label>
+            </marker>
+        </google-map>
+    </div>
+    <div ng-if="fieldEditMode" class="panel panel-default">
+        <div class="panel-heading">{{field.config.fieldLabel}}</div>
+        <div class="panel-body">
+            <form class="form">
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-change="localiserFieldCtrl.handleAddressEdit()" ng-model="localiserFieldCtrl.editableAddress">
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

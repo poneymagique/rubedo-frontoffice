@@ -328,11 +328,44 @@
                 };
                 if (newValue.address){
                     me.positionMarker.label=newValue.address;
+                    if (!$scope.feildEditMode){
+                        me.editableAddress=angular.copy(newValue.address);
+                    }
                 }
             } else {
                 me.positionMarker=null;
             }
         });
+        me.geocoder = new google.maps.Geocoder();
+        me.reGeocode=function(){
+          if (me.editableAddress){
+              var value=angular.copy($scope.fieldEntity[$scope.field.config.name]);
+              me.geocoder.geocode({
+                  'address' : me.editableAddress
+              }, function(results, status) {
+                  if (status == google.maps.GeocoderStatus.OK) {
+                      var latitude=results[0].geometry.location.lat();
+                      var longitude=results[0].geometry.location.lng();
+                      value.address=angular.copy(me.editableAddress);
+                      value.lat=latitude;
+                      value.lon=longitude;
+                      value.location.coordinates=[longitude,latitude];
+                      $scope.fieldEntity[$scope.field.config.name]=angular.copy(value);
+                      $scope.registerFieldEditChanges();
+                      $scope.$apply();
+                  }
+              });
+          }
+        };
+        me.mapTimer=null;
+        me.handleAddressEdit=function(){
+            if ($scope.fieldEditMode){
+                clearTimeout(me.mapTimer);
+                me.mapTimer = setTimeout(function() {
+                    me.reGeocode();
+                }, 500);
+            }
+        };
     }]);
 
     module.controller("PageLinkController",["$scope","RubedoPagesService",function($scope,RubedoPagesService){
