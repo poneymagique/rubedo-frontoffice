@@ -1,11 +1,26 @@
 angular.module("rubedoBlocks").lazy.controller("CalendarController",["$scope","$route","RubedoContentsService","$element",function($scope,$route,RubedoContentsService, $element){
     var me = this;
-
+    var themePath="/theme/"+window.rubedoConfig.siteTheme;
     var config = $scope.blockConfig;
     var pageId=$scope.rubedo.current.page.id;
     var siteId=$scope.rubedo.current.site.id;
+    console.log(config);
     me.contents = [];
     me.calendarId = 'block-'+$scope.block.id+'-calendar';
+    var showCal = false;
+    var showList = false;
+    var displayMode = 'all';
+    angular.forEach(config.display,function(displ){
+        showCal = displ == 'showCal' ? true : showCal;
+        showList = displ == 'showList' ? true : showList;
+    });
+    console.log(showCal, showList);
+    if(showCal && !showList){
+        displayMode = 'showCal';
+    } else if (!showCal && showList){
+        displayMode = 'showList';
+    }
+    me.template = themePath+"/templates/blocks/calendar/"+displayMode+".html";
     var options = {
         dateFieldName: config['date'],
         endDateFieldName: config['endDate'],
@@ -39,6 +54,7 @@ angular.module("rubedoBlocks").lazy.controller("CalendarController",["$scope","$
                             event.end = content.fields[config['endDate']]?
                                 moment.unix(content.fields[config['endDate']]).format('YYYY-MM-DD'):
                                 moment.unix(content.fields[config['date']]).format('YYYY-MM-DD');
+                            event.url = content.detailPageUrl;
                             newEvents.push(event);
                         });
                         me.calendar.fullCalendar('removeEvents');
