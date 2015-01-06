@@ -374,7 +374,7 @@
                     window.saveRubedoMediaChange=function(){};
                 };
                 window.open(
-                    "/backoffice/ext-finder?soloMode=true",
+                    "/backoffice/ext-finder?soloMode=true&allowedDT="+$scope.field.config.allowedDAMTypes+"",
                     "Médiathèque",
                     "menubar=no, status=no, scrollbars=no, top="+top+", left="+left+", width="+width+", height="+height+""
                 );
