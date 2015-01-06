@@ -25,14 +25,14 @@
     </div>
     <div ng-switch-default>
         <p ng-if="!fieldEditMode">{{fieldEntity[field.config.name]}}</p>
-        <p ng-if="fieldEditMode" editable-text="fieldEntity[field.config.name]"
-           e-ng-required="!field.config.allowBlank"
-           e-minLength="{{field.config.minLength}}"
-           e-maxLength="{{field.config.maxLength}}"
-           blur="submit"
-           buttons="no"
-           onaftersave="registerFieldEditChanges()">
-            {{fieldEntity[field.config.name]}}
+        <p ng-if="fieldEditMode"
+           ng-controller="RTEFieldController as rteFieldCtrl"
+           ckeditor="editorOptions"
+           contenteditable="true"
+           ready="setCKEIsReady()"
+           ng-model="fieldEntity[field.config.name]"
+           output-plain-text="true"
+           ng-bind-html="rteFieldCtrl.html">
         </p>
     </div>
 </div>
