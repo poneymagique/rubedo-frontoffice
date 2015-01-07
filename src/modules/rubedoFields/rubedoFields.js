@@ -373,7 +373,7 @@
     module.controller("PageLinkController",["$scope","RubedoPagesService",function($scope,RubedoPagesService){
         var me=this;
         var pageId=$scope.fieldEntity[$scope.field.config.name];
-        if (pageId&&pageId!=""){
+        me.displayLink=function(pageId){
             RubedoPagesService.getPageById(pageId).then(
                 function(response){
                     if (response.data.success){
@@ -382,6 +382,31 @@
                     }
                 }
             );
+        };
+        if (pageId&&pageId!=""){
+            me.displayLink(pageId);
+        }
+        me.launchEditor=function(){
+            if ($scope.fieldEditMode){
+                var width = screen.width/2;
+                var height = screen.height/2;
+                var left = (screen.width-width)/2;
+                var top = +((screen.height-height)/2);
+                window.saveRubedPageLinkChange=function(id){
+                    $scope.fieldEntity[$scope.field.config.name]=id;
+                    pageId=id;
+                    $scope.registerFieldEditChanges();
+                    me.displayLink(pageId);
+                    window.saveRubedPageLinkChange=function(){};
+                };
+                var popupUrl="/backoffice/link-finder?soloMode=true";
+                window.open(
+                    popupUrl,
+                    "Lien interne",
+                    "menubar=no, status=no, scrollbars=no, top="+top+", left="+left+", width="+300+", height="+360+""
+                );
+
+            }
         }
     }]);
 
