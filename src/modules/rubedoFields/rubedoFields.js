@@ -406,8 +406,12 @@
                     );
                     window.saveRubedoMediaChange=function(){};
                 };
+                var popupUrl="/backoffice/ext-finder?soloMode=true";
+                if ($scope.field.config.allowedDAMTypes){
+                    popupUrl=popupUrl+"&allowedDT="+$scope.field.config.allowedDAMTypes+"";
+                }
                 window.open(
-                    "/backoffice/ext-finder?soloMode=true&allowedDT="+$scope.field.config.allowedDAMTypes+"",
+                    popupUrl,
                     "Médiathèque",
                     "menubar=no, status=no, scrollbars=no, top="+top+", left="+left+", width="+width+", height="+height+""
                 );
