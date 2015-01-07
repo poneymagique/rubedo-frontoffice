@@ -58,6 +58,8 @@
         "ImagePickerField":"/templates/fields/media.html",
         "Rubedo.view.ImagePickerField":"/templates/fields/media.html",
         "userPhoto":"/templates/fields/userPhoto.html",
+        "DCEField":"/templates/fields/contentLink.html",
+        "Rubedo.view.DCEField":"/templates/fields/contentLink.html",
         "fieldNotFound":"/templates/fields/fieldNotFound.html"
     };
 
@@ -371,12 +373,31 @@
     module.controller("PageLinkController",["$scope","RubedoPagesService",function($scope,RubedoPagesService){
         var me=this;
         var pageId=$scope.fieldEntity[$scope.field.config.name];
-        if (pageId){
+        if (pageId&&pageId!=""){
             RubedoPagesService.getPageById(pageId).then(
                 function(response){
                     if (response.data.success){
                         me.pageUrl=response.data.url;
                         me.pageTitle=response.data.title;
+                    }
+                }
+            );
+        }
+    }]);
+
+    module.controller("ContentLinkController",["$scope","RubedoContentsService",function($scope,RubedoContentsService){
+        var me=this;
+        var options = {
+            siteId: $scope.rubedo.current.site.id,
+            pageId: $scope.rubedo.current.page.id
+        };
+        var contentId=$scope.fieldEntity[$scope.field.config.name];
+        if (contentId&&contentId!=""){
+            RubedoContentsService.getContentById(contentId, options).then(
+                function(response){
+                    if (response.data.success){
+                        me.contentUrl=response.data.content.canonicalUrl;
+                        me.contentTitle=response.data.content.fields.text;
                     }
                 }
             );
