@@ -71,7 +71,6 @@ angular.module("rubedoBlocks").lazy.controller('SignUpController',['$scope','Rub
                     me.showForm=true;
                     me.userType=response.data.userType;
                     $scope.fieldIdPrefix="signUp"+"_"+me.userType.type;
-                    console.log(response.data);
                     if (config.collectPassword){
                         me.userType.fields.unshift({
                             cType:"textfield",
