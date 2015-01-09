@@ -201,9 +201,12 @@
             $scope.$watch("fieldEntity."+$scope.field.config.name, function(newValue) {
                 if(!$scope.fieldEditMode){
                     if (!newValue){
-                        newValue="";
+                        newValue="<div></div>";
                     }
-
+                    var swt = newValue.substr(0, 1);
+                    if (swt!="<"){
+                        newValue="<div>"+newValue+"</div>";
+                    }
                     me.html=jQuery.htmlClean(newValue, {
                         allowedAttributes:[["style"],["rubedo-page-link"]],
                         format: true
