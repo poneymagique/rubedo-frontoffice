@@ -137,6 +137,9 @@
                 if (getParams.preview_draft&&getParams.preview_draft=="true"){
                     params.useDraftMode=true;
                 }
+                if (getParams.preview_date&&getParams.preview_date!=""){
+                    params.simulatedTime=getParams.preview_date;
+                }
             }
             return ($http.get(config.baseUrl+"/contents", {
                 params: params
