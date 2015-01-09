@@ -60,6 +60,8 @@
         "userPhoto":"/templates/fields/userPhoto.html",
         "DCEField":"/templates/fields/contentLink.html",
         "Rubedo.view.DCEField":"/templates/fields/contentLink.html",
+        "ratingField":"/templates/fields/rating.html",
+        "Rubedo.ux.widget.Rating":"/templates/fields/rating.html",
         "fieldNotFound":"/templates/fields/fieldNotFound.html"
     };
 
@@ -252,6 +254,26 @@
             itemsObj[item.inputValue]=item.boxLabel;
         });
         me.options=itemsObj;
+    }]);
+    module.controller("RatingFieldController",['$scope',function($scope){
+        var me=this;
+        me.getStarArray=function(){
+            var starArray=[];
+            for (i = 1; i <= $scope.field.config.numberOfStars; i++) {
+                if (i<=$scope.fieldEntity[$scope.field.config.name]){
+                    starArray.push("glyphicon-star");
+                } else {
+                    starArray.push("glyphicon-star-empty");
+                }
+            }
+            return (starArray);
+        };
+        me.editValue=function(index){
+          if ($scope.fieldEditMode){
+              $scope.fieldEntity[$scope.field.config.name]=index;
+              $scope.registerFieldEditChanges();
+          }
+        };
     }]);
 
     module.controller("CheckboxGroupController",['$scope',function($scope){

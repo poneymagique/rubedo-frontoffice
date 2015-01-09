@@ -1,0 +1,7 @@
+<div ng-controller="RatingFieldController as ratingFieldCtrlCtrl">
+    <span class="glyphicon"
+          ng-repeat="star in ratingFieldCtrlCtrl.getStarArray() track by $index"
+          ng-class="star"
+          ng-click="ratingFieldCtrlCtrl.editValue($index+1)">
+    </span>
+</div>
