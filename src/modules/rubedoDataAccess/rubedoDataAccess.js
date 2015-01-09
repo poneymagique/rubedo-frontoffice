@@ -121,16 +121,22 @@
     });
 
     //service providing access to contents
-    module.factory('RubedoContentsService', ['$route','$http', function($route,$http){
+    module.factory('RubedoContentsService', ['$route','$http','$location', function($route,$http,$location){
         var serviceInstance={};
         serviceInstance.getContents=function(queryId,pageId,siteId,options){
             var params = {
                 queryId: queryId,
-                    pageId: pageId,
-                    siteId: siteId
+                pageId: pageId,
+                siteId: siteId
             };
             if (options){
                 angular.extend(params,options);
+            }
+            var getParams=$location.search();
+            if (getParams.preview){
+                if (getParams.preview_draft&&getParams.preview_draft=="true"){
+                    params.useDraftMode=true;
+                }
             }
             return ($http.get(config.baseUrl+"/contents", {
                 params: params
