@@ -76,6 +76,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scop
                             );
                         } else {
                             me.detailTemplate=themePath+'/templates/blocks/contentDetail/default.html';
+                            $scope.fields=me.transformForFront(me.content.type.fields);
                         }
                         //$http.get(themePath+'/templates/blocks/contentDetail/)
                     }
@@ -105,7 +106,6 @@ angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scop
             angular.element('#content-contribute-modal').modal('hide');
             $scope.rubedo.addNotification("success","Success","Contents updated.");
             me.getContentById(me.content.id);
-            $route.reload();
         };
         window.cancelContentContribution=function(){
             angular.element("#content-contribute-frame").empty();

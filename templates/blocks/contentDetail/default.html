@@ -1,4 +1,3 @@
-<div ng-init="fields = contentDetailCtrl.transformForFront(contentDetailCtrl.content.type.fields)"></div>
 <rubedo-field ng-repeat="field in fields" ng-if="fieldEntity[field.config.name]||field.cType=='checkboxfield'"></rubedo-field>
 <dir-disqus ng-if="contentDetailCtrl.activateDisqus"
             disqus-shortname="{{contentDetailCtrl.disqusShortname}}"
