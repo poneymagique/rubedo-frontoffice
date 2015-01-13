@@ -1,4 +1,4 @@
-angular.module("rubedoBlocks").lazy.controller("ContentListController",['$scope','$compile','RubedoContentsService',"$route",function($scope,$compile,RubedoContentsService,$route){
+angular.module("rubedoBlocks").lazy.controller("ContentListController",['$scope','$compile','RubedoContentsService',"$route","RubedoContentTypesService",function($scope,$compile,RubedoContentsService,$route,RubedoContentTypesService){
     var me = this;
     me.contentList=[];
     var config=$scope.blockConfig;
@@ -27,7 +27,19 @@ angular.module("rubedoBlocks").lazy.controller("ContentListController",['$scope'
     $scope.$watch('rubedo.fieldEditMode', function(newValue) {
         alreadyPersist = false;
         me.showPaginator = newValue ? false : config.showPager && !config.infiniteScroll;
+        if (newValue&&me.queryType&&me.queryType=="manual"&&!me.creatableContentTypes){
+            RubedoContentTypesService.getContentTypes().then(
+                function(response){
+                    if (response.data.success){
+                        me.creatableContentTypes=response.data.contentTypes;
+                        if (response.data.contentTypes.length>0){
+                            me.selectedManualType=response.data.contentTypes[0].id;
+                        }
 
+                    }
+                }
+            );
+        }
     });
     if (config.infiniteScroll){
         me.limit = options['limit'];
@@ -71,29 +83,36 @@ angular.module("rubedoBlocks").lazy.controller("ContentListController",['$scope'
         });
     };
     me.canAddToList=function(){
-        return ($scope.rubedo.fieldEditMode&&me.queryType&&me.queryType=="simple");
+        return ($scope.rubedo.fieldEditMode&&me.queryType&&(me.queryType=="simple"||me.queryType=="manual"));
     };
     me.launchContribute=function(){
         if ($scope.rubedo.fieldEditMode){
-            var modalUrl = "/backoffice/content-contributor?typeId=" + me.usedContentTypes[0] + "&queryId=" + config.query + "&current-page=" + $scope.rubedo.current.page.id + "&current-workspace=" + "global" +"&workingLanguage="+$route.current.params.lang;
-            var availHeight=window.innerHeight*(90/100);
-            var properHeight=Math.max(400,availHeight);
-            var iframeHeight=properHeight-10;
-            angular.element("#content-contribute-frame").empty();
-            angular.element("#content-contribute-frame").html("<iframe style='width:100%;  height:"+iframeHeight+"px; border:none;' src='" + modalUrl + "'></iframe>");
-            angular.element('#content-contribute-modal').appendTo('body').modal('show');
-            window.confirmContentContribution=function(){
-                angular.element("#content-contribute-frame").empty();
-                angular.element('#content-contribute-modal').modal('hide');
-                $scope.rubedo.addNotification("success","Success","Contents updated.");
-                me.getContents(config.query, pageId, siteId, options, false);
-            };
-            window.cancelContentContribution=function(){
-                angular.element("#content-contribute-frame").empty();
-                angular.element('#content-contribute-modal').modal('hide');
-            };
+            if (me.queryType=="simple"){
+                me.displayEditorModal(me.usedContentTypes[0]);
+            } else if (me.queryType=="manual"&&me.selectedManualType){
+                me.displayEditorModal(me.selectedManualType);
+            }
 
         }
+    };
+    me.displayEditorModal=function(typeId){
+        var modalUrl = "/backoffice/content-contributor?typeId=" + typeId + "&queryId=" + config.query + "&current-page=" + $scope.rubedo.current.page.id + "&current-workspace=" + "global" +"&workingLanguage="+$route.current.params.lang;
+        var availHeight=window.innerHeight*(90/100);
+        var properHeight=Math.max(400,availHeight);
+        var iframeHeight=properHeight-10;
+        angular.element("#content-contribute-frame").empty();
+        angular.element("#content-contribute-frame").html("<iframe style='width:100%;  height:"+iframeHeight+"px; border:none;' src='" + modalUrl + "'></iframe>");
+        angular.element('#content-contribute-modal').appendTo('body').modal('show');
+        window.confirmContentContribution=function(){
+            angular.element("#content-contribute-frame").empty();
+            angular.element('#content-contribute-modal').modal('hide');
+            $scope.rubedo.addNotification("success","Success","Contents updated.");
+            me.getContents(config.query, pageId, siteId, options, false);
+        };
+        window.cancelContentContribution=function(){
+            angular.element("#content-contribute-frame").empty();
+            angular.element('#content-contribute-modal').modal('hide');
+        };
     };
     $scope.loadMoreContents = function(){
         if (options['start'] + options['limit'] < me.count && !$scope.rubedo.fieldEditMode){

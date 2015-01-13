@@ -364,6 +364,14 @@
         return serviceInstance;
     }]);
 
+    module.factory('RubedoContentTypesService', ['$http',function($http) {
+        var serviceInstance={};
+        serviceInstance.getContentTypes=function(){
+            return ($http.get(config.baseUrl+"/contenttypes"));
+        };
+        return serviceInstance;
+    }]);
+
     module.factory('RubedoTranslationsService', ['$http',function($http) {
         var serviceInstance={};
         serviceInstance.getTranslations=function(){
