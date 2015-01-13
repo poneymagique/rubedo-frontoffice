@@ -1,2 +1,13 @@
 <div class="container-fluid" ng-include="rubedo.adminInterfaceViewPath">
 </div>
+<div ng-if="rubedo.fieldEditMode"
+     class="modal fade"
+     id="content-contribute-modal"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="content-contribute-frame">
+        </div>
+    </div>
+</div>
