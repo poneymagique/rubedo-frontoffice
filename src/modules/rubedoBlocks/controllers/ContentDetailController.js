@@ -105,7 +105,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scop
             angular.element('#content-contribute-modal').modal('hide');
             $scope.rubedo.addNotification("success","Success","Contents updated.");
             me.getContentById(me.content.id);
-            $scope.$apply();
+            $route.reload();
         };
         window.cancelContentContribution=function(){
             angular.element("#content-contribute-frame").empty();
