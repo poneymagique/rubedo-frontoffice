@@ -25,6 +25,9 @@ angular.module("rubedoBlocks").lazy.controller("CalendarController",["$scope","$
         limit: 1000,
         'fields[]':['text',config['date'],config['endDate'],'summary','image']
     };
+    if(config.singlePage){
+        options.detailPageId = config.singlePage;
+    }
     me.getContents = function (queryId, pageId, siteId, options, cb){
         RubedoContentsService.getContents(queryId,pageId,siteId, options).then(function(response){
             if (response.data.success){
