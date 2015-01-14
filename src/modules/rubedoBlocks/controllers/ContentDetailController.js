@@ -72,6 +72,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scop
                                 },
                                 function (response){
                                     me.detailTemplate=themePath+'/templates/blocks/contentDetail/default.html';
+                                    $scope.fields=me.transformForFront(me.content.type.fields);
                                 }
                             );
                         } else {
