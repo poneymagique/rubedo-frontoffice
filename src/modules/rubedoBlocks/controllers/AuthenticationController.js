@@ -39,7 +39,7 @@ angular.module("rubedoBlocks").lazy.controller("AuthenticationController",["$sco
                     if(response.data.success){
                         $scope.notification = {
                             type: 'success',
-                            text: 'Password changed'
+                            text: $scope.rubedo.translate("Blocks.UserProfile.Success.PasswordChanged")
                         };
                         $location.search('recoverEmail',null);
                         $location.search('token',null);
@@ -49,7 +49,7 @@ angular.module("rubedoBlocks").lazy.controller("AuthenticationController",["$sco
                     console.log(response);
                     $scope.notification = {
                         type: 'error',
-                        text: 'Password not changed'+(response.data.message?' : '+response.data.message:'')
+                        text: $scope.rubedo.translate("Blocks.SignUp.emailConfirmError.userUpdateFailed")+" "+(response.data.message?' : '+response.data.message:'')
                     };
                 }
             )
