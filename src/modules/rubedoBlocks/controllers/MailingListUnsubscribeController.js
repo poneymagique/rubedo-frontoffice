@@ -11,24 +11,24 @@ angular.module("rubedoBlocks").lazy.controller('MailingListUnsuscribeController'
                     me.email = '';
                     $scope.notification = {
                         type: 'success',
-                        text: 'You have successfully unsubscribed to all newsletters'
+                        text: $scope.rubedo.translate("Blocks.SignUp.unsubscribeOk.unsubscribeSuccess")
                     };
                 } else {
                     $scope.notification = {
                         type: 'error',
-                        text: 'The unsubscribe process failed'
+                        text: $scope.rubedo.translate("Blocks.SignUp.emailConfirmError.userUpdateFailed")
                     };
                 }
             },function(){
                 $scope.notification = {
                     type: 'error',
-                    text: 'The unsubscribe process failed'
+                    text: $scope.rubedo.translate("Blocks.SignUp.emailConfirmError.userUpdateFailed")
                 };
             });
         } else {
             $scope.notification = {
                 type: 'error',
-                text: 'Email is required'
+                text: $scope.rubedo.translate("Blocks.UserProfile.Error.EmailNotValid")
             };
         }
     }
