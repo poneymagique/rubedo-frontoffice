@@ -1,5 +1,5 @@
 <div class="form-group" ng-controller="RadioGroupController as radioGroupCtrl">
-    <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="col-sm-2 control-label">{{field.config.fieldLabel}}</label>
+    <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="col-sm-2 control-label">{{field.config.fieldLabel}} <span ng-if="!field.config.allowBlank">*</span></label>
     <div class="col-sm-10" id="{{fieldIdPrefix+'_'+field.config.name}}">
         <label class="radio-inline" ng-repeat="item in field.config.items">
             <input type="radio" name="{{field.config.name}}" ng-value="item.inputValue" ng-model="fieldEntity[field.config.name][field.config.name]"> {{item.boxLabel}}

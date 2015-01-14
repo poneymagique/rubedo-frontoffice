@@ -1,5 +1,5 @@
 <div class="form-group" ng-controller="RTEFieldController as rteFieldCtrl">
-    <label for="{{fieldIdPrefix+'_'+field.config.name}}" ng-class="{'col-sm-2': !isBasic, 'control-label': !isBasic}">{{field.config.fieldLabel}}</label>
+    <label for="{{fieldIdPrefix+'_'+field.config.name}}" ng-class="{'col-sm-2': !isBasic, 'control-label': !isBasic}">{{field.config.fieldLabel}} <span ng-if="!field.config.allowBlank">*</span></label>
     <div ng-class="{'col-sm-10': !isBasic}">
         <textarea
                class="form-control"

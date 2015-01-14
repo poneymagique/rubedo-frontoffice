@@ -1,5 +1,5 @@
 <div class="form-group">
-    <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="col-sm-2 control-label">{{field.config.fieldLabel}}</label>
+    <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="col-sm-2 control-label">{{field.config.fieldLabel}} <span ng-if="!field.config.allowBlank">*</span></label>
     <div class="col-sm-10">
         <input type="number"
                class="form-control"
