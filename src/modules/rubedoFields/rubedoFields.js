@@ -577,7 +577,26 @@
     module.controller("ProductBoxController",['$scope',function($scope){
         var me=this;
         me.productProperties=$scope.productProperties;
+        me.manageStock=$scope.manageStock;
         console.log(me.productProperties);
+        me.currentVariation=me.productProperties.variations[0];
+        me.canOrder=function(){
+            return !(me.manageStock&&(me.productProperties.canOrderNotInStock=="false")&&(me.currentVariation.stock < me.productProperties.outOfStockLimit)) ;
+        };
+        me.getProductAvailabilityText=function(){
+            if (!me.manageStock){
+                return "";
+            }
+            var complement;
+            if (me.currentVariation.stock < me.productProperties.outOfStockLimit){
+                complement=me.productProperties.resupplyDelay > 1 ? " days" : " day";
+                return("Out of stock : ressuplied before "+me.productProperties.resupplyDelay+ complement);
+
+            } else {
+                complement=me.productProperties.preparationDelay > 1 ? " days" : " day";
+                return("In stock : sent before "+me.productProperties.preparationDelay + complement);
+            }
+        };
     }]);
 
 

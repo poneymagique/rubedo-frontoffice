@@ -1,3 +1,9 @@
-<div ng-controller="ProductBoxController as productBoxCtrl">
-    <h2>Test productBox</h2>
+<div ng-controller="ProductBoxController as productBoxCtrl" class="panel panel-default">
+    <div class="panel-body">
+        <h3>{{productBoxCtrl.currentVariation.price| number : 2}} €</h3>
+        <button class="btn btn-default" ng-disabled="!productBoxCtrl.canOrder()">
+            <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to cart
+        </button>
+    </div>
+    <div ng-if="manageStock" class="panel-footer">{{productBoxCtrl.getProductAvailabilityText()}}</div>
 </div>
