@@ -18,6 +18,10 @@ angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scop
         return field;
     };
 
+    $scope.getFieldByName=function(){
+        return (me.getFieldByName);
+    };
+
     me.getContentById = function (contentId){
         var options = {
             siteId: $scope.rubedo.current.site.id,
@@ -30,6 +34,15 @@ angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scop
                     me.content=response.data.content;
                     $scope.fieldEntity=angular.copy(me.content.fields);
                     $scope.fieldLanguage=me.content.locale;
+                    if (me.content.isProduct){
+                        me.content.type.fields.unshift({
+                            cType:"productBox",
+                            config:{
+
+                            }
+                        });
+                        $scope.productProperties=angular.copy(me.content.productProperties);
+                    }
                     me.content.type.fields.unshift({
                         cType:"title",
                         config:{

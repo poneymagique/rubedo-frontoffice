@@ -62,6 +62,7 @@
         "Rubedo.view.DCEField":"/templates/fields/contentLink.html",
         "ratingField":"/templates/fields/rating.html",
         "Rubedo.ux.widget.Rating":"/templates/fields/rating.html",
+        "productBox":"/templates/fields/productBox.html",
         "fieldNotFound":"/templates/fields/fieldNotFound.html"
     };
 
@@ -255,6 +256,7 @@
         });
         me.options=itemsObj;
     }]);
+
     module.controller("RatingFieldController",['$scope',function($scope){
         var me=this;
         me.getStarArray=function(){
@@ -571,5 +573,13 @@
         }
 
     }]);
+
+    module.controller("ProductBoxController",['$scope',function($scope){
+        var me=this;
+        me.productProperties=$scope.productProperties;
+        console.log(me.productProperties);
+    }]);
+
+
 
 })();
