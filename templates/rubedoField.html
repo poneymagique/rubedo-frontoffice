@@ -1,3 +1,3 @@
-<div  ng-if="!fieldInputMode" ng-include="rubedo.fieldTemplateResolver.getTemplateByType(field.cType)"></div>
-<div  ng-if="fieldInputMode&&rubedo.fieldTemplateResolver.getInputTemplateByType(field.cType)"
+<div  ng-if="!fieldInputMode&&!field.config.useAsVariation" ng-include="rubedo.fieldTemplateResolver.getTemplateByType(field.cType)"></div>
+<div  ng-if="fieldInputMode&&!field.config.useAsVariation&&rubedo.fieldTemplateResolver.getInputTemplateByType(field.cType)"
       ng-include="rubedo.fieldTemplateResolver.getInputTemplateByType(field.cType)"></div>
