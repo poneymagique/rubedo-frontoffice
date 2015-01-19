@@ -579,7 +579,20 @@
         me.productProperties=$scope.productProperties;
         me.manageStock=$scope.manageStock;
         console.log(me.productProperties);
-        me.currentVariation=me.productProperties.variations[0];
+        me.setCurrentVariation=function(variation){
+            me.currentVariation=variation;
+            me.currentPrice=variation.price;
+            me.oldPrice=variation.price;
+            me.hasSpecialOffer=false;
+            var now=new Date();
+            angular.forEach(variation.specialOffers,function(offer){
+                if ((now<=new Date(offer.endDate*1000))&&(now>=new Date(offer.beginDate*1000))){
+                    me.hasSpecialOffer=true;
+                    me.currentPrice=offer.price;
+                }
+            });
+        };
+        me.setCurrentVariation(me.productProperties.variations[0]);
         me.canOrder=function(){
             return !(me.manageStock&&(me.productProperties.canOrderNotInStock=="false")&&(me.currentVariation.stock < me.productProperties.outOfStockLimit)) ;
         };
