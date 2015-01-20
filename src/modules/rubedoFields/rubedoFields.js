@@ -579,6 +579,46 @@
         me.productProperties=$scope.productProperties;
         me.manageStock=$scope.manageStock;
         console.log(me.productProperties);
+        me.excludedVariationFields=["id","price","sku","stock","specialOffers"];
+        me.variationFields=[];
+        me.selectionValues={};
+        me.possibleSelectValues={};
+        angular.forEach(me.productProperties.variations[0],function(value,key){
+            if (me.excludedVariationFields.indexOf(key)==-1){
+                me.variationFields.push(key);
+            }
+        });
+        angular.forEach(me.variationFields,function(varField){
+            me.selectionValues[varField]=me.productProperties.variations[0][varField];
+        });
+        me.applySelectorConstraints=function(){
+            angular.forEach(me.variationFields,function(varField,index){
+                me.possibleSelectValues[varField]=[];
+                angular.forEach(me.productProperties.variations,function(variation){
+                    if (me.possibleSelectValues[varField].indexOf(variation[varField])==-1){
+                        if (index==0){
+                            me.possibleSelectValues[varField].push(variation[varField]);
+                        } else {
+                            var variationOk=true;
+                            angular.forEach(me.variationFields,function(otherField,otherFieldIndex){
+                                if (otherFieldIndex<index&&variationOk){
+                                    if (variation[otherField]!=me.selectionValues[otherField]){
+                                        variationOk=false;
+                                    }
+                                }
+                            });
+                            if (variationOk){
+                                me.possibleSelectValues[varField].push(variation[varField]);
+                            }
+                        }
+                    }
+                });
+                if (me.possibleSelectValues[varField].indexOf(me.selectionValues[varField])==-1){
+                    me.selectionValues[varField]=me.possibleSelectValues[varField][0];
+                }
+            });
+        };
+        me.applySelectorConstraints();
         me.setCurrentVariation=function(variation){
             me.currentVariation=variation;
             me.currentPrice=variation.price;
@@ -586,11 +626,33 @@
             me.hasSpecialOffer=false;
             var now=new Date();
             angular.forEach(variation.specialOffers,function(offer){
-                if ((now<=new Date(offer.endDate*1000))&&(now>=new Date(offer.beginDate*1000))){
+                if (!me.hasSpecialOffer&&(now<=new Date(offer.endDate*1000))&&(now>=new Date(offer.beginDate*1000))){
                     me.hasSpecialOffer=true;
                     me.currentPrice=offer.price;
                 }
             });
+        };
+        me.handleFieldChange=function(){
+            me.applySelectorConstraints();
+            var foundVariation=false;
+            angular.forEach(me.productProperties.variations,function(variation){
+                if (!foundVariation){
+                    var variationOk=true;
+                    angular.forEach(me.variationFields,function(otherField){
+                        if (variationOk){
+                            if (variation[otherField]!=me.selectionValues[otherField]){
+                                variationOk=false;
+                            }
+                        }
+                    });
+                    if (variationOk){
+                        foundVariation=variation;
+                    }
+                }
+            });
+            if (foundVariation){
+                me.setCurrentVariation(foundVariation);
+            }
         };
         me.setCurrentVariation(me.productProperties.variations[0]);
         me.canOrder=function(){

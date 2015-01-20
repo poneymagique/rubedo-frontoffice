@@ -2,6 +2,17 @@
     <div class="panel-body">
         <h5 ng-if="productBoxCtrl.hasSpecialOffer"><del>{{productBoxCtrl.oldPrice| number : 2}} €</del></h5>
         <h3>{{productBoxCtrl.currentPrice| number : 2}} €</h3>
+        <form>
+            <div class="form-group" ng-repeat="field in productBoxCtrl.variationFields">
+                <label for="{{field}}">{{contentDetailCtrl.getFieldByName(field).config.fieldLabel}}</label>
+                <select class="form-control"
+                        id="{{field}}"
+                        ng-model="productBoxCtrl.selectionValues[field]"
+                        ng-change="productBoxCtrl.handleFieldChange()"
+                        ng-options="item for item in productBoxCtrl.possibleSelectValues[field]">
+                        </select>
+            </div>
+        </form>
         <button class="btn btn-default" ng-disabled="!productBoxCtrl.canOrder()">
             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to cart
         </button>
