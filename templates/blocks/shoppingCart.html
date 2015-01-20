@@ -6,18 +6,28 @@
         </button>
         <button ng-if="!shoppingCartCtrl.cartIsEmpty" type="button" class="btn btn-default">
             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-            <span class="badge">{{shoppingCartCtrl.detailedCart.totalItems}}</span> Items
+             <span class="badge">{{shoppingCartCtrl.detailedCart.totalItems}} </span>
+            <span ng-show="shoppingCartCtrl.detailedCart.totalItems>1"> Items</span>
+            <span ng-show="shoppingCartCtrl.detailedCart.totalItems==1"> Item</span>
         </button>
         <button ng-if="!shoppingCartCtrl.cartIsEmpty" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
             <span class="caret"></span>
             <span class="sr-only">Toggle Dropdown</span>
         </button>
         <ul ng-if="!shoppingCartCtrl.cartIsEmpty" class="dropdown-menu" role="menu">
-            <!--<li><a href="#">Action</a></li>-->
-            <!--<li><a href="#">Another action</a></li>-->
-            <!--<li><a href="#">Something else here</a></li>-->
-            <!--<li class="divider"></li>-->
-            <!--<li><a href="#">Separated link</a></li>-->
+            <table class="table">
+                <tr ng-repeat="row in shoppingCartCtrl.detailedCart.cart">
+                    <td>{{row.title}}&nbsp;<small>{{row.subtitle}}</small></td>
+                    <td>x&nbsp;{{row.amount}}</td>
+                    <td><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></td>
+                    <td><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></td>
+                    <td>{{row.taxedPrice | number : 2}}&nbsp;€</td>
+                    <td><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></td>
+                </tr>
+            </table>
+            <h5><strong>Total</strong> : {{shoppingCartCtrl.detailedCart.totalTaxedPrice | number :2}} €</h5>
+            <button class="btn btn-primary">Checkout</button>
+            <button class="btn btn-primary">View detail</button>
         </ul>
     </div>
 </div>
