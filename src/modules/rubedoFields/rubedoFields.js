@@ -574,12 +574,11 @@
 
     }]);
 
-    module.controller("ProductBoxController",['$scope',function($scope){
+    module.controller("ProductBoxController",['$scope','RubedoShoppingCartService',function($scope,RubedoShoppingCartService){
         var me=this;
         me.productProperties=$scope.productProperties;
         me.manageStock=$scope.manageStock;
         me.productId=$scope.productId;
-        console.log(me.productId);
         me.excludedVariationFields=["id","price","sku","stock","specialOffers"];
         me.variationFields=[];
         me.selectionValues={};
@@ -672,6 +671,18 @@
                 complement=me.productProperties.preparationDelay > 1 ? " days" : " day";
                 return("In stock : sent before "+me.productProperties.preparationDelay + complement);
             }
+        };
+        me.addToCart=function(){
+            var options={
+                productId:me.productId,
+                variationId:me.currentVariation.id,
+                amount:1
+            };
+            RubedoShoppingCartService.addToCart(options).then(
+                function(response){
+                    console.log(response);
+                }
+            );
         };
     }]);
 

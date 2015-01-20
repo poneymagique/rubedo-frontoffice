@@ -13,7 +13,7 @@
                         </select>
             </div>
         </form>
-        <button class="btn btn-default" ng-disabled="!productBoxCtrl.canOrder()">
+        <button class="btn btn-default" ng-disabled="!productBoxCtrl.canOrder()" ng-click="productBoxCtrl.addToCart()">
             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to cart
         </button>
     </div>

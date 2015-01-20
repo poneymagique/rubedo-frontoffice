@@ -415,6 +415,28 @@
             }));
         };
         return serviceInstance;
-    }])
+    }]);
+
+    module.factory('RubedoShoppingCartService',['$http','ipCookie',function($http,ipCookie){
+        var serviceInstance = {};
+        serviceInstance.addToCart=function(options){
+            if (ipCookie("shoppingCartToken")){
+                options.shoppingCartToken=ipCookie("shoppingCartToken");
+            }
+            return ($http({
+                url:config.baseUrl+"/ecommerce/shoppingcart",
+                method:"POST",
+                data : options,
+                transformResponse:function(data,headerGetter){
+                    var dataObj=angular.fromJson(data);
+                    if (dataObj.success){
+                        ipCookie("shoppingCartToken",dataObj.shoppingCart.id,{path:"/",expires:8760, expirationUnit:"hours"});
+                    }
+                    return(dataObj);
+                }
+            }));
+        };
+        return serviceInstance;
+    }]);
 
 })();
