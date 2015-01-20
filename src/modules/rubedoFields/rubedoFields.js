@@ -578,7 +578,8 @@
         var me=this;
         me.productProperties=$scope.productProperties;
         me.manageStock=$scope.manageStock;
-        console.log(me.productProperties);
+        me.productId=$scope.productId;
+        console.log(me.productId);
         me.excludedVariationFields=["id","price","sku","stock","specialOffers"];
         me.variationFields=[];
         me.selectionValues={};
