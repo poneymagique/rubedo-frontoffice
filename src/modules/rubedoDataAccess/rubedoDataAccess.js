@@ -419,6 +419,14 @@
 
     module.factory('RubedoShoppingCartService',['$http','ipCookie',function($http,ipCookie){
         var serviceInstance = {};
+        serviceInstance.getCart=function(options){
+            if (ipCookie("shoppingCartToken")){
+                options.shoppingCartToken=ipCookie("shoppingCartToken");
+            }
+            return ($http.get(config.baseUrl+"/ecommerce/shoppingcart", {
+                params: options
+            }));
+        };
         serviceInstance.addToCart=function(options){
             if (ipCookie("shoppingCartToken")){
                 options.shoppingCartToken=ipCookie("shoppingCartToken");

@@ -1,0 +1,23 @@
+<div ng-controller="ShoppingCartController as shoppingCartCtrl">
+    <div class="btn-group" ng-if="blockConfig.displayMode=='button'">
+        <button ng-if="shoppingCartCtrl.cartIsEmpty" type="button" class="btn btn-default">
+            <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+            Empty
+        </button>
+        <button ng-if="!shoppingCartCtrl.cartIsEmpty" type="button" class="btn btn-default">
+            <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+            <span class="badge">{{shoppingCartCtrl.detailedCart.totalItems}}</span> Items
+        </button>
+        <button ng-if="!shoppingCartCtrl.cartIsEmpty" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul ng-if="!shoppingCartCtrl.cartIsEmpty" class="dropdown-menu" role="menu">
+            <!--<li><a href="#">Action</a></li>-->
+            <!--<li><a href="#">Another action</a></li>-->
+            <!--<li><a href="#">Something else here</a></li>-->
+            <!--<li class="divider"></li>-->
+            <!--<li><a href="#">Separated link</a></li>-->
+        </ul>
+    </div>
+</div>

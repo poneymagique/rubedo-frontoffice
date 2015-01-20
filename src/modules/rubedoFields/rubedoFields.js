@@ -574,7 +574,7 @@
 
     }]);
 
-    module.controller("ProductBoxController",['$scope','RubedoShoppingCartService',function($scope,RubedoShoppingCartService){
+    module.controller("ProductBoxController",['$scope','RubedoShoppingCartService','$rootScope',function($scope,RubedoShoppingCartService,$rootScope){
         var me=this;
         me.productProperties=$scope.productProperties;
         me.manageStock=$scope.manageStock;
@@ -680,7 +680,7 @@
             };
             RubedoShoppingCartService.addToCart(options).then(
                 function(response){
-                    console.log(response);
+                    $rootScope.$broadcast("shoppingCartUpdated",{emitter:"productBox"});
                 }
             );
         };

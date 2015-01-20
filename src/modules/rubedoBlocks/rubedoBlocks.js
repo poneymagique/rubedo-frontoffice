@@ -170,6 +170,10 @@
             "template": "/templates/blocks/d3Script.html",
             "internalDependencies":["/src/modules/rubedoBlocks/controllers/D3ScriptController.js"],
             "externalDependencies":['/components/mbostock/d3/d3.min.js']
+        },
+        "shoppingCart": {
+            "template": "/templates/blocks/shoppingCart.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/ShoppingCartController.js"]
         }
     };
 
