@@ -47,11 +47,14 @@
     </div>
     <div class="panel panel-default" ng-if="blockConfig.displayMode=='detail'">
         <div class="panel-heading"><strong>Shopping cart </strong>
-             <span class="badge"> {{shoppingCartCtrl.detailedCart.totalItems}} </span>
-            <span ng-show="shoppingCartCtrl.detailedCart.totalItems>1"> Items</span>
-            <span ng-show="shoppingCartCtrl.detailedCart.totalItems==1"> Item</span>
+             <span ng-if="!shoppingCartCtrl.cartIsEmpty" class="badge"> {{shoppingCartCtrl.detailedCart.totalItems}} </span>
+            <span ng-if="!shoppingCartCtrl.cartIsEmpty" ng-show="shoppingCartCtrl.detailedCart.totalItems>1"> Items</span>
+            <span ng-if="!shoppingCartCtrl.cartIsEmpty" ng-show="shoppingCartCtrl.detailedCart.totalItems==1"> Item</span>
         </div>
-        <table class="table">
+        <div ng-if="shoppingCartCtrl.cartIsEmpty" class="panel-body" >
+            <div class="alert alert-warning" role="alert">Your cart is empty</div>
+        </div>
+        <table ng-if="!shoppingCartCtrl.cartIsEmpty" class="table">
             <thead>
                 <td>Name</td>
                 <td>Unit price</td>
@@ -79,7 +82,7 @@
                         ng-click="shoppingCartCtrl.removeFromCart(row.productId.$id,row.variationId.$id,row.amount); $event.stopPropagation();"></span></td>
             </tr>
         </table>
-        <div class="panel-body text-right">
+        <div ng-if="!shoppingCartCtrl.cartIsEmpty" class="panel-body text-right">
             <h5><strong>Total</strong> : {{shoppingCartCtrl.detailedCart.totalTaxedPrice | number :2}} €</h5>
             <a ng-if="shoppingCartCtrl.checkoutPageUrl"
                ng-href="{{shoppingCartCtrl.checkoutPageUrl}}">
