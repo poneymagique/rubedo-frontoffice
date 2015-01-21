@@ -32,5 +32,10 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
             me.getCart();
         }
     });
+    me.currentStage=1;
+    me.maxStages=6;
+    me.getProgress=function(){
+        return parseInt(me.currentStage/me.maxStages*100);
+    };
 
 }]);

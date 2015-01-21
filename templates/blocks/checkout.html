@@ -1,3 +1,92 @@
 <div ng-controller="CheckoutController as checkoutCtrl">
-    <h3>Test checkout</h3>
+    <div ng-if="checkoutCtrl.cartIsEmpty" class="alert alert-warning" role="alert">Your cart is empty</div>
+    <div ng-if="!checkoutCtrl.cartIsEmpty">
+        <h2>{{rubedo.translate('Label.Checkout')}}</h2>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{checkoutCtrl.getProgress()}}" aria-valuemin="0" aria-valuemax="100" ng-style="{width:checkoutCtrl.getProgress()+'%'}">
+                <span class="sr-only">20% Complete</span>
+            </div>
+        </div>
+        <div class="panel-group" id="checkoutAccordion" role="tablist" aria-multiselectable="true">
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="checkoutHeading1">
+                    <h4 class="panel-title">
+                        {{rubedo.translate('Blocks.Checkout.Steps.CheckoutOptions')}}
+                    </h4>
+                </div>
+                <div id="checkoutStage1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="checkoutHeading1">
+                    <div class="panel-body">
+                        Checkout step 1 content
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="checkoutHeading2">
+                    <h4 class="panel-title">
+                        {{rubedo.translate('Blocks.Checkout.Steps.ContactInformations')}}
+                    </h4>
+                </div>
+                <div id="checkoutStage2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="checkoutHeading2">
+                    <div class="panel-body">
+                        Checkout step 2 content
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="checkoutHeading3">
+                    <h4 class="panel-title">
+                        {{rubedo.translate('Blocks.Checkout.Steps.BillingDetails')}}
+                    </h4>
+                </div>
+                <div id="checkoutStage3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="checkoutHeading3">
+                    <div class="panel-body">
+                        Checkout step 3 content
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="checkoutHeading4">
+                    <h4 class="panel-title">
+                        {{rubedo.translate('Blocks.Checkout.Steps.ShippingDetails')}}
+                    </h4>
+                </div>
+                <div id="checkoutStage4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="checkoutHeading4">
+                    <div class="panel-body">
+                        Checkout step 4 content
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="checkoutHeading5">
+                    <h4 class="panel-title">
+                        {{rubedo.translate('Blocks.Checkout.Steps.ShippingMethod')}}
+                    </h4>
+                </div>
+                <div id="checkoutStage5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="checkoutHeading5">
+                    <div class="panel-body">
+                        Checkout step 5 content
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="checkoutHeading6">
+                    <h4 class="panel-title">
+                        {{rubedo.translate('Blocks.Checkout.Steps.ConfirmationPayment')}}
+                    </h4>
+                </div>
+                <div id="checkoutStage6" class="panel-collapse collapse" role="tabpanel" aria-labelledby="checkoutHeading6">
+                    <div class="panel-body">
+                        Checkout step 6 content
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
