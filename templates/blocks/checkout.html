@@ -19,7 +19,28 @@
                 </div>
                 <div id="checkoutStage1" class="panel-collapse collapse" ng-class="{'in':checkoutCtrl.currentStage==1}" role="tabpanel" aria-labelledby="checkoutHeading1">
                     <div class="panel-body">
-                        Checkout step 1 content
+                        <div ng-if="rubedo.current.user" class="row">
+                            <div class="col-md-12 text-center">
+                                <p>{{rubedo.translate('Blocks.Checkout.Step1.CurrentlyLogged','Currently logged in as %user%',['%user%'],[rubedo.current.user.name])}}</p>
+                                <button ng-click="rubedo.logOut()" class="btn btn-primary">{{ rubedo.translate('Blocks.Checkout.Button.LogOut') }}</button>
+                                <button data-ng-click="checkoutCtrl.setCurrentStage(2)" class="btn btn-primary" >{{ rubedo.translate('Blocks.Checkout.Button.Continue') }}</button>
+                            </div>
+                        </div>
+                        <div ng-if="!rubedo.current.user" class="row">
+                            <div class="col-md-6 text-center">
+                                <h4>{{ rubedo.translate('Blocks.Checkout.Step1.CreateAccount') }}</h4>
+                                <div ng-if="blockConfig.contentId"
+                                     ng-include="rubedo.blockTemplateResolver.getTemplate('richText',{ })"
+                                        ></div>
+                                <button data-ng-click="checkoutCtrl.setCurrentStage(2)" class="btn btn-primary" >{{ rubedo.translate('Blocks.Checkout.Button.Continue') }}</button>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <h4>{{ rubedo.translate('Blocks.Checkout.Step1.AlreadyHaveAccount')}}</h4>
+                                <div ng-if="blockConfig.contentId"
+                                     ng-include="rubedo.blockTemplateResolver.getTemplate('authentication',{ })"
+                                        ></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

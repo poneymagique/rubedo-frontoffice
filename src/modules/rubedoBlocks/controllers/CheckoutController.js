@@ -1,6 +1,10 @@
 angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","RubedoPagesService","$rootScope","RubedoShoppingCartService", function($scope,RubedoPagesService,$rootScope,RubedoShoppingCartService){
     var me = this;
     var config = $scope.blockConfig;
+    if (config.signupContentId){
+        config.contentId=config.signupContentId;
+    }
+    config.displayMode="form";
     if (config.tCPage){
         RubedoPagesService.getPageById(config.tCPage).then(function(response){
             if (response.data.success){

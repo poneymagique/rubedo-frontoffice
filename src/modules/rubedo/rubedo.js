@@ -67,15 +67,15 @@
                 }
             }
         );
-        me.translate=function(transKey,fallbackString,toRelaceArray,toReplaceWithArray){
+        me.translate=function(transKey,fallbackString,toReplaceArray,toReplaceWithArray){
             var stringToReturn="";
             if (me.translations[transKey]){
                 stringToReturn=me.translations[transKey];
             } else {
                 stringToReturn=fallbackString;
             }
-            if (toRelaceArray&&toReplaceWithArray&&angular.isArray(toRelaceArray)&&angular.isArray(toReplaceWithArray)){
-                angular.forEach(toRelaceArray, function(value, key) {
+            if (toReplaceArray&&toReplaceWithArray&&angular.isArray(toReplaceArray)&&angular.isArray(toReplaceWithArray)){
+                angular.forEach(toReplaceArray, function(value, key) {
                     stringToReturn=stringToReturn.replace(value,toReplaceWithArray[key]);
                 });
             }
