@@ -1,7 +1,6 @@
 angular.module("rubedoBlocks").lazy.controller("ShoppingCartController",["$scope","RubedoPagesService","$rootScope","RubedoShoppingCartService", function($scope,RubedoPagesService,$rootScope,RubedoShoppingCartService){
     var me = this;
     var config = $scope.blockConfig;
-    console.log(config);
     if (config.cartDetailPage){
         RubedoPagesService.getPageById(config.cartDetailPage).then(function(response){
             if (response.data.success){
