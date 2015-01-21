@@ -13,6 +13,7 @@
                 <div class="panel-heading" role="tab" id="checkoutHeading1">
                     <h4 class="panel-title">
                         <span class="glyphicon glyphicon-pencil cursor-as-pointer pull-right"
+                              ng-show="checkoutCtrl.currentStage>1"
                               ng-click="checkoutCtrl.setCurrentStage(1)"></span>
                         {{rubedo.translate('Blocks.Checkout.Steps.CheckoutOptions')}}
                     </h4>
@@ -49,6 +50,7 @@
                 <div class="panel-heading" role="tab" id="checkoutHeading2">
                     <h4 class="panel-title">
                         <span class="glyphicon glyphicon-pencil cursor-as-pointer pull-right"
+                              ng-show="checkoutCtrl.currentStage>2"
                               ng-click="checkoutCtrl.setCurrentStage(2)"></span>
                         {{rubedo.translate('Blocks.Checkout.Steps.ContactInformations')}}
                     </h4>
@@ -64,6 +66,7 @@
                 <div class="panel-heading" role="tab" id="checkoutHeading3">
                     <h4 class="panel-title">
                         <span class="glyphicon glyphicon-pencil cursor-as-pointer pull-right"
+                              ng-show="checkoutCtrl.currentStage>3"
                               ng-click="checkoutCtrl.setCurrentStage(3)"></span>
                         {{rubedo.translate('Blocks.Checkout.Steps.BillingDetails')}}
                     </h4>
@@ -79,6 +82,7 @@
                 <div class="panel-heading" role="tab" id="checkoutHeading4">
                     <h4 class="panel-title">
                         <span class="glyphicon glyphicon-pencil cursor-as-pointer pull-right"
+                              ng-show="checkoutCtrl.currentStage>4"
                               ng-click="checkoutCtrl.setCurrentStage(4)"></span>
                         {{rubedo.translate('Blocks.Checkout.Steps.ShippingDetails')}}
                     </h4>
@@ -94,6 +98,7 @@
                 <div class="panel-heading" role="tab" id="checkoutHeading5">
                     <h4 class="panel-title">
                         <span class="glyphicon glyphicon-pencil cursor-as-pointer pull-right"
+                              ng-show="checkoutCtrl.currentStage>5"
                               ng-click="checkoutCtrl.setCurrentStage(5)"></span>
                         {{rubedo.translate('Blocks.Checkout.Steps.ShippingMethod')}}
                     </h4>
@@ -108,8 +113,6 @@
             <div class="panel panel-default" ng-class="{'panel-primary':checkoutCtrl.currentStage==6}">
                 <div class="panel-heading" role="tab" id="checkoutHeading6">
                     <h4 class="panel-title">
-                        <span class="glyphicon glyphicon-pencil cursor-as-pointer pull-right"
-                              ng-click="checkoutCtrl.setCurrentStage(6)"></span>
                         {{rubedo.translate('Blocks.Checkout.Steps.ConfirmationPayment')}}
                     </h4>
                 </div>
