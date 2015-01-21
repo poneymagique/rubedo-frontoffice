@@ -174,6 +174,10 @@
         "shoppingCart": {
             "template": "/templates/blocks/shoppingCart.html",
             "internalDependencies":["/src/modules/rubedoBlocks/controllers/ShoppingCartController.js"]
+        },
+        "checkout": {
+            "template": "/templates/blocks/checkout.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/CheckoutController.js"]
         }
     };
 
