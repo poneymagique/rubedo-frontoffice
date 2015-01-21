@@ -437,7 +437,24 @@
                 data : options,
                 transformResponse:function(data,headerGetter){
                     var dataObj=angular.fromJson(data);
-                    if (dataObj.success){
+                    if (dataObj.success&&dataObj.shoppingCart&&dataObj.shoppingCart.id){
+                        ipCookie("shoppingCartToken",dataObj.shoppingCart.id,{path:"/",expires:8760, expirationUnit:"hours"});
+                    }
+                    return(dataObj);
+                }
+            }));
+        };
+        serviceInstance.removeFromCart=function(options){
+            if (ipCookie("shoppingCartToken")){
+                options.shoppingCartToken=ipCookie("shoppingCartToken");
+            }
+            return ($http({
+                url:config.baseUrl+"/ecommerce/shoppingcart",
+                method:"DELETE",
+                data : options,
+                transformResponse:function(data,headerGetter){
+                    var dataObj=angular.fromJson(data);
+                    if (dataObj.success&&dataObj.shoppingCart&&dataObj.shoppingCart.id){
                         ipCookie("shoppingCartToken",dataObj.shoppingCart.id,{path:"/",expires:8760, expirationUnit:"hours"});
                     }
                     return(dataObj);

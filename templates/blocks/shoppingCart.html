@@ -19,15 +19,30 @@
                 <tr ng-repeat="row in shoppingCartCtrl.detailedCart.cart">
                     <td>{{row.title}}&nbsp;<small>{{row.subtitle}}</small></td>
                     <td>x&nbsp;{{row.amount}}</td>
-                    <td><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></td>
-                    <td><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></td>
+                    <td><span
+                            class="glyphicon glyphicon-plus"
+                            aria-hidden="true"
+                            ng-click="shoppingCartCtrl.addToCart(row.productId.$id,row.variationId.$id,1); $event.stopPropagation();"></span></td>
+                    <td><span
+                            class="glyphicon glyphicon-minus"
+                            aria-hidden="true"
+                            ng-click="shoppingCartCtrl.removeFromCart(row.productId.$id,row.variationId.$id,1); $event.stopPropagation();"></span></td>
                     <td>{{row.taxedPrice | number : 2}}&nbsp;€</td>
-                    <td><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></td>
+                    <td><span
+                            class="glyphicon glyphicon-remove"
+                            aria-hidden="true"
+                            ng-click="shoppingCartCtrl.removeFromCart(row.productId.$id,row.variationId.$id,row.amount); $event.stopPropagation();"></span></td>
                 </tr>
             </table>
             <h5><strong>Total</strong> : {{shoppingCartCtrl.detailedCart.totalTaxedPrice | number :2}} €</h5>
-            <button class="btn btn-primary">Checkout</button>
-            <button class="btn btn-primary">View detail</button>
+            <a ng-if="shoppingCartCtrl.checkoutPageUrl"
+               ng-href="{{shoppingCartCtrl.checkoutPageUrl}}">
+                <button class="btn btn-primary">Checkout</button>
+            </a>
+            <a ng-if="shoppingCartCtrl.cartDetailPageUrl"
+               ng-href="{{shoppingCartCtrl.cartDetailPageUrl}}">
+                <button class="btn btn-primary">View detail</button>
+            </a>
         </ul>
     </div>
 </div>
