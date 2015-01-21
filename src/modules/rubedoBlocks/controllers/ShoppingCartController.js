@@ -52,6 +52,7 @@ angular.module("rubedoBlocks").lazy.controller("ShoppingCartController",["$scope
                         me.cartIsEmpty=true;
                         me.detailedCart={};
                     }
+                    $rootScope.$broadcast("shoppingCartUpdated",{emitter:me.blockId});
                 }
             }
         );
@@ -73,6 +74,7 @@ angular.module("rubedoBlocks").lazy.controller("ShoppingCartController",["$scope
                         me.cartIsEmpty=true;
                         me.detailedCart={};
                     }
+                    $rootScope.$broadcast("shoppingCartUpdated",{emitter:me.blockId});
                 }
             }
         );
