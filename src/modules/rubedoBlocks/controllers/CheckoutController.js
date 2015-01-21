@@ -18,6 +18,7 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
                     if (response.data.shoppingCart.detailedCart&&response.data.shoppingCart.detailedCart.totalItems>0){
                         me.detailedCart=response.data.shoppingCart.detailedCart;
                         me.cartIsEmpty=false;
+                        me.setCurrentStage(1);
                     } else  {
                         me.cartIsEmpty=true;
                         me.detailedCart={};
@@ -36,6 +37,10 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
     me.maxStages=6;
     me.getProgress=function(){
         return parseInt(me.currentStage/me.maxStages*100);
+    };
+    me.setCurrentStage=function(newStage){
+        me.currentStage=newStage;
+        //angular.element("#checkoutStage"+newStage).collapse({parent:"#checkoutAccordion"});
     };
 
 }]);
