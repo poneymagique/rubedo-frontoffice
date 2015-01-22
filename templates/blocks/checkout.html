@@ -150,6 +150,34 @@
                                                     >
                                         </div>
                                     </div>
+                                    <div class="form-group" ng-if="!rubedo.current.user">
+                                        <div class="col-sm-8 col-sm-offset-4">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" ng-model="checkoutCtrl.useSameAddressForBilling">
+                                                    {{rubedo.translate('Blocks.Checkout.Label.Address.SameBilling')}}
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" ng-model="checkoutCtrl.useSameAddressForShipping">
+                                                    {{rubedo.translate('Blocks.Checkout.Label.Address.SameShipping')}}
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" ng-model="checkoutCtrl.readTermsAndConds">
+                                                    {{rubedo.translate('Blocks.Checkout.Label.Terms')}}
+                                                    <a ng-href="{{tCPageUrl}}" target="_blank">{{rubedo.translate('Blocks.Checkout.Label.TermsAndCondition')}} </a>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group text-center" ng-if="!rubedo.current.user">
+                                        <button ng-disabled="!checkoutCtrl.readTermsAndConds" type="submit" class="btn btn-primary">{{rubedo.translate('Blocks.SignUp.label.signUp')}}</button>
+                                    </div>
+
+
                                 </div>
                             </div>
                         </form>
