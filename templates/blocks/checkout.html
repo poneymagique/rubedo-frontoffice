@@ -176,6 +176,10 @@
                                     <div class="form-group text-center" ng-if="!rubedo.current.user">
                                         <button ng-disabled="!checkoutCtrl.readTermsAndConds" type="submit" class="btn btn-primary">{{rubedo.translate('Blocks.SignUp.label.signUp')}}</button>
                                     </div>
+                                    <div class="form-group text-center" ng-if="rubedo.current.user">
+                                        <button type="submit" class="btn btn-primary">{{rubedo.translate('Blocks.Checkout.Label.SaveChanges')}}</button>
+                                        <button type="button" ng-click="checkoutCtrl.setCurrentStage(3)" class="btn btn-primary">{{rubedo.translate('Blocks.Checkout.Label.SkipToNext')}}</button>
+                                    </div>
                                     <div ng-if="checkoutCtrl.stage2Error" ng-init="notification = {type:'error',text:checkoutCtrl.stage2Error}">
                                         <rubedo-notification></rubedo-notification>
                                     </div>

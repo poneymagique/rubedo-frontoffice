@@ -125,7 +125,17 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
                 function(response){
                     if (response.data.success){
                         me.currentUser=response.data.user;
-                        $scope.fieldEntity=angular.copy(me.currentUser.fields);
+                        var existingData=angular.copy(me.currentUser.fields);
+                        if (angular.element.isEmptyObject(existingData.address)){
+                            existingData.address={};
+                        }
+                        if (angular.element.isEmptyObject(existingData.billingAddress)){
+                            existingData.billingAddress={};
+                        }
+                        if (angular.element.isEmptyObject(existingData.shippngAddress)){
+                            existingData.shippngAddress={};
+                        }
+                        $scope.fieldEntity=existingData;
                         me.parseUserType(me.currentUser.type);
                         me.setCurrentStage(2);
                     }
@@ -162,13 +172,27 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
             }
         );
     };
+    me.persistUserChanges=function(errorHolder){
+        var payload=angular.copy(me.currentUser);
+        payload.fields=angular.copy($scope.fieldEntity);
+        payload.fields.login=payload.fields.email;
+        delete (payload.type);
+        RubedoUsersService.updateUser(payload).then(
+            function(response){
+                me.setCurrentStage(me.currentStage+1);
+            },
+            function(response){
+                me.errorHolder=response.data.message;
+            }
+        );
+    };
     me.handleStage2Submit=function(){
-        console.log($scope.fieldEntity);
         me.stage2Error=null;
         if (!$scope.rubedo.current.user){
             me.createUser();
+        } else {
+            me.persistUserChanges(me.stage2Error);
         }
-
     };
 
 
