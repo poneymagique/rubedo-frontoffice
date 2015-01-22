@@ -1,4 +1,4 @@
-angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","RubedoPagesService","$rootScope","RubedoShoppingCartService","RubedoUserTypesService","RubedoCountriesService","RubedoUsersService", function($scope,RubedoPagesService,$rootScope,RubedoShoppingCartService,RubedoUserTypesService,RubedoCountriesService,RubedoUsersService){
+angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","RubedoPagesService","$rootScope","RubedoShoppingCartService","RubedoUserTypesService","RubedoCountriesService","RubedoUsersService","RubedoAuthService", function($scope,RubedoPagesService,$rootScope,RubedoShoppingCartService,RubedoUserTypesService,RubedoCountriesService,RubedoUsersService,RubedoAuthService){
     var me = this;
     var config = $scope.blockConfig;
     if (config.signupContentId){
@@ -100,7 +100,11 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
     };
     me.initializeCheckout=function(){
         $scope.fieldIdPrefix="checkout";
-        $scope.fieldEntity={ };
+        $scope.fieldEntity={
+            address:{},
+            billingAddress:{},
+            shippngAddress:{}
+        };
         $scope.fieldInputMode=true;
         me.stage2Error=null;
         if (!$scope.rubedo.current.user){
@@ -110,6 +114,8 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
                     function(response){
                         if (response.data.success){
                             me.parseUserType(response.data.userType);
+                            me.useSameAddressForBilling=true;
+                            me.useSameAddressForShipping=true;
                         }
                     }
                 );
@@ -126,6 +132,44 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
                 }
             );
         }
-    }
+    };
+    me.createUser=function(){
+        if ($scope.fieldEntity.confirmPassword!=$scope.fieldEntity.password){
+            me.stage2Error="Passwords do not match.";
+            return;
+        }
+        var newUserFields=angular.copy($scope.fieldEntity);
+        delete (newUserFields.confirmPassword);
+        newUserFields.login=newUserFields.email;
+        if (me.useSameAddressForBilling){
+            newUserFields.billingAddress=newUserFields.address;
+        }
+        if (me.useSameAddressForShipping){
+            newUserFields.shippingAddress=newUserFields.address;
+        }
+        RubedoUsersService.createUser(newUserFields,me.userType.id).then(
+            function(response){
+                if (response.data.success){
+                    RubedoAuthService.generateToken({login:newUserFields.login,password:newUserFields.password},me.rememberMe).then(
+                        function(authResponse){
+                            window.location.reload();
+                        }
+                    );
+                }
+            },
+            function(response){
+                me.stage2Error=response.data.message;
+            }
+        );
+    };
+    me.handleStage2Submit=function(){
+        console.log($scope.fieldEntity);
+        me.stage2Error=null;
+        if (!$scope.rubedo.current.user){
+            me.createUser();
+        }
+
+    };
+
 
 }]);

@@ -57,7 +57,7 @@
                 </div>
                 <div id="checkoutStage2" class="panel-collapse collapse" ng-class="{'in':checkoutCtrl.currentStage==2}" role="tabpanel" aria-labelledby="checkoutHeading2">
                     <div class="panel-body">
-                        <form ng-if="checkoutCtrl.userType" class="form-horizontal">
+                        <form ng-if="checkoutCtrl.userType" ng-submit="checkoutCtrl.handleStage2Submit()" class="form-horizontal">
                             <div class="row">
                                 <div class="col-md-6">
                                     <h4 class="text-center">{{ rubedo.translate('Blocks.Checkout.Step2.PersonalDetails')}}</h4>
@@ -71,7 +71,7 @@
                                             <input type="text"
                                                    class="form-control"
                                                    id="{{fieldIdPrefix+'_address_company'}}"
-                                                   ng-model="fieldEntity.ecAddress.company"
+                                                   ng-model="fieldEntity.address.company"
                                                     >
                                         </div>
                                     </div>
@@ -81,7 +81,7 @@
                                             <input type="text"
                                                    class="form-control"
                                                    id="{{fieldIdPrefix+'_address_attention'}}"
-                                                   ng-model="fieldEntity.ecAddress.attention"
+                                                   ng-model="fieldEntity.address.attention"
                                                     >
                                         </div>
                                     </div>
@@ -91,7 +91,7 @@
                                             <input type="text"
                                                    class="form-control"
                                                    id="{{fieldIdPrefix+'_address_address1'}}"
-                                                   ng-model="fieldEntity.ecAddress.address1"
+                                                   ng-model="fieldEntity.address.address1"
                                                    required
                                                     >
                                         </div>
@@ -102,7 +102,7 @@
                                             <input type="text"
                                                    class="form-control"
                                                    id="{{fieldIdPrefix+'_address_address2'}}"
-                                                   ng-model="fieldEntity.ecAddress.address2"
+                                                   ng-model="fieldEntity.address.address2"
                                                     >
                                         </div>
                                     </div>
@@ -112,7 +112,7 @@
                                             <input type="text"
                                                    class="form-control"
                                                    id="{{fieldIdPrefix+'_address_city'}}"
-                                                   ng-model="fieldEntity.ecAddress.city"
+                                                   ng-model="fieldEntity.address.city"
                                                    required
                                                     >
                                         </div>
@@ -123,7 +123,7 @@
                                             <select
                                                    class="form-control"
                                                    id="{{fieldIdPrefix+'_address_country'}}"
-                                                   ng-model="fieldEntity.ecAddress.country"
+                                                   ng-model="fieldEntity.address.country"
                                                    ng-options="c['alpha-2'] as c.name for c in checkoutCtrl.countriesArray"
                                                    required
                                                     ></select>
@@ -135,7 +135,7 @@
                                             <input type="text"
                                                    class="form-control"
                                                    id="{{fieldIdPrefix+'_address_state'}}"
-                                                   ng-model="fieldEntity.ecAddress.regionState"
+                                                   ng-model="fieldEntity.address.regionState"
                                                     >
                                         </div>
                                     </div>
@@ -145,7 +145,7 @@
                                             <input type="text"
                                                    class="form-control"
                                                    id="{{fieldIdPrefix+'_address_postCode'}}"
-                                                   ng-model="fieldEntity.ecAddress.postCode"
+                                                   ng-model="fieldEntity.address.postCode"
                                                    required
                                                     >
                                         </div>
@@ -175,6 +175,9 @@
                                     </div>
                                     <div class="form-group text-center" ng-if="!rubedo.current.user">
                                         <button ng-disabled="!checkoutCtrl.readTermsAndConds" type="submit" class="btn btn-primary">{{rubedo.translate('Blocks.SignUp.label.signUp')}}</button>
+                                    </div>
+                                    <div ng-if="checkoutCtrl.stage2Error" ng-init="notification = {type:'error',text:checkoutCtrl.stage2Error}">
+                                        <rubedo-notification></rubedo-notification>
                                     </div>
 
 
