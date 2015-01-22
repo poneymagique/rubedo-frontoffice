@@ -1,4 +1,4 @@
-angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","RubedoPagesService","$rootScope","RubedoShoppingCartService","RubedoUserTypesService","RubedoCountriesService", function($scope,RubedoPagesService,$rootScope,RubedoShoppingCartService,RubedoUserTypesService,RubedoCountriesService){
+angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","RubedoPagesService","$rootScope","RubedoShoppingCartService","RubedoUserTypesService","RubedoCountriesService","RubedoUsersService", function($scope,RubedoPagesService,$rootScope,RubedoShoppingCartService,RubedoUserTypesService,RubedoCountriesService,RubedoUsersService){
     var me = this;
     var config = $scope.blockConfig;
     if (config.signupContentId){
@@ -59,24 +59,26 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
     me.parseUserType=function(userType){
         me.userType=userType;
         $scope.fieldIdPrefix="checkout"+"_"+me.userType.type;
-        me.userType.fields.unshift({
-            cType:"textfield",
-            config:{
-                name:"confirmPassword",
-                fieldLabel:$scope.rubedo.translate("Blocks.SignUp.label.confirmPassword"),
-                allowBlank:false,
-                vtype:"password"
-            }
-        });
-        me.userType.fields.unshift({
-            cType:"textfield",
-            config:{
-                name:"password",
-                fieldLabel:$scope.rubedo.translate("Blocks.SignUp.label.password"),
-                allowBlank:false,
-                vtype:"password"
-            }
-        });
+        if (!$scope.rubedo.current.user){
+            me.userType.fields.unshift({
+                cType:"textfield",
+                config:{
+                    name:"confirmPassword",
+                    fieldLabel:$scope.rubedo.translate("Blocks.SignUp.label.confirmPassword"),
+                    allowBlank:false,
+                    vtype:"password"
+                }
+            });
+            me.userType.fields.unshift({
+                cType:"textfield",
+                config:{
+                    name:"password",
+                    fieldLabel:$scope.rubedo.translate("Blocks.SignUp.label.password"),
+                    allowBlank:false,
+                    vtype:"password"
+                }
+            });
+        }
         me.userType.fields.unshift({
             cType:"textfield",
             config:{
@@ -112,6 +114,17 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
                     }
                 );
             }
+        } else {
+            RubedoUsersService.getUserById($scope.rubedo.current.user.id).then(
+                function(response){
+                    if (response.data.success){
+                        me.currentUser=response.data.user;
+                        $scope.fieldEntity=angular.copy(me.currentUser.fields);
+                        me.parseUserType(me.currentUser.type);
+                        me.setCurrentStage(2);
+                    }
+                }
+            );
         }
     }
 
