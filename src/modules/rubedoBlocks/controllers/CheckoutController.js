@@ -195,5 +195,15 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
         }
     };
 
+    me.handleStage3Submit=function(){
+        me.stage3Error=null;
+        me.persistUserChanges(me.stage3Error);
+    };
+
+    me.handleStage4Submit=function(){
+        me.stage4Error=null;
+        me.persistUserChanges(me.stage4Error);
+    };
+
 
 }]);
