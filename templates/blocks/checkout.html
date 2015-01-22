@@ -35,7 +35,7 @@
                                         ></div>
                                 <button data-ng-click="checkoutCtrl.setCurrentStage(2)" class="btn btn-primary" >{{ rubedo.translate('Blocks.Checkout.Button.Continue') }}</button>
                             </div>
-                            <div class="col-md-6 text-center">
+                            <div class="col-md-4 col-md-offset-1 text-center">
                                 <h4>{{ rubedo.translate('Blocks.Checkout.Step1.AlreadyHaveAccount')}}</h4>
                                 <div ng-if="blockConfig.contentId"
                                      ng-include="rubedo.blockTemplateResolver.getTemplate('authentication',{ })"
