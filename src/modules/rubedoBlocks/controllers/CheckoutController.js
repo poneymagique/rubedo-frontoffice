@@ -1,4 +1,4 @@
-angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","RubedoPagesService","$rootScope","RubedoShoppingCartService","RubedoUserTypesService", function($scope,RubedoPagesService,$rootScope,RubedoShoppingCartService,RubedoUserTypesService){
+angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","RubedoPagesService","$rootScope","RubedoShoppingCartService","RubedoUserTypesService","RubedoCountriesService", function($scope,RubedoPagesService,$rootScope,RubedoShoppingCartService,RubedoUserTypesService,RubedoCountriesService){
     var me = this;
     var config = $scope.blockConfig;
     if (config.signupContentId){
@@ -13,6 +13,13 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
         });
     }
     me.blockId=($scope.block.id);
+    RubedoCountriesService.getCountries().then(
+        function(response){
+            if (response.data.success){
+                me.countriesArray=response.data.countries;
+            }
+        }
+    );
     me.cartIsEmpty=false;
     me.detailedCart={};
     me.getCart=function(){

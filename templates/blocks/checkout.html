@@ -116,6 +116,17 @@
                                                     >
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="{{fieldIdPrefix+'_address_country'}}" class="col-sm-4 control-label">{{rubedo.translate('Blocks.Checkout.Label.Country')}} </label>
+                                        <div class="col-sm-8">
+                                            <select
+                                                   class="form-control"
+                                                   id="{{fieldIdPrefix+'_address_country'}}"
+                                                   ng-model="fieldEntity.ecAddress.country"
+                                                   ng-options="c['alpha-2'] as c.name for c in checkoutCtrl.countriesArray"
+                                                    ></select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>

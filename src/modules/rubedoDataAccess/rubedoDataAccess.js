@@ -384,6 +384,14 @@
         return serviceInstance;
     }]);
 
+    module.factory('RubedoCountriesService', ['$http',function($http) {
+        var serviceInstance={};
+        serviceInstance.getCountries=function(){
+            return ($http.get(config.baseUrl+"/ecommerce/countries"));
+        };
+        return serviceInstance;
+    }]);
+
     module.factory('RubedoContactService', ['$http',function($http) {
         var serviceInstance={};
         serviceInstance.sendContact=function(payload){
