@@ -1,6 +1,6 @@
 <div class="form-group" ng-controller="ComboboxController as comboboxCtrl">
-    <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="col-sm-2 control-label">{{field.config.fieldLabel}} <span ng-if="!field.config.allowBlank">*</span></label>
-    <div class="col-sm-10">
+    <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="col-sm-4 control-label">{{field.config.fieldLabel}} <span ng-if="!field.config.allowBlank">*</span></label>
+    <div class="col-sm-8">
         <select ng-if="field.config.multiSelect"
                class="form-control"
                multiple="multiple"
