@@ -51,7 +51,7 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
     };
     me.parseUserType=function(userType){
         me.userType=userType;
-        $scope.fieldIdPrefix="signUp"+"_"+me.userType.type;
+        $scope.fieldIdPrefix="checkout"+"_"+me.userType.type;
         me.userType.fields.unshift({
             cType:"textfield",
             config:{
