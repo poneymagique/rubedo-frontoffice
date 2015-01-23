@@ -477,7 +477,83 @@
                 </div>
                 <div id="checkoutStage6" class="panel-collapse collapse" ng-class="{'in':checkoutCtrl.currentStage==6}" role="tabpanel" aria-labelledby="checkoutHeading6">
                     <div class="panel-body">
-                        Checkout step 6 content
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4>{{rubedo.translate('Blocks.OrderDetails.BillingAddress')}}</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <address>
+                                            <strong>{{ fieldEntity.billingAddress.company }}</strong><br />
+                                            <strong>{{ fieldEntity.billingAddress.attention }}</strong><br />
+                                            {{ fieldEntity.billingAddress.address1 }}<br />
+                                            {{ fieldEntity.billingAddress.address2 }}<br />
+                                            {{ fieldEntity.billingAddress.postCode }} {{ fieldEntity.billingAddress.city }}<br />
+                                            {{ fieldEntity.billingAddress.regionState }} {{ fieldEntity.billingAddress.country }}<br />
+                                        </address>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4>{{rubedo.translate('Blocks.OrderDetails.ShippingAddress')}}</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <address>
+                                            <strong>{{ fieldEntity.shippingAddress.company }}</strong><br />
+                                            <strong>{{ fieldEntity.shippingAddress.attention }}</strong><br />
+                                            {{ fieldEntity.shippingAddress.address1 }}<br />
+                                            {{ fieldEntity.shippingAddress.address2 }}<br />
+                                            {{ fieldEntity.shippingAddress.postCode }} {{ fieldEntity.shippingAddress.city }}<br />
+                                            {{ fieldEntity.shippingAddress.regionState }} {{ fieldEntity.shippingAddress.country }}<br />
+                                        </address>
+                                    </div>
+                               </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4>{{ rubedo.translate('Blocks.OrderDetails.OrderDetails') }}</h4>
+                                    </div>
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>{{ rubedo.translate('Blocks.OrderDetails.Table.Name') }}</th>
+                                            <th>{{ rubedo.translate('Blocks.OrderDetails.Table.Cost')}}</th>
+                                            <th>{{ rubedo.translate('Blocks.OrderDetails.Table.Amount') }}</th>
+                                            <th>{{ rubedo.translate('Blocks.OrderDetails.Table.Price') }}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <tr ng-repeat="product in checkoutCtrl.detailedCart.cart">
+                                            <td>
+                                                {{ product.title }}<br />
+                                                <small>{{ product.subtitle }}</small>
+                                            </td>
+                                            <td>{{ product.unitPrice | number : 2 }} €</td>
+                                            <td>{{ product.amount }}</td>
+                                            <td>{{ product.price | number : 2 }} €</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="panel-body text-right">
+                                        <h5><strong>{{ rubedo.translate('Blocks.Checkout.CheckoutSummary.SubTotal')}} :</strong> {{ checkoutCtrl.detailedCart.totalPrice |number : 2 }} €</h5>
+                                        <h5><strong>{{ rubedo.translate('Blocks.OrderDetails.Table.ShippingMethod') }} : {{ checkoutCtrl.currentShipper.name }} </strong> <small>{{ checkoutCtrl.currentShipper.hRDelay }} {{ checkoutCtrl.currentShipper.hRUnit }}</small> : {{ checkoutCtrl.currentShipper.rate|number : 2 }} €</h5>
+                                        <h5><strong>{{ rubedo.translate('Blocks.OrderDetails.Table.ShippingTax')}} :</strong> {{ checkoutCtrl.currentShipper.tax*checkoutCtrl.currentShipper.rate/100 |number : 2 }} €</h5>
+                                        <h5><strong>{{ rubedo.translate('Blocks.OrderDetails.Table.ProductsTaxes') }} :</strong> {{ (checkoutCtrl.detailedCart.totalTaxedPrice -  checkoutCtrl.detailedCart.totalPrice)|number : 2 }} €</h5>
+                                        <h5><strong>{{ rubedo.translate('Blocks.OrderDetails.Table.TotalPrice') }} :</strong> {{ (checkoutCtrl.detailedCart.totalTaxedPrice + checkoutCtrl.currentShipper.rate+checkoutCtrl.currentShipper.tax*checkoutCtrl.currentShipper.rate/100)|number : 2}} €</h5>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
