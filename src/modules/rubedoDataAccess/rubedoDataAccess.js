@@ -472,4 +472,18 @@
         return serviceInstance;
     }]);
 
+    module.factory('RubedoShippersService',['$http','ipCookie',function($http,ipCookie){
+        var serviceInstance = {};
+        serviceInstance.getShippers=function(){
+            var options={};
+            if (ipCookie("shoppingCartToken")){
+                options.shoppingCartToken=ipCookie("shoppingCartToken");
+            }
+            return ($http.get(config.baseUrl+"/ecommerce/shippers", {
+                params: options
+            }));
+        };
+        return serviceInstance;
+    }]);
+
 })();

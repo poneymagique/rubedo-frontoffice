@@ -1,4 +1,4 @@
-angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","RubedoPagesService","$rootScope","RubedoShoppingCartService","RubedoUserTypesService","RubedoCountriesService","RubedoUsersService","RubedoAuthService", function($scope,RubedoPagesService,$rootScope,RubedoShoppingCartService,RubedoUserTypesService,RubedoCountriesService,RubedoUsersService,RubedoAuthService){
+angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","RubedoPagesService","$rootScope","RubedoShoppingCartService","RubedoUserTypesService","RubedoCountriesService","RubedoUsersService","RubedoAuthService","RubedoShippersService", function($scope,RubedoPagesService,$rootScope,RubedoShoppingCartService,RubedoUserTypesService,RubedoCountriesService,RubedoUsersService,RubedoAuthService,RubedoShippersService){
     var me = this;
     var config = $scope.blockConfig;
     if (config.signupContentId){
@@ -172,14 +172,25 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
             }
         );
     };
-    me.persistUserChanges=function(errorHolder){
+    me.refreshShippers=function(){
+        RubedoShippersService.getShippers().then(
+            function(response){
+                console.log(response);
+                me.setCurrentStage(me.currentStage+1);
+            }
+        );
+    };
+    me.persistUserChanges=function(errorHolder,refreshShippers){
         var payload=angular.copy(me.currentUser);
         payload.fields=angular.copy($scope.fieldEntity);
-        payload.fields.login=payload.fields.email;
         delete (payload.type);
         RubedoUsersService.updateUser(payload).then(
             function(response){
-                me.setCurrentStage(me.currentStage+1);
+                if (refreshShippers){
+                    me.refreshShippers();
+                } else {
+                    me.setCurrentStage(me.currentStage+1);
+                }
             },
             function(response){
                 me.errorHolder=response.data.message;
@@ -202,7 +213,7 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
 
     me.handleStage4Submit=function(){
         me.stage4Error=null;
-        me.persistUserChanges(me.stage4Error);
+        me.persistUserChanges(me.stage4Error,true);
     };
 
 
