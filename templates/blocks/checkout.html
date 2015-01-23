@@ -432,7 +432,39 @@
                 </div>
                 <div id="checkoutStage5" class="panel-collapse collapse" ng-class="{'in':checkoutCtrl.currentStage==5}" role="tabpanel" aria-labelledby="checkoutHeading5">
                     <div class="panel-body">
-                        Checkout step 5 content
+                        <form ng-if="checkoutCtrl.userType&&rubedo.current.user" ng-submit="checkoutCtrl.handleStage5Submit()" class="form-horizontal">
+                            <div class="col-md-6 col-md-offset-3">
+                                <div class="form-group">
+                                    <div class="col-sm-8 col-sm-offset-4">
+                                        <div class="radio" ng-repeat="shipper in checkoutCtrl.shippersArray">
+                                            <label>
+                                                <input type="radio" name="shippersRadio" value="{{shipper.shipperId}}"
+                                                       ng-checked="checkoutCtrl.currentShipper&&checkoutCtrl.currentShipper.shipperId==shipper.shipperId"
+                                                       ng-click="checkoutCtrl.currentShipper=shipper;">
+                                                {{rubedo.translate('Blocks.Checkout.ShippingOption',"",['%name%','%delay%','%unit%','%rate%'],[shipper.name,shipper.hRDelay,shipper.hRUnit,shipper.rate])}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{fieldIdPrefix+'_shippingComments'}}" class="col-sm-4 control-label">{{rubedo.translate('Blocks.Checkout.Label.AddComments')}} </label>
+                                    <div class="col-sm-8">
+                                        <textarea
+                                               class="form-control"
+                                               rows="4"
+                                               id="{{fieldIdPrefix+'_shippingComments'}}"
+                                               ng-model="checkoutCtrl.shippingComments"
+                                                ></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group text-center" ng-if="rubedo.current.user">
+                                    <button type="submit" class="btn btn-primary">{{rubedo.translate('Blocks.Checkout.Label.Continue')}}</button>
+                                </div>
+                                <div ng-if="checkoutCtrl.stage5Error" ng-init="notification = {type:'error',text:checkoutCtrl.stage5Error}">
+                                    <rubedo-notification></rubedo-notification>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

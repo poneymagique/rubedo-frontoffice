@@ -175,7 +175,8 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
     me.refreshShippers=function(){
         RubedoShippersService.getShippers().then(
             function(response){
-                console.log(response);
+                me.shippersArray=response.data.shippers;
+                me.currentShipper=response.data.shippers[0];
                 me.setCurrentStage(me.currentStage+1);
             }
         );
@@ -214,6 +215,15 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
     me.handleStage4Submit=function(){
         me.stage4Error=null;
         me.persistUserChanges(me.stage4Error,true);
+    };
+
+    me.handleStage5Submit=function(){
+        me.stage5Error=null;
+        if (!me.currentShipper){
+            me.stage5Error="Please choose a shipper"
+        } else {
+            me.setCurrentStage(me.currentStage+1);
+        }
     };
 
 
