@@ -178,6 +178,10 @@
         "checkout": {
             "template": "/templates/blocks/checkout.html",
             "internalDependencies":["/src/modules/rubedoBlocks/controllers/CheckoutController.js"]
+        },
+        "userOrders": {
+            "template": "/templates/blocks/userOrders.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/UserOrdersController.js"]
         }
     };
 
