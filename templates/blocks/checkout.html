@@ -548,7 +548,6 @@
                                         <h5><strong>{{ rubedo.translate('Blocks.OrderDetails.Table.ShippingTax')}} :</strong> {{ checkoutCtrl.currentShipper.tax*checkoutCtrl.currentShipper.rate/100 |number : 2 }} €</h5>
                                         <h5><strong>{{ rubedo.translate('Blocks.OrderDetails.Table.ProductsTaxes') }} :</strong> {{ (checkoutCtrl.detailedCart.totalTaxedPrice -  checkoutCtrl.detailedCart.totalPrice)|number : 2 }} €</h5>
                                         <h5><strong>{{ rubedo.translate('Blocks.OrderDetails.Table.TotalPrice') }} :</strong> {{ (checkoutCtrl.detailedCart.totalTaxedPrice + checkoutCtrl.currentShipper.rate+checkoutCtrl.currentShipper.tax*checkoutCtrl.currentShipper.rate/100)|number : 2}} €</h5>
-
                                     </div>
                                 </div>
 

@@ -1,4 +1,4 @@
-angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","RubedoPagesService","$rootScope","RubedoShoppingCartService","RubedoUserTypesService","RubedoCountriesService","RubedoUsersService","RubedoAuthService","RubedoShippersService", function($scope,RubedoPagesService,$rootScope,RubedoShoppingCartService,RubedoUserTypesService,RubedoCountriesService,RubedoUsersService,RubedoAuthService,RubedoShippersService){
+angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","RubedoPagesService","$rootScope","RubedoShoppingCartService","RubedoUserTypesService","RubedoCountriesService","RubedoUsersService","RubedoAuthService","RubedoShippersService","RubedoPaymentMeansService", function($scope,RubedoPagesService,$rootScope,RubedoShoppingCartService,RubedoUserTypesService,RubedoCountriesService,RubedoUsersService,RubedoAuthService,RubedoShippersService,RubedoPaymentMeansService){
     var me = this;
     var config = $scope.blockConfig;
     if (config.signupContentId){
@@ -17,6 +17,13 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
         function(response){
             if (response.data.success){
                 me.countriesArray=response.data.countries;
+            }
+        }
+    );
+    RubedoPaymentMeansService.getActivePaymentMeans().then(
+        function(response){
+            if (response.data.success){
+                me.activePaymentMeans=response.data.paymentMeans;
             }
         }
     );

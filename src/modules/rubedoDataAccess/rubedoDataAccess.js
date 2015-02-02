@@ -486,4 +486,12 @@
         return serviceInstance;
     }]);
 
+    module.factory('RubedoPaymentMeansService',['$http',function($http){
+        var serviceInstance = {};
+        serviceInstance.getActivePaymentMeans=function(){
+            return ($http.get(config.baseUrl+"/ecommerce/paymentmeans"));
+        };
+        return serviceInstance;
+    }]);
+
 })();
