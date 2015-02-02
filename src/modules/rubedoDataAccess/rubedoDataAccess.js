@@ -494,4 +494,17 @@
         return serviceInstance;
     }]);
 
+    module.factory('RubedoOrdersService',['$http',function($http){
+        var serviceInstance = {};
+        serviceInstance.getMyOrders=function(options){
+            return ($http.get(config.baseUrl+"/ecommerce/orders",{
+                params:options
+            }));
+        };
+        serviceInstance.getOrderDetail=function(id){
+            return ($http.get(config.baseUrl+"/ecommerce/orders/"+id));
+        };
+        return serviceInstance;
+    }]);
+
 })();
