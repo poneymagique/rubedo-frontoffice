@@ -182,6 +182,10 @@
         "userOrders": {
             "template": "/templates/blocks/userOrders.html",
             "internalDependencies":["/src/modules/rubedoBlocks/controllers/UserOrdersController.js"]
+        },
+        "orderDetail": {
+            "template": "/templates/blocks/orderDetail.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/OrderDetailController.js"]
         }
     };
 
