@@ -494,7 +494,7 @@
         return serviceInstance;
     }]);
 
-    module.factory('RubedoOrdersService',['$http',function($http){
+    module.factory('RubedoOrdersService',['$http','ipCookie',function($http,ipCookie){
         var serviceInstance = {};
         serviceInstance.getMyOrders=function(options){
             return ($http.get(config.baseUrl+"/ecommerce/orders",{
@@ -503,6 +503,16 @@
         };
         serviceInstance.getOrderDetail=function(id){
             return ($http.get(config.baseUrl+"/ecommerce/orders/"+id));
+        };
+        serviceInstance.createOrder=function(options){
+            if (ipCookie("shoppingCartToken")){
+                options.shoppingCartToken=ipCookie("shoppingCartToken");
+            }
+            return ($http({
+                url:config.baseUrl+"/ecommerce/orders",
+                method:"POST",
+                data : options
+            }));
         };
         return serviceInstance;
     }]);

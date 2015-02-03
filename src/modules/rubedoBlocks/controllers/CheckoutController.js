@@ -1,4 +1,4 @@
-angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","RubedoPagesService","$rootScope","RubedoShoppingCartService","RubedoUserTypesService","RubedoCountriesService","RubedoUsersService","RubedoAuthService","RubedoShippersService","RubedoPaymentMeansService", function($scope,RubedoPagesService,$rootScope,RubedoShoppingCartService,RubedoUserTypesService,RubedoCountriesService,RubedoUsersService,RubedoAuthService,RubedoShippersService,RubedoPaymentMeansService){
+angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","RubedoPagesService","$rootScope","RubedoShoppingCartService","RubedoUserTypesService","RubedoCountriesService","RubedoUsersService","RubedoAuthService","RubedoShippersService","RubedoPaymentMeansService","RubedoOrdersService", function($scope,RubedoPagesService,$rootScope,RubedoShoppingCartService,RubedoUserTypesService,RubedoCountriesService,RubedoUsersService,RubedoAuthService,RubedoShippersService,RubedoPaymentMeansService,RubedoOrdersService){
     var me = this;
     var config = $scope.blockConfig;
     if (config.signupContentId){
@@ -231,6 +231,25 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
         } else {
             me.setCurrentStage(me.currentStage+1);
         }
+    };
+
+    me.handleOrderCreate=function(){
+        me.orderCreateError=null;
+        if (!me.currentPaymentMeans){
+            me.orderCreateError="Please choose a payment means";
+            return;
+        }
+        var options={
+            paymentMeans:me.currentPaymentMeans.paymentMeans,
+            shipperId:me.currentShipper.shipperId,
+            shippingComments:me.shippingComments
+        };
+        RubedoOrdersService.createOrder(options).then(
+            function(response){
+                console.log(response);
+            }
+        );
+
     };
 
 
