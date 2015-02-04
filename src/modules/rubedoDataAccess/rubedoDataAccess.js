@@ -521,7 +521,10 @@
         var serviceInstance = {};
         serviceInstance.getPaymentInformation=function(orderId){
             return ($http.get(config.baseUrl+"/ecommerce/payment",{
-                params:{orderId:orderId}
+                params:{
+                    orderId:orderId,
+                    currentUserUrl:window.location.href
+                }
             }));
         };
         return serviceInstance;
