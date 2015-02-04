@@ -22,6 +22,11 @@ angular.module("rubedoBlocks").lazy.controller('OrderDetailController',['$scope'
                                 if (pmResponse.data.success&&pmResponse.data.paymentInstructions){
                                     if(pmResponse.data.paymentInstructions.whatToDo=="displayRichText"&&pmResponse.data.paymentInstructions.richText){
                                         me.paymentRichText=pmResponse.data.paymentInstructions.richText;
+                                    }else if(pmResponse.data.paymentInstructions.whatToDo=="redirectToUrl"&&pmResponse.data.paymentInstructions.url){
+                                        me.showPaymentButton=true;
+                                        me.handlePaymentButtonClick=function(){
+                                            window.location.href=pmResponse.data.paymentInstructions.url;
+                                        };
                                     }
                                 }
                             }
