@@ -1,4 +1,4 @@
-angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","RubedoPagesService","$rootScope","RubedoShoppingCartService","RubedoUserTypesService","RubedoCountriesService","RubedoUsersService","RubedoAuthService","RubedoShippersService","RubedoPaymentMeansService","RubedoOrdersService", function($scope,RubedoPagesService,$rootScope,RubedoShoppingCartService,RubedoUserTypesService,RubedoCountriesService,RubedoUsersService,RubedoAuthService,RubedoShippersService,RubedoPaymentMeansService,RubedoOrdersService){
+angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","RubedoPagesService","$rootScope","RubedoShoppingCartService","RubedoUserTypesService","RubedoCountriesService","RubedoUsersService","RubedoAuthService","RubedoShippersService","RubedoPaymentMeansService","RubedoOrdersService","$location", function($scope,RubedoPagesService,$rootScope,RubedoShoppingCartService,RubedoUserTypesService,RubedoCountriesService,RubedoUsersService,RubedoAuthService,RubedoShippersService,RubedoPaymentMeansService,RubedoOrdersService,$location){
     var me = this;
     var config = $scope.blockConfig;
     if (config.signupContentId){
@@ -9,6 +9,13 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
         RubedoPagesService.getPageById(config.tCPage).then(function(response){
             if (response.data.success){
                 me.tCPageUrl=response.data.url;
+            }
+        });
+    }
+    if (config.orderDetailPage){
+        RubedoPagesService.getPageById(config.orderDetailPage).then(function(response){
+            if (response.data.success){
+                me.orderDetailPageUrl=response.data.url;
             }
         });
     }
@@ -246,7 +253,10 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
         };
         RubedoOrdersService.createOrder(options).then(
             function(response){
-                console.log(response);
+                if (response.data.success){
+                    var myOrderId=response.data.order.id;
+                    $location.url(me.orderDetailPageUrl+"?order="+myOrderId);
+                }
             }
         );
 
