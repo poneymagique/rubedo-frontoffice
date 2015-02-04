@@ -1,7 +1,7 @@
     angular.module("rubedoBlocks").lazy.controller("MenuController",['$scope','$location','RubedoMenuService','RubedoPagesService',function($scope,$location,RubedoMenuService,RubedoPagesService){
         var me=this;
         me.menu={};
-        me.currentRouteleine=$location.path();
+        me.currentRouteline=$location.path();
         var config=$scope.blockConfig;
         me.searchEnabled = (config.useSearchEngine && config.searchPage);
         if (config.rootPage){
