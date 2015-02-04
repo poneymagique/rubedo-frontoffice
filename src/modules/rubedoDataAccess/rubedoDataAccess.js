@@ -517,4 +517,14 @@
         return serviceInstance;
     }]);
 
+    module.factory('RubedoPaymentService',['$http',function($http){
+        var serviceInstance = {};
+        serviceInstance.getPaymentInformation=function(orderId){
+            return ($http.get(config.baseUrl+"/ecommerce/payment",{
+                params:{orderId:orderId}
+            }));
+        };
+        return serviceInstance;
+    }]);
+
 })();
