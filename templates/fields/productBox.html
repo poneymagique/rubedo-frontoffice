@@ -5,7 +5,9 @@
         <form>
             <div class="form-group" ng-repeat="field in productBoxCtrl.variationFields">
                 <label for="{{field}}">{{contentDetailCtrl.getFieldByName(field).config.fieldLabel}}</label>
-                <select class="form-control"
+                <span ng-if="productBoxCtrl.productProperties.variations.length==1"> {{productBoxCtrl.selectionValues[field]}}</span>
+                <select ng-if="productBoxCtrl.productProperties.variations.length>1"
+                        class="form-control"
                         id="{{field}}"
                         ng-model="productBoxCtrl.selectionValues[field]"
                         ng-change="productBoxCtrl.handleFieldChange()"
