@@ -240,6 +240,12 @@
                 params: options
             }));
         };
+        serviceInstance.getAuthStatus = function(){
+            if (serviceInstance.getPersistedTokens().accessToken){
+                config.accessToken=serviceInstance.getPersistedTokens().accessToken;
+            }
+            return ($http.get(config.baseUrl+"/auth"));
+        };
         serviceInstance.changePassword =  function(options){
             return ($http({
                 url:config.baseUrl+"/users/password/token",

@@ -102,19 +102,22 @@
             if (curentTokens.refreshToken&&(!curentTokens.accessToken||forceRefresh)){
                 RubedoAuthService.refreshToken().then(
                     function(response){
-                        me.current.user=response.data.token.user;
-                        if (me.current.user.rights.canEdit){
-//                        snapRemote.getSnapper().then(function(snapper) {
-//                            //snapper.enable();
-//                        });
-                        }
+                        me.current.user=response.data.currentUser;
+                    }
+                );
+            } else if (curentTokens.refreshToken&&curentTokens.accessToken){
+                RubedoAuthService.getAuthStatus().then(
+                    function(response){
+                        me.current.user=response.data.currentUser;
+                    },function(response){
+                        me.refreshAuth(true);
                     }
                 );
             }
         };
 
-        me.refreshAuth(true);
-        setInterval(function () {me.refreshAuth(false);}, 300000);
+        me.refreshAuth(false);
+        setInterval(function () {me.refreshAuth(false);}, 60000);
         me.addNotification=function(type,title,text,timeout){
             angular.element.toaster({ priority : type, title : title, message : text, settings:{timeout:timeout}});
         };
