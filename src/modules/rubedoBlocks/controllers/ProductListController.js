@@ -169,7 +169,7 @@ angular.module("rubedoBlocks").lazy.controller("ProductListController",['$scope'
         me.getContents(config.query, pageId, siteId, options, false);
     }
 }]);
-angular.module("rubedoBlocks").lazy.controller("ContentListDetailController",['$scope','$compile','RubedoProductsService',function($scope,$compile,RubedoProductsService){
+angular.module("rubedoBlocks").lazy.controller("ProductListDetailController",['$scope','$compile','RubedoProductsService',function($scope,$compile,RubedoProductsService){
     var me = this;
     me.index = $scope.$index;
     me.parentIndex = $scope.columnIndex;
