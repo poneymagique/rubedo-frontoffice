@@ -171,6 +171,56 @@
         return serviceInstance;
     }]);
 
+    module.factory('RubedoProductsService', ['$route','$http','$location', function($route,$http,$location){
+        var serviceInstance={};
+        serviceInstance.getContents=function(queryId,pageId,siteId,options){
+            var params = {
+                queryId: queryId,
+                pageId: pageId,
+                siteId: siteId
+            };
+            if (options){
+                angular.extend(params,options);
+            }
+            var getParams=$location.search();
+            if (getParams.preview){
+                if (getParams.preview_draft&&getParams.preview_draft=="true"){
+                    params.useDraftMode=true;
+                }
+                if (getParams.preview_date&&getParams.preview_date!=""){
+                    params.simulatedTime=getParams.preview_date;
+                }
+            }
+            return ($http.get(config.baseUrl+"/ecommerce/products", {
+                params: params
+            }));
+        };
+        serviceInstance.getContentById = function(contentId, options){
+            return ($http.get(config.baseUrl+"/ecommerce/products/"+contentId, {
+                params: options
+            }));
+        };
+        serviceInstance.updateContent=function(content){
+            return ($http({
+                url:config.baseUrl+"/ecommerce/products/"+content.id,
+                method:"PATCH",
+                data : {
+                    content:content
+                }
+            }));
+        };
+        serviceInstance.updateContents=function(contents){
+            return ($http({
+                url:config.baseUrl+"/ecommerce/products",
+                method:"PATCH",
+                data:{
+                    contents:contents
+                }
+            }));
+        };
+        return serviceInstance;
+    }]);
+
     // authentication service
     module.factory('RubedoAuthService',['$http','ipCookie',function($http,ipCookie){
         var serviceInstance={};

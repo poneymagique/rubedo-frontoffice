@@ -39,6 +39,10 @@
             "template": "/templates/blocks/contentList.html",
             "internalDependencies":["/src/modules/rubedoBlocks/controllers/ContentListController.js","/src/modules/rubedoBlocks/directives/PaginatorDirective.js"]
         },
+        "productList": {
+            "template": "/templates/blocks/productList.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/ProductListController.js","/src/modules/rubedoBlocks/directives/PaginatorDirective.js"]
+        },
         "authentication": {
             "template": "/templates/blocks/authentication.html",
             "internalDependencies":["/src/modules/rubedoBlocks/controllers/AuthenticationController.js"]
