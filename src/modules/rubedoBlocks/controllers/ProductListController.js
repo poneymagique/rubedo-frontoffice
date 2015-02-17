@@ -184,11 +184,26 @@ angular.module("rubedoBlocks").lazy.controller("ProductListController",['$scope'
         me.getContents(config.query, pageId, siteId, options, false);
     }
 }]);
-angular.module("rubedoBlocks").lazy.controller("ProductListDetailController",['$scope','$compile','RubedoProductsService',function($scope,$compile,RubedoProductsService){
+angular.module("rubedoBlocks").lazy.controller("ProductListDetailController",['$scope','$compile','RubedoProductsService','RubedoShoppingCartService','$rootScope',function($scope,$compile,RubedoProductsService,RubedoShoppingCartService,$rootScope){
     var me = this;
     me.index = $scope.$index;
     me.parentIndex = $scope.columnIndex;
     me.content = $scope.content;
+    me.canOrder=function(){
+        return !(me.content.productProperties.manageStock&&(me.content.productProperties.canOrderNotInStock=="false")&&(me.content.productProperties.variations[0].stock < me.content.productProperties.outOfStockLimit)) ;
+    };
+    me.addToCart=function(){
+        var options={
+            productId:me.content.id,
+            variationId:me.content.productProperties.variations[0].id,
+            amount:1
+        };
+        RubedoShoppingCartService.addToCart(options).then(
+            function(response){
+                $rootScope.$broadcast("shoppingCartUpdated",{emitter:"listProductBox"});
+            }
+        );
+    };
     $scope.fieldEntity=angular.copy(me.content.fields);
     $scope.fieldLanguage=me.content.locale;
     $scope.fieldInputMode=false;
