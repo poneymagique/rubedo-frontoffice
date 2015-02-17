@@ -5,14 +5,29 @@ angular.module("rubedoBlocks").lazy.controller("ProductListController",['$scope'
     var pageId=$scope.rubedo.current.page.id;
     var siteId=$scope.rubedo.current.site.id;
     var alreadyPersist = false;
-    me.contentHeight = config.summaryHeight?config.summaryHeight:80;
+    me.contentHeight = config.summaryHeight ? config.summaryHeight : null;
+    me.summaryStyle={};
+    if (me.contentHeight){
+        me.summaryStyle['height']=me.contentHeight+"px";
+        me.summaryStyle['overflow']="hidden";
+    }
     me.start = config.resultsSkip?config.resultsSkip:0;
     me.limit = config.pageSize?config.pageSize:12;
     me.ismagic = config.magicQuery ? config.magicQuery : false;
+    me.imageField= config.imageField ? config.imageField : "image";
+    me.imageHeight= config.imageHeight ? config.imageHeight : null;
+    me.imageWidth= config.imageWidth ? config.imageWidth : null;
+    me.imageStyle={};
+    if (me.imageHeight){
+        me.imageStyle['height']=me.imageHeight+"px";
+        me.imageStyle['overflow']="hidden";
+    }
+    me.imageResizeMode= config.imageResizeMode ? config.imageResizeMode : "boxed";
     var options = {
         start: me.start,
         limit: me.limit,
-        ismagic: me.ismagic
+        ismagic: me.ismagic,
+        'fields[]' : ["text","summary",me.imageField]
     };
     if(config.singlePage){
         options.detailPageId = config.singlePage;

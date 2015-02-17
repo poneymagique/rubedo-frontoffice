@@ -16,10 +16,14 @@
             <div ng-class="contentListCtrl.columns" ng-repeat="columnContents in contentListCtrl.contentList" ng-init="columnIndex = $index" >
                 <div class="rubedo-product-in-list" ng-controller="ProductListDetailController as contentListDetailCtrl" ng-repeat="content in columnContents">
                     <div class="row">
-                        <div ng-class="{'col-md-2':!(blockConfig.columns>1),'col-md-12':blockConfig.columns>1}">
-                            <img class="img-responsive" ng-if="content.fields.image && !contentListCtrl.titleOnly"
-                                 ng-src="{{rubedo.imageUrl.getUrlByMediaId(content.fields.image,{mode:'boxed',height:contentListCtrl.contentHeight+40}) }}"
-                                 alt="{{ content.fields.text }}"/>
+
+                        <div ng-style="contentListCtrl.imageStyle"
+                                ng-class="{'col-md-2':!(blockConfig.columns>1),'col-md-12':blockConfig.columns>1}">
+
+                            <img class="img-responsive" ng-if="content.fields[contentListCtrl.imageField] && !contentListCtrl.titleOnly"
+                                 ng-src="{{rubedo.imageUrl.getUrlByMediaId(content.fields[contentListCtrl.imageField],{mode:contentListCtrl.imageResizeMode,height:contentListCtrl.imageHeight,width:contentListCtrl.imageWidth}) }}"
+                                 alt="{{ content.fields.text }}"
+                                 />
                         </div>
                         <div ng-class="{'col-md-8':!(blockConfig.columns>1),'col-md-12':blockConfig.columns>1}">
                             <h4>
@@ -28,14 +32,15 @@
                                 </a>
                                 <rubedo-field ng-if="fieldEditMode" field="{{content.type.title}}"></rubedo-field>
                             </h4>
-                            <p class="text-justify" ng-if="!contentListCtrl.titleOnly">
+                            <p class="text-justify" ng-style="contentListCtrl.summaryStyle" ng-if="!contentListCtrl.titleOnly">
                                 <rubedo-field field="{{content.type.summary}}"></rubedo-field>
                             </p>
                         </div>
-                        <div ng-class="{'col-md-2':!(blockConfig.columns>1),'col-md-12':blockConfig.columns>1}">
+                        <div class="text-center" ng-class="{'col-md-2':!(blockConfig.columns>1),'col-md-12':blockConfig.columns>1}">
                             <a  ng-href="{{ content.detailPageUrl }}">
                                 <button class="btn btn-default">View detail</button>
                             </a>
+                            <button class="btn btn-default">Add to cart</button>
                         </div>
                     </div>
                 </div>
