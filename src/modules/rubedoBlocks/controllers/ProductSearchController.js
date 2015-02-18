@@ -1,8 +1,38 @@
-angular.module("rubedoBlocks").lazy.controller("ProductSearchController",["$scope","$location","$routeParams","$compile","RubedoSearchService",
-    function($scope,$location,$routeParams,$compile,RubedoSearchService){
+angular.module("rubedoBlocks").lazy.controller("ProductSearchController",["$scope","$location","$routeParams","$compile","RubedoSearchService","RubedoShoppingCartService","$rootScope",
+    function($scope,$location,$routeParams,$compile,RubedoSearchService,RubedoShoppingCartService,$rootScope){
         var me = this;
         var config = $scope.blockConfig;
         var themePath="/theme/"+window.rubedoConfig.siteTheme;
+        me.contentHeight = config.summaryHeight ? config.summaryHeight : null;
+        me.summaryStyle={};
+        if (me.contentHeight){
+            me.summaryStyle['height']=me.contentHeight+"px";
+            me.summaryStyle['overflow']="hidden";
+        }
+        me.imageField= config.imageField ? config.imageField : "image";
+        me.imageHeight= config.imageHeight ? config.imageHeight : null;
+        me.imageWidth= config.imageWidth ? config.imageWidth : null;
+        me.imageStyle={};
+        if (me.imageHeight){
+            me.imageStyle['height']=me.imageHeight+"px";
+            me.imageStyle['overflow']="hidden";
+        }
+        me.imageResizeMode= config.imageResizeMode ? config.imageResizeMode : "boxed";
+        me.canOrder=function(content){
+            return !(content.productProperties.manageStock&&(content.productProperties.canOrderNotInStock=="false")&&(content.productProperties.variations[0].stock < content.productProperties.outOfStockLimit)) ;
+        };
+        me.addToCart=function(content){
+            var options={
+                productId:content.id,
+                variationId:content.productProperties.variations[0].id,
+                amount:1
+            };
+            RubedoShoppingCartService.addToCart(options).then(
+                function(response){
+                    $rootScope.$broadcast("shoppingCartUpdated",{emitter:"searchProductBox"});
+                }
+            );
+        };
         me.data = [];
         me.facets = [];
         me.activeFacets = [];
