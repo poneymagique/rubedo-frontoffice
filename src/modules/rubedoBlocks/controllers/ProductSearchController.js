@@ -11,11 +11,10 @@ angular.module("rubedoBlocks").lazy.controller("ProductSearchController",["$scop
         me.orderBy = $routeParams.orderby?$routeParams.orderby:"_score";
         var resolveOrderBy = {
             '_score': 'relevance',
-            'lastUpdateTime': 'date',
-            'authorName': 'author',
-            'text': 'title'
+            'lastUpdateTime': 'date'
         };
         me.displayMode=config.displayMode ? config.displayMode : "default";
+        me.productDisplayMode=config.productDisplayMode ? config.productDisplayMode : "grid";
         me.displayOrderBy = $routeParams.orderby?resolveOrderBy[$routeParams.orderby]:$scope.rubedo.translate('Search.Label.OrderByRelevance');
         me.template = themePath+"/templates/blocks/productSearch/"+me.displayMode+".html";
         var predefinedFacets = !config.predefinedFacets?{}:JSON.parse(config.predefinedFacets);

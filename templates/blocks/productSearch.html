@@ -1,4 +1,21 @@
 <div ng-controller="ProductSearchController as searchResultsCtrl">
+    <span class="pull-right">View as &nbsp;
+        <div class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-default btn-lg"
+                    ng-click="searchResultsCtrl.productDisplayMode='grid';"
+                    ng-class="{'btn-primary':searchResultsCtrl.productDisplayMode=='grid'}">
+                <span class="glyphicon glyphicon-th"></span>
+            </button>
+            <button type="button"
+                    class="btn btn-default btn-lg"
+                    ng-click="searchResultsCtrl.productDisplayMode='list';"
+                    ng-class="{'btn-primary':searchResultsCtrl.productDisplayMode=='list'}">
+                <span class="glyphicon glyphicon-th-list"></span>
+            </button>
+        </div>
+    </span>
+    <h1 ng-if="rubedo.current.page.eCTitle">{{rubedo.current.page.eCTitle}}</h1>
     <nav class="navbar navbar-default">
         <div class="navbar-header">
             <span class="navbar-brand" ng-if="searchResultsCtrl.count > 1">{{rubedo.translate('Search.ThereAre','There are')}} <span class="badge">{{searchResultsCtrl.count}}</span> {{rubedo.translate('Search.Results','results')}}</span>
@@ -10,9 +27,7 @@
                     <a href class="dropdown-toggle" data-toggle="dropdown">{{searchResultsCtrl.displayOrderBy}} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href ng-click="searchResultsCtrl.changeOrderBy('_score')">{{rubedo.translate("Search.Label.OrderByRelevance", "Order by relevance")}}</a></li>
-                        <li><a href ng-click="searchResultsCtrl.changeOrderBy('lastUpdateTime')">{{rubedo.translate("Search.Label.OrderByDate", "Order by date")}}</a></li>
-                        <li><a ng-click="searchResultsCtrl.changeOrderBy('authorName')" href>{{rubedo.translate("Search.Label.OrderByAuthor", "Order by author")}}</a></li>
-                        <li><a ng-click="searchResultsCtrl.changeOrderBy('text')" href>{{rubedo.translate("Blocks.Search.Label.OrderByTitle", "Order by title")}}</a></li>
+                        <li><a href ng-click="searchResultsCtrl.changeOrderBy('lastUpdateTime')">{{rubedo.translate("Search.Label.OrderByNewest", "Order by newest")}}</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
