@@ -194,6 +194,10 @@
         "productSearch": {
             "template": "/templates/blocks/productSearch.html",
             "internalDependencies":["/src/modules/rubedoBlocks/controllers/ProductSearchController.js","/src/modules/rubedoBlocks/directives/PaginatorDirective.js"]
+        },
+        "category": {
+            "template": "/templates/blocks/category.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/CategoryController.js"]
         }
     };
 
