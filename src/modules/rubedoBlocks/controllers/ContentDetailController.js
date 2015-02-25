@@ -34,7 +34,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scop
                         me.content.type.fields.unshift({
                             cType:"productBox",
                             config:{
-
+                                name:"productBox"
                             }
                         });
                         $scope.productProperties=angular.copy(me.content.productProperties);

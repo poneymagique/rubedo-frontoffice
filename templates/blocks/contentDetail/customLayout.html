@@ -7,7 +7,7 @@
             <div ng-repeat="columnField in fields"
                  ng-class="rubedo.componentsService.resolveResponsiveClass(columnField.responsive)" ng-init="field = columnField.field"
                  >
-                <div ng-if="field&&(fieldEntity[field.config.name]||field.cType=='checkboxfield')">
+                <div ng-if="field&&(fieldEntity[field.config.name]||field.cType=='productBox'||field.cType=='checkboxfield')">
                     <div ng-if="columnField.showLabel&&field.cType!='checkboxfield'">
                         <label>{{field.config.fieldLabel}} :</label>
                         <rubedo-field></rubedo-field>
@@ -28,7 +28,7 @@
                          ng-class="rubedo.componentsService.resolveResponsiveClass(columnField.responsive)"
                          ng-init="field = columnField.field"
                             >
-                        <div ng-if="field&&(fieldEntity[field.config.name]||field.cType=='checkboxfield')">
+                        <div ng-if="field&&(fieldEntity[field.config.name]||field.cType=='productBox'||field.cType=='checkboxfield')">
                             <div ng-if="columnField.showLabel&&field.cType!='checkboxfield'">
                                 <label>{{field.config.fieldLabel}} :</label>
                                 <rubedo-field></rubedo-field>
