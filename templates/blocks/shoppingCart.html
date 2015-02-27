@@ -56,6 +56,7 @@
         </div>
         <table ng-if="!shoppingCartCtrl.cartIsEmpty" class="table">
             <thead>
+                <td></td>
                 <td>Name</td>
                 <td>Unit price</td>
                 <td>Number</td>
@@ -64,7 +65,15 @@
                 <td>Delete</td>
             </thead>
             <tr ng-repeat="row in shoppingCartCtrl.detailedCart.cart">
-                <td>{{row.title}}&nbsp;<small>{{row.subtitle}}</small></td>
+                <td>
+                    <img class="img-responsive" ng-if="row.image"
+                         ng-src="{{rubedo.imageUrl.getUrlByMediaId(row.image,{size:'thumbnail'}) }}"
+                         alt="{{ row.title }}"
+                            />
+                </td>
+                <td>
+                    {{row.title}}&nbsp;<small>{{row.subtitle}}</small>
+                </td>
                 <td>{{row.unitTaxedPrice | number : 2}} €</td>
                 <td>x&nbsp;{{row.amount}}</td>
                 <td><span
