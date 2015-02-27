@@ -1,4 +1,4 @@
-angular.module("rubedoBlocks").lazy.controller("ProductListController",['$scope','$compile','RubedoProductsService',"$route","RubedoContentTypesService",function($scope,$compile,RubedoProductsService,$route,RubedoContentTypesService){
+angular.module("rubedoBlocks").lazy.controller("ProductListController",['$scope','$compile','RubedoProductsService',"$route","RubedoContentTypesService","RubedoContentsService",function($scope,$compile,RubedoProductsService,$route,RubedoContentTypesService,RubedoContentsService){
     var me = this;
     me.contentList=[];
     var config=$scope.blockConfig;
@@ -149,7 +149,7 @@ angular.module("rubedoBlocks").lazy.controller("ProductListController",['$scope'
                     });
                 }
             });
-            RubedoProductsService.updateContents(contentsToPerist).then(
+            RubedoContentsService.updateContents(contentsToPerist).then(
                 function(response){
                     if (response.data.success){
                         var notUpdateContents = [];
