@@ -1,7 +1,7 @@
 <div ng-controller="ProductBoxController as productBoxCtrl" class="panel panel-default">
     <div class="panel-body">
         <h5 ng-if="productBoxCtrl.hasSpecialOffer"><del>{{productBoxCtrl.oldPrice| number : 2}} €</del></h5>
-        <h3>{{productBoxCtrl.currentPrice| number : 2}} €</h3>
+        <h3 ng-class="{'text-danger':productBoxCtrl.hasSpecialOffer}" >{{productBoxCtrl.currentPrice| number : 2}} €</h3>
         <form>
             <div class="form-group" ng-repeat="field in productBoxCtrl.variationFields">
                 <label for="{{field}}">{{contentDetailCtrl.getFieldByName(field).config.fieldLabel}}</label>
