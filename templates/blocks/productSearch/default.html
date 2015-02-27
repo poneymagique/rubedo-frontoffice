@@ -51,10 +51,12 @@
                     <div ng-style="searchResultsCtrl.imageStyle"
                          ng-class="{'col-md-12':searchResultsCtrl.productDisplayMode=='grid','col-md-2':searchResultsCtrl.productDisplayMode=='list'}">
 
-                        <img class="img-responsive" ng-if="content['fields.'+searchResultsCtrl.imageField] && !searchResultsCtrl.titleOnly"
-                             ng-src="{{rubedo.imageUrl.getUrlByMediaId(content['fields.'+searchResultsCtrl.imageField],{mode:searchResultsCtrl.imageResizeMode,height:searchResultsCtrl.imageHeight,width:searchResultsCtrl.imageWidth}) }}"
-                             alt="{{ content.title }}"
-                                />
+                        <a ng-href="{{ content.url }}">
+                            <img class="img-responsive" ng-if="content['fields.'+searchResultsCtrl.imageField] && !searchResultsCtrl.titleOnly"
+                                 ng-src="{{rubedo.imageUrl.getUrlByMediaId(content['fields.'+searchResultsCtrl.imageField],{mode:searchResultsCtrl.imageResizeMode,height:searchResultsCtrl.imageHeight,width:searchResultsCtrl.imageWidth}) }}"
+                                 alt="{{ content.title }}"
+                                    />
+                        </a>
                     </div>
                     <div ng-class="{'col-md-12':searchResultsCtrl.productDisplayMode=='grid','col-md-8':searchResultsCtrl.productDisplayMode=='list'}">
                         <h4>
