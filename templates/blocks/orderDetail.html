@@ -3,6 +3,14 @@
     <div class="row">
         <div class="col-md-8">
             <h3>{{ rubedo.translate('Blocks.OrderDetails.OrderNumber','',['%order%'],[orderDetailCtrl.order.orderNumber])}}</h3>
+            <h4>{{rubedo.translate('Blocks.OrderDetails.Payment')}}</h4>
+            <ul class="list-unstyled">
+                <li><strong>{{ rubedo.translate('Blocks.OrderDetails.Payment.Means') }}</strong> : {{ orderDetailCtrl.order.paymentMeans }}</li>
+                <li><strong>{{ rubedo.translate('Blocks.OrderDetails.Payment.Status') }}</strong> : {{ orderDetailCtrl.order.status }}</li>
+                <li ng-if="orderDetailCtrl.order.billingAddress.vatEin"><strong>{{ rubedo.translate('Blocks.OrderDetails.Payment.VatEin') }}</strong> : {{ orderDetailCtrl.order.billingAddress.vatEin }}</li>
+            </ul>
+            <rubedo-custom-template ng-if="orderDetailCtrl.paymentRichText" template="{{orderDetailCtrl.paymentRichText}}"></rubedo-custom-template>
+            <button ng-if="orderDetailCtrl.showPaymentButton" class="btn btn-primary" ng-click="orderDetailCtrl.handlePaymentButtonClick()">Pay order</button>
         </div>
         <div class="col-md-4 text-right">
             <time>{{orderDetailCtrl.order.createTime*1000 | date: "shortDate"  }}</time>
@@ -13,6 +21,7 @@
                  {{ rubedo.translate('Blocks.OrderDetails.OrderBill')}}
             </a></strong>
         </div>
+
     </div>
     <div class="row">
         <div class="col-md-6">
@@ -92,12 +101,4 @@
 
         </div>
     </div>
-    <h4>{{rubedo.translate('Blocks.OrderDetails.Payment')}}</h4>
-    <ul class="list-unstyled">
-        <li><strong>{{ rubedo.translate('Blocks.OrderDetails.Payment.Means') }}</strong> : {{ orderDetailCtrl.order.paymentMeans }}</li>
-        <li><strong>{{ rubedo.translate('Blocks.OrderDetails.Payment.Status') }}</strong> : {{ orderDetailCtrl.order.status }}</li>
-        <li ng-if="orderDetailCtrl.order.billingAddress.vatEin"><strong>{{ rubedo.translate('Blocks.OrderDetails.Payment.VatEin') }}</strong> : {{ orderDetailCtrl.order.billingAddress.vatEin }}</li>
-    </ul>
-    <rubedo-custom-template ng-if="orderDetailCtrl.paymentRichText" template="{{orderDetailCtrl.paymentRichText}}"></rubedo-custom-template>
-    <button ng-if="orderDetailCtrl.showPaymentButton" class="btn btn-primary" ng-click="orderDetailCtrl.handlePaymentButtonClick()">Pay order</button>
 </div>

@@ -54,15 +54,17 @@
         <div ng-if="shoppingCartCtrl.cartIsEmpty" class="panel-body" >
             <div class="alert alert-warning" role="alert">Your cart is empty</div>
         </div>
-        <table ng-if="!shoppingCartCtrl.cartIsEmpty" class="table">
+        <table ng-if="!shoppingCartCtrl.cartIsEmpty" class="table table-striped table-hover">
             <thead>
-                <td></td>
-                <td>Name</td>
-                <td>Unit price</td>
-                <td>Number</td>
-                <td>Add/Remove</td>
-                <td>Price</td>
-                <td>Delete</td>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Unit price</th>
+                    <th>Number</th>
+                    <th>Add/Remove</th>
+                    <th>Price</th>
+                    <th>Delete</th>
+                </tr>
             </thead>
             <tr ng-repeat="row in shoppingCartCtrl.detailedCart.cart">
                 <td>
