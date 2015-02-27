@@ -7,6 +7,7 @@
         me.colClass="col-lg-"+12/me.nbOfColumns;
         me.imageHeight= config.imageHeight ? config.imageHeight : null;
         me.imageWidth= config.imageWidth ? config.imageWidth : null;
+        me.imageResizeMode= config.imageResizeMode ? config.imageResizeMode : "boxed";
         me.imageStyle={};
         if (me.imageHeight){
             me.imageStyle['height']=me.imageHeight+"px";
