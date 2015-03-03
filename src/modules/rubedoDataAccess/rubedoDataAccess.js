@@ -37,9 +37,6 @@
                   if (config.lang){
                       outboundConfig.params.lang =  config.lang;
                   }
-                  if (config.fingerprint){
-                      outboundConfig.params.fingerprint =  config.fingerprint;
-                  }
                   return outboundConfig;
 
               }
@@ -141,11 +138,20 @@
                     params.simulatedTime=getParams.preview_date;
                 }
             }
+            if (params.ismagic&&config.fingerprint){
+                params.fingerprint =  config.fingerprint;
+            }
             return ($http.get(config.baseUrl+"/contents", {
                 params: params
             }));
         };
         serviceInstance.getContentById = function(contentId, options){
+            if (!options){
+                options={ };
+            }
+            if (config.fingerprint){
+                options.fingerprint =  config.fingerprint;
+            }
           return ($http.get(config.baseUrl+"/contents/"+contentId, {
               params: options
           }));
@@ -191,11 +197,20 @@
                     params.simulatedTime=getParams.preview_date;
                 }
             }
+            if (params.ismagic&&config.fingerprint){
+                params.fingerprint =  config.fingerprint;
+            }
             return ($http.get(config.baseUrl+"/ecommerce/products", {
                 params: params
             }));
         };
         serviceInstance.getContentById = function(contentId, options){
+            if (!options){
+                options={ };
+            }
+            if (config.fingerprint){
+                options.fingerprint =  config.fingerprint;
+            }
             return ($http.get(config.baseUrl+"/ecommerce/products/"+contentId, {
                 params: options
             }));
