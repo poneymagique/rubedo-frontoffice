@@ -23,7 +23,6 @@ angular.module("rubedoBlocks").lazy.controller("MediaListController",["$scope","
         options.start = me.start;
         me.getMedia(options);
     };
-    console.log(config.facets.length);
     me.getMedia = function(options){
         RubedoSearchService.getMediaById(options).then(function(response){
             if(response.data.success){
