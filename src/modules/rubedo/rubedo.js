@@ -37,10 +37,17 @@
 
     });
 
-    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService','RubedoFieldTemplateResolver','snapRemote','RubedoPageComponents','RubedoTranslationsService',
-        function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService,RubedoFieldTemplateResolver,snapRemote, RubedoPageComponents, RubedoTranslationsService){
-        //set context and page-wide services
+    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService','RubedoFieldTemplateResolver','snapRemote','RubedoPageComponents','RubedoTranslationsService','$scope',
+        function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService,RubedoFieldTemplateResolver,snapRemote, RubedoPageComponents, RubedoTranslationsService,$scope){
         var me=this;
+        //break nav on non-page routes
+        $scope.$on("$locationChangeStart",function(event, newLoc,currentLoc){
+            if (newLoc.indexOf("file?file-id") > -1||newLoc.indexOf("dam?media-id") > -1){
+                event.preventDefault();
+                window.location.href=newLoc;
+            }
+        });
+        //set context and page-wide services
         me.adminBtnIconClass="glyphicon glyphicon-arrow-right";
         me.snapOpts={
           disable:'right',
