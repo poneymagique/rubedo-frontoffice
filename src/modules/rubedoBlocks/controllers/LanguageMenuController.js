@@ -34,7 +34,12 @@ angular.module("rubedoBlocks").lazy.controller("LanguageMenuController", ['$scop
                             RubedoContentsService.getContentById(contentId).then(function(contentResponse){
                                 if (contentResponse.data.success){
                                     window.location.href =response.data.url + "/" + contentId + "/" + angular.lowercase(contentResponse.data.content.text.replace(/ /g, "-"));
+                                } else {
+                                    window.location.href =  response.data.url;
                                 }
+                            },
+                            function(){
+                                window.location.href =  response.data.url;
                             });
                         } else {
                             window.location.href =  response.data.url;
