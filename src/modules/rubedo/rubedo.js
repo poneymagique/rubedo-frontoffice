@@ -176,6 +176,12 @@
                         newPage.metaKeywords = newPage.metaKeywords?newPage.metaKeywords+','+keyword:keyword;
                     });
                 }
+                if (!newPage.description&&response.data.site.description){
+                    newPage.description=response.data.site.description;
+                }
+                if (!newPage.title&&response.data.site.title){
+                    newPage.title=response.data.site.title;
+                }
                 if(newPage.noIndex || newPage.noFollow){
                     newPage.metaRobots = (newPage.noIndex?'noindex':'') + (newPage.noFollow?',nofollow':'');
                 }
