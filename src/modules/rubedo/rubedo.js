@@ -45,6 +45,12 @@
             if (newLoc.indexOf("file?file-id") > -1||newLoc.indexOf("dam?media-id") > -1){
                 event.preventDefault();
                 window.location.href=newLoc;
+            } else if (newLoc.indexOf("#") > -1){
+                event.preventDefault();
+                var target=angular.element("[name='"+newLoc.split("#")[1]+"']");
+                if (target){
+                    angular.element("body").animate({scrollTop: target.offset().top}, "slow");
+                }
             }
         });
         //set context and page-wide services
