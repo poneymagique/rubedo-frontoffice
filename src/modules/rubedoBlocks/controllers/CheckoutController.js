@@ -1,4 +1,4 @@
-angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","RubedoPagesService","$rootScope","RubedoShoppingCartService","RubedoUserTypesService","RubedoCountriesService","RubedoUsersService","RubedoAuthService","RubedoShippersService","RubedoPaymentMeansService","RubedoOrdersService","$location", function($scope,RubedoPagesService,$rootScope,RubedoShoppingCartService,RubedoUserTypesService,RubedoCountriesService,RubedoUsersService,RubedoAuthService,RubedoShippersService,RubedoPaymentMeansService,RubedoOrdersService,$location){
+angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","RubedoPagesService","$rootScope","RubedoShoppingCartService","RubedoUserTypesService","RubedoCountriesService","RubedoUsersService","RubedoAuthService","RubedoShippersService","RubedoPaymentMeansService","RubedoOrdersService","$location","RubedoMailingListService", function($scope,RubedoPagesService,$rootScope,RubedoShoppingCartService,RubedoUserTypesService,RubedoCountriesService,RubedoUsersService,RubedoAuthService,RubedoShippersService,RubedoPaymentMeansService,RubedoOrdersService,$location,RubedoMailingListService){
     var me = this;
     var config = $scope.blockConfig;
     if (config.signupContentId){
@@ -176,7 +176,25 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
                 if (response.data.success){
                     RubedoAuthService.generateToken({login:newUserFields.login,password:newUserFields.password},me.rememberMe).then(
                         function(authResponse){
-                            window.location.reload();
+                            var mailingListsSuscribe=[];
+                            angular.forEach(me.mailingLists, function(mailingList){
+                                if(mailingList.checked){
+                                    mailingListsSuscribe.push(mailingList.id);
+                                }
+                            });
+                            if (mailingListsSuscribe.length>0){
+                                var mloptions = {
+                                    mailingLists: mailingListsSuscribe,
+                                    email: newUserFields.email
+                                };
+                                RubedoMailingListService.subscribeToMailingLists(mloptions).then(function(mlresponse){
+                                    window.location.reload();
+                                },function(mlresponse){
+                                    window.location.reload();
+                                });
+                            } else{
+                                window.location.reload();
+                            }
                         }
                     );
                 }
@@ -261,6 +279,22 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
         );
 
     };
+    me.mailingLists={};
+    RubedoMailingListService.getAllMailingList().then(function(response){
+        if(response.data.success){
+            angular.forEach(config.mailingListId, function(mailing){
+                var newMailing = {};
+                angular.forEach(response.data.mailinglists, function(mailingInfo){
+                    if(mailingInfo.id == mailing){
+                        newMailing.id = mailing;
+                        newMailing.name = mailingInfo.name;
+                        newMailing.checked = false;
+                        me.mailingLists[mailing] = newMailing;
+                    }
+                });
+            });
+        }
+    });
 
 
 }]);
