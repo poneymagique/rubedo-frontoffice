@@ -32,13 +32,21 @@ angular.module("rubedoBlocks").lazy.controller('SignUpController',['$scope','Rub
                         me.confirmMessageDefault="A confirmation email has been sent to the provided address.";
                     }
                     if (config.mailingListId){
-                        var options = {
-                            mailingLists: config.mailingListId,
-                            email: response.data.user.data.email
-                        };
-                        RubedoMailingListService.subscribeToMailingLists(options).then(function(response){
-                        },function(response){
+                        var mailingListsSuscribe=[];
+                        angular.forEach(me.mailingLists, function(mailingList){
+                            if(mailingList.checked){
+                                mailingListsSuscribe.push(mailingList.id);
+                            }
                         });
+                        if (mailingListsSuscribe.length>0){
+                            var options = {
+                                mailingLists: mailingListsSuscribe,
+                                email: response.data.user.data.email
+                            };
+                            RubedoMailingListService.subscribeToMailingLists(options).then(function(response){
+                            },function(response){
+                            });
+                        }
                     }
                 } else {
                     me.signupError=response.data.message;
@@ -113,6 +121,7 @@ angular.module("rubedoBlocks").lazy.controller('SignUpController',['$scope','Rub
             }
         );
     }
+    me.mailingLists={};
     RubedoMailingListService.getAllMailingList().then(function(response){
         if(response.data.success){
             me.userType = response.data.userType;
