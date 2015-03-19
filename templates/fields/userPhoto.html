@@ -1,14 +1,16 @@
-<img ng-if="!fieldEditMode" ng-if="fieldEntity[field.config.name]&&userPhotoUrl" alt="photo" ng-src="{{userPhotoUrl}}" class="img-responsive img-thumbnail">
-<div ng-if="fieldEditMode" class="thumbnail" ng-controller="UserPhotoFieldController as userPhotoFieldCtrl">
-    <img ng-if="fieldEntity[field.config.name]&&userPhotoUrl" alt="photo" ng-src="{{userPhotoUrl}}" class="img-responsive">
-    <div class="caption">
-        <form class="form" ng-submit="userPhotoFieldCtrl.submitPhoto()">
-            <div class="form-group">
-                <label >{{rubedo.translate('Fields.User.Label.UploadPhoto', 'Upload a new photo')}}</label>
-                <input type="file" file-model="userPhotoFieldCtrl.photoFile" required>
-                <p class="help-block">{{rubedo.translate('Fields.User.Label.Formats', 'Acceptable formats are...')}}</p>
-            </div>
-            <button type="submit" class="btn btn-primary">{{rubedo.translate('Label.Upload', 'Upload')}}</button>
-        </form>
+<img ng-if="!fieldInputMode" ng-if="fieldEntity[field.config.name]&&userPhotoUrl" alt="photo" ng-src="{{userPhotoUrl}}" class="img-responsive img-thumbnail">
+<div ng-if="fieldInputMode" class="form-group">
+    <label class="col-sm-4 control-label">{{field.config.fieldLabel}} :</label>
+    <div class="col-sm-8" ng-controller="UserPhotoFieldController as userPhotoFieldCtrl">
+        <img alt="photo" ng-src="{{userPhotoUrl}}" class="img-responsive">
+        <div class="caption">
+            <form class="form" ng-submit="userPhotoFieldCtrl.submitPhoto()">
+                <div class="form-group">
+                    <label >{{rubedo.translate('Fields.User.Label.UploadPhoto', 'Upload a new photo')}}</label>
+                    <input type="file" file-model="userPhotoFieldCtrl.photoFile" required>
+                </div>
+                <button type="submit" class="btn btn-primary">{{rubedo.translate('Label.Upload', 'Upload')}}</button>
+            </form>
+        </div>
     </div>
 </div>

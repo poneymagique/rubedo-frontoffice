@@ -11,7 +11,7 @@ angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope"
         });
         return field;
     };
-    $scope.fieldEditMode=false;
+    $scope.fieldInputMode=false;
     me.canEdit=false;
     me.getUserById = function (userId){
         RubedoUsersService.getUserById(userId).then(
@@ -73,7 +73,7 @@ angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope"
         me.getUserById($scope.rubedo.current.user.id);
     }
     me.revertChanges=function(){
-        $scope.fieldEditMode=false;
+        $scope.fieldInputMode=false;
         $scope.fieldEntity=angular.copy(me.user.fields);
         me.hasChanges=false;
     };
@@ -95,10 +95,11 @@ angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope"
         );
     };
     me.enterEditMode=function(){
-        $scope.fieldEditMode=true;
+        $scope.fieldInputMode=true;
+        me.hasChanges=true;
     };
     me.cancelEditMode=function(){
-        $scope.fieldEditMode=false;
+        $scope.fieldInputMode=false;
     };
     $scope.registerFieldEditChanges=me.registerEditChanges;
     $scope.updatePhotoUrl=function(photoUrl){

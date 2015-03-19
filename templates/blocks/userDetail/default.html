@@ -1,1 +1,9 @@
-<rubedo-field ng-repeat="field in userProfileCtrl.user.type.fields" ng-if="fieldEntity[field.config.name]"></rubedo-field>
+<div ng-if="!fieldInputMode" class="form form-horizontal">
+    <div class="form-group" ng-repeat="field in userProfileCtrl.user.type.fields">
+        <label class="col-sm-4 control-label">{{field.config.fieldLabel}} :</label>
+        <rubedo-field class="col-sm-8"></rubedo-field>
+    </div>
+</div>
+<div ng-if="fieldInputMode" class="form form-horizontal">
+    <rubedo-field ng-repeat="field in userProfileCtrl.user.type.fields"></rubedo-field>
+</div>

@@ -67,6 +67,7 @@
     };
 
     inputFieldsConfig={
+        "userPhoto":"/templates/fields/userPhoto.html",
         "textfield":"/templates/inputFields/text.html",
         "Ext.form.field.Text":"/templates/inputFields/text.html",
         "Ext.form.field.Number":"/templates/inputFields/number.html",
