@@ -2,7 +2,7 @@
  * Module that manages fields for display and edit
  */
 (function(){
-    var moduleDependencies=['rubedoDataAccess','xeditable','checklist-model','ckeditor'];
+    var moduleDependencies=['rubedoDataAccess','xeditable','checklist-model','ckeditor','ui.bootstrap.datetimepicker'];
     if (typeof(google)!="undefined"){
         moduleDependencies.push('google-maps');
     }
@@ -684,6 +684,16 @@
                 }
             );
         };
+    }]);
+
+    module.controller("DateFieldController",["$scope","$element",function($scope,$element){
+        var me=this;
+        me.date=new Date($scope.fieldEntity[$scope.field.config.name]*1000);
+        me.setTime=function(newDate){
+            $scope.fieldEntity[$scope.field.config.name]=newDate.getTime()/1000;
+            $scope.registerFieldEditChanges();
+        };
+
     }]);
 
 

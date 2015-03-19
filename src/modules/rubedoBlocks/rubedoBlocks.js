@@ -62,7 +62,7 @@
         "calendar": {
             "template": "/templates/blocks/calendar.html",
             "internalDependencies":["/src/modules/rubedoBlocks/controllers/CalendarController.js"],
-            "externalDependencies":['/components/jquery/fullCalendar/lib/moment.min.js','/components/jquery/fullCalendar/lib/jquery-ui.custom.min.js','/components/jquery/fullCalendar/fullcalendar.min.js','/components/jquery/fullCalendar/lang/en-gb.js','/components/jquery/fullCalendar/lang/fr.js']
+            "externalDependencies":['/components/jquery/fullCalendar/lib/jquery-ui.custom.min.js','/components/jquery/fullCalendar/fullcalendar.min.js','/components/jquery/fullCalendar/lang/en-gb.js','/components/jquery/fullCalendar/lang/fr.js']
         },
         "development": {
             "template": "/templates/blocks/development.html"
