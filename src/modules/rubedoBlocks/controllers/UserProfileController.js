@@ -87,10 +87,11 @@ angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope"
         delete (payload.type);
         RubedoUsersService.updateUser(payload).then(
             function(response){
-                console.log(response);
+                $scope.fieldInputMode=false;
+                $scope.rubedo.addNotification("success","Success","Profile updated.");
             },
             function(response){
-                console.log(response);
+                $scope.rubedo.addNotification("danger","Error","Profile update error.");
             }
         );
     };
