@@ -2,18 +2,22 @@
      class="row"
      ng-class="rubedo.componentsService.resolveResponsiveClass(row.responsive)">
 
-    <div ng-if="!row.displayAsTabs" ng-repeat="column in row.columns"
+    <div ng-if="!row.displayAsTabs"  ng-repeat="column in row.columns"
          ng-class="rubedo.componentsService.getColumnClass(column.span,column.offset,column.stackThreshold)+' '+rubedo.componentsService.resolveResponsiveClass(column.responsive)">
-        <div ng-repeat="columnField in column.fields"
-             ng-class="rubedo.componentsService.resolveResponsiveClass(columnField.responsive)"
-             ng-init="field = userProfileCtrl.getFieldByName(columnField.name)"
-                >
-            <div ng-if="field&&(fieldEntity[field.config.name]||field.cType=='checkboxfield')||fieldInputMode">
-                <div ng-if="columnField.showLabel&&field.cType!='checkboxfield'">
-                    <label>{{field.config.fieldLabel}} :</label>
-                    <rubedo-field></rubedo-field>
+        <div ng-class="{'form form-horizontal':fieldInputMode}">
+            <div ng-repeat="columnField in column.fields"
+                 ng-class="rubedo.componentsService.resolveResponsiveClass(columnField.responsive)"
+                 ng-init="field = userProfileCtrl.getFieldByName(columnField.name)"
+                    >
+                <div ng-if="field&&(fieldEntity[field.config.name]||field.cType=='checkboxfield')&&!fieldInputMode">
+                    <div ng-if="columnField.showLabel&&field.cType!='checkboxfield'">
+                        <label>{{field.config.fieldLabel}} :</label>
+                        <rubedo-field></rubedo-field>
+                    </div>
+                    <rubedo-field ng-if="!columnField.showLabel||field.cType=='checkboxfield'"></rubedo-field>
+
                 </div>
-                <rubedo-field ng-if="!columnField.showLabel||field.cType=='checkboxfield'"></rubedo-field>
+                <rubedo-field ng-if="fieldInputMode"></rubedo-field>
             </div>
         </div>
     </div>
@@ -24,16 +28,19 @@
         </ul>
         <div class="tab-content">
             <div ng-repeat="column in row.columns" class="tab-pane"  ng-class="{'active':$index==0}" id="{{'contentTab'+column.$$hashKey}}">
-                <div ng-repeat="columnField in column.fields"
-                     ng-class="rubedo.componentsService.resolveResponsiveClass(columnField.responsive)"
-                     ng-init="field = userProfileCtrl.getFieldByName(columnField.name)"
-                        >
-                    <div ng-if="field&&(fieldEntity[field.config.name]||field.cType=='checkboxfield')||fieldInputMode">
-                        <div ng-if="columnField.showLabel&&field.cType!='checkboxfield'">
-                            <label>{{field.config.fieldLabel}} :</label>
-                            <rubedo-field></rubedo-field>
+                <div ng-class="{'form form-horizontal':fieldInputMode}">
+                    <div ng-repeat="columnField in column.fields"
+                         ng-class="rubedo.componentsService.resolveResponsiveClass(columnField.responsive)"
+                         ng-init="field = userProfileCtrl.getFieldByName(columnField.name)"
+                            >
+                        <div ng-if="field&&(fieldEntity[field.config.name]||field.cType=='checkboxfield')&&!fieldInputMode">
+                            <div ng-if="columnField.showLabel&&field.cType!='checkboxfield'">
+                                <label>{{field.config.fieldLabel}} :</label>
+                                <rubedo-field></rubedo-field>
+                            </div>
+                            <rubedo-field ng-if="!columnField.showLabel||field.cType=='checkboxfield'"></rubedo-field>
                         </div>
-                        <rubedo-field ng-if="!columnField.showLabel||field.cType=='checkboxfield'"></rubedo-field>
+                        <rubedo-field ng-if="fieldInputMode"></rubedo-field>
                     </div>
                 </div>
             </div>
