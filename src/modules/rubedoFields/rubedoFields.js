@@ -81,7 +81,9 @@
         "combobox":"/templates/inputFields/combobox.html",
         "Ext.form.field.ComboBox":"/templates/inputFields/combobox.html",
         "radiogroup":"/templates/inputFields/radioGroup.html",
-        "Ext.form.RadioGroup":"/templates/inputFields/radioGroup.html"
+        "Ext.form.RadioGroup":"/templates/inputFields/radioGroup.html",
+        "datefield":"/templates/inputFields/date.html",
+        "Ext.form.field.Date":"/templates/inputFields/date.html"
     };
 
     //service for resolving field templates
@@ -686,12 +688,22 @@
         };
     }]);
 
-    module.controller("DateFieldController",["$scope","$element",function($scope,$element){
+    module.controller("DateFieldController",["$scope","$element","$filter",function($scope,$element,$filter){
         var me=this;
-        me.date=new Date($scope.fieldEntity[$scope.field.config.name]*1000);
+        var originalDate=$scope.fieldEntity[$scope.field.config.name];
+        if (originalDate){
+            me.date=new Date($scope.fieldEntity[$scope.field.config.name]*1000);
+            me.formattedDate=$filter('date')(me.date, "shortDate");
+        } else {
+            me.date=new Date();
+        }
         me.setTime=function(newDate){
             $scope.fieldEntity[$scope.field.config.name]=newDate.getTime()/1000;
-            $scope.registerFieldEditChanges();
+            me.formattedDate=$filter('date')(newDate, "shortDate");
+            if ($scope.registerFieldEditChanges){
+                $scope.registerFieldEditChanges();
+            }
+
         };
 
     }]);
