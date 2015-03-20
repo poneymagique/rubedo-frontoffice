@@ -150,7 +150,7 @@
                                                     >
                                         </div>
                                     </div>
-                                    <p>{{rubedo.translate('Blocks.Checkout.MailingLists.Label')}}</p>
+                                    <p ng-if="!rubedo.current.user">{{rubedo.translate('Blocks.Checkout.MailingLists.Label')}}</p>
                                     <div class="form-group" ng-if="!rubedo.current.user">
                                         <div class="col-sm-8 col-sm-offset-4">
                                             <div ng-repeat="mailingList in checkoutCtrl.mailingLists" class="checkbox">
