@@ -124,8 +124,6 @@ angular.module("rubedoBlocks").lazy.controller('SignUpController',['$scope','Rub
     me.mailingLists={};
     RubedoMailingListService.getAllMailingList().then(function(response){
         if(response.data.success){
-            me.userType = response.data.userType;
-            $scope.fieldIdPrefix=me.prefix+me.userType.type;
             angular.forEach(config.mailingListId, function(mailing){
                 var newMailing = {};
                 angular.forEach(response.data.mailinglists, function(mailingInfo){
