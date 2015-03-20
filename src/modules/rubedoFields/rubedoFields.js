@@ -432,7 +432,7 @@
                 var popupUrl="/backoffice/link-finder?soloMode=true";
                 window.open(
                     popupUrl,
-                    "Lien interne",
+                    "Page link",
                     "menubar=no, status=no, scrollbars=no, top="+top+", left="+left+", width="+300+", height="+360+""
                 );
 
@@ -457,6 +457,37 @@
                 }
             );
         }
+        me.launchEditor=function(){
+            if ($scope.fieldEditMode){
+                var width = screen.width/2;
+                var height = screen.height/2;
+                var left = (screen.width-width)/2;
+                var top = +((screen.height-height)/2);
+                window.saveRubedoMediaChange=function(id){
+                    $scope.fieldEntity[$scope.field.config.name]=id;
+                    contentId=id;
+                    $scope.registerFieldEditChanges();
+                    RubedoContentsService.getContentById(contentId, options).then(
+                        function(response){
+                            if (response.data.success){
+                                me.contentUrl=response.data.content.canonicalUrl;
+                                me.contentTitle=response.data.content.fields.text;
+                            }
+                        }
+                    );
+                    window.saveRubedoMediaChange=function(){};
+                };
+                var popupUrl="/backoffice/ext-finder?soloMode=true&contentMode=true";
+                if ($scope.field.config.allowedCT){
+                    popupUrl=popupUrl+"&allowedCT="+$scope.field.config.allowedCT+"";
+                }
+                window.open(
+                    popupUrl,
+                    "Content link",
+                    "menubar=no, status=no, scrollbars=no, top="+top+", left="+left+", width="+width+", height="+height+""
+                );
+            }
+        };
     }]);
 
     module.controller("MediaFieldController",["$scope","RubedoMediaService",function($scope,RubedoMediaService){
@@ -488,7 +519,7 @@
                 }
                 window.open(
                     popupUrl,
-                    "Médiathèque",
+                    "DAM",
                     "menubar=no, status=no, scrollbars=no, top="+top+", left="+left+", width="+width+", height="+height+""
                 );
             }
