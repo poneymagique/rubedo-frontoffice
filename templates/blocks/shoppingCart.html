@@ -2,13 +2,13 @@
     <div class="btn-group" ng-if="blockConfig.displayMode=='button'">
         <button ng-if="shoppingCartCtrl.cartIsEmpty" type="button" class="btn btn-default">
             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-            Empty
+            {{ rubedo.translate('Label.Empty')}}
         </button>
         <button ng-if="!shoppingCartCtrl.cartIsEmpty" type="button" class="btn btn-default">
             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
              <span class="badge">{{shoppingCartCtrl.detailedCart.totalItems}} </span>
-            <span ng-show="shoppingCartCtrl.detailedCart.totalItems>1"> Items</span>
-            <span ng-show="shoppingCartCtrl.detailedCart.totalItems==1"> Item</span>
+            <span ng-show="shoppingCartCtrl.detailedCart.totalItems>1"> {{ rubedo.translate('Label.Items')}}</span>
+            <span ng-show="shoppingCartCtrl.detailedCart.totalItems==1"> {{ rubedo.translate('Label.Item')}}</span>
         </button>
         <button ng-if="!shoppingCartCtrl.cartIsEmpty" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
             <span class="caret"></span>
@@ -48,8 +48,8 @@
     <div class="panel panel-default" ng-if="blockConfig.displayMode=='detail'">
         <div class="panel-heading"><strong>{{ rubedo.translate('Label.ShoppingCart')}}</strong>
              <span ng-if="!shoppingCartCtrl.cartIsEmpty" class="badge"> {{shoppingCartCtrl.detailedCart.totalItems}} </span>
-            <span ng-if="!shoppingCartCtrl.cartIsEmpty" ng-show="shoppingCartCtrl.detailedCart.totalItems>1"> Items</span>
-            <span ng-if="!shoppingCartCtrl.cartIsEmpty" ng-show="shoppingCartCtrl.detailedCart.totalItems==1"> Item</span>
+            <span ng-if="!shoppingCartCtrl.cartIsEmpty" ng-show="shoppingCartCtrl.detailedCart.totalItems>1"> {{ rubedo.translate('Label.Items')}}</span>
+            <span ng-if="!shoppingCartCtrl.cartIsEmpty" ng-show="shoppingCartCtrl.detailedCart.totalItems==1"> {{ rubedo.translate('Label.Item')}}</span>
         </div>
         <div ng-if="shoppingCartCtrl.cartIsEmpty" class="panel-body" >
             <div class="alert alert-warning" role="alert">{{ rubedo.translate('Blocks.ShoppingCart.CartIsEmpty')}}</div>

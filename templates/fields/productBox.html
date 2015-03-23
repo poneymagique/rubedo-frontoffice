@@ -16,7 +16,7 @@
             </div>
         </form>
         <button class="btn btn-default" ng-disabled="!productBoxCtrl.canOrder()" ng-click="productBoxCtrl.addToCart()">
-            <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to cart
+            <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> {{ rubedo.translate('Label.AddToCart')}}
         </button>
     </div>
     <div ng-if="manageStock" class="panel-footer">{{productBoxCtrl.getProductAvailabilityText()}}</div>

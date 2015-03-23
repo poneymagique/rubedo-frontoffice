@@ -1,15 +1,17 @@
 <div ng-controller="ProductSearchController as searchResultsCtrl">
-    <span class="pull-right">View as &nbsp;
+    <span class="pull-right">{{rubedo.translate('Blocks.Search.Label.ViewAs')}} &nbsp;
         <div class="btn-group" role="group">
             <button type="button"
                     class="btn btn-default btn-lg"
                     ng-click="searchResultsCtrl.productDisplayMode='grid';"
+                    title="{{rubedo.translate('Blocks.Search.Label.Grid')}}"
                     ng-class="{'btn-primary':searchResultsCtrl.productDisplayMode=='grid'}">
                 <span class="glyphicon glyphicon-th"></span>
             </button>
             <button type="button"
                     class="btn btn-default btn-lg"
                     ng-click="searchResultsCtrl.productDisplayMode='list';"
+                    title="{{rubedo.translate('Blocks.Search.Label.List')}}"
                     ng-class="{'btn-primary':searchResultsCtrl.productDisplayMode=='list'}">
                 <span class="glyphicon glyphicon-th-list"></span>
             </button>
