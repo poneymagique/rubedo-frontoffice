@@ -84,7 +84,9 @@
         "radiogroup":"/templates/inputFields/radioGroup.html",
         "Ext.form.RadioGroup":"/templates/inputFields/radioGroup.html",
         "datefield":"/templates/inputFields/date.html",
-        "Ext.form.field.Date":"/templates/inputFields/date.html"
+        "Ext.form.field.Date":"/templates/inputFields/date.html",
+        "localiserField":"/templates/inputFields/localiser.html",
+        "Rubedo.view.localiserField":"/templates/inputFields/localiser.html"
     };
 
     //service for resolving field templates
@@ -346,7 +348,7 @@
             zoom:4
         };
         $scope.$watch("fieldEntity."+$scope.field.config.name, function(newValue){
-            if (newValue.lat&&newValue.lon){
+            if (newValue&&newValue.lat&&newValue.lon){
                 me.map.center={
                     latitude:newValue.lat,
                     longitude:newValue.lon
@@ -360,7 +362,7 @@
                 };
                 if (newValue.address){
                     me.positionMarker.label=newValue.address;
-                    if (!$scope.feildEditMode){
+                    if (!$scope.feildEditMode&&!$scope.fieldInputMode){
                         me.editableAddress=angular.copy(newValue.address);
                     }
                 }
@@ -370,8 +372,21 @@
         });
         me.geocoder = new google.maps.Geocoder();
         me.reGeocode=function(){
-          if (me.editableAddress){
+          if (me.editableAddress&&me.editableAddress!=""){
               var value=angular.copy($scope.fieldEntity[$scope.field.config.name]);
+              if (!value){
+                  value={
+                      address:null,
+                      altitude:null,
+                      lat:null,
+                      lon:null,
+                      location:{
+                          type:"Point",
+                          coordinates:[]
+                      }
+                      };
+              }
+
               me.geocoder.geocode({
                   'address' : me.editableAddress
               }, function(results, status) {
@@ -383,7 +398,9 @@
                       value.lon=longitude;
                       value.location.coordinates=[longitude,latitude];
                       $scope.fieldEntity[$scope.field.config.name]=angular.copy(value);
-                      $scope.registerFieldEditChanges();
+                      if ($scope.registerFieldEditChanges){
+                        $scope.registerFieldEditChanges();
+                      }
                       $scope.$apply();
                   }
               });
@@ -391,7 +408,7 @@
         };
         me.mapTimer=null;
         me.handleAddressEdit=function(){
-            if ($scope.fieldEditMode){
+            if ($scope.fieldEditMode||$scope.fieldInputMode){
                 clearTimeout(me.mapTimer);
                 me.mapTimer = setTimeout(function() {
                     me.reGeocode();
