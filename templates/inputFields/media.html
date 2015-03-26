@@ -1,16 +1,13 @@
 <div ng-if="field.config.allowedDAMTypes" ng-controller="MediaFieldController as mediaFieldCtrl">
-    <div ng-if="mediaFieldCtrl.fileTypeTemplate" ng-include="mediaFieldCtrl.fileTypeTemplate"></div>
     <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="col-sm-4 control-label">{{field.config.fieldLabel}} <span ng-if="!field.config.allowBlank">*</span></label>
     <div  class="col-sm-8">
+        <div ng-if="mediaFieldCtrl.fileTypeTemplate" ng-include="mediaFieldCtrl.fileTypeTemplate"></div>
         <input type="file"
                class="form-control"
                id="{{fieldIdPrefix+'_'+field.config.name}}"
                ng-required="!field.config.allowBlank"
                file-model="mediaFieldCtrl.newFile"
-               ng-model="fieldEntity[field.config.name]"
-               ng-change="mediaFieldCtrl.uploadNewFile()"
                 >
-        <button type="button" class="btn btn-default" ng-click="mediaFieldCtrl.uploadNewFile()">{{rubedo.translate('Label.Upload', 'Upload')}}</button>
         <span ng-if="field.config.tooltip" class="help-block">{{field.config.tooltip}}</span>
     </div>
 </div>

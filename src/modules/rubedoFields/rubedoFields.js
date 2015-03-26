@@ -509,7 +509,7 @@
         };
     }]);
 
-    module.controller("MediaFieldController",["$scope","RubedoMediaService",function($scope,RubedoMediaService){
+    module.controller("MediaFieldController",["$scope","RubedoMediaService","$element",function($scope,RubedoMediaService,$element){
         var me=this;
         var mediaId=$scope.fieldEntity[$scope.field.config.name];
         me.launchEditor=function(){
@@ -587,7 +587,7 @@
         }
         me.newFile=null;
         me.uploadNewFile=function(){
-           if (me.newFile&&$scope.field.config.allowedDAMTypes){
+           if ($scope.fieldInputMode&&me.newFile&&$scope.field.config.allowedDAMTypes){
                var uploadOptions={
                    typeId:$scope.field.config.allowedDAMTypes,
                    fields:{
@@ -616,6 +616,13 @@
            }
 
         };
+        if ($scope.fieldInputMode){
+            $element.find('.form-control').on('change', function(){
+                setTimeout(function(){
+                    me.uploadNewFile();
+                }, 200);
+            });
+        }
     }]);
 
     module.directive('fileModel', ['$parse', function ($parse) {
