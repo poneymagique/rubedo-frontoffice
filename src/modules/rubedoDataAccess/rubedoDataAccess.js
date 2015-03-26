@@ -455,6 +455,9 @@
         serviceInstance.getContentTypes=function(){
             return ($http.get(config.baseUrl+"/contenttypes"));
         };
+        serviceInstance.findById=function(id){
+            return ($http.get(config.baseUrl+"/contenttypes/"+id));
+        };
         return serviceInstance;
     }]);
 

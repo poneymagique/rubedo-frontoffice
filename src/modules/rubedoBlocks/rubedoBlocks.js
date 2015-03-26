@@ -198,6 +198,10 @@
         "category": {
             "template": "/templates/blocks/category.html",
             "internalDependencies":["/src/modules/rubedoBlocks/controllers/CategoryController.js"]
+        },
+        "contentContribution": {
+            "template": "/templates/blocks/contentContribution.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/ContentContributionController.js"]
         }
     };
 

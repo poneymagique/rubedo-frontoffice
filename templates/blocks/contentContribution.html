@@ -1,0 +1,6 @@
+<div ng-if="rubedo.current.user" ng-controller="ContentContributionController as ccCtrl">
+    <form ng-if="ccCtrl.contentType" class="form form-horizontal">
+        <h2 class="text-center">New content : {{ccCtrl.contentType.type}}</h2>
+        <rubedo-field ng-repeat="field in fields"></rubedo-field>
+    </form>
+</div>
