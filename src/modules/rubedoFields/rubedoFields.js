@@ -587,6 +587,7 @@
         }
         me.newFile=null;
         me.uploadNewFile=function(){
+           me.notification=null;
            if ($scope.fieldInputMode&&me.newFile&&$scope.field.config.allowedDAMTypes){
                var uploadOptions={
                    typeId:$scope.field.config.allowedDAMTypes,
@@ -607,10 +608,18 @@
                             me.displayMedia();
                        } else {
                            console.log(response);
+                           me.notification={
+                               type:"error",
+                               text:response.data.message
+                           };
                        }
                    },
                    function(response){
                        console.log(response);
+                       me.notification={
+                           type:"error",
+                           text:response.data.message
+                       };
                    }
                );
            }
