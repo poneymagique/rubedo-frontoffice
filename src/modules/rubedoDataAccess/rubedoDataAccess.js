@@ -430,6 +430,15 @@
                 data : options
             }));
         };
+        serviceInstance.uploadMedia=function(file,options){
+            var fd = new FormData();
+            fd.append('file', file);
+            return($http.post(config.baseUrl+"/media", fd, {
+                transformRequest: angular.identity,
+                params:options,
+                headers: {'Content-Type': undefined}
+            }));
+        };
         return serviceInstance;
     }]);
 

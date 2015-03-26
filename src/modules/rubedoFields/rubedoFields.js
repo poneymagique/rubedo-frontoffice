@@ -86,7 +86,9 @@
         "datefield":"/templates/inputFields/date.html",
         "Ext.form.field.Date":"/templates/inputFields/date.html",
         "localiserField":"/templates/inputFields/localiser.html",
-        "Rubedo.view.localiserField":"/templates/inputFields/localiser.html"
+        "Rubedo.view.localiserField":"/templates/inputFields/localiser.html",
+        "ImagePickerField":"/templates/inputFields/media.html",
+        "Rubedo.view.ImagePickerField":"/templates/inputFields/media.html"
     };
 
     //service for resolving field templates
@@ -583,6 +585,37 @@
                 }
             );
         }
+        me.newFile=null;
+        me.uploadNewFile=function(){
+           if (me.newFile&&$scope.field.config.allowedDAMTypes){
+               var uploadOptions={
+                   typeId:$scope.field.config.allowedDAMTypes,
+                   fields:{
+                       title:me.newFile.name
+                   }
+               };
+               RubedoMediaService.uploadMedia(me.newFile,uploadOptions).then(
+                   function(response){
+                       if (response.data.success){
+                           var id=response.data.media.id;
+                           $scope.fieldEntity[$scope.field.config.name]=id;
+                           mediaId=id;
+                           if ($scope.registerFieldEditChanges){
+                               $scope.registerFieldEditChanges();
+                           }
+                            me.media=response.data.media;
+                            me.displayMedia();
+                       } else {
+                           console.log(response);
+                       }
+                   },
+                   function(response){
+                       console.log(response);
+                   }
+               );
+           }
+
+        };
     }]);
 
     module.directive('fileModel', ['$parse', function ($parse) {
