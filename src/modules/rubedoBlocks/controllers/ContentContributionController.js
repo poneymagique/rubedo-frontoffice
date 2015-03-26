@@ -9,6 +9,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                 if(response.data.success){
                     console.log(response);
                     me.contentType=response.data.contentType;
+                    $scope.fieldIdPrefix="contentContribution"+me.contentType.type;
                     me.contentType.fields.unshift({
                         cType:"textarea",
                         config:{

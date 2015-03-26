@@ -1,4 +1,4 @@
-<div ng-if="rubedo.current.user&&field.config.allowedDAMTypes" ng-controller="MediaFieldController as mediaFieldCtrl">
+<div class="form-group" ng-if="rubedo.current.user&&field.config.allowedDAMTypes" ng-controller="MediaFieldController as mediaFieldCtrl">
     <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="col-sm-4 control-label">{{field.config.fieldLabel}} <span ng-if="!field.config.allowBlank">*</span></label>
     <div  class="col-sm-8">
         <div ng-if="mediaFieldCtrl.fileTypeTemplate" ng-include="mediaFieldCtrl.fileTypeTemplate"></div>
