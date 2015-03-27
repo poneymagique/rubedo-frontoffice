@@ -2,5 +2,27 @@
     <form ng-if="ccCtrl.contentType" class="form form-horizontal">
         <h2 class="text-center">New content : {{ccCtrl.contentType.type}}</h2>
         <rubedo-field ng-repeat="field in fields"></rubedo-field>
+        <div ng-repeat="vocabulary in vocabularies" class="form-group">
+            <label  class="col-sm-4 control-label">{{vocabulary.name}} <span ng-if="vocabulary.mandatory">*</span></label>
+            <div class="col-sm-8">
+                <select ng-if="vocabulary.multiSelect"
+                        chosen
+                        class="form-control"
+                        multiple
+                        ng-required="vocabulary.mandatory"
+                        ng-options="s.id as s.text for s in vocabulary.terms"
+                        ng-model="fieldEntity.taxonomy[vocabulary.id]"
+                        ></select>
+                <select ng-if="!vocabulary.multiSelect"
+                        chosen
+                        class="form-control"
+                        ng-required="vocabulary.mandatory"
+                        ng-options="s.id as s.text for s in vocabulary.terms"
+                        ng-model="fieldEntity.taxonomy[vocabulary.id]"
+                        ></select>
+                <span ng-if="vocabulary.helpText" class="help-block">{{vocabulary.helpText}}</span>
+            </div>
+        </div>
     </form>
+
 </div>

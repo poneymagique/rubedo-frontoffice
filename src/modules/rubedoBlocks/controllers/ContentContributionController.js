@@ -2,9 +2,14 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
     var me=this;
     var config = $scope.blockConfig;
     $scope.fieldInputMode=true;
-    $scope.fieldEntity={};
+    $scope.fieldEntity={
+        taxonomy:{}
+    };
+    var options={
+        includeTaxonomy:true
+    };
     me.loadContentType=function(ctId){
-        RubedoContentTypesService.findById(ctId).then(
+        RubedoContentTypesService.findById(ctId,options).then(
             function(response){
                 if(response.data.success){
                     console.log(response);
@@ -27,6 +32,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                         }
                     });
                     $scope.fields=me.contentType.fields;
+                    $scope.vocabularies=me.contentType.completeVocabularies;
                 }
             }
         );
