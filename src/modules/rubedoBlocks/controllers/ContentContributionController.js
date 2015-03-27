@@ -13,7 +13,6 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
         RubedoContentTypesService.findById(ctId,options).then(
             function(response){
                 if(response.data.success){
-                    console.log(response);
                     me.contentType=response.data.contentType;
                     $scope.fieldIdPrefix="contentContribution"+me.contentType.type;
                     me.contentType.fields.unshift({
@@ -43,6 +42,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
     }
     me.submitNewContent=function(){
         if(me.contentType&&me.submitStatus){
+            me.createError=null;
             var formData=angular.copy($scope.fieldEntity);
             var payLoad={
                 status:me.submitStatus,
@@ -53,10 +53,25 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
             payLoad.fields=formData;
             RubedoContentsService.createNewContent(payLoad).then(
                 function(createResponse){
-                    console.log(createResponse);
+                    if (createResponse.data.success){
+                        $scope.rubedo.addNotification("success","Success","Content created.");
+                        $scope.fieldEntity={
+                            taxonomy:{}
+                        };
+                    }else{
+                        $scope.rubedo.addNotification("danger","Error","Content creation error.");
+                        me.createError={
+                            type:"error",
+                            text:createResponse.data.message
+                        };
+                    }
                 },
                 function(createResponse){
-                    console.log(createResponse);
+                    $scope.rubedo.addNotification("danger","Error","Content creation error.");
+                    me.createError={
+                        type:"error",
+                        text:createResponse.data.message
+                    };
                 }
             );
         }
