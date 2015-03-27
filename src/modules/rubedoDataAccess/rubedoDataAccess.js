@@ -174,6 +174,15 @@
                 }
             }));
         };
+        serviceInstance.createNewContent=function(content){
+            return ($http({
+                url:config.baseUrl+"/contents",
+                method:"POST",
+                data:{
+                    content:content
+                }
+            }));
+        };
         return serviceInstance;
     }]);
 

@@ -8,6 +8,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
     var options={
         includeTaxonomy:true
     };
+    me.submitStatus=null;
     me.loadContentType=function(ctId){
         RubedoContentTypesService.findById(ctId,options).then(
             function(response){
@@ -20,7 +21,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                         config:{
                             name:"summary",
                             fieldLabel:"Summary",
-                            allowBlank:false
+                            allowBlank:true
                         }
                     });
                     me.contentType.fields.unshift({
@@ -40,4 +41,24 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
     if (config.contentType&&config.contentType!=""){
         me.loadContentType(config.contentType);
     }
+    me.submitNewContent=function(){
+        if(me.contentType&&me.submitStatus){
+            var formData=angular.copy($scope.fieldEntity);
+            var payLoad={
+                status:me.submitStatus,
+                typeId:me.contentType.id,
+                taxonomy:formData.taxonomy
+            };
+            delete (formData.taxonomy);
+            payLoad.fields=formData;
+            RubedoContentsService.createNewContent(payLoad).then(
+                function(createResponse){
+                    console.log(createResponse);
+                },
+                function(createResponse){
+                    console.log(createResponse);
+                }
+            );
+        }
+    };
 }]);
