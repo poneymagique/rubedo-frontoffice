@@ -44,6 +44,9 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                     me.existingContent=ecResponse.data.content;
                     var initialValues=angular.copy(me.existingContent.fields);
                     initialValues.taxonomy=angular.copy(me.existingContent.taxonomy);
+                    if(angular.element.isEmptyObject(initialValues.taxonomy)){
+                        initialValues.taxonomy={};
+                    }
                     $scope.fieldEntity=angular.copy(initialValues);
                     me.updateMode=true;
                     me.loadContentType(me.existingContent.type.id);
