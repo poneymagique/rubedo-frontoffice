@@ -38,7 +38,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
         );
     };
     if($location.search()["content-edit"]){
-        RubedoContentsService.getContentById($location.search()["content-edit"]).then(
+        RubedoContentsService.getContentById($location.search()["content-edit"],{useDraftMode:true}).then(
             function(ecResponse){
                 if (ecResponse.data.success){
                     me.existingContent=ecResponse.data.content;
