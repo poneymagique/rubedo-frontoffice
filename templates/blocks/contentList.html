@@ -20,8 +20,11 @@
                          alt="{{ content.fields.text }}"/>
                     <div class="media-body">
                         <h4 class="media-heading">
-                            <a ng-if="!fieldEditMode" ng-href="{{ content.detailPageUrl }}">
-                                {{content.fields.text}}
+                            <a ng-if="!fieldEditMode&&!contentListCtrl.isFOContributeMode" ng-href="{{ content.detailPageUrl }}">
+                                {{content.fields.text }}
+                            </a>
+                            <a ng-if="!fieldEditMode&&contentListCtrl.isFOContributeMode" ng-href="{{ contentListCtrl.editorPageUrl+'?content-edit='+content.id }}">
+                                {{content.fields.text }} ( {{content.status}} )
                             </a>
                             <rubedo-field ng-if="fieldEditMode" field="{{content.type.title}}"></rubedo-field>
                         </h4>
@@ -30,8 +33,11 @@
                             <rubedo-field field="{{content.type.summary}}"></rubedo-field>
                         </p>
                     </div>
-                    <a class="pull-right" ng-href="{{ content.detailPageUrl }}">
+                    <a ng-if="!contentListCtrl.isFOContributeMode" class="pull-right" ng-href="{{ content.detailPageUrl }}">
                         {{rubedo.translate('Block.ContentList.Label.ReadMore','read more')}}
+                    </a>
+                    <a ng-if="contentListCtrl.isFOContributeMode" class="pull-right" ng-href="{{ content.detailPageUrl+'?preview=true&preview_draft=true' }}">
+                        Preview detail
                     </a>
                 </div>
             </div>
