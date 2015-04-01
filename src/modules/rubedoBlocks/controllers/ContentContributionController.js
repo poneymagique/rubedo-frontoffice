@@ -1,4 +1,4 @@
-angular.module("rubedoBlocks").lazy.controller("ContentContributionController",["$scope","RubedoContentsService","RubedoContentTypesService","$location",function($scope,RubedoContentsService,RubedoContentTypesService,$location){
+angular.module("rubedoBlocks").lazy.controller("ContentContributionController",["$scope","RubedoContentsService","RubedoContentTypesService","$location","RubedoPagesService",function($scope,RubedoContentsService,RubedoContentTypesService,$location,RubedoPagesService){
     var me=this;
     var config = $scope.blockConfig;
     $scope.fieldInputMode=true;
@@ -72,6 +72,13 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                         if (response.data.success){
                             me.existingContent.version = response.data.version;
                             $scope.rubedo.addNotification("success","Success","Content updated.");
+                            if (config.listPageId){
+                                RubedoPagesService.getPageById(config.listPageId).then(function(response2){
+                                    if (response2.data.success){
+                                        $location.url(response2.data.url);
+                                    }
+                                });
+                            }
                         } else {
                             $scope.rubedo.addNotification("danger","Error","Content update error.");
                         }
@@ -97,6 +104,14 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                             $scope.fieldEntity={
                                 taxonomy:{}
                             };
+                            if (config.listPageId){
+                                RubedoPagesService.getPageById(config.listPageId).then(function(response2){
+                                    if (response2.data.success){
+                                        $location.url(response2.data.url);
+                                    }
+                                });
+                            }
+
                         }else{
                             $scope.rubedo.addNotification("danger","Error","Content creation error.");
                             me.createError={

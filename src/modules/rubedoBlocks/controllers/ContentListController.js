@@ -17,7 +17,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentListController",['$scope'
     if(config.singlePage){
         options.detailPageId = config.singlePage;
     }
-    if(config.enableFOContrib){
+    if(config.enableFOContrib&&$scope.rubedo.current.user){
         options.foContributeMode = true;
         me.isFOContributeMode=true;
         if (config.editorPageId){
