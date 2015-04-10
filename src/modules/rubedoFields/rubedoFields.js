@@ -63,6 +63,8 @@
         "ratingField":"/templates/fields/rating.html",
         "Rubedo.ux.widget.Rating":"/templates/fields/rating.html",
         "productBox":"/templates/fields/productBox.html",
+        "embeddedImageField":"/templates/fields/embeddedImage.html",
+        "Rubedo.view.embeddedImageField":"/templates/fields/embeddedImage.html",
         "fieldNotFound":"/templates/fields/fieldNotFound.html"
     };
 
