@@ -6,7 +6,17 @@
         <div ng-repeat="vocabulary in vocabularies" class="form-group">
             <label  class="col-sm-4 control-label">{{vocabulary.name}} <span ng-if="vocabulary.mandatory">*</span></label>
             <div class="col-sm-8">
-                <select ng-if="vocabulary.multiSelect"
+                <select ng-if="vocabulary.multiSelect&&vocabulary.expandable"
+                        chosen
+                        class="form-control"
+                        no-results-text="'No result found. Press enter to add '"
+                        extendable="true"
+                        multiple
+                        ng-required="vocabulary.mandatory"
+                        ng-options="s.id as s.text for s in vocabulary.terms"
+                        ng-model="fieldEntity.taxonomy[vocabulary.id]"
+                        ></select>
+                <select ng-if="vocabulary.multiSelect&&!vocabulary.expandable"
                         chosen
                         class="form-control"
                         multiple
@@ -16,6 +26,7 @@
                         ></select>
                 <select ng-if="!vocabulary.multiSelect"
                         chosen
+
                         class="form-control"
                         ng-required="vocabulary.mandatory"
                         ng-options="s.id as s.text for s in vocabulary.terms"
