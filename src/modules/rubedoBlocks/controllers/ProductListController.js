@@ -1,4 +1,4 @@
-angular.module("rubedoBlocks").lazy.controller("ProductListController",['$scope','$compile','RubedoProductsService',"$route","RubedoContentTypesService","RubedoContentsService",function($scope,$compile,RubedoProductsService,$route,RubedoContentTypesService,RubedoContentsService){
+angular.module("rubedoBlocks").lazy.controller("ProductListController",['$scope','$compile','RubedoProductsService',"$route","RubedoContentTypesService","RubedoContentsService","RubedoPagesService",function($scope,$compile,RubedoProductsService,$route,RubedoContentTypesService,RubedoContentsService,RubedoPagesService){
     var me = this;
     me.contentList=[];
     var config=$scope.blockConfig;
@@ -31,6 +31,17 @@ angular.module("rubedoBlocks").lazy.controller("ProductListController",['$scope'
     };
     if(config.singlePage){
         options.detailPageId = config.singlePage;
+    }
+    if(config.enableFOContrib&&$scope.rubedo.current.user){
+        options.foContributeMode = true;
+        me.isFOContributeMode=true;
+        if (config.editorPageId){
+            RubedoPagesService.getPageById(config.editorPageId).then(function(response){
+                if (response.data.success){
+                    me.editorPageUrl=response.data.url;
+                }
+            });
+        }
     }
     me.titleOnly = config.showOnlyTitle;
     me.columns = config.columns && !config.infiniteScroll ? 'col-md-'+(12/config.columns):'col-md-12';
