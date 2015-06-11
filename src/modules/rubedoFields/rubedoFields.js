@@ -366,7 +366,7 @@
                 };
                 if (newValue.address){
                     me.positionMarker.label=newValue.address;
-                    if (!$scope.feildEditMode&&!$scope.fieldInputMode){
+                    if ((!$scope.feildEditMode&&!$scope.fieldInputMode)||!me.editableAddress){
                         me.editableAddress=angular.copy(newValue.address);
                     }
                 }
