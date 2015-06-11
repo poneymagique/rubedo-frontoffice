@@ -1,5 +1,5 @@
 <div class="form-group" ng-if="rubedo.current.user&&field.config.allowedDAMTypes" ng-controller="MediaFieldController as mediaFieldCtrl">
-    <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="col-sm-4 control-label">{{field.config.fieldLabel}} <span ng-if="!field.config.allowBlank">*</span></label>
+    <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="col-sm-4 control-label">{{field.config.fieldLabel}} <span ng-if="!field.config.allowBlank&&!field.config.fieldLabel.includes('*')">*</span></label>
     <div  class="col-sm-8">
         <div ng-if="mediaFieldCtrl.fileTypeTemplate" ng-include="mediaFieldCtrl.fileTypeTemplate"></div>
         <rubedo-notification ng-if="mediaFieldCtrl.notification" ng-init="notification=mediaFieldCtrl.notification"></rubedo-notification>

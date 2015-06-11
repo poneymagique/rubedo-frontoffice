@@ -1,5 +1,5 @@
 <div class="form-group">
-    <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="col-sm-4 control-label">{{field.config.fieldLabel}} <span ng-if="!field.config.allowBlank">*</span></label>
+    <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="col-sm-4 control-label">{{field.config.fieldLabel}} <span ng-if="!field.config.allowBlank&&!field.config.fieldLabel.includes('*')">*</span></label>
     <div class="col-sm-8">
         <input type="{{field.config.vtype=='email'||field.config.vtype=='url'||field.config.vtype=='password' ? field.config.vtype : 'text'}}"
                class="form-control"

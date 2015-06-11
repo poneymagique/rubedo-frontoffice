@@ -1,5 +1,5 @@
 <div class="form-grup" ng-controller="LocaliserFieldController as localiserFieldCtrl">
-    <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="col-sm-4 control-label">{{field.config.fieldLabel}} <span ng-if="!field.config.allowBlank">*</span></label>
+    <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="col-sm-4 control-label">{{field.config.fieldLabel}} <span ng-if="!field.config.allowBlank&&!field.config.fieldLabel.includes('*')">*</span></label>
     <div class="col-sm-8">
         <div class="rubedo-map-field">
             <google-map center="localiserFieldCtrl.map.center" zoom="localiserFieldCtrl.map.zoom" draggable="true">

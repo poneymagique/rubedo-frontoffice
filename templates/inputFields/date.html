@@ -1,5 +1,5 @@
 <div class="form-group" ng-controller="DateFieldController as dateFieldCtrl">
-    <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="col-sm-4 control-label">{{field.config.fieldLabel}} <span ng-if="!field.config.allowBlank">*</span></label>
+    <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="col-sm-4 control-label">{{field.config.fieldLabel}} <span ng-if="!field.config.allowBlank&&!field.config.fieldLabel.includes('*')">*</span></label>
     <div class="col-sm-8">
         <div class="dropdown">
             <a showtab class="dropdown-toggle" id="dropdown{{fieldIdPrefix+'_'+field.config.name}}" role="button" data-toggle="dropdown" data-target="#" href="#">
