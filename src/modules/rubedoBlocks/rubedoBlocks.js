@@ -202,6 +202,10 @@
         "contentContribution": {
             "template": "/templates/blocks/contentContribution.html",
             "internalDependencies":["/src/modules/rubedoBlocks/controllers/ContentContributionController.js","/src/modules/rubedoBlocks/directives/ChosenDirective.js"]
+        },
+        "megaMenu": {
+            "template": "/templates/blocks/megaMenu.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/MegaMenuController.js"]
         }
     };
 
