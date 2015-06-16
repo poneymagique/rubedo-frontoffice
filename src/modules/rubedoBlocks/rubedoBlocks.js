@@ -318,8 +318,16 @@
                 var el;
                 attrs.$observe( 'template', function ( tpl ) {
                     if ( angular.isDefined( tpl ) ) {
+                        var includeId=false;
+                        if (tpl.indexOf("document.write(")>-1) {
+                            includeId="custom"+Math.random().toString(36).substring(7);
+                            tpl = tpl.replace("document.write(", "angular.element("+includeId+").append(");
+                        }
                         el = $compile( tpl )( scope );
                         element.html("");
+                        if (includeId){
+                            element.attr("id",includeId);
+                        }
                         element.append( el );
                     }
                 });
