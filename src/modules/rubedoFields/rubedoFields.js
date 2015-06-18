@@ -221,6 +221,7 @@
                     }
                     me.html=jQuery.htmlClean(newValue, {
                         allowedAttributes:[["style"],["rubedo-page-link"],["target"]],
+                        replace: [[["b", "big"], "strong"]],
                         format: true
                     });
 
