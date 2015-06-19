@@ -6,9 +6,11 @@ angular.module("rubedoBlocks").lazy.controller("CarouselController",["$scope","R
         start: blockConfig.resultsSkip ? blockConfig.resultsSkip : 0,
         limit: blockConfig.pageSize ? blockConfig.pageSize : 6,
         'fields[]' : ["text","summary",blockConfig.imageField],
-        'requiredFields[]':[blockConfig.imageField],
         ismagic: blockConfig.magicQuery ? blockConfig.magicQuery : false
     };
+    if (blockConfig.imageField && blockConfig.imageField!="") {
+    	queryOptions['requiredFields[]'] = [blockConfig.imageField];
+    }
     var pageId=$scope.rubedo.current.page.id;
     var siteId=$scope.rubedo.current.site.id;
     me.getContents=function(){
