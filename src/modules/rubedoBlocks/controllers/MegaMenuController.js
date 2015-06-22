@@ -74,12 +74,25 @@
             );
         };
         $scope.registerFieldEditChanges=me.registerEditChanges;
-        
+
         RubedoMenuService.getMenu(pageId, config.menuLevel).then(function(response){
             if (response.data.success){
                 me.menu=response.data.menu;
+                var menuMode = "simple";
+                me.menu.pages.forEach(function(page) {
+                	page.menuMode = "simple";
+                	if (page.pages) {
+	                	page.pages.every(function(subpage) {
+	                		if (subpage.pages) {
+	                			page.menuMode = "mega";
+	                		}
+	                		return (!subpage.pages);
+	                	});
+                	}
+                });
             } else {
                 me.menu={};
             }
-        });
+        });        
+        
     }]);
