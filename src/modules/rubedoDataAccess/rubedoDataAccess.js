@@ -58,7 +58,7 @@
     module.factory('RubedoModuleConfigService',[function(){
         var serviceInstance = {};
         serviceInstance.addFallbackLang=function(fallbackLang){
-            config.lang=config.lang+'-'+fallbackLang;
+            config.lang=config.lang+'|'+fallbackLang;
         };
         serviceInstance.changeLang =  function(lang){
             config.lang = lang;
