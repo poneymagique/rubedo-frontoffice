@@ -11,6 +11,9 @@ angular.module("rubedoBlocks").lazy.controller("CarouselController",["$scope","R
     if (blockConfig.imageField && blockConfig.imageField!="") {
     	queryOptions['requiredFields[]'] = [blockConfig.imageField];
     }
+    if(blockConfig.singlePage){
+        queryOptions.detailPageId = blockConfig.singlePage;
+    }
     var pageId=$scope.rubedo.current.page.id;
     var siteId=$scope.rubedo.current.site.id;
     me.getContents=function(){
