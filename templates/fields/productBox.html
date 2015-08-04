@@ -3,7 +3,7 @@
         <h5 ng-if="productBoxCtrl.hasSpecialOffer"><del>{{productBoxCtrl.oldPrice| number : 2}} €</del></h5>
         <h3 ng-class="{'text-danger':productBoxCtrl.hasSpecialOffer}" >{{productBoxCtrl.currentPrice| number : 2}} €</h3>
         <form>
-            <div class="form-group" ng-repeat="field in productBoxCtrl.variationFields">
+            <div class="form-group" ng-repeat="field in productBoxCtrl.variationFields track by $index">
                 <label for="{{field}}">{{contentDetailCtrl.getFieldByName(field).config.fieldLabel}}</label>
                 <span ng-if="productBoxCtrl.productProperties.variations.length==1"> {{productBoxCtrl.selectionValues[field]}}</span>
                 <select ng-if="productBoxCtrl.productProperties.variations.length>1"

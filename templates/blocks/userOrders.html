@@ -12,7 +12,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in userOrdersCtrl.orders">
+                <tr ng-repeat="item in userOrdersCtrl.orders track by $index">
                     <td>{{ item.orderNumber }}</td>
                     <td>{{ item.createTime*1000| date: "shortDate" }}</td>
                     <td>{{ item.finalPrice|number : 2 }} €</td>

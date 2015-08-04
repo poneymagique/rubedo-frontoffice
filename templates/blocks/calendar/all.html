@@ -2,7 +2,7 @@
     {{ calendarCtrl.init() }}
 </div>
 <div class="col-md-6">
-    <div class="media" ng-repeat="content in calendarCtrl.contents">
+    <div class="media" ng-repeat="content in calendarCtrl.contents track by $index">
         <img class="media-object pull-left" ng-if="content.fields.image"
              ng-src="{{rubedo.imageUrl.getUrlByMediaId(content.fields.image,{size:'thumbnail'}) }}" alt="{{ content.fields.text }}" />
 

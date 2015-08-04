@@ -1,5 +1,5 @@
 <div ng-controller="GalleryController as galleryCtrl">
-    <div ng-if="galleryCtrl.query" ng-repeat="image in galleryCtrl.images" class="pull-left thumbnail gallery" ng-style="{width:galleryCtrl.width}">
+    <div ng-if="galleryCtrl.query" ng-repeat="image in galleryCtrl.images track by $index" class="pull-left thumbnail gallery" ng-style="{width:galleryCtrl.width}">
         <a href data-toggle="modal" ng-click="galleryCtrl.loadModal($index)">
             <img class="img-rounded" ng-src="{{image.thumbnailUrl}}" ng-attr-alt="{{image.title}}" ng-attr-title="{{image.title}}"/>
         </a>

@@ -1,6 +1,6 @@
 <div ng-controller="MediaListController as mediaListCtrl">
     <div ng-if="mediaListCtrl.display">
-        <div class="media" ng-repeat="media in mediaListCtrl.media">
+        <div class="media" ng-repeat="media in mediaListCtrl.media track by $index">
             <a  class="pull-left" ng-href="{{ media.url }}" target="_blank">
                 <img ng-src="{{ rubedo.imageUrl.getThumbnailUrlByMediaId(media.id) }}" ng-attr-alt="{{media.title}}" class="media-object pull-left" ng-attr-title="{{media.title}}" />
             </a>

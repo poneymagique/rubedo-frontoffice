@@ -1,11 +1,11 @@
-<div ng-repeat="row in userProfileCtrl.customLayout.rows"
+<div ng-repeat="row in userProfileCtrl.customLayout.rows track by $index"
      class="row"
      ng-class="rubedo.componentsService.resolveResponsiveClass(row.responsive)">
 
-    <div ng-if="!row.displayAsTabs"  ng-repeat="column in row.columns"
+    <div ng-if="!row.displayAsTabs"  ng-repeat="column in row.columns track by $index"
          ng-class="rubedo.componentsService.getColumnClass(column.span,column.offset,column.stackThreshold)+' '+rubedo.componentsService.resolveResponsiveClass(column.responsive)">
         <div ng-class="{'form form-horizontal':fieldInputMode}">
-            <div ng-repeat="columnField in column.fields"
+            <div ng-repeat="columnField in column.fields track by $index"
                  ng-class="rubedo.componentsService.resolveResponsiveClass(columnField.responsive)"
                  ng-init="field = userProfileCtrl.getFieldByName(columnField.name)"
                     >
@@ -24,12 +24,12 @@
 
     <div ng-if="row.displayAsTabs&&row.columns" class="col-sm-12">
         <ul class="nav nav-tabs" role="tablist">
-            <li ng-repeat="column in row.columns" ng-class="{'active':$index==0}"><a showtab href="#{{'contentTab'+column.$$hashKey}}" role="tab" data-toggle="tab">{{column.eTitle}}</a></li>
+            <li ng-repeat="column in row.columns track by $index" ng-class="{'active':$index==0}"><a showtab href="#{{'contentTab'+column.$$hashKey}}" role="tab" data-toggle="tab">{{column.eTitle}}</a></li>
         </ul>
         <div class="tab-content">
-            <div ng-repeat="column in row.columns" class="tab-pane"  ng-class="{'active':$index==0}" id="{{'contentTab'+column.$$hashKey}}">
+            <div ng-repeat="column in row.columns track by $index" class="tab-pane"  ng-class="{'active':$index==0}" id="{{'contentTab'+column.$$hashKey}}">
                 <div ng-class="{'form form-horizontal':fieldInputMode}">
-                    <div ng-repeat="columnField in column.fields"
+                    <div ng-repeat="columnField in column.fields track by $index"
                          ng-class="rubedo.componentsService.resolveResponsiveClass(columnField.responsive)"
                          ng-init="field = userProfileCtrl.getFieldByName(columnField.name)"
                             >

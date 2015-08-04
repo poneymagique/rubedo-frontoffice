@@ -29,10 +29,10 @@
     <nav class="navbar navbar-default">
         <div class="navbar-header">
             <span class="navbar-brand">{{rubedo.translate("Blocks.Search.Label.SearchCriteria", "Search criteria")}} :
-                <span ng-repeat-start="term in directoryCtrl.notRemovableTerms">{{term.operator}}</span><span
+                <span ng-repeat-start="term in directoryCtrl.notRemovableTerms track by $index">{{term.operator}}</span><span
                         class="badge" ng-repeat-end>
                     {{term.label}}
-                </span><span ng-repeat-start="term in directoryCtrl.activeTerms">{{term.operator}}</span>
+                </span><span ng-repeat-start="term in directoryCtrl.activeTerms track by $index">{{term.operator}}</span>
                 <span class="badge cursor-as-pointer" ng-repeat-end
                       ng-click="directoryCtrl.clickOnFacets(term.facetId, term.term)">
                     {{term.label}}&nbsp;&times;
@@ -43,7 +43,7 @@
     <div class="row" ng-if="directoryCtrl.alphabeticIndex">
         <div class="text-center col-md-12">
             <div class="btn-group alphabeticalIndex">
-                <button ng-repeat="letter in directoryCtrl.alphabet.terms" ng-disabled="!letter.term"
+                <button ng-repeat="letter in directoryCtrl.alphabet.terms track by $index" ng-disabled="!letter.term"
                         ng-click="directoryCtrl.clickOnFacets(directoryCtrl.alphabet.id, letter.term)"
                         type="button" class="btn btn-default">{{letter.label}}<sup>{{letter.count}}</sup>
                 </button>
@@ -63,16 +63,16 @@
                     </form>
                 </div>
             </div>
-            <div class="panel panel-default" ng-repeat="facet in directoryCtrl.facets" ng-if="facet.terms || facet.ranges">
+            <div class="panel panel-default" ng-repeat="facet in directoryCtrl.facets track by $index" ng-if="facet.terms || facet.ranges">
                 <div class="panel-heading">{{facet.label}}&nbsp;<span
                         ng-if="facet.total && (facet.total - facet.other) <= directoryCtrl.count" class="badge pull-right">{{facet.total - facet.other}}</span></div>
                 <div class="panel-body">
                     <ul>
-                        <li ng-if="facet.terms" class="cursor-as-pointer" ng-repeat="term in facet.terms"
+                        <li ng-if="facet.terms" class="cursor-as-pointer" ng-repeat="term in facet.terms track by $index"
                             ng-click="directoryCtrl.clickOnFacets(facet.id, term.term)">
                             {{term.label}}&nbsp;({{term.count}})
                         </li>
-                        <li ng-if="facet.ranges" class="cursor-as-pointer" ng-repeat="term in facet.ranges"
+                        <li ng-if="facet.ranges" class="cursor-as-pointer" ng-repeat="term in facet.ranges track by $index"
                             ng-click="directoryCtrl.clickOnFacets(facet.id, term.from)">
                             {{term.label}}&nbsp;({{term.count}})
                         </li>

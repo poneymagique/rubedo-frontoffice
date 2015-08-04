@@ -10,10 +10,10 @@
                 <label ng-attr-for="{{mailingListSusCtrl.prefix+'name'}}">{{rubedo.translate("Blocks.SignUp.label.name", "Name")}}</label>
                 <input ng-model="mailingListSusCtrl.name" type="text" class="form-control" ng-attr-id="{{mailingListSusCtrl.prefix+'name'}}" placeholder="{{rubedo.translate('Blocks.SignUp.label.name', 'Name')}}" required>
             </div>
-            <rubedo-field ng-repeat="field in mailingListSusCtrl.userType.fields"></rubedo-field>
+            <rubedo-field ng-repeat="field in mailingListSusCtrl.userType.fields track by $index"></rubedo-field>
 
             <h4>{{rubedo.translate('Blocks.SignUp.label.mailingList', 'Subscribe to the following mailing lists')}}</h4>
-            <div ng-repeat="mailingList in mailingListSusCtrl.mailingLists" class="checkbox">
+            <div ng-repeat="mailingList in mailingListSusCtrl.mailingLists track by $index" class="checkbox">
                 <label>
                     <input ng-model="mailingList.checked" type="checkbox"> {{mailingList.name}}
                 </label>

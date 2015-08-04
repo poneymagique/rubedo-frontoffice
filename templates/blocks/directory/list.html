@@ -1,4 +1,4 @@
-<div class="media resultData" ng-repeat="datum in directoryCtrl.data">
+<div class="media resultData" ng-repeat="datum in directoryCtrl.data track by $index">
     <img ng-if="datum.avatar" ng-src="{{datum.avatar}}" alt="{{datum.title}}"
          class="img-responsive img-thumbnail pull-left media-object"/>
     <div class="media-body">

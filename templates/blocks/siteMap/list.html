@@ -3,5 +3,5 @@
 <a ng-href="{{menu.url}}">{{menu.text}}</a>
 
 <ul class="no-list-style" ng-hide="siteMapCtrl.getPageDisplay(menu.id)" ng-if="menu.pages">
-    <li ng-repeat="menu in menu.pages" ng-include="rubedo.themePath+'/templates/blocks/siteMap/list.html'"></li>
+    <li ng-repeat="menu in menu.pages track by $index" ng-include="rubedo.themePath+'/templates/blocks/siteMap/list.html'"></li>
 </ul>

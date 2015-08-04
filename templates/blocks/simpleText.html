@@ -1,3 +1,3 @@
 <div ng-controller="RichTextController as richTextCtrl">
-    <rubedo-field ng-repeat="field in richTextCtrl.content.type.fields" ng-if="fieldEntity[field.config.name]"></rubedo-field>
+    <rubedo-field ng-repeat="field in richTextCtrl.content.type.fields track by $index" ng-if="fieldEntity[field.config.name]"></rubedo-field>
 </div>

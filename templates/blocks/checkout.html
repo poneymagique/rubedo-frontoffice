@@ -61,7 +61,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <h4 class="text-center">{{ rubedo.translate('Blocks.Checkout.Step2.PersonalDetails')}}</h4>
-                                    <rubedo-field ng-repeat="field in checkoutCtrl.inputFields"></rubedo-field>
+                                    <rubedo-field ng-repeat="field in checkoutCtrl.inputFields track by $index"></rubedo-field>
                                 </div>
                                 <div class="col-md-6">
                                     <h4 class="text-center">{{ rubedo.translate('Blocks.Checkout.Label.Address')}}</h4>
@@ -153,7 +153,7 @@
                                     <p ng-if="!rubedo.current.user">{{rubedo.translate('Blocks.Checkout.MailingLists.Label')}}</p>
                                     <div class="form-group" ng-if="!rubedo.current.user">
                                         <div class="col-sm-8 col-sm-offset-4">
-                                            <div ng-repeat="mailingList in checkoutCtrl.mailingLists" class="checkbox">
+                                            <div ng-repeat="mailingList in checkoutCtrl.mailingLists track by $index" class="checkbox">
                                                 <label>
                                                     <input ng-model="mailingList.checked" type="checkbox"> {{mailingList.name}}
                                                 </label>
@@ -440,7 +440,7 @@
                             <div class="col-md-6 col-md-offset-3">
                                 <div class="form-group">
                                     <div class="col-sm-8 col-sm-offset-4">
-                                        <div class="radio" ng-repeat="shipper in checkoutCtrl.shippersArray">
+                                        <div class="radio" ng-repeat="shipper in checkoutCtrl.shippersArray track by $index">
                                             <label>
                                                 <input type="radio" name="shippersRadio" value="{{shipper.shipperId}}"
                                                        ng-checked="checkoutCtrl.currentShipper&&checkoutCtrl.currentShipper.shipperId==shipper.shipperId"
@@ -535,7 +535,7 @@
                                         </thead>
                                         <tbody>
 
-                                        <tr ng-repeat="product in checkoutCtrl.detailedCart.cart">
+                                        <tr ng-repeat="product in checkoutCtrl.detailedCart.cart track by $index">
                                             <td>
                                                 {{ product.title }}<br />
                                                 <small>{{ product.subtitle }}</small>
@@ -558,7 +558,7 @@
                                 <form ng-if="checkoutCtrl.userType&&rubedo.current.user" ng-submit="checkoutCtrl.handleOrderCreate()" class="form-horizontal">
                                         <div class="form-group">
                                             <div class="col-sm-12">
-                                                <div class="radio" ng-repeat="paymentMeans in checkoutCtrl.activePaymentMeans">
+                                                <div class="radio" ng-repeat="paymentMeans in checkoutCtrl.activePaymentMeans track by $index">
                                                     <label>
                                                         <input type="radio" name="paymentMeansRadio" value="{{paymentMeans.paymentMeans}}"
                                                                ng-checked="checkoutCtrl.currentPaymentMeans&&checkoutCtrl.currentPaymentMeans.paymentMeans==paymentMeans.paymentMeans"

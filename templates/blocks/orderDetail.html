@@ -77,7 +77,7 @@
                     </thead>
                     <tbody>
 
-                    <tr ng-repeat="product in orderDetailCtrl.order.detailedCart.cart">
+                    <tr ng-repeat="product in orderDetailCtrl.order.detailedCart.cart track by $index">
                         <td>
                             {{ product.title }}<br />
                             <small>{{ product.subtitle }}</small>

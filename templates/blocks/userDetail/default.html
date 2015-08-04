@@ -1,9 +1,9 @@
 <div ng-if="!fieldInputMode" class="form form-horizontal">
-    <div class="form-group" ng-repeat="field in userProfileCtrl.user.type.fields">
+    <div class="form-group" ng-repeat="field in userProfileCtrl.user.type.fields track by $index">
         <label class="col-sm-4 control-label">{{field.config.fieldLabel}} :</label>
         <rubedo-field class="col-sm-8"></rubedo-field>
     </div>
 </div>
 <div ng-if="fieldInputMode" class="form form-horizontal">
-    <rubedo-field ng-repeat="field in userProfileCtrl.user.type.fields"></rubedo-field>
+    <rubedo-field ng-repeat="field in userProfileCtrl.user.type.fields track by $index"></rubedo-field>
 </div>
