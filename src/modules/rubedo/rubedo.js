@@ -51,6 +51,8 @@
                 if (target){
                     angular.element("body,html").animate({scrollTop: target.offset().top}, "slow");
                 }
+            } else if (window._gaq) {
+                window._gaq.push(['_trackPageview', newLoc]);
             }
         });
         //set context and page-wide services
