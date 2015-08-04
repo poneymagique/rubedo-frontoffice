@@ -14,11 +14,15 @@ angular.module("rubedoBlocks").lazy.directive("paginator",["$timeout",function($
             var me = this;
             me.showPager = false;
             $scope.$watch('count',function(){
-                me.actualPage = 1;
-                me.nbPages = Math.ceil(($scope.count - $scope.start)/$scope.limit);
+                me.actualPage = $scope.start/$scope.limit+1;
+                me.nbPages = Math.ceil($scope.count/$scope.limit);
                 me.showPager = me.nbPages > 1;
             });
-            var resultsSkip = $scope.start;
+            $scope.$watch('start',function(){
+                me.actualPage = $scope.start/$scope.limit+1;
+                me.nbPages = Math.ceil($scope.count/$scope.limit);
+                me.showPager = me.nbPages > 1;
+            });
             me.showActive = function(value){
                 return value == me.actualPage;
             };
@@ -48,8 +52,7 @@ angular.module("rubedoBlocks").lazy.directive("paginator",["$timeout",function($
                         me.actualPage = value + 1;
                     }
                     $scope.start = (value * $scope.limit);
-                    if (resultsSkip)
-                        $scope.start += resultsSkip;
+
                     $timeout($scope.changePageAction);
                 }
             };
