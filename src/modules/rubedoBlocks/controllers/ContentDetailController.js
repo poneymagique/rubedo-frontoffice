@@ -27,11 +27,13 @@ angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scop
                 if(response.data.success){
                     $scope.rubedo.current.page.contentCanonicalUrl = response.data.content.canonicalUrl;
                     me.content=response.data.content;
-                    if (me.content.fields.text){
-                        $scope.rubedo.setPageTitle(angular.copy(me.content.fields.text));
-                    }
-                    if (me.content.fields.summary){
-                        $scope.rubedo.setPageDescription(angular.copy(me.content.fields.summary));
+                    if (config.isAutoInjected){
+                        if (me.content.fields.text){
+                            $scope.rubedo.setPageTitle(angular.copy(me.content.fields.text));
+                        }
+                        if (me.content.fields.summary){
+                            $scope.rubedo.setPageDescription(angular.copy(me.content.fields.summary));
+                        }
                     }
                     $scope.fieldEntity=angular.copy(me.content.fields);
                     $scope.fieldLanguage=me.content.locale;
