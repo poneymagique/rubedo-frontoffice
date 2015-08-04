@@ -162,6 +162,12 @@
                 me.registeredEditCtrls.push(ctrlRef);
             }
         };
+            me.setPageTitle=function(newTitle){
+                me.current.page.title=newTitle;
+            };
+            me.setPageDescription=function(newDescription){
+                me.current.page.description=newDescription;
+            }
 
     }]);
 
