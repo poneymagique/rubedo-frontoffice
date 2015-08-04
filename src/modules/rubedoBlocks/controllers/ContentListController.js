@@ -1,7 +1,8 @@
-angular.module("rubedoBlocks").lazy.controller("ContentListController",['$scope','$compile','RubedoContentsService',"$route","RubedoContentTypesService","RubedoPagesService",function($scope,$compile,RubedoContentsService,$route,RubedoContentTypesService,RubedoPagesService){
+angular.module("rubedoBlocks").lazy.controller("ContentListController",['$scope','$compile','RubedoContentsService',"$route","RubedoContentTypesService","RubedoPagesService","$location",function($scope,$compile,RubedoContentsService,$route,RubedoContentTypesService,RubedoPagesService,$location){
     var me = this;
     me.contentList=[];
     var config=$scope.blockConfig;
+    var blockPagingIdentifier=$scope.block.bType+$scope.block.id.substring(21)+"Page";
     var pageId=$scope.rubedo.current.page.id;
     var siteId=$scope.rubedo.current.site.id;
     var alreadyPersist = false;
@@ -9,6 +10,10 @@ angular.module("rubedoBlocks").lazy.controller("ContentListController",['$scope'
     me.start = config.resultsSkip?config.resultsSkip:0;
     me.limit = config.pageSize?config.pageSize:12;
     me.ismagic = config.magicQuery ? config.magicQuery : false;
+    var urlCurrentPage=$location.search()[blockPagingIdentifier];
+    if (urlCurrentPage){
+        me.start=(urlCurrentPage-1)*me.limit;
+    }
     var options = {
         start: me.start,
         limit: me.limit,
@@ -33,6 +38,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentListController",['$scope'
     me.showPaginator = config.showPager && !config.infiniteScroll;
     me.changePageAction = function(){
         options.start = me.start;
+        $location.search(blockPagingIdentifier,(me.start/me.limit)+1);
         me.getContents(config.query, pageId, siteId, options);
     };
     $scope.$watch('rubedo.fieldEditMode', function(newValue) {
