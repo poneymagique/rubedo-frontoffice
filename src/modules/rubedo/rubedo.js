@@ -48,8 +48,10 @@
             } else if (newLoc.indexOf("#") > -1){
                 event.preventDefault();
                 var target=angular.element("[name='"+newLoc.split("#")[1]+"']");
-                if (target){
+                if (target&&target.length>0){
                     angular.element("body,html").animate({scrollTop: target.offset().top}, "slow");
+                } else {
+                    window.location.href=newLoc.slice(0,newLoc.indexOf("#"));
                 }
             } else if (window._gaq) {
                 window._gaq.push(['_trackPageview', newLoc]);
