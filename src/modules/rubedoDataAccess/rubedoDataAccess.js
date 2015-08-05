@@ -87,13 +87,17 @@
     //service providing menu structure using root page id, level and language
     module.factory('RubedoMenuService', ['$route','$http',function($route,$http) {
         var serviceInstance={};
-        serviceInstance.getMenu=function(pageId,menuLevel){
+        serviceInstance.getMenu=function(pageId,menuLevel,includeRichText){
+            var params={
+                pageId:pageId,
+                menuLocale:$route.current.params.lang,
+                menuLevel:menuLevel
+            };
+            if (includeRichText){
+                params.includeRichText=true;
+            }
             return ($http.get(config.baseUrl+"/menu",{
-                params:{
-                    pageId:pageId,
-                    menuLocale:$route.current.params.lang,
-                    menuLevel:menuLevel
-                }
+                params:params
             }));
         };
         return serviceInstance;
