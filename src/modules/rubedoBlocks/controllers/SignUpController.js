@@ -1,4 +1,4 @@
-angular.module("rubedoBlocks").lazy.controller('SignUpController',['$scope','RubedoUserTypesService','RubedoUsersService', '$location','RubedoMailingListService', function($scope, RubedoUserTypesService, RubedoUsersService, $location, RubedoMailingListService){
+angular.module("rubedoBlocks").lazy.controller('SignUpController',['$scope','RubedoUserTypesService','RubedoUsersService', '$location','RubedoMailingListService','RubedoAuthService', function($scope, RubedoUserTypesService, RubedoUsersService, $location, RubedoMailingListService,RubedoAuthService){
     var me = this;
     var config = $scope.blockConfig;
     me.inputFields=[ ];
@@ -24,6 +24,18 @@ angular.module("rubedoBlocks").lazy.controller('SignUpController',['$scope','Rub
                     if (me.userType.signUpType=="open"){
                         me.confirmMessage="Blocks.SignUp.done.created";
                         me.confirmMessageDefault="Account created.";
+                        me.credentials={
+                            login:fields.login,
+                            password:fields.password
+                        };
+                        RubedoAuthService.generateToken(me.credentials,false).then(
+                            function(responseAuth){
+                                window.location.reload();
+                            },
+                            function(responseAuth){
+                                me.authError=response.data.message;
+                            }
+                        );
                     } else if (me.userType.signUpType=="moderated"){
                         me.confirmMessage="Blocks.SignUp.moderated.created";
                         me.confirmMessageDefault="Account created. You will be able to log in as soon as an administrator validates your account.";
