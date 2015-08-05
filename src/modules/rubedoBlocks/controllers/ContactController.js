@@ -45,7 +45,6 @@ angular.module("rubedoBlocks").lazy.controller('ContactController',['$scope','Ru
             function(response){
                 if (response.data.success){
                     me.contactData={ };
-                    me.showForm=false;
                     me.showConfirmMessage=true;
                 } else {
                     me.contactError=response.data.message;
