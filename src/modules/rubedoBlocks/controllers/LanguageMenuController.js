@@ -24,7 +24,7 @@ angular.module("rubedoBlocks").lazy.controller("LanguageMenuController", ['$scop
                     if (response.data.success){
                         if($scope.rubedo.current.page.contentCanonicalUrl) {
                             // Get content id
-                            urlArray = $scope.rubedo.current.page.contentCanonicalUrl.split("/");
+                            urlArray = $route.current.params.routeline.split("/");
                             contentId = urlArray[urlArray.length-2];
 
                             // Redirect without title
@@ -33,7 +33,12 @@ angular.module("rubedoBlocks").lazy.controller("LanguageMenuController", ['$scop
                             //Redirect with title
                             RubedoContentsService.getContentById(contentId).then(function(contentResponse){
                                 if (contentResponse.data.success){
-                                    window.location.href =response.data.url + "/" + contentId + "/" + angular.lowercase(contentResponse.data.content.text.replace(/ /g, "-"));
+                                    console.log(contentResponse.data.content);
+                                    var contentSegment=contentResponse.data.content.text;
+                                    if (contentResponse.data.content.fields.urlSegment&&contentResponse.data.content.fields.urlSegment!=""){
+                                        contentSegment=contentResponse.data.content.fields.urlSegment;
+                                    }
+                                    window.location.href =response.data.url + "/" + contentId + "/" + angular.lowercase(contentSegment.replace(/ /g, "-"));
                                 } else {
                                     window.location.href =  response.data.url;
                                 }
