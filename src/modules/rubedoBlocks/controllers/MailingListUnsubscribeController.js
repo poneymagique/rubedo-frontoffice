@@ -16,7 +16,7 @@ angular.module("rubedoBlocks").lazy.controller('MailingListUnsuscribeController'
                 } else {
                     $scope.notification = {
                         type: 'error',
-                        text: $scope.rubedo.translate("Blocks.SignUp.emailConfirmError.userUpdateFailed")
+                        text: $scope.rubedo.translate("Blocks.UserProfile.Error.EmailNotValid")
                     };
                 }
             },function(){
