@@ -50,6 +50,24 @@ angular.module("rubedoBlocks").lazy.controller("LanguageMenuController", ['$scop
                                 window.location.href =  response.data.url;
                             });
                         } else {
+                            var keptParameters = 0;
+                            var urlParameters = "";
+
+                            for(var index in $route.current.params) {
+                                if(index == "lang" || index == "routeline") {
+                                    continue;
+                                }
+
+                                urlParameters += index + "=" + $route.current.params[index] + "&";
+                                keptParameters++;
+                            }
+
+                            if(keptParameters > 0 && response.data.url.indexOf("?") == -1) {
+                                response.data.url += "?";
+                            }
+
+                            response.data.url += urlParameters;
+
                             window.location.href =  response.data.url;
                         }
                     }
