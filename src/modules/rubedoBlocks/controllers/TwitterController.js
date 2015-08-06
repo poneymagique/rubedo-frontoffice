@@ -5,6 +5,7 @@ angular.module("rubedoBlocks").lazy.controller('TwitterController',['$scope',fun
         me[key] = value;
     });
     me.chrome = '';
+    me.width = (config.width && config.width!= "") ? config.width : 0;
     me.tweetMode = function(mode){
         if(mode == config.mode) {
             return config.account;
