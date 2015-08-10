@@ -238,7 +238,7 @@
         };
         return serviceInstance;
     });
-
+    var mimifiedBlocksDependency=false;
     module.factory('RubedoBlockDependencyResolver', function() {
         var serviceInstance={};
         serviceInstance.getDependencies=function(bTypeArray){
@@ -263,15 +263,19 @@
                 }
             });
             if (window.rubedoConfig.isMimified){
-                var allBlockDependencies=[];
-                angular.forEach(blocksConfig,function(block){
-                    angular.forEach(block.internalDependencies,function(dependencyPath) {
-                        if (allBlockDependencies.indexOf(dependencyPath) < 0) {
-                            allBlockDependencies.push(dependencyPath);
-                        }
+                if (!mimifiedBlocksDependency) {
+                    var allBlockDependencies=[];
+                    angular.forEach(blocksConfig,function(block){
+                        angular.forEach(block.internalDependencies,function(dependencyPath) {
+                            if (allBlockDependencies.indexOf(dependencyPath) < 0) {
+                                allBlockDependencies.push(dependencyPath);
+                            }
+                        });
                     });
-                });
-                dependenciesArray.push(themePath+"/js/rubedo-all-blocks.js?blockconfig="+angular.toJson(allBlockDependencies));
+                    mimifiedBlocksDependency=themePath+"/js/rubedo-all-blocks.js?blockconfig="+angular.toJson(allBlockDependencies);
+                }
+                dependenciesArray.push(mimifiedBlocksDependency);
+
             }
             return (dependenciesArray);
         };
