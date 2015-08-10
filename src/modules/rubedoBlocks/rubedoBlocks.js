@@ -252,7 +252,7 @@
                             }
                         });
                     }
-                    if (blocksConfig[bType].internalDependencies){
+                    if (blocksConfig[bType].internalDependencies&&!window.rubedoConfig.isMimified){
                         angular.forEach(blocksConfig[bType].internalDependencies,function(dependency){
                             var dependencyPath=blocksConfig[bType].absoluteUrl?dependency:themePath+dependency;
                             if (dependenciesArray.indexOf(dependencyPath)<0){
@@ -262,6 +262,17 @@
                     }
                 }
             });
+            if (window.rubedoConfig.isMimified){
+                var allBlockDependencies=[];
+                angular.forEach(blocksConfig,function(block){
+                    angular.forEach(block.internalDependencies,function(dependencyPath) {
+                        if (allBlockDependencies.indexOf(dependencyPath) < 0) {
+                            allBlockDependencies.push(dependencyPath);
+                        }
+                    });
+                });
+                dependenciesArray.push(themePath+"/js/rubedo-all-blocks.js?blockconfig="+angular.toJson(allBlockDependencies));
+            }
             return (dependenciesArray);
         };
         return serviceInstance;
