@@ -1,4 +1,4 @@
-angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope","RubedoUsersService","$route","$location",function($scope, RubedoUsersService, $route,$location){
+angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope","RubedoUsersService","$route","$location","RubedoMailingListService",function($scope, RubedoUsersService, $route,$location,RubedoMailingListService){
     var me = this;
     var config = $scope.blockConfig;
     var themePath="/theme/"+window.rubedoConfig.siteTheme;
@@ -18,6 +18,7 @@ angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope"
             function(response){
                 if(response.data.success){
                     me.user=response.data.user;
+                    me.initMl();
                     me.hasChanges=false;
                     $scope.fieldEntity=angular.copy(me.user.fields);
                     $scope.fieldLanguage=$route.current.params.lang;
@@ -77,6 +78,8 @@ angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope"
         $scope.fieldInputMode=false;
         $scope.fieldEntity=angular.copy(me.user.fields);
         me.hasChanges=false;
+        me.initMl();
+
     };
     me.registerEditChanges=function(){
         me.hasChanges=true;
@@ -88,6 +91,45 @@ angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope"
         delete (payload.type);
         RubedoUsersService.updateUser(payload).then(
             function(response){
+                if (config.mailingListId){
+                    var mailingListsSuscribe=[];
+                    var mailingListsUnSuscribe=[];
+                    angular.forEach(me.mailingLists, function(mailingList){
+                        if(mailingList.checked){
+                            mailingListsSuscribe.push(mailingList.id);
+                        } else {
+                            mailingListsUnSuscribe.push(mailingList.id);
+
+                        }
+                    });
+                    if (mailingListsSuscribe.length>0){
+                        var options = {
+                            mailingLists: mailingListsSuscribe,
+                            email: me.user.fields.email
+                        };
+                        RubedoMailingListService.subscribeToMailingLists(options).then(
+                            function(response2){
+
+                            },function(response2){
+
+                            }
+                        );
+                    }
+                    if (mailingListsUnSuscribe.length>0){
+                        var options2 = {
+                            mailingLists: mailingListsUnSuscribe,
+                            email: me.user.fields.email
+                        };
+                        RubedoMailingListService.unsubscribeToMailingLists(options2).then(
+                            function(response2){
+
+                            },function(response2){
+
+                            }
+                        );
+                    }
+                }
+
                 $scope.fieldInputMode=false;
                 $scope.rubedo.addNotification("success","Success","Profile updated.");
             },
@@ -107,5 +149,25 @@ angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope"
     $scope.updatePhotoUrl=function(photoUrl){
         $scope.userPhotoUrl=photoUrl;
         me.user.photoUrl=photoUrl;
+    };
+    me.mailingLists={};
+    me.initMl = function() {
+        if(config.mailingListId) {
+            RubedoMailingListService.getAllMailingList().then(function(response){
+                if(response.data.success){
+                    angular.forEach(config.mailingListId, function(mailing){
+                        var newMailing = {};
+                        angular.forEach(response.data.mailinglists, function(mailingInfo){
+                            if(mailingInfo.id == mailing){
+                                newMailing.id = mailing;
+                                newMailing.name = mailingInfo.name;
+                                newMailing.checked = me.user.mailingLists && me.user.mailingLists[mailing] && me.user.mailingLists[mailing].status;
+                                me.mailingLists[mailing] = newMailing;
+                            }
+                        });
+                    });
+                }
+            });
+        }
     }
 }]);
