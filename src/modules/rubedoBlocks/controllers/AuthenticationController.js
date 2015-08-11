@@ -84,11 +84,24 @@ angular.module("rubedoBlocks").lazy.controller("AuthenticationController",["$sco
             me.authError="Please fill in all required fields."
         } else {
             RubedoAuthService.generateToken(me.credentials,me.rememberMe).then(
-                function(response){
-                    window.location.reload();
+                function(responseAuth){
+                    if (me.blockConfig&&me.blockConfig.redirectOnConnection&&me.blockConfig.profilePage&&mongoIdRegex.test(me.blockConfig.profilePage)){
+                        RubedoPagesService.getPageById(me.blockConfig.profilePage).then(function(response){
+                            if (response.data.success){
+                                window.location.href=response.data.url;
+                            } else {
+                                window.location.reload();
+                            }
+                        },function(response){
+                            window.location.reload();
+
+                        });
+                    } else {
+                        window.location.reload();
+                    }
                 },
-                function(response){
-                    me.authError=response.data.message;
+                function(responseAuth){
+                    me.authError=responseAuth.data.message;
                 }
             );
         }
