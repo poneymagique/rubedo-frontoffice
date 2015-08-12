@@ -185,6 +185,11 @@ angular.module("rubedoBlocks").lazy.controller("ContentListController",['$scope'
     if(config.query){
         me.getContents(config.query, pageId, siteId, options, false);
     }
+    me.launchFOContribute=function(){
+        if(me.editorPageUrl){
+            $location.url(me.editorPageUrl);
+        }
+    }
 }]);
 angular.module("rubedoBlocks").lazy.controller("ContentListDetailController",['$scope','$compile','RubedoContentsService',function($scope,$compile,RubedoContentsService){
     var me = this;
@@ -229,4 +234,5 @@ angular.module("rubedoBlocks").lazy.controller("ContentListDetailController",['$
         }
     };
     $scope.registerFieldEditChanges = me.registerEditChanges;
+
 }]);
