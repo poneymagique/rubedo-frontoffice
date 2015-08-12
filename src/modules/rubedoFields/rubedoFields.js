@@ -65,6 +65,8 @@
         "productBox":"/templates/fields/productBox.html",
         "embeddedImageField":"/templates/fields/embeddedImage.html",
         "Rubedo.view.embeddedImageField":"/templates/fields/embeddedImage.html",
+        "RDirectObjectField":"/templates/fields/jsonObject.html",
+        "Rubedo.view.RDirectObjectField":"/templates/fields/jsonObject.html",
         "fieldNotFound":"/templates/fields/fieldNotFound.html"
     };
 
