@@ -24,9 +24,17 @@
                         ng-options="s.id as s.text for s in vocabulary.terms"
                         ng-model="fieldEntity.taxonomy[vocabulary.id]"
                         ></select>
-                <select ng-if="!vocabulary.multiSelect"
+                <select ng-if="!vocabulary.multiSelect&&!vocabulary.expandable"
                         chosen
-
+                        class="form-control"
+                        ng-required="vocabulary.mandatory"
+                        ng-options="s.id as s.text for s in vocabulary.terms"
+                        ng-model="fieldEntity.taxonomy[vocabulary.id]"
+                        ></select>
+                <select ng-if="!vocabulary.multiSelect&&vocabulary.expandable"
+                        chosen
+                        extendable="true"
+                        no-results-text="'No result found. Press enter to add '"
                         class="form-control"
                         ng-required="vocabulary.mandatory"
                         ng-options="s.id as s.text for s in vocabulary.terms"
