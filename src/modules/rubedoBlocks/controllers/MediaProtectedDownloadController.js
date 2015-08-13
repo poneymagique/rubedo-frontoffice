@@ -7,7 +7,6 @@ angular.module("rubedoBlocks").lazy.controller('MediaProtectedDownloadController
     };
     RubedoMediaService.getProtectedMediaById(options).then(function(response){
         if(response.data.success){
-            console.log(response.data);
             me.media = response.data.media;
             me.introduction = response.data.introduction?response.data.introduction : undefined;
         }
@@ -22,14 +21,19 @@ angular.module("rubedoBlocks").lazy.controller('MediaProtectedDownloadController
                 if(response.data.success){
                     $scope.notification = {
                         type: 'success',
-                        text: 'Email sent'
+                        text: $scope.rubedo.translate("Blocks.ProtectedRessource.MailSent")
+                    };
+                } else {
+                    $scope.notification = {
+                        type: 'error',
+                        text: response.data.message&&response.data.message!="" ? response.data.message : $scope.rubedo.translate("Exception104", null, ["%1$s"], [me.email])
                     };
                 }
                 me.email = '';
-            },function(){
+            },function(response){
                 $scope.notification = {
                     type: 'error',
-                    text: 'Email not sent'
+                    text: response.data.message&&response.data.message!="" ? response.data.message : $scope.rubedo.translate("Exception104", null, ["%1$s"], [me.email])
                 };
             });
         }

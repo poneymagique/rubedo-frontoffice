@@ -1,5 +1,5 @@
 <div ng-controller="MediaProtectedDownloadController as mediaPrtcdDlCtrl">
-    <rubedo-notification ng-if="MediaProtectedDownloadController.notification"></rubedo-notification>
+    <rubedo-notification ng-if="notification"></rubedo-notification>
     <div ng-if="mediaPrtcdDlCtrl.introduction"
          ng-include="rubedo.blockTemplateResolver.getTemplate('richText',{ })"
          ng-init="blockConfig = {content:mediaPrtcdDlCtrl.introduction, fromFront: true}"
