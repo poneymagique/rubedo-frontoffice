@@ -68,24 +68,30 @@
                 </div>
                 <table class="table table-striped table-hover">
                     <thead>
-                    <tr>
-                        <th>{{ rubedo.translate('Blocks.OrderDetails.Table.Name') }}</th>
-                        <th>{{ rubedo.translate('Blocks.OrderDetails.Table.Cost')}}</th>
-                        <th>{{ rubedo.translate('Blocks.OrderDetails.Table.Amount') }}</th>
-                        <th>{{ rubedo.translate('Blocks.OrderDetails.Table.Price') }}</th>
-                    </tr>
+                        <tr>
+                            <th></th>
+                            <th>{{ rubedo.translate('Blocks.OrderDetails.Table.Name') }}</th>
+                            <th>{{ rubedo.translate('Blocks.OrderDetails.Table.Cost')}}</th>
+                            <th>{{ rubedo.translate('Blocks.OrderDetails.Table.Amount') }}</th>
+                            <th>{{ rubedo.translate('Blocks.OrderDetails.Table.Price') }}</th>
+                        </tr>
                     </thead>
                     <tbody>
-
-                    <tr ng-repeat="product in orderDetailCtrl.order.detailedCart.cart track by $index">
-                        <td>
-                            {{ product.title }}<br />
-                            <small>{{ product.subtitle }}</small>
-                        </td>
-                        <td>{{ product.unitPrice | number : 2 }} €</td>
-                        <td>{{ product.amount }}</td>
-                        <td>{{ product.price | number : 2 }} €</td>
-                    </tr>
+                        <tr ng-repeat="product in orderDetailCtrl.order.detailedCart.cart track by $index">
+                            <td>
+                                <img class="img-responsive" ng-if="product.image"
+                                     ng-src="{{rubedo.imageUrl.getUrlByMediaId(product.image,{size:'thumbnail'}) }}"
+                                     alt="{{ product.title }}"
+                                        />
+                            </td>
+                            <td>
+                                {{ product.title }}<br />
+                                <small>{{ product.subtitle }}</small>
+                            </td>
+                            <td>{{ product.unitPrice | number : 2 }} €</td>
+                            <td>{{ product.amount }}</td>
+                            <td>{{ product.price | number : 2 }} €</td>
+                        </tr>
                     </tbody>
                 </table>
                 <div class="panel-body text-right">
