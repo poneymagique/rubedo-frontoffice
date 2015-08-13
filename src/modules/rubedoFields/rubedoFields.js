@@ -248,17 +248,29 @@
     module.controller("ExternalMediaFieldController",['$scope','$http','$sce',function($scope,$http,$sce){
         var me=this;
         var myValue=$scope.fieldEntity[$scope.field.config.name];
-        if ((myValue)&&(myValue.url)){
-            var url = "http://iframe.ly/api/oembed?callback=JSON_CALLBACK&url="+encodeURIComponent(myValue.url);
-            if ($scope.rubedo.current.site.iframelyKey){
-                url=url+"&api_key="+$scope.rubedo.current.site.iframelyKey;
-            }
-            $http.jsonp(url).success(function(response){
+        me.refreshRender=function(){
+            if ((myValue)&&(myValue.url)){
+                var url = "http://iframe.ly/api/oembed?callback=JSON_CALLBACK&url="+encodeURIComponent(myValue.url);
+                if ($scope.rubedo.current.site.iframelyKey){
+                    url=url+"&api_key="+$scope.rubedo.current.site.iframelyKey;
+                }
+                $http.jsonp(url).success(function(response){
                     me.html=$sce.trustAsHtml(response.html);
                 });
-
-
-        }
+            }
+        };
+        me.refreshRender();
+        me.handleSizeChanges=function(){
+            if ($scope.fieldEditMode){
+                $scope.registerFieldEditChanges();
+            }
+        };
+        me.handleUrlChanges=function(){
+            me.refreshRender();
+            if ($scope.fieldEditMode){
+                $scope.registerFieldEditChanges();
+            }
+        };
     }]);
 
     module.controller("RadioGroupController",['$scope',function($scope){

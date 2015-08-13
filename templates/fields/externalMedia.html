@@ -1,4 +1,30 @@
-<div
-     ng-controller="ExternalMediaFieldController as externalMediaFieldCtrl"
-     ng-style="{'maxWidth':fieldEntity[field.config.name].maxWidth, 'maxHeight':fieldEntity[field.config.name].maxHeight}"
+<div ng-controller="ExternalMediaFieldController as externalMediaFieldCtrl">
+    <div ng-style="{'maxWidth':fieldEntity[field.config.name].maxWidth, 'maxHeight':fieldEntity[field.config.name].maxHeight, 'overflow':'hidden'}"
      ng-bind-html="externalMediaFieldCtrl.html"></div>
+    <div class="panel panel-default" ng-if="fieldEditMode">
+        <div class="panel-heading">{{field.config.fieldLabel}}</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-8">
+                    <input type="text" class="form-control"
+                           ng-model="fieldEntity[field.config.name].url"
+                           ng-change="externalMediaFieldCtrl.handleUrlChanges()"
+                           placeholder="URL">
+                </div>
+                <div class="col-xs-2">
+                    <input type="number" class="form-control"
+                           ng-model="fieldEntity[field.config.name].maxHeight"
+                           ng-change="externalMediaFieldCtrl.handleSizeChanges()"
+                           placeholder="Max height">
+                </div>
+                <div class="col-xs-2">
+                    <input type="number" class="form-control"
+                           ng-model="fieldEntity[field.config.name].maxWidth"
+                           ng-change="externalMediaFieldCtrl.handleSizeChanges()"
+                           placeholder="Max width">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
