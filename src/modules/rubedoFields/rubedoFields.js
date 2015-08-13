@@ -93,6 +93,8 @@
         "Rubedo.view.localiserField":"/templates/inputFields/localiser.html",
         "ImagePickerField":"/templates/inputFields/media.html",
         "Rubedo.view.ImagePickerField":"/templates/inputFields/media.html",
+        "externalMediaField":"/templates/inputFields/externalMedia.html",
+        "Rubedo.view.externalMediaField":"/templates/inputFields/externalMedia.html",
         "ratingField":"/templates/inputFields/rating.html",
         "Rubedo.ux.widget.Rating":"/templates/inputFields/rating.html"
     };
@@ -247,8 +249,8 @@
 
     module.controller("ExternalMediaFieldController",['$scope','$http','$sce',function($scope,$http,$sce){
         var me=this;
-        var myValue=$scope.fieldEntity[$scope.field.config.name];
         me.refreshRender=function(){
+            var myValue=$scope.fieldEntity[$scope.field.config.name];
             if ((myValue)&&(myValue.url)){
                 var url = "http://iframe.ly/api/oembed?callback=JSON_CALLBACK&url="+encodeURIComponent(myValue.url);
                 if ($scope.rubedo.current.site.iframelyKey){
