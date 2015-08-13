@@ -92,7 +92,9 @@
         "localiserField":"/templates/inputFields/localiser.html",
         "Rubedo.view.localiserField":"/templates/inputFields/localiser.html",
         "ImagePickerField":"/templates/inputFields/media.html",
-        "Rubedo.view.ImagePickerField":"/templates/inputFields/media.html"
+        "Rubedo.view.ImagePickerField":"/templates/inputFields/media.html",
+        "ratingField":"/templates/inputFields/rating.html",
+        "Rubedo.ux.widget.Rating":"/templates/inputFields/rating.html"
     };
 
     //service for resolving field templates
@@ -283,9 +285,11 @@
             return (starArray);
         };
         me.editValue=function(index){
-          if ($scope.fieldEditMode){
+          if ($scope.fieldEditMode||$scope.fieldInputMode){
               $scope.fieldEntity[$scope.field.config.name]=index;
-              $scope.registerFieldEditChanges();
+              if ($scope.fieldEditMode){
+                  $scope.registerFieldEditChanges();
+              }
           }
         };
     }]);
