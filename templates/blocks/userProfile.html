@@ -6,6 +6,7 @@
         <button ng-show="fieldInputMode&&!userProfileCtrl.hasChanges" ng-click="userProfileCtrl.cancelEditMode()" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> {{rubedo.translate("Label.Cancel", "Cancel")}}</button>
     </div>
     <div ng-include="userProfileCtrl.detailTemplate"></div>
+    <div ng-if="userProfileCtrl.mailingLists&&userProfileCtrl.user.type.fields">{{rubedo.translate('Blocks.UserProfile.Label.SubscribedNews', 'My subscribed newsletters')}}</div>
     <div ng-repeat="mailingList in userProfileCtrl.mailingLists track by $index" class="checkbox">
         <label>
             <input ng-disabled="!fieldInputMode" ng-model="mailingList.checked" type="checkbox"> {{mailingList.name}}
