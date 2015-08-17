@@ -21,7 +21,7 @@ angular.module("rubedoBlocks").lazy.controller('MediaProtectedDownloadController
                 if(response.data.success){
                     $scope.notification = {
                         type: 'success',
-                        text: $scope.rubedo.translate("Blocks.ProtectedRessource.MailSent")
+                        text: $scope.rubedo.translate("Blocks.ProtectedRessource.MailSent", "An email with your download link has been sent")
                     };
                 } else {
                     $scope.notification = {
