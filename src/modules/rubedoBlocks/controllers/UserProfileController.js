@@ -29,7 +29,7 @@ angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope"
                         cType:"textfield",
                         config:{
                             name:"email",
-                            fieldLabel:"E-mail",
+                            fieldLabel:$scope.rubedo.translate("Label.Email", "Email"),
                             allowBlank:false,
                             vtype:"email"
                         }
@@ -38,7 +38,7 @@ angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope"
                         cType:"textfield",
                         config:{
                             name:"name",
-                            fieldLabel:"Name",
+                            fieldLabel:$scope.rubedo.translate("Label.Name", "Name"),
                             allowBlank:false
                         }
                     });
