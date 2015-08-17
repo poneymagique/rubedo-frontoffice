@@ -168,7 +168,7 @@ angular.module("rubedoBlocks").lazy.controller("GeoSearchResultsController",["$s
             me.template = themePath+"/templates/blocks/geoSearchResults/map.html";
         }
         var predefinedFacets = config.predefinedFacets==""?{}:JSON.parse(config.predefinedFacets);
-        var facetsId = ['objectType','type','damType','userType','author','userName','lastupdatetime','query'];
+        var facetsId = ['objectType','type','damType','userType','author','userName','lastupdatetime','price','inStock','query'];
         if (config.displayedFacets=="all"){
             config.displayedFacets="['all']";
         }
@@ -253,7 +253,7 @@ angular.module("rubedoBlocks").lazy.controller("GeoSearchResultsController",["$s
                 } else if (facetId == 'query') {
                     $location.search('query',null);
                     delete options.query;
-                } else if(facetId == 'lastupdatetime') {
+                } else if(facetId == 'lastupdatetime'||facetId == 'price'||facetId == 'inStock') {
                     delete options[facetId];
                     $location.search(facetId,null);
                 } else {
@@ -278,7 +278,7 @@ angular.module("rubedoBlocks").lazy.controller("GeoSearchResultsController",["$s
                     }
                     options.taxonomies[facetId].push(term);
                     $location.search('taxonomies',JSON.stringify(options.taxonomies));
-                } else if(facetId == 'lastupdatetime') {
+                } else if(facetId == 'lastupdatetime'||facetId == 'price'||facetId == 'inStock') {
                     options[facetId] = term;
                     $location.search(facetId,options[facetId]);
                 } else {

@@ -20,8 +20,8 @@
                         <input ng-class="{'disabled':geoSearchResultsCtrl.disabled(term.term)}" type="checkbox" ng-checked="geoSearchResultsCtrl.checked(term.term)"/>
                         {{term.label}}&nbsp;({{term.count}})
                     </li>
-                    <li class="cursor-as-pointer" ng-if="facet.ranges && term.count > 0" ng-repeat="term in facet.ranges track by $index" ng-click="geoSearchResultsCtrl.clickOnFacets(facet.id, term.from)">
-                        <input ng-class="{'disabled':geoSearchResultsCtrl.disabled(term.from)}" type="checkbox" ng-checked="geoSearchResultsCtrl.checked(term.from)"/>
+                    <li class="cursor-as-pointer" ng-if="facet.ranges && term.count > 0" ng-repeat="term in facet.ranges track by $index" ng-click="geoSearchResultsCtrl.clickOnFacets(facet.id, term.key)">
+                        <input ng-class="{'disabled':geoSearchResultsCtrl.disabled(term.from)}" type="checkbox" ng-checked="geoSearchResultsCtrl.checked(term.key)"/>
                         {{term.label}}&nbsp;({{term.count}})
                     </li>
                 </ul>

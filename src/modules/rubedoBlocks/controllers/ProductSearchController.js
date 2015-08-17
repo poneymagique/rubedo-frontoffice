@@ -48,7 +48,7 @@ angular.module("rubedoBlocks").lazy.controller("ProductSearchController",["$scop
         me.displayOrderBy = $routeParams.orderby?resolveOrderBy[$routeParams.orderby]:$scope.rubedo.translate('Search.Label.OrderByRelevance');
         me.template = themePath+"/templates/blocks/productSearch/"+me.displayMode+".html";
         var predefinedFacets = !config.predefinedFacets?{}:JSON.parse(config.predefinedFacets);
-        var facetsId = ['objectType','type','damType','userType','author','userName','lastupdatetime','query'];
+        var facetsId = ['objectType','type','damType','userType','author','userName','lastupdatetime','price','inStock','query'];
         var defaultOptions = {
             start: me.start,
             limit: me.limit,
@@ -162,7 +162,7 @@ angular.module("rubedoBlocks").lazy.controller("ProductSearchController",["$scop
                 } else if (facetId == 'query') {
                     $location.search('query',null);
                     delete options.query;
-                } else if(facetId == 'lastupdatetime') {
+                } else if(facetId == 'lastupdatetime'||facetId == 'price'||facetId == 'inStock') {
                     delete options[facetId];
                     $location.search(facetId,null);
                 } else {
@@ -187,7 +187,7 @@ angular.module("rubedoBlocks").lazy.controller("ProductSearchController",["$scop
                     }
                     options.taxonomies[facetId].push(term);
                     $location.search('taxonomies',JSON.stringify(options.taxonomies));
-                } else if(facetId == 'lastupdatetime') {
+                } else if(facetId == 'lastupdatetime'||facetId == 'price'||facetId == 'inStock') {
                     options[facetId] = term;
                     $location.search(facetId,options[facetId]);
                 } else {
