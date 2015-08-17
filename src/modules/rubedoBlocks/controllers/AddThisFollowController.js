@@ -1,4 +1,4 @@
-angular.module("rubedoBlocks").lazy.controller('AddThisFollowController',['$scope',function($scope){
+angular.module("rubedoBlocks").lazy.controller('AddThisFollowController',['$scope','$timeout',function($scope,$timeout){
     var me = this;
     var config = $scope.blockConfig;
     me.networks = [];
@@ -23,5 +23,8 @@ angular.module("rubedoBlocks").lazy.controller('AddThisFollowController',['$scop
             me.networks.push(network);
         }
     });
-    addthis.toolbox('.addthis_toolbox');
+    $timeout(function() {
+        addthis.toolbox('.addthis_toolbox');
+    }, 500);
+
 }]);
