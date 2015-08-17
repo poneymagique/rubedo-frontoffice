@@ -20,8 +20,8 @@
                         <input ng-class="{'disabled':searchResultsCtrl.disabled(term.term)}" type="checkbox" ng-checked="searchResultsCtrl.checked(term.term)"/>
                         {{term.label}}&nbsp;({{term.count}})
                     </li>
-                    <li class="cursor-as-pointer" ng-if="facet.ranges && term.count > 0" ng-repeat="term in facet.ranges track by $index" ng-click="searchResultsCtrl.clickOnFacets(facet.id, term.from)">
-                        <input ng-class="{'disabled':searchResultsCtrl.disabled(term.from)}" type="checkbox" ng-checked="searchResultsCtrl.checked(term.from)"/>
+                    <li class="cursor-as-pointer" ng-if="facet.ranges && term.count > 0" ng-repeat="term in facet.ranges track by $index" ng-click="searchResultsCtrl.clickOnFacets(facet.id, term.key)">
+                        <input ng-class="{'disabled':searchResultsCtrl.disabled(term.from)}" type="checkbox" ng-checked="searchResultsCtrl.checked(term.key)"/>
                         {{term.label}}&nbsp;({{term.count}})
                     </li>
                 </ul>
