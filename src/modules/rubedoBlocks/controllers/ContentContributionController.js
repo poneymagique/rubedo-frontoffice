@@ -19,7 +19,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                         cType:"textarea",
                         config:{
                             name:"summary",
-                            fieldLabel:"Summary",
+                            fieldLabel:$scope.rubedo.translate("Label.Summary", "Summary"),
                             allowBlank:true
                         }
                     });
@@ -27,7 +27,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                         cType:"textfield",
                         config:{
                             name:"text",
-                            fieldLabel:"Title",
+                            fieldLabel:$scope.rubedo.translate("Label.Title", "Title"),
                             allowBlank:false
                         }
                     });
@@ -71,7 +71,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                     function(response){
                         if (response.data.success){
                             me.existingContent.version = response.data.version;
-                            $scope.rubedo.addNotification("success","Success","Content updated.");
+                            $scope.rubedo.addNotification("success","Success",$scope.rubedo.translate("Blocks.Contrib.Status.ContentUpdated", "Content updated"));
                             if (config.listPageId){
                                 RubedoPagesService.getPageById(config.listPageId).then(function(response2){
                                     if (response2.data.success){
@@ -80,12 +80,12 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                                 });
                             }
                         } else {
-                            $scope.rubedo.addNotification("danger","Error","Content update error.");
+                            $scope.rubedo.addNotification("danger","Error",$scope.rubedo.translate("Blocks.Contrib.Status.UpdateError", "Content update error"));
                         }
 
                     },
                     function(response){
-                        $scope.rubedo.addNotification("danger","Error","Content update error.");
+                        $scope.rubedo.addNotification("danger","Error",$scope.rubedo.translate("Blocks.Contrib.Status.UpdateError", "Content update error"));
                     }
                 );
 
@@ -100,7 +100,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                 RubedoContentsService.createNewContent(payLoad).then(
                     function(createResponse){
                         if (createResponse.data.success){
-                            $scope.rubedo.addNotification("success","Success","Content created.");
+                            $scope.rubedo.addNotification("success","Success",$scope.rubedo.translate("Blocks.Contrib.Status.ContentCreated", "Content created"));
                             $scope.fieldEntity={
                                 taxonomy:{}
                             };
@@ -113,7 +113,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                             }
 
                         }else{
-                            $scope.rubedo.addNotification("danger","Error","Content creation error.");
+                            $scope.rubedo.addNotification("danger","Error",$scope.rubedo.translate("Blocks.Contrib.Status.CreateError", "Content creation error"));
                             me.createError={
                                 type:"error",
                                 text:createResponse.data.message
@@ -121,7 +121,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                         }
                     },
                     function(createResponse){
-                        $scope.rubedo.addNotification("danger","Error","Content creation error.");
+                        $scope.rubedo.addNotification("danger","Error",$scope.rubedo.translate("Blocks.Contrib.Status.CreateError", "Content creation error"));
                         me.createError={
                             type:"error",
                             text:createResponse.data.message
