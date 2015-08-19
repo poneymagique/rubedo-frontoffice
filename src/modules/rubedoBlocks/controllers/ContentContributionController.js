@@ -71,7 +71,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                     function(response){
                         if (response.data.success){
                             me.existingContent.version = response.data.version;
-                            $scope.rubedo.addNotification("success","Success",$scope.rubedo.translate("Blocks.Contrib.Status.ContentUpdated", "Content updated"));
+                            $scope.rubedo.addNotification("success",$scope.rubedo.translate("Block.Success", "Success !"),$scope.rubedo.translate("Blocks.Contrib.Status.ContentUpdated", "Content updated"));
                             if (config.listPageId){
                                 RubedoPagesService.getPageById(config.listPageId).then(function(response2){
                                     if (response2.data.success){
@@ -80,12 +80,12 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                                 });
                             }
                         } else {
-                            $scope.rubedo.addNotification("danger","Error",$scope.rubedo.translate("Blocks.Contrib.Status.UpdateError", "Content update error"));
+                            $scope.rubedo.addNotification("danger",$scope.rubedo.translate("Block.Error", "Error !"),$scope.rubedo.translate("Blocks.Contrib.Status.UpdateError", "Content update error"));
                         }
 
                     },
                     function(response){
-                        $scope.rubedo.addNotification("danger","Error",$scope.rubedo.translate("Blocks.Contrib.Status.UpdateError", "Content update error"));
+                        $scope.rubedo.addNotification("danger",$scope.rubedo.translate("Block.Error", "Error !"),$scope.rubedo.translate("Blocks.Contrib.Status.UpdateError", "Content update error"));
                     }
                 );
 
@@ -100,7 +100,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                 RubedoContentsService.createNewContent(payLoad).then(
                     function(createResponse){
                         if (createResponse.data.success){
-                            $scope.rubedo.addNotification("success","Success",$scope.rubedo.translate("Blocks.Contrib.Status.ContentCreated", "Content created"));
+                            $scope.rubedo.addNotification("success",$scope.rubedo.translate("Block.Success", "Success !"),$scope.rubedo.translate("Blocks.Contrib.Status.ContentCreated", "Content created"));
                             $scope.fieldEntity={
                                 taxonomy:{}
                             };
@@ -113,7 +113,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                             }
 
                         }else{
-                            $scope.rubedo.addNotification("danger","Error",$scope.rubedo.translate("Blocks.Contrib.Status.CreateError", "Content creation error"));
+                            $scope.rubedo.addNotification("danger",$scope.rubedo.translate("Block.Error", "Error !"),$scope.rubedo.translate("Blocks.Contrib.Status.CreateError", "Content creation error"));
                             me.createError={
                                 type:"error",
                                 text:createResponse.data.message
@@ -121,7 +121,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                         }
                     },
                     function(createResponse){
-                        $scope.rubedo.addNotification("danger","Error",$scope.rubedo.translate("Blocks.Contrib.Status.CreateError", "Content creation error"));
+                        $scope.rubedo.addNotification("danger",$scope.rubedo.translate("Block.Error", "Error !"),$scope.rubedo.translate("Blocks.Contrib.Status.CreateError", "Content creation error"));
                         me.createError={
                             type:"error",
                             text:createResponse.data.message
