@@ -24,7 +24,7 @@
 
     <div ng-if="row.displayAsTabs&&row.columns" class="col-sm-12">
         <ul class="nav nav-tabs" role="tablist">
-            <li ng-repeat="column in row.columns track by $index" ng-class="{'active':$index==0}"><a showtab href="#{{'contentTab'+column.$$hashKey}}" role="tab" data-toggle="tab">{{column.eTitle}}</a></li>
+            <li ng-repeat="column in row.columns" ng-class="{'active':$index==0}"><a showtab href="#{{'contentTab'+column.$$hashKey}}" role="tab" data-toggle="tab">{{column.eTitle}}</a></li>
         </ul>
         <div class="tab-content">
             <div ng-repeat="column in row.columns track by $index" class="tab-pane"  ng-class="{'active':$index==0}" id="{{'contentTab'+column.$$hashKey}}">
