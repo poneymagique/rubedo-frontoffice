@@ -50,21 +50,21 @@ angular.module("rubedoBlocks").lazy.controller('MailingListSuscribeController',[
                     if(response.data.success){
                         $scope.notification = {
                             type: 'success',
-                            text: 'You have successfully subscribed to the selected newsletter(s)'
+                            text: $scope.rubedo.translate("Blocks.Subscribe.Status.Success")
                         };
                     }
                     me.email = '';
                 },function(){
                     $scope.notification = {
                         type: 'error',
-                        text: 'The subscribe process failed'
+                        text: $scope.rubedo.translate("Blocks.Subscribe.Status.Fail")
                     };
                 });
             }
         } else {
             $scope.notification = {
                 type: 'error',
-                text: 'Email and/or name are required'
+                text: $scope.rubedo.translate("Blocks.Subscribe.Status.BadEmail")
             };
         }
     };
