@@ -51,7 +51,6 @@
         </div>
         <div class="form-group">
             <div class="col-sm-8 col-md-offset-4">
-                <rubedo-notification ng-if="ccCtrl.createError" ng-init="notification=ccCtrl.createError"></rubedo-notification>
                 <button type="submit" class="btn btn-primary" ng-if="rubedo.current.user.rights.canContributeFODraft" ng-click="ccCtrl.submitStatus='draft'">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> {{rubedo.translate("Blocks.Contrib.Label.SaveDraft", "Save as draft")}}
                 </button>
