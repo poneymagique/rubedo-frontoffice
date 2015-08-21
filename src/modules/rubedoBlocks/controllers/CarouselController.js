@@ -16,6 +16,7 @@ angular.module("rubedoBlocks").lazy.controller("CarouselController",["$scope","R
     }
     var pageId=$scope.rubedo.current.page.id;
     var siteId=$scope.rubedo.current.site.id;
+    $scope.isArray = angular.isArray;
     me.getContents=function(){
         RubedoContentsService.getContents(blockConfig.query,pageId,siteId, queryOptions).then(
             function(response){
