@@ -1,4 +1,4 @@
-angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scope","RubedoContentsService","$http","$route",function($scope, RubedoContentsService,$http,$route){
+angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scope","RubedoContentsService","$http","$route","$rootScope",function($scope, RubedoContentsService,$http,$route,$rootScope){
     var me = this;
     var config = $scope.blockConfig;
     var themePath="/theme/"+window.rubedoConfig.siteTheme;
@@ -99,6 +99,13 @@ angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scop
                         }
                         //$http.get(themePath+'/templates/blocks/contentDetail/)
                     }
+                    $rootScope.$broadcast("ClickStreamEvent",{csEvent:"contentDetailView",csEventArgs:{
+                        contentId:me.content.id,
+                        siteId:options.pageId,
+                        pageId:options.siteId,
+                        typeId:me.content.typeId,
+                        contentTaxo:me.content.taxonomy
+                    }});
                 }
             }
         );
