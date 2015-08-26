@@ -639,4 +639,32 @@
         return serviceInstance;
     }]);
 
+    module.factory('RubedoClickStreamService',['$http','ipCookie',function($http,ipCookie){
+        var serviceInstance = {};
+        serviceInstance.logEvent=function(event,args){
+            if (config.fingerprint) {
+                var currentSessionId=ipCookie("sessionId");
+                if (!currentSessionId){
+                    currentSessionId=Math.random().toString(36).substring(7);
+                }
+                ipCookie("sessionId",currentSessionId,{path:"/",expires:1, expirationUnit:"hours"});
+                var payload = {
+                    fingerprint:config.fingerprint,
+                    url:window.location.href,
+                    os:navigator.platform,
+                    userAgent:navigator.userAgent,
+                    sessionId:currentSessionId,
+                    event:event,
+                    eventArgs:args
+                };
+                return ($http({
+                    url: config.baseUrl + "/clickstream",
+                    method: "POST",
+                    data: payload
+                }));
+            }
+        };
+        return serviceInstance;
+    }]);
+
 })();

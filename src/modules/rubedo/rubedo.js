@@ -37,8 +37,8 @@
 
     });
 
-    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService','RubedoFieldTemplateResolver','snapRemote','RubedoPageComponents','RubedoTranslationsService','$scope',
-        function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService,RubedoFieldTemplateResolver,snapRemote, RubedoPageComponents, RubedoTranslationsService,$scope){
+    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService','RubedoFieldTemplateResolver','snapRemote','RubedoPageComponents','RubedoTranslationsService','$scope','RubedoClickStreamService',
+        function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService,RubedoFieldTemplateResolver,snapRemote, RubedoPageComponents, RubedoTranslationsService,$scope,RubedoClickStreamService){
         var me=this;
         //break nav on non-page routes
         $scope.$on("$locationChangeStart",function(event, newLoc,currentLoc){
@@ -169,11 +169,16 @@
             };
             me.setPageDescription=function(newDescription){
                 me.current.page.description=newDescription;
-            }
+            };
 
+            $scope.$on("ClickStreamEvent",function(event,args){
+                if (typeof(Fingerprint2)!="undefined"&&args&&args.csEvent){
+                    RubedoClickStreamService.logEvent(args.csEvent,args.csEventArgs);
+                }
+            });
     }]);
 
-    app.controller("PageBodyController",['RubedoPagesService', 'RubedoModuleConfigService','$scope','RubedoBlockDependencyResolver',function(RubedoPagesService, RubedoModuleConfigService,$scope,RubedoBlockDependencyResolver){
+    app.controller("PageBodyController",['RubedoPagesService', 'RubedoModuleConfigService','$scope','RubedoBlockDependencyResolver','$rootScope',function(RubedoPagesService, RubedoModuleConfigService,$scope,RubedoBlockDependencyResolver,$rootScope){
         var me=this;
         if ($scope.rubedo.fieldEditMode){
             $scope.rubedo.revertChanges();
@@ -226,6 +231,11 @@
                         me.currentBodyTemplate=themePath+'/templates/defaultPageBody.html';
                     }
                 }
+                $rootScope.$broadcast("ClickStreamEvent",{csEvent:"pageView",csEventArgs:{
+                    pageId:newPage.id,
+                    siteId:response.data.site.id,
+                    pageTaxo:newPage.taxonomy
+                }});
 
             }
         },function(response){
