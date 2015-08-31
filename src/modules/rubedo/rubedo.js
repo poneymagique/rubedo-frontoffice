@@ -37,7 +37,7 @@
 
     });
 
-    app.factory('UXUsersService',["RubedoModuleConfigService",function(RubedoModuleConfigService){
+    app.factory('UXUserService',["RubedoModuleConfigService",function(RubedoModuleConfigService){
         var serviceInstance = {};
         serviceInstance.ISCONNECTED=function(){
             return(current.user ? true : false);
@@ -48,8 +48,28 @@
         return serviceInstance;
     }]);
 
-    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService','RubedoFieldTemplateResolver','snapRemote','RubedoPageComponents','RubedoTranslationsService','$scope','RubedoClickStreamService','$rootScope','UXUsersService',
-        function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService,RubedoFieldTemplateResolver,snapRemote, RubedoPageComponents, RubedoTranslationsService,$scope,RubedoClickStreamService,$rootScope,UXUsersService){
+    app.factory('UXPageService',[function(){
+        var serviceInstance = {};
+        serviceInstance.angReferrer=false;
+        serviceInstance.setAngReferrer=function(newReferrer){
+            serviceInstance.angReferrer=newReferrer;
+        };
+        serviceInstance.REFERRER=function(){
+            if (serviceInstance.angReferrer) {
+                return(serviceInstance.angReferrer);
+            } else if (document.referrer&&document.referrer!=""){
+                return(document.referrer);
+            } else {
+                return false
+            }
+
+        };
+
+        return serviceInstance;
+    }]);
+
+    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService','RubedoFieldTemplateResolver','snapRemote','RubedoPageComponents','RubedoTranslationsService','$scope','RubedoClickStreamService','$rootScope','UXUserService','UXPageService',
+        function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService,RubedoFieldTemplateResolver,snapRemote, RubedoPageComponents, RubedoTranslationsService,$scope,RubedoClickStreamService,$rootScope,UXUserService,UXPageService){
         var me=this;
         //break nav on non-page routes
         $scope.$on("$locationChangeStart",function(event, newLoc,currentLoc){
@@ -64,8 +84,14 @@
                 } else {
                     window.location.href=newLoc.slice(0,newLoc.indexOf("#"));
                 }
-            } else if (window._gaq) {
-                window._gaq.push(['_trackPageview', newLoc]);
+            } else {
+                if (window._gaq) {
+                    window._gaq.push(['_trackPageview', newLoc]);
+                }
+                if (currentLoc&&currentLoc!=""&&currentLoc!=newLoc){
+                    UXPageService.setAngReferrer(currentLoc);
+                }
+
             }
         });
         //set context and page-wide services
@@ -193,8 +219,11 @@
                 $rootScope.$broadcast("ClickStreamEvent",{csEvent:event,csEventArgs:args});
             };
 
-            USER=UXUsersService;
+            USER=UXUserService;
             $scope.USER=USER;
+
+            PAGE=UXPageService;
+            $scope.PAGE=PAGE;
     }]);
 
     app.controller("PageBodyController",['RubedoPagesService', 'RubedoModuleConfigService','$scope','RubedoBlockDependencyResolver','$rootScope',function(RubedoPagesService, RubedoModuleConfigService,$scope,RubedoBlockDependencyResolver,$rootScope){
