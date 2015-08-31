@@ -68,6 +68,9 @@
         serviceInstance.changeLang =  function(lang){
             config.lang = lang;
         };
+        serviceInstance.getConfig=function(){
+            return config;
+        };
         return serviceInstance;
     }]);
 
