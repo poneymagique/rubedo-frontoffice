@@ -37,8 +37,8 @@
 
     });
 
-    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService','RubedoFieldTemplateResolver','snapRemote','RubedoPageComponents','RubedoTranslationsService','$scope','RubedoClickStreamService',
-        function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService,RubedoFieldTemplateResolver,snapRemote, RubedoPageComponents, RubedoTranslationsService,$scope,RubedoClickStreamService){
+    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService','RubedoFieldTemplateResolver','snapRemote','RubedoPageComponents','RubedoTranslationsService','$scope','RubedoClickStreamService','$rootScope',
+        function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService,RubedoFieldTemplateResolver,snapRemote, RubedoPageComponents, RubedoTranslationsService,$scope,RubedoClickStreamService,$rootScope){
         var me=this;
         //break nav on non-page routes
         $scope.$on("$locationChangeStart",function(event, newLoc,currentLoc){
@@ -176,6 +176,10 @@
                     RubedoClickStreamService.logEvent(args.csEvent,args.csEventArgs);
                 }
             });
+
+            me.fireCSEvent=function(event,args){
+                $rootScope.$broadcast("ClickStreamEvent",{csEvent:event,csEventArgs:args});
+            };
     }]);
 
     app.controller("PageBodyController",['RubedoPagesService', 'RubedoModuleConfigService','$scope','RubedoBlockDependencyResolver','$rootScope',function(RubedoPagesService, RubedoModuleConfigService,$scope,RubedoBlockDependencyResolver,$rootScope){
