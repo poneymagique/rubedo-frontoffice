@@ -53,7 +53,10 @@
             return(serviceInstance.emailRegex.test(current.user.email));
         };
         serviceInstance.SUBSCRIBEDTO=function(mailingList){
-            return (current.user&&current.user.mailingLists&&current.user.mailingLists[mailingList]&&current.user.mailingLists[mailingList].status);
+            return current.user&&current.user.mailingLists&&current.user.mailingLists[mailingList]&&current.user.mailingLists[mailingList].status ? true : false;
+        };
+        serviceInstance.ISGEOLOCATED=function(){
+            return navigator.geolocation ? true : false;
         };
         return serviceInstance;
     }]);
