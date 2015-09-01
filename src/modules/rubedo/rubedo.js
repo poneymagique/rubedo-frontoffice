@@ -51,6 +51,14 @@
     app.factory('UXPageService',[function(){
         var serviceInstance = {};
         serviceInstance.angReferrer=false;
+        serviceInstance.lastPageLoad=Date.now() / 1000 | 0;
+        serviceInstance.resetPageLoad=function(){
+            serviceInstance.lastPageLoad=Date.now() / 1000 | 0;
+        };
+        serviceInstance.TIMEONPAGE=function(){
+            var newTS=Date.now() / 1000 | 0;
+            return (newTS-serviceInstance.lastPageLoad);
+        };
         serviceInstance.setAngReferrer=function(newReferrer){
             serviceInstance.angReferrer=newReferrer;
         };
@@ -104,6 +112,7 @@
                 if (currentLoc&&currentLoc!=""&&currentLoc!=newLoc){
                     UXPageService.setAngReferrer(currentLoc);
                 }
+                UXPageService.resetPageLoad();
 
             }
         });
