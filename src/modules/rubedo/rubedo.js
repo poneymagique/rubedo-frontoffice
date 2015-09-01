@@ -52,6 +52,9 @@
             }
             return(serviceInstance.emailRegex.test(current.user.email));
         };
+        serviceInstance.SUBSCRIBEDTO=function(mailingList){
+            return (current.user&&current.user.mailingLists&&current.user.mailingLists[mailingList]&&current.user.mailingLists[mailingList].status);
+        };
         return serviceInstance;
     }]);
 
