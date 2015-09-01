@@ -45,6 +45,13 @@
         serviceInstance.FINGERPRINT=function(){
             return(RubedoModuleConfigService.getConfig().fingerprint);
         };
+        serviceInstance.emailRegex= /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        serviceInstance.ISEMAILVALID=function(){
+            if (!current.user){
+                return false;
+            }
+            return(serviceInstance.emailRegex.test(current.user.email));
+        };
         return serviceInstance;
     }]);
 
