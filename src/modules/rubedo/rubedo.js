@@ -68,8 +68,21 @@
         return serviceInstance;
     }]);
 
-    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService','RubedoFieldTemplateResolver','snapRemote','RubedoPageComponents','RubedoTranslationsService','$scope','RubedoClickStreamService','$rootScope','UXUserService','UXPageService',
-        function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService,RubedoFieldTemplateResolver,snapRemote, RubedoPageComponents, RubedoTranslationsService,$scope,RubedoClickStreamService,$rootScope,UXUserService,UXPageService){
+    app.factory('UXSessionService',['ipCookie',function(ipCookie){
+        var serviceInstance = {};
+        serviceInstance.DURATION=function(){
+            var existingTS=ipCookie("sessionStartTS");
+            if (!existingTS){
+                return false;
+            }
+            var newTS=Date.now() / 1000 | 0;
+            return (newTS-existingTS);
+        };
+        return serviceInstance;
+    }]);
+
+    app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService','RubedoFieldTemplateResolver','snapRemote','RubedoPageComponents','RubedoTranslationsService','$scope','RubedoClickStreamService','$rootScope','UXUserService','UXPageService','UXSessionService',
+        function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService,RubedoFieldTemplateResolver,snapRemote, RubedoPageComponents, RubedoTranslationsService,$scope,RubedoClickStreamService,$rootScope,UXUserService,UXPageService,UXSessionService){
         var me=this;
         //break nav on non-page routes
         $scope.$on("$locationChangeStart",function(event, newLoc,currentLoc){
@@ -224,6 +237,9 @@
 
             PAGE=UXPageService;
             $scope.PAGE=PAGE;
+
+            SESSION=UXSessionService;
+            $scope.SESSION=SESSION;
     }]);
 
     app.controller("PageBodyController",['RubedoPagesService', 'RubedoModuleConfigService','$scope','RubedoBlockDependencyResolver','$rootScope',function(RubedoPagesService, RubedoModuleConfigService,$scope,RubedoBlockDependencyResolver,$rootScope){

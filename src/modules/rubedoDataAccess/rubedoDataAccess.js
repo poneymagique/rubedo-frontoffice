@@ -649,6 +649,8 @@
                 var currentSessionId=ipCookie("sessionId");
                 if (!currentSessionId){
                     currentSessionId=Math.random().toString(36).substring(7);
+                    var newTS=Date.now() / 1000 | 0;
+                    ipCookie("sessionStartTS",newTS,{path:"/",expires:1, expirationUnit:"hours"});
                 }
                 ipCookie("sessionId",currentSessionId,{path:"/",expires:1, expirationUnit:"hours"});
                 var payload = {
