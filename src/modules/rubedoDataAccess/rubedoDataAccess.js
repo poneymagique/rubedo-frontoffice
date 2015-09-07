@@ -129,6 +129,34 @@
         return serviceInstance;
     });
 
+    module.factory('RubedoFingerprintDataService', ["$http",function($http) {
+        var serviceInstance={};
+        serviceInstance.getFingerprintData=function(){
+                return ($http.get(config.baseUrl+"/fingerprintdata", {
+                    params: {
+                        fingerprint:config.fingerprint
+                    }
+                }));
+        };
+        serviceInstance.logFDChange=function(property,operator,value){
+            if (config.fingerprint){
+                return ($http({
+                    url:config.baseUrl+"/fingerprintdata",
+                    method:"POST",
+                    data:{
+                        fingerprint:config.fingerprint,
+                        property:property,
+                        operator:operator,
+                        value:value
+                    }
+                }));
+            }
+        };
+
+
+        return serviceInstance;
+    }]);
+
     //service providing access to contents
     module.factory('RubedoContentsService', ['$route','$http','$location', function($route,$http,$location){
         var serviceInstance={};
