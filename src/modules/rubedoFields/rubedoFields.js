@@ -444,6 +444,31 @@
                 }, 500);
             }
         };
+        me.applyPlacesEvent=function(){
+
+            setTimeout(function() {
+                var input = angular.element("#" + $scope.fieldIdPrefix + '_' + $scope.field.config.name);
+                var searchBox = new google.maps.places.SearchBox(input[0]);
+                google.maps.event.addListener(searchBox, 'places_changed', function () {
+                    if ($scope.fieldEditMode||$scope.fieldInputMode) {
+                        me.editableAddress = searchBox.getPlaces()[0].formatted_address;
+                        me.reGeocode();
+                    }
+                });
+            },1000);
+        };
+        me.hasPlacesEvent=false;
+        if ($scope.fieldInputMode&&$scope.field.config.usePlacesSearch){
+            me.hasPlacesEvent=true;
+            me.applyPlacesEvent();
+        }
+        $scope.$watch("fieldEditMode", function(editOn){
+            if (editOn&&$scope.field.config.usePlacesSearch&&!me.hasPlacesEvent){
+                me.hasPlacesEvent=true;
+                me.applyPlacesEvent();
+            }
+        });
+
     }]);
 
     module.controller("PageLinkController",["$scope","RubedoPagesService",function($scope,RubedoPagesService){

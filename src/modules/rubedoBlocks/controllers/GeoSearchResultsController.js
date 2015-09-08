@@ -396,7 +396,7 @@ angular.module("rubedoBlocks").lazy.controller("GeoSearchResultsController",["$s
              * With this hack, the map will be added to the dom after the HTML rendering
              */
             return true;
-        }
+        };
         if (config.height&&config.height!=500){
             setTimeout(function(){
                 $element.find(".angular-google-map-container").height(config.height);

@@ -11,7 +11,7 @@
         <div class="panel-body">
             <form class="form">
                 <div class="form-group">
-                    <input type="text" class="form-control" ng-change="localiserFieldCtrl.handleAddressEdit()" ng-model="localiserFieldCtrl.editableAddress">
+                    <input id="{{fieldIdPrefix+'_'+field.config.name}}" type="text" class="form-control" ng-change="localiserFieldCtrl.handleAddressEdit()" ng-model="localiserFieldCtrl.editableAddress">
                 </div>
             </form>
         </div>
