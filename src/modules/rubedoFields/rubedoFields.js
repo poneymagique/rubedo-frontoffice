@@ -67,6 +67,8 @@
         "Rubedo.view.embeddedImageField":"/templates/fields/embeddedImage.html",
         "RDirectObjectField":"/templates/fields/jsonObject.html",
         "Rubedo.view.RDirectObjectField":"/templates/fields/jsonObject.html",
+        "urlField":"/templates/fields/url.html",
+        "Rubedo.view.urlField":"/templates/fields/url.html",
         "fieldNotFound":"/templates/fields/fieldNotFound.html"
     };
 

@@ -1,0 +1,22 @@
+<div>
+    <a ng-href="{{fieldEntity[field.config.name].url}}">{{fieldEntity[field.config.name].title}}</a>
+    <div class="panel panel-default" ng-if="fieldEditMode">
+        <div class="panel-heading">{{field.config.fieldLabel}}</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+                    <input type="text" class="form-control"
+                           ng-model="fieldEntity[field.config.name].url"
+                           ng-change="registerFieldEditChanges()"
+                           placeholder="URL">
+                </div>
+                <div class="col-xs-6">
+                    <input type="text" class="form-control"
+                           ng-model="fieldEntity[field.config.name].title"
+                           ng-change="registerFieldEditChanges()"
+                           placeholder="Title">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
