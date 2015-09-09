@@ -20,7 +20,17 @@
                 }
             });
         };
-        
+        me.hasSubPages=function(page){
+            var hasSub=false;
+            if (page.pages){
+                angular.forEach(page.pages,function(somePage){
+                    if (!hasSub&&somePage.pages&&!angular.element.isEmptyObject(somePage.pages)){
+                        hasSub=true;
+                    }
+                });
+            }
+            return hasSub;
+        };
 
 
         RubedoMenuService.getMenu(pageId, config.menuLevel,true).then(function(response){

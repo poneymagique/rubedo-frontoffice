@@ -445,7 +445,6 @@
             }
         };
         me.applyPlacesEvent=function(){
-
             setTimeout(function() {
                 var input = angular.element("#" + $scope.fieldIdPrefix + '_' + $scope.field.config.name);
                 var searchBox = new google.maps.places.SearchBox(input[0]);
