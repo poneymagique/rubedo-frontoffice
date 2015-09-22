@@ -214,7 +214,9 @@ angular.module("rubedoBlocks").lazy.controller("GeoSearchResultsController",["$s
         me.checked = function(term){
             var checked = false;
             angular.forEach(me.activeTerms,function(activeTerm){
-                checked = activeTerm.term==term;
+                if (!checked){
+                    checked = activeTerm.term==term;
+                }
             });
             return checked;
         };
