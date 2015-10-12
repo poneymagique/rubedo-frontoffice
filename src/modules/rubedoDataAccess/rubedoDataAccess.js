@@ -687,8 +687,29 @@
           return config.fingerPrintData;
         };
         serviceInstance.logFDChange=function(property,operator,value){
-            if (config.fingerprint){
-                return ($http({
+            if (config.fingerprint&&["inc","dec","set"].indexOf(operator)>-1){
+                if (typeof(value)=="undefined"){
+                    if (operator=="inc"){
+                        value=1;
+                    } else if (operator=="dec"){
+                        value=-1;
+                    } else if (operator=="set"){
+                        value=null;
+                    }
+                }
+                if (operator=="set"){
+                    config[property]=value;
+                } else {
+                    if (!config[property]){
+                        config[property]=0;
+                    }
+                    if (operator=="inc"){
+                        config[property]=config[property]+value;
+                    } else if (operator=="dec"){
+                        config[property]=config[property]-value;
+                    }
+                }
+                $http({
                     url:config.baseUrl+"/fingerprintdata",
                     method:"POST",
                     data:{
@@ -697,7 +718,7 @@
                         operator:operator,
                         value:value
                     }
-                }));
+                });
             }
         };
 
