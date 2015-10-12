@@ -27,7 +27,10 @@ angular.module("rubedoBlocks").lazy.controller('MailingListSuscribeController',[
         }
     });
     me.submit = function(){
-        if (me.email && me.name) {
+        if (me.email) {
+            if (!me.name){
+                me.name=angular.copy(me.email);
+            }
             var mailingListsSuscribe = [];
             angular.forEach(me.mailingLists, function(mailingList){
                 if(mailingList.checked){
