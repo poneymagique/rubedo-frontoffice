@@ -102,6 +102,20 @@
         return serviceInstance;
     }]);
 
+    app.factory('UXCore',['RubedoFingerprintDataService',function(RubedoFingerprintDataService){
+        var serviceInstance = {};
+        serviceInstance.evaluateCondition=function(condition){
+            return(eval(condition));
+        };
+        serviceInstance.parse =function(instruction){
+            serviceInstance.fingerprintData=RubedoFingerprintDataService.getFingerprintData();
+            console.log(serviceInstance.fingerprintData);
+            console.log(instruction);
+        };
+
+        return serviceInstance;
+    }]);
+
     app.controller("RubedoController",['RubedoBlockTemplateResolver','RubedoImageUrlService','RubedoAuthService','RubedoFieldTemplateResolver','snapRemote','RubedoPageComponents','RubedoTranslationsService','$scope','RubedoClickStreamService','$rootScope','UXUserService','UXPageService','UXSessionService',
         function(RubedoBlockTemplateResolver,RubedoImageUrlService,RubedoAuthService,RubedoFieldTemplateResolver,snapRemote, RubedoPageComponents, RubedoTranslationsService,$scope,RubedoClickStreamService,$rootScope,UXUserService,UXPageService,UXSessionService){
         var me=this;
@@ -264,7 +278,7 @@
             $scope.SESSION=SESSION;
     }]);
 
-    app.controller("PageBodyController",['RubedoPagesService', 'RubedoModuleConfigService','$scope','RubedoBlockDependencyResolver','$rootScope',function(RubedoPagesService, RubedoModuleConfigService,$scope,RubedoBlockDependencyResolver,$rootScope){
+    app.controller("PageBodyController",['RubedoPagesService', 'RubedoModuleConfigService','$scope','RubedoBlockDependencyResolver','$rootScope','UXCore',function(RubedoPagesService, RubedoModuleConfigService,$scope,RubedoBlockDependencyResolver,$rootScope,UXCore){
         var me=this;
         if ($scope.rubedo.fieldEditMode){
             $scope.rubedo.revertChanges();
@@ -299,6 +313,7 @@
                 if (response.data.site.locStrategy == 'fallback'){
                     RubedoModuleConfigService.addFallbackLang(response.data.site.defaultLanguage);
                 }
+
                 var usedblockTypes=angular.copy(response.data.blockTypes);
                 var dependencies=RubedoBlockDependencyResolver.getDependencies(usedblockTypes);
                 if (dependencies.length>0){
@@ -317,6 +332,9 @@
                         me.currentBodyTemplate=themePath+'/templates/defaultPageBody.html';
                     }
                 }
+                //UX
+                
+                //Page load
                 $rootScope.$broadcast("ClickStreamEvent",{csEvent:"pageView",csEventArgs:{
                     pageId:newPage.id,
                     siteId:response.data.site.id,
