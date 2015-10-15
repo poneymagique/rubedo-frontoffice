@@ -102,7 +102,9 @@
         "ratingField":"/templates/inputFields/rating.html",
         "urlField":"/templates/inputFields/url.html",
         "Rubedo.view.urlField":"/templates/inputFields/url.html",
-        "Rubedo.ux.widget.Rating":"/templates/inputFields/rating.html"
+        "Rubedo.ux.widget.Rating":"/templates/inputFields/rating.html",
+        "RECField":"/templates/inputFields/recField.html",
+        "Rubedo.view.RECField":"/templates/inputFields/recField.html"
     };
 
     //service for resolving field templates
@@ -862,8 +864,13 @@
 
     module.controller("RECFieldController",["$scope","RubedoContentTypesService",function($scope,RubedoContentTypesService){
         var me=this;
+        $scope.fields=[];
         var config=$scope.field.config;
+        if (!$scope.$parent.fieldEntity[config.name]&&$scope.fieldInputMode){
+            $scope.$parent.fieldEntity[config.name]={ };
+        }
         $scope.fieldEntity=$scope.$parent.fieldEntity[config.name];
+
         RubedoContentTypesService.findById(config.usedCT,{}).then(
             function(response){
                 if(response.data.success){
