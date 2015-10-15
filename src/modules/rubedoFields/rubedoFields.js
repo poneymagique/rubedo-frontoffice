@@ -69,6 +69,8 @@
         "Rubedo.view.RDirectObjectField":"/templates/fields/jsonObject.html",
         "urlField":"/templates/fields/url.html",
         "Rubedo.view.urlField":"/templates/fields/url.html",
+        "RECField":"/templates/fields/recField.html",
+        "Rubedo.view.RECField":"/templates/fields/recField.html",
         "fieldNotFound":"/templates/fields/fieldNotFound.html"
     };
 
@@ -858,6 +860,20 @@
 
     }]);
 
+    module.controller("RECFieldController",["$scope","RubedoContentTypesService",function($scope,RubedoContentTypesService){
+        var me=this;
+        var config=$scope.field.config;
+        $scope.fieldEntity=$scope.$parent.fieldEntity[config.name];
+        RubedoContentTypesService.findById(config.usedCT,{}).then(
+            function(response){
+                if(response.data.success){
+                    me.contentType=response.data.contentType;
+                    $scope.fieldIdPrefix=$scope.$parent.fieldIdPrefix+me.contentType.type;
+                    $scope.fields=me.contentType.fields;
+                }
+            }
+        );
+    }]);
 
 
 })();

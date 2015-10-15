@@ -1,0 +1,3 @@
+<div ng-controller="RECFieldController as recCtrl">
+    <rubedo-field ng-repeat="field in fields track by $index" ng-if="fieldEntity[field.config.name]||field.cType=='checkboxfield'||field.cType=='productBox'"></rubedo-field>
+</div>
