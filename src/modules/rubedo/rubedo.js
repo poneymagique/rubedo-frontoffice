@@ -14,7 +14,8 @@
         site:{
 
         },
-        user:null
+        user:null,
+        UXParams:{}
     };
 
     app.config(function($routeProvider,$locationProvider,$controllerProvider, $compileProvider, $filterProvider, $provide) {
@@ -113,6 +114,12 @@
         };
         var DEC=function(var1,var2){
             RubedoFingerprintDataService.logFDChange(var1,"dec",var2);
+        };
+        var HIDEBLOCK=function(bType){
+            if(!current.UXParams.hiddenBlocks){
+                current.UXParams.hiddenBlocks={};
+            }
+            current.UXParams.hiddenBlocks[bType]=true;
         };
         serviceInstance.evaluateCondition=function(condition){
             return(eval(condition));
@@ -357,6 +364,7 @@
                 }
                 //UX
                 //UXCore.parse("IF USER.FINGERPRINT() THEN INC(PAGE.NBVIEWS)");
+                //UXCore.parse("IF USER.FINGERPRINT() THEN HIDEBLOCK('contentList')");
                 //Page load
                 $rootScope.$broadcast("ClickStreamEvent",{csEvent:"pageView",csEventArgs:{
                     pageId:newPage.id,

@@ -1,4 +1,5 @@
-<div ng-init="blockConfig=block.configBloc"
+<div ng-if="!rubedo.current.UXParams.hiddenBlocks[block.bType]"
+     ng-init="blockConfig=block.configBloc"
      ng-class="rubedo.componentsService.resolveResponsiveClass(block.responsive)"
      ng-style="{'min-height':block.configBloc.blockMinHeight}">
     <h4 ng-if="block.displayTitle">{{block.title}}</h4>
