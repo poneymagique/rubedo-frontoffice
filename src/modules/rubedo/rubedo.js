@@ -87,6 +87,14 @@
             }
 
         };
+        serviceInstance.NBVIEWS=function(){
+            var fingerprintData=RubedoFingerprintDataService.getFingerprintData();
+            if(fingerprintData&&fingerprintData.pages&&fingerprintData.pages[current.page.id]&&fingerprintData.pages[current.page.id].nbViews){
+                return(fingerprintData.pages[current.page.id].nbViews);
+            } else {
+                return(0);
+            }
+        };
 
         return serviceInstance;
     }]);
