@@ -37,6 +37,7 @@
 
     });
 
+
     app.factory('UXUserService',["RubedoModuleConfigService",function(RubedoModuleConfigService){
         var serviceInstance = {};
         serviceInstance.ISCONNECTED=function(){
@@ -61,7 +62,7 @@
         return serviceInstance;
     }]);
 
-    app.factory('UXPageService',[function(){
+    app.factory('UXPageService',["RubedoFingerprintDataService",function(RubedoFingerprintDataService){
         var serviceInstance = {};
         serviceInstance.angReferrer=false;
         serviceInstance.lastPageLoad=Date.now() / 1000 | 0;
@@ -104,15 +105,37 @@
 
     app.factory('UXCore',['RubedoFingerprintDataService',function(RubedoFingerprintDataService){
         var serviceInstance = {};
+        var SET=function(var1,var2){
+            RubedoFingerprintDataService.logFDChange(var1,"set",var2);
+        };
+        var INC=function(var1,var2){
+            RubedoFingerprintDataService.logFDChange(var1,"inc",var2);
+        };
+        var DEC=function(var1,var2){
+            RubedoFingerprintDataService.logFDChange(var1,"dec",var2);
+        };
         serviceInstance.evaluateCondition=function(condition){
             return(eval(condition));
         };
-        serviceInstance.parse =function(instruction){
-            serviceInstance.fingerprintData=RubedoFingerprintDataService.getFingerprintData();
-            console.log(serviceInstance.fingerprintData);
-            console.log(instruction);
+        serviceInstance.executeAction=function(action){
+            var replaceArray={
+                'PAGE.NBVIEWS':"'pages."+current.page.id+".nbViews'"
+            };
+            angular.forEach(replaceArray, function(value, key) {
+                var regex = new RegExp(key, "g");
+                action = action.replace(regex, value);
+            });
+            eval(action);
         };
-
+        serviceInstance.parse=function(instruction){
+            serviceInstance.fingerprintData=RubedoFingerprintDataService.getFingerprintData();
+            if(instruction.indexOf("IF")>-1&&instruction.indexOf("THEN")>-1){
+                var splittedInstruction=instruction.replace("IF","").split("THEN");
+                if(serviceInstance.evaluateCondition(splittedInstruction[0])){
+                    serviceInstance.executeAction(splittedInstruction[1]);
+                }
+            }
+        };
         return serviceInstance;
     }]);
 
@@ -333,7 +356,7 @@
                     }
                 }
                 //UX
-                
+                //UXCore.parse("IF USER.FINGERPRINT() THEN INC(PAGE.NBVIEWS)");
                 //Page load
                 $rootScope.$broadcast("ClickStreamEvent",{csEvent:"pageView",csEventArgs:{
                     pageId:newPage.id,
