@@ -123,11 +123,17 @@
         var DEC=function(var1,var2){
             RubedoFingerprintDataService.logFDChange(var1,"dec",var2);
         };
-        var HIDEBLOCK=function(bType){
+        var HIDEBLOCK=function(bCode){
             if(!current.UXParams.hiddenBlocks){
                 current.UXParams.hiddenBlocks={};
             }
-            current.UXParams.hiddenBlocks[bType]=true;
+            current.UXParams.hiddenBlocks[bCode]=true;
+        };
+        var SHOWBLOCK=function(bCode){
+            if(!current.UXParams.hiddenBlocks){
+                current.UXParams.hiddenBlocks={};
+            }
+            current.UXParams.hiddenBlocks[bCode]=false;
         };
         serviceInstance.evaluateCondition=function(condition){
             return(eval(condition));
@@ -371,8 +377,7 @@
                     }
                 }
                 //UX
-                //UXCore.parse("IF USER.FINGERPRINT() THEN INC(PAGE.NBVIEWS)");
-                //UXCore.parse("IF USER.FINGERPRINT() THEN HIDEBLOCK('contentList')");
+                
                 //Page load
                 $rootScope.$broadcast("ClickStreamEvent",{csEvent:"pageView",csEventArgs:{
                     pageId:newPage.id,
