@@ -414,7 +414,14 @@
                     }
                 }
                 //UX
-                //UXCore.parse("IF USER.FINGERPRINT() THEN console.log('ok') DELAY 5000");
+                if (newPage.UXInstructions&&newPage.UXInstructions!=""){
+                    var instructionsArray=newPage.UXInstructions.split("\n");
+                    angular.forEach(instructionsArray,function(instruction){
+                        if(instruction!=""){
+                            UXCore.parse(instruction);
+                        }
+                    });
+                }
                 //Page load
                 $rootScope.$broadcast("ClickStreamEvent",{csEvent:"pageView",csEventArgs:{
                     pageId:newPage.id,
