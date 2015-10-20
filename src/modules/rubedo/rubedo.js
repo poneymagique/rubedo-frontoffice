@@ -150,6 +150,7 @@
                 if(!current.UXParams.initialEvents[bCode]){
                     current.UXParams.initialEvents[bCode]=[];
                 }
+                $rootScope.$broadcast("RubedoShowModal",{block:bCode});
                 current.UXParams.initialEvents[bCode]["RubedoShowModal"]=true;
             }
 
@@ -168,7 +169,19 @@
             eval(action);
         };
         serviceInstance.parse=function(instruction){
-            serviceInstance.fingerprintData=RubedoFingerprintDataService.getFingerprintData();
+            if(instruction.indexOf("DELAY")>-1){
+                var splittedInstruction=instruction.split("DELAY");
+                current.queue.push(
+                    $timeout(function(){
+                        serviceInstance.segment(splittedInstruction[0]);
+                    },parseInt(splittedInstruction[1]))
+                );
+            } else {
+                serviceInstance.segment(instruction);
+            }
+
+        };
+        serviceInstance.segment=function(instruction){
             if(instruction.indexOf("IF")>-1&&instruction.indexOf("THEN")>-1){
                 var splittedInstruction=instruction.replace("IF","").split("THEN");
                 if(serviceInstance.evaluateCondition(splittedInstruction[0])){
@@ -401,7 +414,7 @@
                     }
                 }
                 //UX
-                //UXCore.parse("IF USER.FINGERPRINT() THEN INC(PAGE.NBVIEWS)");
+                //UXCore.parse("IF USER.FINGERPRINT() THEN console.log('ok') DELAY 5000");
                 //Page load
                 $rootScope.$broadcast("ClickStreamEvent",{csEvent:"pageView",csEventArgs:{
                     pageId:newPage.id,
