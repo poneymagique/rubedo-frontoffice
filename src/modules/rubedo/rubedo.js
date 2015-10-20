@@ -415,12 +415,17 @@
                 }
                 //UX
                 if (newPage.UXInstructions&&newPage.UXInstructions!=""){
-                    var instructionsArray=newPage.UXInstructions.split("\n");
-                    angular.forEach(instructionsArray,function(instruction){
-                        if(instruction!=""){
-                            UXCore.parse(instruction);
-                        }
-                    });
+                    if (newPage.UXInstructions.indexOf("\n")>-1){
+                        var instructionsArray=newPage.UXInstructions.split("\n");
+                        angular.forEach(instructionsArray,function(instruction){
+                            if(instruction!=""){
+                                UXCore.parse(instruction);
+                            }
+                        });
+                    } else {
+                        UXCore.parse(newPage.UXInstructions);
+                    }
+
                 }
                 //Page load
                 $rootScope.$broadcast("ClickStreamEvent",{csEvent:"pageView",csEventArgs:{
