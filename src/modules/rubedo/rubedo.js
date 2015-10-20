@@ -141,7 +141,6 @@
                 current.queue.push(
                     $timeout(function(){
                         $rootScope.$broadcast("RubedoShowModal",{block:bCode});
-                        console.log("ok");
                     },delay)
                 );
             } else {
