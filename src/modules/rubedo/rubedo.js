@@ -112,7 +112,7 @@
         return serviceInstance;
     }]);
 
-    app.factory('UXCore',['RubedoFingerprintDataService',function(RubedoFingerprintDataService){
+    app.factory('UXCore',['RubedoFingerprintDataService','$rootScope','$timeout',function(RubedoFingerprintDataService,$rootScope,$timeout){
         var serviceInstance = {};
         var SET=function(var1,var2){
             RubedoFingerprintDataService.logFDChange(var1,"set",var2);
@@ -134,6 +134,22 @@
                 current.UXParams.hiddenBlocks={};
             }
             current.UXParams.hiddenBlocks[bCode]=false;
+        };
+        var SHOWMODAL=function(bCode,delay){
+            if (delay){
+                $timeout(function(){
+                    $rootScope.$broadcast("RubedoShowModal",{block:bCode});
+                },delay);
+            } else {
+                if (!current.UXParams.initialEvents){
+                    current.UXParams.initialEvents={};
+                }
+                if(!current.UXParams.initialEvents[bCode]){
+                    current.UXParams.initialEvents[bCode]=[];
+                }
+                current.UXParams.initialEvents[bCode]["RubedoShowModal"]=true;
+            }
+
         };
         serviceInstance.evaluateCondition=function(condition){
             return(eval(condition));
@@ -320,6 +336,7 @@
 
             SESSION=UXSessionService;
             $scope.SESSION=SESSION;
+
     }]);
 
     app.controller("PageBodyController",['RubedoPagesService', 'RubedoModuleConfigService','$scope','RubedoBlockDependencyResolver','$rootScope','UXCore',function(RubedoPagesService, RubedoModuleConfigService,$scope,RubedoBlockDependencyResolver,$rootScope,UXCore){
@@ -377,7 +394,7 @@
                     }
                 }
                 //UX
-                
+                //UXCore.parse("IF USER.FINGERPRINT() THEN INC(PAGE.NBVIEWS)");
                 //Page load
                 $rootScope.$broadcast("ClickStreamEvent",{csEvent:"pageView",csEventArgs:{
                     pageId:newPage.id,

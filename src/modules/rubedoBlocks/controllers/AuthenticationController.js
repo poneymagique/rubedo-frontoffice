@@ -18,6 +18,14 @@ angular.module("rubedoBlocks").lazy.controller("AuthenticationController",["$sco
     me.showModal=function(){
         angular.element('#rubedoAuthModal').appendTo('body').modal('show');
     };
+    $scope.$on("RubedoShowModal",function(event,args){
+        if (args&&args.block&&args.block==$scope.block.code){
+            me.showModal();
+        }
+    });
+    if ($scope.rubedo.current.UXParams.initialEvents&&$scope.rubedo.current.UXParams.initialEvents[$scope.block.code]&&$scope.rubedo.current.UXParams.initialEvents[$scope.block.code]["RubedoShowModal"]){
+        setTimeout(function(){me.showModal();},200);
+    }
     me.recoverPwdModal=function(){
         angular.element('#rubedoAuthModal').appendTo('body').modal('hide');
         angular.element('#rubedoRecoverPwdModal').appendTo('body').modal('show');
