@@ -14,6 +14,7 @@
         site:{
 
         },
+        queue:[],
         user:null,
         UXParams:{}
     };
@@ -137,9 +138,12 @@
         };
         var SHOWMODAL=function(bCode,delay){
             if (delay){
-                $timeout(function(){
-                    $rootScope.$broadcast("RubedoShowModal",{block:bCode});
-                },delay);
+                current.queue.push(
+                    $timeout(function(){
+                        $rootScope.$broadcast("RubedoShowModal",{block:bCode});
+                        console.log("ok");
+                    },delay)
+                );
             } else {
                 if (!current.UXParams.initialEvents){
                     current.UXParams.initialEvents={};
@@ -339,11 +343,15 @@
 
     }]);
 
-    app.controller("PageBodyController",['RubedoPagesService', 'RubedoModuleConfigService','$scope','RubedoBlockDependencyResolver','$rootScope','UXCore',function(RubedoPagesService, RubedoModuleConfigService,$scope,RubedoBlockDependencyResolver,$rootScope,UXCore){
+    app.controller("PageBodyController",['RubedoPagesService', 'RubedoModuleConfigService','$scope','RubedoBlockDependencyResolver','$rootScope','UXCore','$timeout',function(RubedoPagesService, RubedoModuleConfigService,$scope,RubedoBlockDependencyResolver,$rootScope,UXCore,$timeout){
         var me=this;
         if ($scope.rubedo.fieldEditMode){
             $scope.rubedo.revertChanges();
         }
+        angular.forEach(current.queue,function(task){
+            $timeout.cancel(task);
+        });
+        current.queue=[];
         RubedoPagesService.getPageByCurrentRoute().then(function(response){
             if (response.data.success){
                 var newPage=angular.copy(response.data.page);
