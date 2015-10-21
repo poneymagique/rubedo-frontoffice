@@ -211,6 +211,8 @@
                 if(serviceInstance.evaluateCondition(splittedInstruction[0])){
                     serviceInstance.executeAction(splittedInstruction[1]);
                 }
+            } else {
+                serviceInstance.executeAction(instruction);
             }
         };
         return serviceInstance;
