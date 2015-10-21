@@ -46,7 +46,7 @@
         serviceInstance.ISCONNECTED=function(){
             return(current.user ? true : false);
         };
-        serviceInstance.FINGERPRINT=function(){
+        serviceInstance.RUID=function(){
             return(RubedoModuleConfigService.getConfig().fingerprint);
         };
         serviceInstance.emailRegex= /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -161,7 +161,7 @@
                 'USER.DATA.':"serviceInstance.fingerprintData.",
                 'USER.ISCONNECTED':'USER.ISCONNECTED()',
                 'USER.ISGEOLOCATED':'USER.ISGEOLOCATED()',
-                'USER.FINGERPRINT':'USER.FINGERPRINT()',
+                'USER.RUID':'USER.RUID()',
                 'USER.ISEMAILVALID':'USER.ISEMAILVALID()',
                 'SESSION.DURATION':'SESSION.DURATION()',
                 'PAGE.NBVIEWS':'PAGE.NBVIEWS()',
@@ -184,7 +184,7 @@
                 'USER.DATA.':"serviceInstance.fingerprintData.",
                 'USER.ISCONNECTED':'USER.ISCONNECTED()',
                 'USER.ISGEOLOCATED':'USER.ISGEOLOCATED()',
-                'USER.FINGERPRINT':'USER.FINGERPRINT()',
+                'USER.RUID':'USER.RUID()',
                 'USER.ISEMAILVALID':'USER.ISEMAILVALID()',
                 'SESSION.DURATION':'SESSION.DURATION()',
                 'PAGE.TIMEONPAGE':'PAGE.TIMEONPAGE()',

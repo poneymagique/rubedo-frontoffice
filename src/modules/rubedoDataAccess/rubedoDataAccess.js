@@ -731,14 +731,14 @@
         var ipc=injector.get("ipCookie");
         var fpd=injector.get("RubedoFingerprintDataService");
 
-        if (ipc("fingerprint")){
-            config.fingerprint=ipc("fingerprint");
+        if (ipc("ruid")){
+            config.fingerprint=ipc("ruid");
             fpd.loadFingerprintData();
         } else {
             angular.element(document).ready(function () {
                 new Fingerprint2().get(function(result){
                     config.fingerprint=result;
-                    ipc("fingerprint",result,{path:"/",expires:8760, expirationUnit:"hours"});
+                    ipc("ruid",result,{path:"/",expires:8760, expirationUnit:"hours"});
                     fpd.loadFingerprintData();
                 });
             });
