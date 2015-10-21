@@ -446,6 +446,19 @@
                     }
                 }
                 //UX
+                if (newPage.pageProperties&&newPage.pageProperties.UXInstructions&&newPage.pageProperties.UXInstructions!=""){
+                    if (newPage.pageProperties.UXInstructions.indexOf("\n")>-1){
+                        var maskInstructionsArray=newPage.pageProperties.UXInstructions.split("\n");
+                        angular.forEach(maskInstructionsArray,function(instruction){
+                            if(instruction!=""){
+                                UXCore.parse(instruction);
+                            }
+                        });
+                    } else {
+                        UXCore.parse(newPage.pageProperties.UXInstructions);
+                    }
+
+                }
                 if (newPage.UXInstructions&&newPage.UXInstructions!=""){
                     if (newPage.UXInstructions.indexOf("\n")>-1){
                         var instructionsArray=newPage.UXInstructions.split("\n");
