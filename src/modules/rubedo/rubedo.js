@@ -165,7 +165,8 @@
                 'SESSION.DURATION':'SESSION.DURATION()',
                 'PAGE.NBVIEWS':'PAGE.NBVIEWS()',
                 'PAGE.TIMEONPAGE':'PAGE.TIMEONPAGE()',
-                'PAGE.REFERRER':'PAGE.REFERRER()'
+                'PAGE.REFERRER':'PAGE.REFERRER()',
+                'NOT':'!'
             };
             angular.forEach(replaceArray, function(value, key) {
                 var regex = new RegExp(key, "g");
@@ -183,6 +184,7 @@
                 'SESSION.DURATION':'SESSION.DURATION()',
                 'PAGE.TIMEONPAGE':'PAGE.TIMEONPAGE()',
                 'PAGE.REFERRER':'PAGE.REFERRER()',
+                'NOT':'!',
                 'PAGE.NBVIEWS':"'pages."+current.page.id+".nbViews'"
             };
             angular.forEach(replaceArray, function(value, key) {
