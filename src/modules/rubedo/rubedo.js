@@ -166,7 +166,9 @@
                 'PAGE.NBVIEWS':'PAGE.NBVIEWS()',
                 'PAGE.TIMEONPAGE':'PAGE.TIMEONPAGE()',
                 'PAGE.REFERRER':'PAGE.REFERRER()',
+                ' NOT = ':'!=',
                 ' AND ':'&&',
+                ' = ':'==',
                 ' OR ':'||',
                 ' NOT ':'!'
             };
