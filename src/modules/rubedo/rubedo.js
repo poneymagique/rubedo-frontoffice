@@ -15,6 +15,7 @@
 
         },
         queue:[],
+        rEvents:{},
         user:null,
         UXParams:{}
     };
@@ -200,7 +201,15 @@
             eval(action);
         };
         serviceInstance.parse=function(instruction){
-            if(instruction.indexOf("DELAY")>-1){
+            if (instruction.indexOf("WHEN")>-1&&instruction.indexOf("DO")>-1){
+                var splittedInstruction=instruction.replace("WHEN","").split("DO");
+                var eventName=splittedInstruction[0].trim();
+                if (!current.rEvents[eventName]){
+                    current.rEvents[eventName]=[];
+                }
+                current.rEvents[eventName].push(splittedInstruction[1])
+
+            } else if(instruction.indexOf("DELAY")>-1){
                 var splittedInstruction=instruction.split("DELAY");
                 current.queue.push(
                     $timeout(function(){
@@ -398,6 +407,16 @@
             $timeout.cancel(task);
         });
         current.queue=[];
+        current.rEvents={ };
+        $scope.$on("ClickStreamEvent",function(event,args){
+            if(args.csEvent&&current.rEvents[args.csEvent]){
+                angular.forEach(current.rEvents[args.csEvent],function(instructionToHandle){
+                    if(instructionToHandle!=""){
+                        UXCore.parse(instructionToHandle);
+                    }
+                });
+            }
+        });
         RubedoPagesService.getPageByCurrentRoute().then(function(response){
             if (response.data.success){
                 var newPage=angular.copy(response.data.page);
