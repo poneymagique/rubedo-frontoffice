@@ -156,10 +156,33 @@
 
         };
         serviceInstance.evaluateCondition=function(condition){
+            var replaceArray={
+                'USER.DATA.':"serviceInstance.fingerprintData.",
+                'USER.ISCONNECTED':'USER.ISCONNECTED()',
+                'USER.ISGEOLOCATED':'USER.ISGEOLOCATED()',
+                'USER.FINGERPRINT':'USER.FINGERPRINT()',
+                'USER.ISEMAILVALID':'USER.ISEMAILVALID()',
+                'SESSION.DURATION':'SESSION.DURATION()',
+                'PAGE.NBVIEWS':'PAGE.NBVIEWS()',
+                'PAGE.TIMEONPAGE':'PAGE.TIMEONPAGE()',
+                'PAGE.REFERRER':'PAGE.REFERRER()'
+            };
+            angular.forEach(replaceArray, function(value, key) {
+                var regex = new RegExp(key, "g");
+                condition = condition.replace(regex, value);
+            });
             return(eval(condition));
         };
         serviceInstance.executeAction=function(action){
             var replaceArray={
+                'USER.DATA.':"serviceInstance.fingerprintData.",
+                'USER.ISCONNECTED':'USER.ISCONNECTED()',
+                'USER.ISGEOLOCATED':'USER.ISGEOLOCATED()',
+                'USER.FINGERPRINT':'USER.FINGERPRINT()',
+                'USER.ISEMAILVALID':'USER.ISEMAILVALID()',
+                'SESSION.DURATION':'SESSION.DURATION()',
+                'PAGE.TIMEONPAGE':'PAGE.TIMEONPAGE()',
+                'PAGE.REFERRER':'PAGE.REFERRER()',
                 'PAGE.NBVIEWS':"'pages."+current.page.id+".nbViews'"
             };
             angular.forEach(replaceArray, function(value, key) {
@@ -182,6 +205,7 @@
 
         };
         serviceInstance.segment=function(instruction){
+            serviceInstance.fingerprintData=RubedoFingerprintDataService.getFingerprintData();
             if(instruction.indexOf("IF")>-1&&instruction.indexOf("THEN")>-1){
                 var splittedInstruction=instruction.replace("IF","").split("THEN");
                 if(serviceInstance.evaluateCondition(splittedInstruction[0])){
