@@ -1,5 +1,6 @@
 <div>
-    <a ng-href="{{fieldEntity[field.config.name].url}}">{{fieldEntity[field.config.name].title}}</a>
+    <a ng-href="{{fieldEntity[field.config.name].url}}" ng-if="fieldEntity[field.config.name].openInNewWindow" target="_blank">{{fieldEntity[field.config.name].title}}</a>
+    <a ng-href="{{fieldEntity[field.config.name].url}}" ng-if="!fieldEntity[field.config.name].openInNewWindow">{{fieldEntity[field.config.name].title}}</a>
     <div class="panel panel-default" ng-if="fieldEditMode">
         <div class="panel-heading">{{field.config.fieldLabel}}</div>
         <div class="panel-body">
