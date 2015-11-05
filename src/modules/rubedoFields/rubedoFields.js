@@ -104,7 +104,8 @@
         "Rubedo.view.urlField":"/templates/inputFields/url.html",
         "Rubedo.ux.widget.Rating":"/templates/inputFields/rating.html",
         "RECField":"/templates/inputFields/recField.html",
-        "Rubedo.view.RECField":"/templates/inputFields/recField.html"
+        "Rubedo.view.RECField":"/templates/inputFields/recField.html",
+        "SpecialRepeatedField":"/templates/inputFields/specialRepeatedField.html"
     };
 
     //service for resolving field templates
@@ -880,6 +881,33 @@
                 }
             }
         );
+    }]);
+
+    module.controller("RepeatedFieldController",["$scope","RubedoContentTypesService",function($scope,RubedoContentTypesService){
+        var me=this;
+        $scope.fields=[];
+        var initialField=angular.copy($scope.field);
+        var config=initialField.config;
+        if (!$scope.$parent.fieldEntity[config.name]&&$scope.fieldInputMode){
+            $scope.$parent.fieldEntity[config.name]=[];
+        }
+        $scope.fieldEntity=$scope.$parent.fieldEntity[config.name];
+        me.fieldIterations=1;
+        if ($scope.fieldEntity.length>1){
+            me.fieldIterations=angular.copy($scope.fieldEntity.length);
+        }
+        me.buildFields=function(){
+            var fieldsArray=[];
+            for (i = 0; i < me.fieldIterations; i++) {
+                var newField=angular.copy(initialField);
+                newField.config.name=angular.copy(i);
+                newField.config.multivalued=false;
+                fieldsArray.push(newField);
+            }
+            $scope.fields=fieldsArray;
+        };
+        me.buildFields();
+
     }]);
 
 
