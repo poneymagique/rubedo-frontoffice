@@ -915,6 +915,18 @@
             me.fieldIterations=me.fieldIterations-1;
             me.buildFields();
         };
+        me.moveUp=function(index){
+            var otherValue=angular.copy($scope.fieldEntity[index-1]);
+            var myValue=angular.copy($scope.fieldEntity[index]);
+            $scope.fieldEntity[index-1]=myValue;
+            $scope.fieldEntity[index]=otherValue;
+        };
+        me.moveDown=function(index){
+            var otherValue=angular.copy($scope.fieldEntity[index+1]);
+            var myValue=angular.copy($scope.fieldEntity[index]);
+            $scope.fieldEntity[index+1]=myValue;
+            $scope.fieldEntity[index]=otherValue;
+        };
         me.buildFields();
 
     }]);
