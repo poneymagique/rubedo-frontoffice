@@ -906,6 +906,15 @@
             }
             $scope.fields=fieldsArray;
         };
+        me.addField=function(){
+            me.fieldIterations=me.fieldIterations+1;
+            me.buildFields();
+        };
+        me.removeField=function(index){
+            $scope.fieldEntity.splice(index,1);
+            me.fieldIterations=me.fieldIterations-1;
+            me.buildFields();
+        };
         me.buildFields();
 
     }]);

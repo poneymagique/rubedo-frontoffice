@@ -1,5 +1,16 @@
 <div ng-controller="RepeatedFieldController as RepeatedFieldCtrl"  >
-    <div ng-repeat="field in fields">
-        <rubedo-field></rubedo-field>
+    <div ng-repeat="field in fields" class="row">
+        <div class="col-xs-1">
+            <button class="btn btn-default" ng-if="$index==0" ng-click="RepeatedFieldCtrl.addField()">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </button>
+            <button class="btn btn-default" ng-if="$index>0" ng-click="RepeatedFieldCtrl.removeField($index)">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>
+        </div>
+        <div class="col-xs-11">
+            <rubedo-field></rubedo-field>
+        </div>
+
     </div>
 </div>
