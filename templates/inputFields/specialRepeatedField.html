@@ -2,16 +2,16 @@
     <div ng-repeat="field in fields" class="row">
         <div class="col-xs-2">
             <div class="btn-group" role="group">
-            <button class="btn btn-default" ng-if="$index==0" ng-click="RepeatedFieldCtrl.addField()">
+            <button type="button" class="btn btn-default" ng-if="$index==0" ng-click="RepeatedFieldCtrl.addField()">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             </button>
-            <button class="btn btn-default" ng-if="$index>0" ng-click="RepeatedFieldCtrl.removeField($index)">
+            <button type="button" class="btn btn-default" ng-if="$index>0" ng-click="RepeatedFieldCtrl.removeField($index)">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </button>
-            <button class="btn btn-default" ng-if="$index>0" ng-click="RepeatedFieldCtrl.moveUp($index)">
+            <button type="button" class="btn btn-default" ng-if="$index>0" ng-click="RepeatedFieldCtrl.moveUp($index)">
                 <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
             </button>
-            <button class="btn btn-default" ng-if="$index<fields.length-1" ng-click="RepeatedFieldCtrl.moveDown($index)">
+            <button type="button" class="btn btn-default" ng-if="$index<fields.length-1" ng-click="RepeatedFieldCtrl.moveDown($index)">
                 <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
             </button>
             </div>
