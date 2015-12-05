@@ -206,6 +206,10 @@
         "megaMenu": {
             "template": "/templates/blocks/megaMenu.html",
             "internalDependencies":["/src/modules/rubedoBlocks/controllers/MegaMenuController.js"]
+        },
+        "rssFeed": {
+            "template": "/templates/blocks/rssFeed.html",
+            "internalDependencies":["/src/modules/rubedoBlocks/controllers/RSSFeedController.js"]
         }
     };
 
