@@ -3,6 +3,7 @@
         <h3><a ng-href="{{rssFeedCtrl.feed.link}}">{{rssFeedCtrl.feed.title}}</a> &nbsp; <a ng-href="{{rssFeedCtrl.feed.feedUrl}}"><img src="theme/default/img/feed-icon-14x14.png"></a></h3>
         <div ng-repeat="entry in rssFeedCtrl.feed.entries">
             <h4><a ng-href="{{entry.link}}">{{entry.title}}</a></h4>
+            <p ng-if="entry.publishedDate">{{entry.publishedDate| date: "shortDate"}}</p>
             <p ng-if="!blockConfig.showOnlyTitle">{{entry.contentSnippet}}</p>
             <hr/>
         </div>
