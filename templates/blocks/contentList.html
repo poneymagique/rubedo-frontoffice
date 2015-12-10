@@ -3,16 +3,16 @@
             ng-options="ct.id as ct.type for ct in contentListCtrl.creatableContentTypes"
             ng-model="contentListCtrl.selectedManualType"></select>
     <button ng-if="contentListCtrl.canAddToList()"
-            title="Add content"
+            title="{{rubedo.translate('Block.ContentList.Label.Add','add content')}}"
             class="btn btn-default"
             ng-click="contentListCtrl.launchContribute()">
         <span class="glyphicon glyphicon-plus"></span>
     </button>
     <button ng-if="!contentListCtrl.canAddToList()&&contentListCtrl.isFOContributeMode&&contentListCtrl.editorPageUrl"
-            title="Add content"
+            title="{{rubedo.translate('Block.ContentList.Label.Add','add content')}}"
             class="btn btn-default"
             ng-click="contentListCtrl.launchFOContribute()">
-        <span class="glyphicon glyphicon-plus"></span> Contribute
+        <span class="glyphicon glyphicon-plus"></span> {{rubedo.translate('Block.ContentList.Label.Add','add content')}}
     </button>
     <div class="row">
         <div ng-attr-lr-infinite-scroll="loadMoreContents"
