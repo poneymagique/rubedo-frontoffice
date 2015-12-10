@@ -97,64 +97,66 @@ angular.module("rubedoBlocks").lazy.controller('DirectoryController',["$scope","
             }
         };
         me.clickOnFacets =  function(facetId,term){
-            var del = false;
-            angular.forEach(me.activeTerms,function(activeTerm){
-                if(!del){
-                    del = (activeTerm.term==term && activeTerm.facetId==facetId);
-                }
-            });
-            if(del){
-                if(facetsId.indexOf(facetId)==-1){
-                    options.taxonomies[facetId].splice(options.taxonomies[facetId].indexOf(term),1);
-                    if(options.taxonomies[facetId].length == 0){
-                        delete options.taxonomies[facetId];
+            if(term) {
+                var del = false;
+                angular.forEach(me.activeTerms, function (activeTerm) {
+                    if (!del) {
+                        del = (activeTerm.term == term && activeTerm.facetId == facetId);
                     }
-                    if(Object.keys(options['taxonomies']).length == 0){
-                        $location.search('taxonomies',null);
+                });
+                if (del) {
+                    if (facetsId.indexOf(facetId) == -1) {
+                        options.taxonomies[facetId].splice(options.taxonomies[facetId].indexOf(term), 1);
+                        if (options.taxonomies[facetId].length == 0) {
+                            delete options.taxonomies[facetId];
+                        }
+                        if (Object.keys(options['taxonomies']).length == 0) {
+                            $location.search('taxonomies', null);
+                        } else {
+                            $location.search('taxonomies', JSON.stringify(options.taxonomies));
+                        }
+                    } else if (facetId == 'query') {
+                        $location.search('query', null);
+                        delete options.query;
+                    } else if (facetId == 'lastupdatetime') {
+                        delete options[facetId];
+                        $location.search(facetId, null);
                     } else {
-                        $location.search('taxonomies',JSON.stringify(options.taxonomies));
+                        if (angular.isArray(options[facetId + '[]'])) {
+                            options[facetId + '[]'].splice(options[facetId + '[]'].indexOf(term), 1);
+                        } else {
+                            delete options[facetId + '[]'];
+                        }
+                        if (!options[facetId + '[]'] || options[facetId + '[]'].length == 0) {
+                            $location.search(facetId + '[]', null)
+                        } else {
+                            $location.search(facetId + '[]', options[facetId + '[]']);
+                        }
                     }
-                } else if (facetId == 'query') {
-                    $location.search('query',null);
-                    delete options.query;
-                } else if(facetId == 'lastupdatetime') {
-                    delete options[facetId];
-                    $location.search(facetId,null);
                 } else {
-                    if(angular.isArray(options[facetId+'[]'])){
-                        options[facetId+'[]'].splice(options[facetId+'[]'].indexOf(term),1);
+                    if (facetsId.indexOf(facetId) == -1) {
+                        if (!options.taxonomies) {
+                            options.taxonomies = {};
+                        }
+                        if (!options.taxonomies[facetId]) {
+                            options.taxonomies[facetId] = [];
+                        }
+                        options.taxonomies[facetId].push(term);
+                        $location.search('taxonomies', JSON.stringify(options.taxonomies));
+                    } else if (facetId == 'lastupdatetime') {
+                        options[facetId] = term;
+                        $location.search(facetId, options[facetId]);
                     } else {
-                        delete options[facetId+'[]'];
-                    }
-                    if(!options[facetId+'[]'] || options[facetId+'[]'].length == 0){
-                        $location.search(facetId+'[]',null)
-                    } else {
-                        $location.search(facetId+'[]',options[facetId+'[]']);
+                        if (!options[facetId + '[]']) {
+                            options[facetId + '[]'] = [];
+                        }
+                        options[facetId + '[]'].push(term);
+                        $location.search(facetId + '[]', options[facetId + '[]']);
                     }
                 }
-            } else {
-                if(facetsId.indexOf(facetId)==-1){
-                    if(!options.taxonomies){
-                        options.taxonomies = {};
-                    }
-                    if(!options.taxonomies[facetId]){
-                        options.taxonomies[facetId] = [];
-                    }
-                    options.taxonomies[facetId].push(term);
-                    $location.search('taxonomies',JSON.stringify(options.taxonomies));
-                } else if(facetId == 'lastupdatetime') {
-                    options[facetId] = term;
-                    $location.search(facetId,options[facetId]);
-                } else {
-                    if(!options[facetId+'[]']){
-                        options[facetId+'[]'] = [];
-                    }
-                    options[facetId+'[]'].push(term);
-                    $location.search(facetId+'[]',options[facetId+'[]']);
-                }
+                me.start = 0;
+                options.start = me.start;
             }
-            me.start = 0;
-            options.start = me.start;
         };
 
         me.searchByQuery = function(options){
