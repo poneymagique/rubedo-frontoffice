@@ -3,11 +3,12 @@
         <button ng-show="!fieldInputMode" ng-click="userProfileCtrl.enterEditMode()" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> {{rubedo.translate("Label.Edit", "Edit")}}</button>
     </div>
     <div ng-include="userProfileCtrl.detailTemplate"></div>
-    <div ng-if="userProfileCtrl.mailingLists&&userProfileCtrl.user.type.fields">{{rubedo.translate('Blocks.UserProfile.Label.SubscribedNews', 'My subscribed newsletters')}}</div>
-    <div ng-repeat="mailingList in userProfileCtrl.mailingLists track by $index" class="checkbox">
-        <label>
-            <input ng-disabled="!fieldInputMode" ng-model="mailingList.checked" type="checkbox"> {{mailingList.name}}
-        </label>
+    <div ng-if="userProfileCtrl.canEdit&&userProfileCtrl.mailingLists&&userProfileCtrl.user.type.fields">{{rubedo.translate('Blocks.UserProfile.Label.SubscribedNews', 'My subscribed newsletters')}}
+        <div ng-repeat="mailingList in userProfileCtrl.mailingLists track by $index" class="checkbox">
+            <label>
+                <input ng-disabled="!fieldInputMode" ng-model="mailingList.checked" type="checkbox"> {{mailingList.name}}
+            </label>
+        </div>
     </div>
     <br>
     <div ng-show="userProfileCtrl.canEdit && fieldInputMode && userProfileCtrl.hasChanges" class="pull-right">
