@@ -1,11 +1,11 @@
 <div ng-if="rubedo.current.user&&rubedo.current.user.rights.canContributeFO" ng-controller="ContentContributionController as ccCtrl">
-    <form ng-if="ccCtrl.contentType" class="form form-horizontal" ng-submit="ccCtrl.submitNewContent()">
+    <form ng-if="ccCtrl.contentType"  ng-submit="ccCtrl.submitNewContent()">
         <h2 ng-if="!ccCtrl.updateMode" class="text-center">{{rubedo.translate("Blocks.Contrib.Label.NewContent", "New Content")}} : {{ccCtrl.contentType.type}}</h2>
         <h2 ng-if="ccCtrl.updateMode" class="text-center">{{rubedo.translate("Blocks.Contrib.Label.EditContent", "Edit content")}} : {{ccCtrl.existingContent.text}}  ({{rubedo.translate("Label."+ccCtrl.existingContent.status, ccCtrl.existingContent.status)}}) </h2>
         <rubedo-field ng-repeat="field in fields track by $index"></rubedo-field>
         <div ng-repeat="vocabulary in vocabularies track by $index" class="form-group">
-            <label  class="col-sm-4 control-label">{{vocabulary.name}} <span ng-if="vocabulary.mandatory">*</span></label>
-            <div class="col-sm-8">
+            <label  class="control-label">{{vocabulary.name}} <span ng-if="vocabulary.mandatory">*</span></label>
+            <div>
                 <select ng-if="vocabulary.multiSelect&&vocabulary.expandable"
                         chosen
                         class="form-control"
@@ -50,7 +50,7 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-8 col-md-offset-4">
+            <div class="text-center">
                 <button type="submit" class="btn btn-primary" ng-if="rubedo.current.user.rights.canContributeFODraft" ng-click="ccCtrl.submitStatus='draft'">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> {{rubedo.translate("Blocks.Contrib.Label.SaveDraft", "Save as draft")}}
                 </button>

@@ -1,7 +1,7 @@
 
 <div class="form-group">
-    <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="col-sm-4 control-label">{{field.config.fieldLabel}} <span ng-if="!field.config.allowBlank&&!field.config.fieldLabel.includes('*')">*</span></label>
-    <div class="col-sm-8">
+    <label for="{{fieldIdPrefix+'_'+field.config.name}}" class="control-label">{{field.config.fieldLabel}} <span ng-if="!field.config.allowBlank&&!field.config.fieldLabel.includes('*')">*</span></label>
+    <div>
         <div id="{{fieldIdPrefix+'_'+field.config.name}}" ng-controller="RatingFieldController as ratingFieldCtrlCtrl">
             <span class="glyphicon"
                   ng-repeat="star in ratingFieldCtrlCtrl.getStarArray() track by $index"
