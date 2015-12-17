@@ -10,12 +10,12 @@ angular.module("rubedoBlocks").lazy.controller('DirectoryController',["$scope","
         me.limit = $routeParams.limit?$routeParams.limit:10;
         me.orderBy = $routeParams.orderby?$routeParams.orderby:"_score";
         var resolveOrderBy = {
-            '_score': 'relevance',
-            'lastUpdateTime': 'date',
-            'authorName': 'author',
-            'text': 'title'
+            '_score': $scope.rubedo.translate('Search.Label.OrderByRelevance'),
+            'lastUpdateTime': $scope.rubedo.translate('Search.Label.OrderByDate'),
+            'authorName': $scope.rubedo.translate('Search.Label.OrderByAuthor'),
+            'text': $scope.rubedo.translate('Blocks.Search.Label.OrderByTitle')
         };
-        me.displayOrderBy = $routeParams.orderby?resolveOrderBy[$routeParams.orderby]:"relevance";
+        me.displayOrderBy = $routeParams.orderby?resolveOrderBy[$routeParams.orderby]:$scope.rubedo.translate('Search.Label.OrderByRelevance');
         me.template = themePath+"/templates/blocks/directory/"+config.userDisplayMode+".html";
         me.activateSearch = config.activateSearch;
         me.alphabeticIndex =  config.alphabeticIndex;

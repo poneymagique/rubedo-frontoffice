@@ -7,12 +7,12 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href class="dropdown-toggle" data-toggle="dropdown">Order by {{directoryCtrl.displayOrderBy}} <span class="caret"></span></a>
+                    <a href class="dropdown-toggle" data-toggle="dropdown">{{directoryCtrl.displayOrderBy}} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href ng-click="directoryCtrl.changeOrderBy('_score')">{{rubedo.translate("OrderByRelevance", "Order by relevance")}}</a></li>
-                        <li><a href ng-click="directoryCtrl.changeOrderBy('lastUpdateTime')">{{rubedo.translate("OrderByDate", "Order by date")}}</a></li>
-                        <li><a ng-click="directoryCtrl.changeOrderBy('authorName')" href>{{rubedo.translate("OrderByAuthor", "Order by author")}}</a></li>
-                        <li><a ng-click="directoryCtrl.changeOrderBy('text')" href>{{rubedo.translate("OrderByTitle", "Order by title")}}</a></li>
+                        <li><a href ng-click="directoryCtrl.changeOrderBy('_score')">{{rubedo.translate("Search.Label.OrderByRelevance", "Order by relevance")}}</a></li>
+                        <li><a href ng-click="directoryCtrl.changeOrderBy('lastUpdateTime')">{{rubedo.translate("Search.Label.OrderByDate", "Order by date")}}</a></li>
+                        <li><a ng-click="directoryCtrl.changeOrderBy('authorName')" href>{{rubedo.translate("Search.Label.OrderByAuthor", "Order by author")}}</a></li>
+                        <li><a ng-click="directoryCtrl.changeOrderBy('text')" href>{{rubedo.translate("Blocks.Search.Label.OrderByTitle", "Order by title")}}</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
