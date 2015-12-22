@@ -1,6 +1,6 @@
 <nav class="navbar navbar-default">
     <div class="navbar-header">
-            <span class="navbar-brand">Search criteria :
+            <span class="navbar-brand">{{rubedo.translate('Blocks.Search.Label.SearchCriteria', 'Search criteria')}} :
                 <span ng-repeat-start="term in geoSearchResultsCtrl.notRemovableTerms track by $index">{{term.operator}}</span><span
                         class="badge" ng-repeat-end>
                     {{term.label}}
@@ -18,7 +18,7 @@
             <div class="panel-heading">
                 <form ng-submit="geoSearchResultsCtrl.onSubmit()" role="form">
                     <div class="input-group">
-                        <input class="form-control" type="text" ng-model="geoSearchResultsCtrl.query" placeholder="Search"/>
+                        <input class="form-control" type="text" ng-model="geoSearchResultsCtrl.query" placeholder="{{rubedo.translate('Search.Label.Search','Search')}}"/>
                             <span class="input-group-btn"><button class="btn btn-default" type="submit">
                                 <span class="glyphicon glyphicon-search"></span></button></span>
                     </div>
