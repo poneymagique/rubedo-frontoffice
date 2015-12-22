@@ -34,7 +34,7 @@ angular.module("rubedoBlocks").lazy.controller("AuthenticationController",["$sco
         if(me.newPassword != me.newConfirmPassword){
             $scope.notification = {
                 type: 'error',
-                text: 'Passwords do not match.'
+                text: $scope.rubedo.translate("Blocks.Auth.Error.PasswordsNotMatch")
             };
         } else {
             var options = {
@@ -73,7 +73,7 @@ angular.module("rubedoBlocks").lazy.controller("AuthenticationController",["$sco
                 if(response.data.success){
                     $scope.notification = {
                         type: 'success',
-                        text: 'Email sent'
+                        text: $scope.rubedo.translate("Blocks.Auth.EmailHasBeenSent")
                     };
                 }
                 me.recoverUserEmail = '';
@@ -89,7 +89,7 @@ angular.module("rubedoBlocks").lazy.controller("AuthenticationController",["$sco
     me.authenticate=function(){
         me.authError=null;
         if ((!me.credentials.login)||(!me.credentials.password)){
-            me.authError="Please fill in all required fields."
+            me.authError=$scope.rubedo.translate("Exception59");
         } else {
             RubedoAuthService.generateToken(me.credentials,me.rememberMe).then(
                 function(responseAuth){
