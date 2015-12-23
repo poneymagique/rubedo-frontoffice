@@ -26,11 +26,10 @@ angular.module("rubedoBlocks").lazy.controller('AddThisShareController',['$scope
         }
     }
     me.loadAddThis = function(){
-        addthis_share = {
+        addthis.toolbox('.'+me.class,{},{
             url: window.location.href,
             title: $scope.rubedo.current.page.title
-        };
-        addthis.toolbox('.'+me.class);
+        });
 
     };
 }]);
