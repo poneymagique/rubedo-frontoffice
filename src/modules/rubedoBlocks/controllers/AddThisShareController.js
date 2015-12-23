@@ -3,7 +3,7 @@ angular.module("rubedoBlocks").lazy.controller('AddThisShareController',['$scope
     var config = $scope.blockConfig;
     me.like = config.like == 1;
     me.disposition = config.disposition;
-    me.class = 'addthis_toolbox';
+    me.class = 'addthis_toolbox'+Math.random().toString(36).substring(7);
     if(me.like){
         if(config.disposition == 'Horizontal'){
             me.class += ' addthis_default_style';
@@ -26,7 +26,7 @@ angular.module("rubedoBlocks").lazy.controller('AddThisShareController',['$scope
         }
     }
     me.loadAddThis = function(){
-        addthis.toolbox('.addthis_toolbox');
+        addthis.toolbox('.'+me.class);
 
     };
 }]);
