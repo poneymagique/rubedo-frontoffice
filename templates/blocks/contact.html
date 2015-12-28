@@ -1,7 +1,7 @@
 <div ng-controller="ContactController as contactCtrl">
     <form ng-if="contactCtrl.showForm" class="form-horizontal" role="form" ng-submit="contactCtrl.submit()">
         <div ng-if="contactCtrl.mailingLists.length>1" class="form-group">
-            <label for="{{'ml'+block.id}}" class="col-sm-2 control-label">Subject *</label>
+            <label for="{{'ml'+block.id}}" class="col-sm-2 control-label">{{rubedo.translate("Blocks.Contact.Input.Subject.Label", "Subject *")}}</label>
             <div class="col-sm-10">
                 <select  name="ml"
                          ng-model="contactCtrl.mailingListId"
