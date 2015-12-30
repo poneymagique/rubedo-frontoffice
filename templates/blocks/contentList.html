@@ -30,7 +30,7 @@
                                 {{content.fields.text }}
                             </a>
                             <a ng-if="!fieldEditMode&&contentListCtrl.isFOContributeMode" ng-href="{{ contentListCtrl.editorPageUrl+'?content-edit='+content.id }}">
-                                {{content.fields.text }} ( {{content.status}} )
+                                {{content.fields.text }} ( {{rubedo.translate("Label." + content.status.toLowerCase())}} )
                             </a>
                             <rubedo-field ng-if="fieldEditMode" field="{{content.type.title}}"></rubedo-field>
                         </h4>
@@ -47,7 +47,7 @@
                         {{rubedo.translate('Block.ContentList.Label.ReadMore','read more')}}
                     </a>
                     <a ng-if="contentListCtrl.isFOContributeMode" class="pull-right" ng-href="{{ content.detailPageUrl+'?preview=true&preview_draft=true' }}">
-                        Preview detail
+                        {{rubedo.translate('Block.ContentList.Label.Preview','Preview detail')}}
                     </a>
                 </div>
             </div>
