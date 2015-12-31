@@ -131,10 +131,10 @@ angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope"
                 }
 
                 $scope.fieldInputMode=false;
-                $scope.rubedo.addNotification("success","Success","Profile updated.");
+                $scope.rubedo.addNotification("success",$scope.rubedo.translate("Block.Success", "Success !"),$scope.rubedo.translate("Blocks.UserProfile.Success.UserUpdated", "Profile updated."));
             },
             function(response){
-                $scope.rubedo.addNotification("danger","Error","Profile update error.");
+                $scope.rubedo.addNotification("danger",$scope.rubedo.translate("Block.error", "Error !"),$scope.rubedo.translate("Blocks.UserProfile.Error.UserNotUpdated", "Profile update error."));
             }
         );
     };
