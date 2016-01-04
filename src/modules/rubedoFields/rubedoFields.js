@@ -235,21 +235,12 @@
                     if (swt!="<"){
                         newValue="<div>"+newValue+"</div>";
                     }
-                    console.log(newValue);
-                    me.html=jQuery.htmlClean(newValue, {
-                        allowedAttributes:[["style"],["rubedo-page-link"],["target"],["border"]],
-                        replace: [[["b", "big"], "strong"]],
-                        format: true
-                    });
-                    console.log(me.html);
+                    me.html=newValue;
                 } else if ($scope.fieldEditMode&&!me.html){
                     if (!newValue){
                         newValue="";
                     }
-                    me.html=$sce.trustAsHtml(jQuery.htmlClean(newValue, {
-                        allowedAttributes:[["style"],["rubedo-page-link"]],
-                        format: true
-                    }));
+                    me.html=$sce.trustAsHtml(newValue);
                 }
                 if ($scope.fieldEditMode&&me.isCKEReady){
                     $scope.registerFieldEditChanges();
