@@ -235,13 +235,11 @@
                     if (swt!="<"){
                         newValue="<div>"+newValue+"</div>";
                     }
-                    console.log(newValue);
                     me.html=jQuery.htmlClean(newValue, {
                         allowedAttributes:[["style"],["rubedo-page-link"],["target"],["border"]],
                         replace: [[["b", "big"], "strong"]],
                         format: true
                     });
-                    console.log(me.html);
                 } else if ($scope.fieldEditMode&&!me.html){
                     if (!newValue){
                         newValue="";
