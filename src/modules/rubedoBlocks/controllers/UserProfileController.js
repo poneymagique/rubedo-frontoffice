@@ -88,6 +88,10 @@ angular.module("rubedoBlocks").lazy.controller("UserProfileController",["$scope"
     me.persistChanges=function(){
         var payload=angular.copy(me.user);
         payload.fields=angular.copy($scope.fieldEntity);
+        delete(payload.fields.photo);
+        delete(payload.fields.photoUrl);
+        delete(payload.photo);
+        delete(payload.photoUrl);
         delete (payload.type);
         RubedoUsersService.updateUser(payload).then(
             function(response){
