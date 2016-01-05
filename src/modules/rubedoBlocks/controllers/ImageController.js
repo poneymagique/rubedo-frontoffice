@@ -17,7 +17,6 @@ angular.module("rubedoBlocks").lazy.controller("ImageController",["$scope","$htt
             if(response.data.success) {
                 me.imageTitle = response.data.media.fields.title;
             }
-            console.log(response);
         }
     );
 
