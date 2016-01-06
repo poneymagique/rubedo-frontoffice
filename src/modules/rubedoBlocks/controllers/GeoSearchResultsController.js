@@ -404,4 +404,9 @@ angular.module("rubedoBlocks").lazy.controller("GeoSearchResultsController",["$s
                 $element.find(".angular-google-map-container").height(config.height);
             },190);
         }
+        setTimeout(function(){
+            if(!me.count||me.count==0){
+                google.maps.event.trigger(me.mapControl.getGMap(), 'resize');
+            }
+        },3200);
     }]);
