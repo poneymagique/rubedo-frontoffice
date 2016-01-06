@@ -6,6 +6,10 @@
     </div>
     <form ng-if="signUpCtrl.showForm" class="form-horizontal" role="form" ng-submit="signUpCtrl.submit()">
         <rubedo-field ng-repeat="field in signUpCtrl.inputFields track by $index" ></rubedo-field>
+        <div ng-if="blockConfig.introNewsletters"
+             ng-include="rubedo.blockTemplateResolver.getTemplate('richText',{ })"
+             ng-init="blockConfig = {contentId:blockConfig.introNewsletters}"
+                >
         <div ng-repeat="mailingList in signUpCtrl.mailingLists track by $index" class="checkbox">
             <label>
                 <input ng-model="mailingList.checked" type="checkbox"> {{mailingList.name}}
