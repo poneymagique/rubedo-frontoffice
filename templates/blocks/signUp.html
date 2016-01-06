@@ -9,7 +9,7 @@
         <div ng-if="blockConfig.introNewsletters"
              ng-include="rubedo.blockTemplateResolver.getTemplate('richText',{ })"
              ng-init="blockConfig = {contentId:blockConfig.introNewsletters}"
-                >
+                ></div>
         <div ng-repeat="mailingList in signUpCtrl.mailingLists track by $index" class="checkbox">
             <label>
                 <input ng-model="mailingList.checked" type="checkbox"> {{mailingList.name}}
