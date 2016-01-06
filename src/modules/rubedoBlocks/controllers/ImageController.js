@@ -1,6 +1,7 @@
-angular.module("rubedoBlocks").lazy.controller("ImageController",["$scope","RubedoPagesService", function($scope,RubedoPagesService){
+angular.module("rubedoBlocks").lazy.controller("ImageController",["$scope","$http","RubedoPagesService", function($scope,$http,RubedoPagesService){
     var me = this;
     var config = $scope.blockConfig;
+    me.imageTitle = "";
     if (config.externalURL){
         me.url=config.externalURL;
     } else if (config.imageLink&&mongoIdRegex.test(config.imageLink)){
@@ -10,5 +11,13 @@ angular.module("rubedoBlocks").lazy.controller("ImageController",["$scope","Rube
             }
         });
     }
+
+    $http.get("/api/v1/media/" + config.imageFile).then(
+        function(response) {
+            if(response.data.success) {
+                me.imageTitle = response.data.media.fields.title;
+            }
+        }
+    );
 
 }]);

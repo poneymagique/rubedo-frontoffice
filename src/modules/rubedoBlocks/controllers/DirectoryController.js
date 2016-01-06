@@ -195,7 +195,7 @@ angular.module("rubedoBlocks").lazy.controller('DirectoryController',["$scope","
                                 newTerm.label = term.label;
                                 newTerm.facetId = activeFacet.id;
                                 if(previousFacetId == activeFacet.id){
-                                    newTerm.operator =' '+(activeFacet.operator)+' ';
+                                    newTerm.operator =(activeFacet.operator);
                                 } else if (previousFacetId && me.notRemovableTerms.length != 0){
                                     newTerm.operator = ', ';
                                 }
