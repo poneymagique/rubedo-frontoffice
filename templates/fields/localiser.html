@@ -1,4 +1,4 @@
-<div ng-controller="LocaliserFieldController as localiserFieldCtrl">
+<div ng-controller="LocaliserFieldController as localiserFieldCtrl" ng-if="localiserFieldCtrl.positionMarker.coords">
     <div class="rubedo-map-field">
         <google-map center="localiserFieldCtrl.map.center" zoom="localiserFieldCtrl.map.zoom" draggable="true">
             <marker ng-if="localiserFieldCtrl.positionMarker" idKey="'positionMarker'" coords="localiserFieldCtrl.positionMarker.coords">
