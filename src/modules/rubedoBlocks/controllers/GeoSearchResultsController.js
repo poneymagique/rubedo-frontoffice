@@ -407,6 +407,37 @@ angular.module("rubedoBlocks").lazy.controller("GeoSearchResultsController",["$s
         setTimeout(function(){
             if(!me.count||me.count==0){
                 google.maps.event.trigger(me.mapControl.getGMap(), 'resize');
+                if (config.useLocation&&navigator.geolocation){
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        me.mapControl.getGMap().setCenter(new google.maps.LatLng({
+                            lat:position.coords.latitude,
+                            lng:position.coords.longitude
+                        }));
+
+
+                    }, function() {
+                        //handle geoloc error
+                    });
+                } else if (config.centerAddress){
+                    me.geocoder.geocode({
+                        'address' : config.centerAddress
+                    }, function(results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            me.mapControl.getGMap().setCenter(new google.maps.LatLng({
+                                lat:results[0].geometry.location.lat(),
+                                lng:results[0].geometry.location.lng()
+                            }));
+
+                        }
+                    });
+
+                } else if (config.centerLatitude && config.centerLongitude){
+                    me.mapControl.getGMap().setCenter(new google.maps.LatLng({
+                        lat:config.centerLatitude,
+                        lng:config.centerLongitude
+                    }));
+
+                }
             }
         },3200);
     }]);
