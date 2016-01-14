@@ -210,43 +210,51 @@ angular.module("rubedoBlocks").lazy.controller("ContentListDetailController",['$
     me.index = $scope.$index;
     me.parentIndex = $scope.columnIndex;
     me.content = $scope.content;
-    $scope.fieldEntity=angular.copy(me.content.fields);
+    $scope.fieldEntity=$scope.content.fields;
     $scope.fieldLanguage=me.content.locale;
     $scope.fieldInputMode=false;
     $scope.$watch('rubedo.fieldEditMode', function(newValue) {
         $scope.fieldEditMode=$scope.content.content&&me.content.readOnly ? false : newValue;
 
     });
+    $scope.$watch('content', function(newValue) {
+        me.initCT();
+        me.content = newValue;
+        $scope.fieldEntity = newValue.fields;
+    });
     me.registerEditChanges=function(){
         $scope.rubedo.registerEditCtrl(me);
     };
+    me.initCT=function() {
+        $scope.content.type = {
+            title: {
+                cType: "textfield",
+                config: {
+                    name: "text",
+                    fieldLabel: "Title",
+                    allowBlank: false
+                }
+            },
+            summary: {
+                cType: "textarea",
+                config: {
+                    name: "summary",
+                    fieldLabel: "Summary",
+                    allowBlank: false
+                }
+            }
+        };
+    }
     me.persistChanges = function(){
         me.content.fields = angular.copy($scope.fieldEntity);
         $scope.$parent.$parent.$parent.persistAllChanges();
+        me.initCT();
     };
     me.revertChanges = function(){
-      $scope.fieldEntity = angular.copy(me.content.fields);
+        $scope.fieldEntity = angular.copy(me.content.fields);
+        me.initCT();
     };
-    $scope.content.type = {
-        title:
-        {
-            cType:"textfield",
-            config:{
-                name:"text",
-                fieldLabel:"Title",
-                allowBlank:false
-            }
-        },
-        summary:
-        {
-            cType:"textarea",
-            config:{
-                name:"summary",
-                fieldLabel:"Summary",
-                allowBlank:false
-            }
-        }
-    };
+    me.initCT();
     $scope.registerFieldEditChanges = me.registerEditChanges;
 
 }]);
