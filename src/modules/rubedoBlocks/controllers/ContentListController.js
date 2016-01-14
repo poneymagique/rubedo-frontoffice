@@ -244,7 +244,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentListDetailController",['$
                 }
             }
         };
-    }
+    };
     me.persistChanges = function(){
         me.content.fields = angular.copy($scope.fieldEntity);
         $scope.$parent.$parent.$parent.persistAllChanges();
