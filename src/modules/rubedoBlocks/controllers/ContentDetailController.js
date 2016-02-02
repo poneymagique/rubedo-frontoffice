@@ -116,8 +116,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentDetailController",["$scop
                         siteId:options.pageId,
                         pageId:options.siteId,
                         typeId:me.content.typeId,
-                        contentTaxo:me.content.taxonomy,
-                        allContentTerms:allContentTerms
+                        taxonomyTerms:allContentTerms
                     }});
                 }
             }
