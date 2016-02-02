@@ -5,7 +5,7 @@
              ng-init="blockConfig = {content:mediaDownloadCtrl.intro, fromFront: true}"
                 >
         </div>
-        <a class="btn btn-primary" target="_blank" ng-href="{{mediaDownloadCtrl.media.url}}">
+        <a class="btn btn-primary" target="_blank" ng-href="{{mediaDownloadCtrl.media.url}}" ng-click="rubedo.trackGaDownloadClick(mediaDownloadCtrl.media.url)">
             <i class="glyphicon glyphicon-download"></i> {{rubedo.translate('Label.Download', 'Download')}}
         </a>
     </div>
