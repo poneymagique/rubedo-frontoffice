@@ -376,9 +376,9 @@
         me.setPageDescription=function(newDescription){
             me.current.page.description=newDescription;
         };
-        me.trackGaDownloadClick = function(url) {
+        me.sendGaEvent = function(cat, action, label) {
             if(window._gaq) {
-                window._gaq.push('send', 'event', 'Download', url);
+                window._gaq.push('send', 'event', cat, action, label);
             }
         };
 

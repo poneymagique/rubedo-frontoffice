@@ -274,6 +274,7 @@ angular.module("rubedoBlocks").lazy.controller("CheckoutController",["$scope","R
                 if (response.data.success){
                     var myOrderId=response.data.order.id;
                     $location.url(me.orderDetailPageUrl+"?order="+myOrderId);
+                    $scope.rubedo.sendGaEvent('form', 'order', myOrderId);
                 }
             }
         );

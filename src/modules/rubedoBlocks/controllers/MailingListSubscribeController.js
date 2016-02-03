@@ -55,6 +55,7 @@ angular.module("rubedoBlocks").lazy.controller('MailingListSuscribeController',[
                             type: 'success',
                             text: $scope.rubedo.translate("Blocks.Subscribe.Status.Success")
                         };
+                        $scope.rubedo.sendGaEvent('form', 'subscribe newsletter', options.email);
                     }
                     me.email = '';
                 },function(){
