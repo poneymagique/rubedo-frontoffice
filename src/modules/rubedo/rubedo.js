@@ -370,31 +370,36 @@
                 me.registeredEditCtrls.push(ctrlRef);
             }
         };
-            me.setPageTitle=function(newTitle){
-                me.current.page.title=newTitle;
-            };
-            me.setPageDescription=function(newDescription){
-                me.current.page.description=newDescription;
-            };
+        me.setPageTitle=function(newTitle){
+            me.current.page.title=newTitle;
+        };
+        me.setPageDescription=function(newDescription){
+            me.current.page.description=newDescription;
+        };
+        me.trackGaDownloadClick = function(url) {
+            if(window._gaq) {
+                window._gaq.push('send', 'event', 'Download', url);
+            }
+        };
 
-            $scope.$on("ClickStreamEvent",function(event,args){
-                if (typeof(Fingerprint2)!="undefined"&&args&&args.csEvent){
-                    RubedoClickStreamService.logEvent(args.csEvent,args.csEventArgs);
-                }
-            });
+        $scope.$on("ClickStreamEvent",function(event,args){
+            if (typeof(Fingerprint2)!="undefined"&&args&&args.csEvent){
+                RubedoClickStreamService.logEvent(args.csEvent,args.csEventArgs);
+            }
+        });
 
-            me.fireCSEvent=function(event,args){
-                $rootScope.$broadcast("ClickStreamEvent",{csEvent:event,csEventArgs:args});
-            };
+        me.fireCSEvent=function(event,args){
+            $rootScope.$broadcast("ClickStreamEvent",{csEvent:event,csEventArgs:args});
+        };
 
-            USER=UXUserService;
-            $scope.USER=USER;
+        USER=UXUserService;
+        $scope.USER=USER;
 
-            PAGE=UXPageService;
-            $scope.PAGE=PAGE;
+        PAGE=UXPageService;
+        $scope.PAGE=PAGE;
 
-            SESSION=UXSessionService;
-            $scope.SESSION=SESSION;
+        SESSION=UXSessionService;
+        $scope.SESSION=SESSION;
 
     }]);
 

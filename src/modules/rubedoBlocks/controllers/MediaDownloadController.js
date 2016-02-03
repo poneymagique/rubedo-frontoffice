@@ -8,7 +8,10 @@ angular.module("rubedoBlocks").lazy.controller('MediaDownloadController',['$scop
     RubedoMediaService.getMediaById(options.mediaId, options).then(function(response){
         if(response.data.success){
             me.media =  response.data.media;
-            me.intro = response.data.intro.content ? response.data.intro.content : false;
+            me.intro = null;
+            if(typeof response.data.intro != "undefined") {
+                me.intro = response.data.intro.content;
+            }
         }
     });
 }]);
