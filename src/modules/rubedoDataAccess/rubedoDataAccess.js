@@ -645,9 +645,9 @@
                 if (!currentSessionId){
                     currentSessionId=Math.random().toString(36).substring(7);
                     var newTS=Date.now() / 1000 | 0;
-                    ipCookie("sessionStartTS",newTS,{path:"/",expires:1, expirationUnit:"hours"});
+                    ipCookie("sessionStartTS",newTS,{path:"/",expires:5, expirationUnit:"minutes"});
                 }
-                ipCookie("sessionId",currentSessionId,{path:"/",expires:1, expirationUnit:"hours"});
+                ipCookie("sessionId",currentSessionId,{path:"/",expires:5, expirationUnit:"minutes"});
                 var payload = {
                     fingerprint:config.fingerprint,
                     url:window.location.href,

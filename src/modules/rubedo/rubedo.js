@@ -499,10 +499,20 @@
 
                 }
                 //Page load
+                var allContentTerms=[];
+                if (newPage.taxonomy){
+                    angular.forEach(newPage.taxonomy,function(value){
+                        if (angular.isString(value)&&value!=""){
+                            allContentTerms.push(value);
+                        } else if (angular.isArray(value)){
+                            allContentTerms=allContentTerms.concat(value);
+                        }
+                    });
+                }
                 $rootScope.$broadcast("ClickStreamEvent",{csEvent:"pageView",csEventArgs:{
                     pageId:newPage.id,
                     siteId:response.data.site.id,
-                    pageTaxo:newPage.taxonomy
+                    taxonomyTerms:allContentTerms
                 }});
 
             }

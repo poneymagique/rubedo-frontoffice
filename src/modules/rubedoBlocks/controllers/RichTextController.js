@@ -44,13 +44,13 @@ angular.module("rubedoBlocks").lazy.controller("RichTextController",["$scope","$
             function(response){
                 if (response.data.success){
                     me.content.version = response.data.version;
-                    $scope.rubedo.addNotification("success","Success","Content updated.");
+                    $scope.rubedo.addNotification("success",$scope.rubedo.translate("Block.Success", "Success !"),$scope.rubedo.translate("Blocks.Contrib.Status.ContentUpdated", "Content updated"));
                 } else {
-                    $scope.rubedo.addNotification("danger","Error","Content update error.");
+                    $scope.rubedo.addNotification("danger",$scope.rubedo.translate("Block.Error", "Error !"),$scope.rubedo.translate("Blocks.Contrib.Status.UpdateError", "Content update error"));
                 }
             },
             function(response){
-                $scope.rubedo.addNotification("danger","Error","Content update error.");
+                $scope.rubedo.addNotification("danger",$scope.rubedo.translate("Block.Error", "Error !"),$scope.rubedo.translate("Blocks.Contrib.Status.UpdateError", "Content update error"));
             }
         );
     };
