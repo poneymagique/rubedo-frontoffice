@@ -376,9 +376,9 @@
         me.setPageDescription=function(newDescription){
             me.current.page.description=newDescription;
         };
-        me.sendGaEvent = function(cat, action, label) {
+        me.sendGaEvent = function(cat, label) {
             if(window._gaq) {
-                window._gaq.push('send', 'event', cat, action, label);
+                window._gaq.push(['_trackPageview', cat+label]);
             }
         };
 
