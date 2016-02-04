@@ -60,7 +60,7 @@ angular.module("rubedoBlocks").lazy.controller('SignUpController',['$scope','Rub
                             });
                         }
                     }
-                    $scope.rubedo.sendGaEvent('form', 'sign up', response.data.user.data.email);
+                    $scope.rubedo.sendGaEvent('/form/', 'sign up');
                 } else {
                     me.signupError=response.data.message;
                 }

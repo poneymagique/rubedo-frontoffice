@@ -13,7 +13,7 @@ angular.module("rubedoBlocks").lazy.controller('MailingListUnsuscribeController'
                         type: 'success',
                         text: $scope.rubedo.translate("Blocks.SignUp.unsubscribeOk.unsubscribeSuccess")
                     };
-                    $scope.rubedo.sendGaEvent('form', 'unsubscribe newsletter', options.email);
+                    $scope.rubedo.sendGaEvent('/form/', 'unsubscribe newsletter');
                 } else {
                     $scope.notification = {
                         type: 'error',
