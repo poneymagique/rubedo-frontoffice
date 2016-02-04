@@ -1,6 +1,7 @@
 angular.module("rubedoBlocks").lazy.controller("ContentContributionController",["$scope","RubedoContentsService","RubedoContentTypesService","$location","RubedoPagesService",function($scope,RubedoContentsService,RubedoContentTypesService,$location,RubedoPagesService){
     var me=this;
     var config = $scope.blockConfig;
+    $scope.rFieldInputErrors=false;
     $scope.fieldInputMode=true;
     $scope.fieldEntity={
         taxonomy:{}
@@ -58,6 +59,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
     }
     me.submitNewContent=function(){
         if(me.contentType&&me.submitStatus){
+            $scope.rFieldInputErrors=false;
             me.createError=null;
             var formData=angular.copy($scope.fieldEntity);
             if (me.updateMode){
@@ -80,11 +82,13 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                                 });
                             }
                         } else {
+                            $scope.rFieldInputErrors=response.data.inputErrors;
                             $scope.rubedo.addNotification("danger",$scope.rubedo.translate("Block.Error", "Error !"),$scope.rubedo.translate("Blocks.Contrib.Status.UpdateError", "Content update error"));
                         }
 
                     },
                     function(response){
+                        $scope.rFieldInputErrors=response.data.inputErrors;
                         $scope.rubedo.addNotification("danger",$scope.rubedo.translate("Block.Error", "Error !"),$scope.rubedo.translate("Blocks.Contrib.Status.UpdateError", "Content update error"));
                     }
                 );
@@ -113,6 +117,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                             }
 
                         }else{
+                            $scope.rFieldInputErrors=createResponse.data.inputErrors;
                             $scope.rubedo.addNotification("danger",$scope.rubedo.translate("Block.Error", "Error !"),$scope.rubedo.translate("Blocks.Contrib.Status.CreateError", "Content creation error"));
                             me.createError={
                                 type:"error",
@@ -121,6 +126,7 @@ angular.module("rubedoBlocks").lazy.controller("ContentContributionController",[
                         }
                     },
                     function(createResponse){
+                        $scope.rFieldInputErrors=createResponse.data.inputErrors;
                         $scope.rubedo.addNotification("danger",$scope.rubedo.translate("Block.Error", "Error !"),$scope.rubedo.translate("Blocks.Contrib.Status.CreateError", "Content creation error"));
                         me.createError={
                             type:"error",

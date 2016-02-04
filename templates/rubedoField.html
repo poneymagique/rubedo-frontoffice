@@ -1,4 +1,9 @@
 <div  ng-if="!fieldInputMode&&!field.config.useAsVariation" ng-include="rubedo.fieldTemplateResolver.getTemplateByType(field.cType)"></div>
+<div  class="alert alert-danger" role="alert" ng-if="fieldInputMode&&!field.config.useAsVariation&&rFieldInputErrors[field.config.name]">
+<strong>{{rubedo.translate("Block.error", "Error !")}}</strong>
+<span ng-if="rFieldInputErrors[field.config.name]=='missing field'">{{rubedo.translate("Blocks.Contact.Input.Error.CanNotBeEmpty", "This field can not be empty")}}</span>
+<span ng-if="rFieldInputErrors[field.config.name]!='missing field'">Invalid field data</span>
+</div>
 <div  ng-if="fieldInputMode&&!field.config.useAsVariation&&!field.config.multivalued&&rubedo.fieldTemplateResolver.getInputTemplateByType(field.cType)"
       ng-include="rubedo.fieldTemplateResolver.getInputTemplateByType(field.cType)"></div>
 <div  ng-if="fieldInputMode&&!field.config.useAsVariation&&field.config.multivalued&&rubedo.fieldTemplateResolver.getInputTemplateByType(field.cType)"
