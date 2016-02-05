@@ -436,11 +436,19 @@
                         newPage.metaKeywords = newPage.metaKeywords?newPage.metaKeywords+','+keyword:keyword;
                     });
                 }
-                if (!newPage.description&&response.data.site.description){
-                    newPage.description=response.data.site.description;
+                var routeString="";
+                if(response.data.breadcrumb&&response.data.breadcrumb.length>1){
+                    angular.forEach(response.data.breadcrumb,function(bcItem,bcKey){
+                        if(bcKey>=1){
+                            routeString=routeString+bcItem.title+" ";
+                        }
+                    });
                 }
-                if (!newPage.title&&response.data.site.title){
-                    newPage.title=response.data.site.title;
+                if (!newPage.description||newPage.description==""){
+                    newPage.description=routeString.length>0 ? response.data.site.host+" : "+routeString  : response.data.site.host;
+                }
+                if (!newPage.title||newPage.title==""){
+                    newPage.title=routeString.length>0 ? routeString+"- "+response.data.site.host  : response.data.site.host;
                 }
                 if(newPage.noIndex || newPage.noFollow){
                     newPage.metaRobots = (newPage.noIndex?'noindex':'') + (newPage.noFollow?',nofollow':'');
