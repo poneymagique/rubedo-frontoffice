@@ -252,8 +252,8 @@
                     window.location.href=newLoc.slice(0,newLoc.indexOf("#"));
                 }
             } else {
-                if (window._gaq) {
-                    window._gaq.push(['_trackPageview', newLoc]);
+                if (window.ga) {
+                    window.ga('send', 'pageview', newLoc);
                 }
                 if (currentLoc&&currentLoc!=""&&currentLoc!=newLoc){
                     UXPageService.setAngReferrer(currentLoc);
@@ -377,8 +377,8 @@
             me.current.page.description=newDescription;
         };
         me.sendGaEvent = function(cat, label) {
-            if(window._gaq) {
-                window._gaq.push(['_trackPageview', cat+label]);
+            if(window.ga) {
+                window.ga('send', 'pageview', cat+label);
             }
         };
 
