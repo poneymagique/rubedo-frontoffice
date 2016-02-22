@@ -5,6 +5,7 @@ angular.module("rubedoBlocks").lazy.controller("SearchFormController",['$scope',
     me.placeholder = config.placeholder;
     me.onSubmit = function(){
         var paramQuery = me.query?'?query='+me.query:'';
+        paramQuery += me.query2?'&'+me.query2:'';
         RubedoPagesService.getPageById(config.searchPage).then(function(response){
             if (response.data.success){
                 $location.url(response.data.url+paramQuery);
